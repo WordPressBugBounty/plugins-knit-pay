@@ -1,0 +1,9 @@
+Special thanks to the developers of the following projects. We have modified and re-used various parts of the codes of the following projects in this plugin. 
+1. WordPress Pay >> Core (https://github.com/wp-pay/core)
+2. WordPress Pay Extensions (https://github.com/wp-pay-extensions)
+3. WordPress Money library (https://github.com/pronamic/wp-money)
+4. WordPress DateTime library (https://github.com/pronamic/wp-datetime)
+5. WordPress Plugin - Pronamic Pay (https://wordpress.org/plugins/pronamic-ideal/)
+6. Icon: Designed by monkik from Flaticon
+
+Kindly inform us if we missed any names or references.
