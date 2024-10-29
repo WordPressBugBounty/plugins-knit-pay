@@ -19,11 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'LearnDash_Settings_Section_KnitPay' ) ) ) {
+if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'KnitPaySettingsSection' ) ) ) {
 	/**
 	 * Class to create the settings section.
 	 */
 	class KnitPaySettingsSection extends LearnDash_Settings_Section {
+		private $id;
+		private $payment_method;
 
 		/**
 		 * Protected constructor for class

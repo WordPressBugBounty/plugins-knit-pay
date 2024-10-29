@@ -3,9 +3,9 @@
 namespace KnitPay\Extensions\WPTravelEngine;
 
 use Pronamic\WordPress\Pay\AbstractPluginIntegration;
-use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
-use Pronamic\WordPress\Pay\Core\Util;
+use Pronamic\WordPress\Pay\Plugin;
 use Pronamic\WordPress\Pay\Payments\Payment;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 use WPTravelEngine\Core\Booking as WTE_Booking;
 
 /**
@@ -16,7 +16,7 @@ use WPTravelEngine\Core\Booking as WTE_Booking;
  *
  * @author  knitpay
  * @since   1.9
- * @version 8.87.13.1
+ * @version 8.89.1.0
  */
 class Extension extends AbstractPluginIntegration {
 	/**
@@ -65,18 +65,27 @@ class Extension extends AbstractPluginIntegration {
 		// TODO add customer phone fileld
 		// wp_travel_engine_booking_fields_display
 
-		add_filter( 'wp_travel_engine_available_payment_gateways', [ $this, 'add_payment_gateways' ] );
-		add_filter( 'wpte_settings_get_global_tabs', [ $this, 'settings_get_global_tabs' ] );
-		add_action( 'wp_travel_engine_before_billing_form', [ $this, 'wp_travel_engine_before_billing_form' ], 10 );
 		// TODO add payment details box on booking page.
-		// add_action( 'add_meta_boxes', array( $this, 'wpte_payu_add_meta_boxes' ) );
+		// add_action( 'add_meta_boxes', array( $this, 'wpte_knit_pay_add_meta_boxes' ) );
+
+		add_filter( 'wptravelengine_rest_prepare_settings', [ $this, 'add_payment_gateways' ], 10, 3 );
+		add_filter( 'wptravelengine_settings:tabs:payments', [ $this, 'add_knit_pay_sub_tabs' ], 10, 1 );
+		add_action( 'wptravelengine_api_update_settings', [ $this, 'wptravelengine_api_update_settings' ], 10, 2 );
+		add_filter( 'wptravelengine_settings_api_schema', [ $this, 'wptravelengine_settings_api_schema' ], 10, 2 );
+
+		add_action( 'wp_travel_engine_before_billing_form', [ $this, 'wp_travel_engine_before_billing_form' ], 10 );
+
+		// TODO Deprecated, remove after 31 Dec 2025
+		add_filter( 'wp_travel_engine_available_payment_gateways', [ $this, 'add_payment_gateways_old' ] );
+		add_filter( 'wpte_settings_get_global_tabs', [ $this, 'settings_get_global_tabs' ] );
 	}
 
+	// Display error message on checkout page.
 	public static function wp_travel_engine_before_billing_form() {
 		return wp_travel_engine_print_notices();
 	}
 
-	public function add_payment_gateways( $gateways_list ) {
+	public function add_payment_gateways_old( $gateways_list ) {
 		$wp_travel_engine_settings = get_option( 'wp_travel_engine_settings' );
 		$knit_pay_settings         = isset( $wp_travel_engine_settings['knit_pay_settings'] ) ? $wp_travel_engine_settings['knit_pay_settings'] : [];
 		$title                     = ! empty( $knit_pay_settings['title'] ) ? $knit_pay_settings['title'] : __( 'Pay Online', 'knit-pay-lang' );
@@ -97,9 +106,157 @@ class Extension extends AbstractPluginIntegration {
 		return $gateways_list;
 	}
 
+	public static function add_payment_gateways( $settings, $request, $settings_controller ) {
+		$plugin_settings = $settings_controller->plugin_settings;
+
+		$settings['payment_gateways'][] = [
+			'id'     => 'knit_pay',
+			'name'   => 'Knit Pay',
+			'enable' => wptravelengine_toggled( $plugin_settings->get( 'knit_pay' ) ),
+			'icon'   => esc_attr( KNITPAY_URL ) . '/images/knit-pay/icon.svg',
+		];
+		$settings['knit_pay_settings']  = [
+			'title'               => (string) $plugin_settings->get( 'knit_pay_settings.title', __( 'Pay Online', 'knit-pay-lang' ) ),
+			'description'         => (string) $plugin_settings->get( 'knit_pay_settings.description', '' ),
+			'icon'                => (string) $plugin_settings->get( 'knit_pay_settings.icon', '' ),
+			'payment_description' => (string) $plugin_settings->get( 'knit_pay_settings.payment_description', __( 'WTE Booking {booking_id}', 'knit-pay-lang' ) ),
+			'config_id'           => (string) $plugin_settings->get( 'knit_pay_settings.config_id', get_option( 'pronamic_pay_config_id' ) ),
+		];
+
+		return $settings;
+	}
+
+	public function wptravelengine_settings_api_schema( $_schema, $settings_controller ) {
+		$_schema['knit_pay_settings'] = [
+			'description' => __( 'Knit Pay Payment Gateway Settings', 'knit-pay-lang' ),
+			'type'        => 'object',
+			'properties'  => [
+				'title'               => [
+					'description' => __( 'Knit Pay Title', 'knit-pay-lang' ),
+					'type'        => 'string',
+				],
+				'description'         => [
+					'description' => __( 'Knit Pay Description', 'knit-pay-lang' ),
+					'type'        => 'string',
+				],
+				'icon'                => [
+					'description' => __( 'Knit Pay Icon URL', 'knit-pay-lang' ),
+					'type'        => 'string',
+				],
+				'payment_description' => [
+					'description' => __( 'Knit Pay Payment Description', 'knit-pay-lang' ),
+					'type'        => 'string',
+				],
+				'config_id'           => [
+					'description' => __( 'Knit Pay Configuration', 'knit-pay-lang' ),
+					'type'        => 'string',
+				],
+			],
+		];
+
+		return $_schema;
+	}
+
+	public function wptravelengine_api_update_settings( $request, $settings_controller ) {
+		$plugin_settings = $settings_controller->plugin_settings;
+		$setting_id      = 'knit_pay_settings';
+		if ( isset( $request[ $setting_id ] ) ) {
+			if ( isset( $request[ $setting_id ]['title'] ) ) {
+				$plugin_settings->set( $setting_id . '.title', $request[ $setting_id ]['title'] );
+			}
+
+			if ( isset( $request[ $setting_id ]['description'] ) ) {
+				$plugin_settings->set( $setting_id . '.description', $request[ $setting_id ]['description'] );
+			}
+
+			if ( isset( $request[ $setting_id ]['icon'] ) ) {
+				$plugin_settings->set( $setting_id . '.icon', $request[ $setting_id ]['icon'] );
+			}
+
+			if ( isset( $request[ $setting_id ]['payment_description'] ) ) {
+				$plugin_settings->set( $setting_id . '.payment_description', $request[ $setting_id ]['payment_description'] );
+			}
+
+			if ( isset( $request[ $setting_id ]['config_id'] ) ) {
+				$plugin_settings->set( $setting_id . '.config_id', $request[ $setting_id ]['config_id'] );
+			}
+		}
+	}
+
+	public static function add_knit_pay_sub_tabs( $tab_settings ) {
+		$payment_method         = 'knit_pay';
+		$payment_config_options = [];
+		$payment_configurations = Plugin::get_config_select_options( $payment_method );
+		foreach ( $payment_configurations as $key => $payment_config ) {
+			$payment_config_options[] = [
+				'value' => $key,
+				'label' => $payment_config,
+			];
+		}
+
+		$tab_settings['sub_tabs'][] = [
+			'title'  => __( 'Knit Pay', 'knit-pay-lang' ),
+			'order'  => 11,
+			'id'     => 'payment-knit-pay',
+			'fields' => [
+				[
+					'field_type' => 'ALERT',
+					'content'    => __( 'WP Travel Engine has done major changes in payment processing in v 4.3.0 and the new version of WP Travel Engine Payments is currently not stable and still under development. Knit Pay is now compatible with the new version of WP Travel Engine and will not work with the old version of WP Travel Engine.', 'knit-pay-lang' ),
+				],
+				[
+					'divider'    => true,
+					'field_type' => 'ALERT',
+					'content'    => __( 'This version is currently under Beta and you might face some issues while using it. Kindly report the issue to Knit Pay if you find any bugs.', 'knit-pay-lang' ),
+				],
+				[
+					'divider'    => true,
+					'label'      => __( 'Title', 'knit-pay-lang' ),
+					'help'       => __( 'This controls the title which the user sees during checkout.', 'knit-pay-lang' ),
+					'field_type' => 'TEXT',
+					'name'       => 'knit_pay_settings.title',
+				],
+				[
+					'divider'    => true,
+					'label'      => __( 'Description', 'knit-pay-lang' ),
+					'help'       => sprintf(
+						/* translators: %s: payment method title */
+						__( 'Give the customer instructions for paying via %s.', 'knit-pay-lang' ),
+						__( 'Knit Pay', 'knit-pay-lang' )
+					),
+					'field_type' => 'TEXT',
+					'name'       => 'knit_pay_settings.description',
+				],
+				[
+					'divider'     => true,
+					'label'       => __( 'Icon URL', 'knit-pay-lang' ),
+					'description' => __( 'This controls the icon which the user sees during checkout.', 'knit-pay-lang' ),
+					'field_type'  => 'TEXT',
+					'name'        => 'knit_pay_settings.icon',
+				],
+				[
+					'divider'     => true,
+					'label'       => __( 'Payment Description', 'knit-pay-lang' ),
+					'description' => sprintf( __( 'Available tags: %s', 'knit-pay-lang' ), sprintf( '<code>%s</code>', '{booking_id}' ) ),
+					'field_type'  => 'TEXT',
+					'name'        => 'knit_pay_settings.payment_description',
+				],
+				[
+					'divider'     => true,
+					'label'       => __( 'Configuration', 'knit-pay-lang' ),
+					'description' => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.',
+					'field_type'  => 'SELECT',
+					'name'        => 'knit_pay_settings.config_id',
+					'options'     => $payment_config_options,
+				],
+			],
+		];
+
+		return $tab_settings;
+	}
+
 	public static function settings_get_global_tabs( $global_tabs ) {
 		$global_tabs['wpte-payment']['sub_tabs']['knit_pay'] = [
-			'label'        => __( 'Knit Pay Settings', 'wp-travel-engine' ),
+			'label'        => __( 'Knit Pay Settings', 'knit-pay-lang' ),
 			'content_path' => __DIR__ . '/admin_setting.php',
 			'current'      => true,
 		];
@@ -117,7 +274,6 @@ class Extension extends AbstractPluginIntegration {
 	 */
 	public static function redirect_url( $url, $payment ) {
 		$booking_id     = (int) $payment->get_source_id();
-		$return_url     = wp_travel_engine_get_booking_confirm_url();
 		$wte_payment_id = $payment->get_meta( 'wte_payment_id' );
 
 		switch ( $payment->get_status() ) {

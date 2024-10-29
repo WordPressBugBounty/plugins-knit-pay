@@ -131,7 +131,7 @@ class Integration extends AbstractGatewayIntegration {
 			'title'    => __( 'Default Customer Phone', 'knit-pay-lang' ),
 			'type'     => 'text',
 			'classes'  => [ 'regular-text', 'code' ],
-			'tooltip'  => __( 'Knit Pay will pass this phone number to Cashfree if the customer\'s phone number is not available.', 'knit-pay-lang' ),
+			'tooltip'  => __( 'Knit Pay will pass this phone number to Cashfree if the customer\'s phone number is unavailable. If not entered, Knit Pay - Cashfree will use 9999999999 as a default phone number.', 'knit-pay-lang' ),
 		];
 
 		// TODO Implement Webhook URL, cashfree API v4, requirement webhook URL implementation.

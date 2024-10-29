@@ -37,6 +37,9 @@ defined( 'ABSPATH' ) || exit();
 class Gateway extends Learndash_Payment_Gateway {
 	private const GATEWAY_NAME = 'knit_pay';
 
+	private $learndash_transaction_class;
+	private $learndash_product_class;
+
 	/**
 	 * @var string
 	 */

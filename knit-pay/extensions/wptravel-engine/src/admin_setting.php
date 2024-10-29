@@ -99,7 +99,7 @@ knit_pay_wte_render_setting_field(
 ?>
 
 <div class="wpte-field wpte-select wpte-floated">
-	<label class="wpte-field-label"><?php esc_html_e( 'Configuration', 'wp-travel-engine' ); ?></label>
+	<label class="wpte-field-label"><?php esc_html_e( 'Configuration', 'knit-pay-lang' ); ?></label>
 	<select name="wp_travel_engine_settings[knit_pay_settings][config_id]">
 			<?php
 			// TODO: remove hardcoded

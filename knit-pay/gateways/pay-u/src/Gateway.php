@@ -196,7 +196,7 @@ class Gateway extends Core_Gateway {
 		$udf2 = KNITPAY_VERSION;
 		$udf3 = $payment->get_source();
 		$udf4 = home_url( '/' );
-		$udf5 = defined( 'KNIT_PAY_PRO' ) ? 'Knit Pay Pro' : 'Knit Pay';
+		$udf5 = defined( 'KNIT_PAY_PRO' ) ? '' : 'Knit Pay';
 
 		if ( 'woocommerce' === $udf3 ) {
 			$udf3 = 'wc';

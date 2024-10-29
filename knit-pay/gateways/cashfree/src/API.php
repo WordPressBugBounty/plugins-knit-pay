@@ -6,7 +6,7 @@ use Exception;
 
 class API {
 
-	const CONNECTION_TIMEOUT = 10;
+	const CONNECTION_TIMEOUT = 15;
 
 	private $api_endpoint;
 

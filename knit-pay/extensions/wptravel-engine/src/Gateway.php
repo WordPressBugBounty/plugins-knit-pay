@@ -49,16 +49,6 @@ class Gateway {
 		$wp_travel_engine_settings = get_option( 'wp_travel_engine_settings' );
 		$this->knit_pay_settings   = isset( $wp_travel_engine_settings['knit_pay_settings'] ) ? $wp_travel_engine_settings['knit_pay_settings'] : [];
 
-		// Update the configuration format if old configuration exists
-		// @since 6.67.4.0
-		// TODO Remove this block after 2024
-		if ( ! empty( $wp_travel_engine_settings['knit_pay_config_id'] ) ) {
-			$this->knit_pay_settings['config_id']           = $wp_travel_engine_settings['knit_pay_config_id'];
-			$wp_travel_engine_settings['knit_pay_settings'] = $this->knit_pay_settings;
-			unset( $wp_travel_engine_settings['knit_pay_config_id'] );
-			update_option( 'wp_travel_engine_settings', $wp_travel_engine_settings );
-		}
-
 		add_action( 'wte_payment_gateway_knit_pay', [ $this, 'process' ], 12, 3 );
 	}
 

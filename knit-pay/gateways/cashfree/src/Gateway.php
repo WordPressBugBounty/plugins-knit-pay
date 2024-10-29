@@ -113,6 +113,9 @@ class Gateway extends Core_Gateway {
 		if ( ! empty( $billing_address ) && ! empty( $billing_address->get_phone() ) ) {
 			$customer_phone = $this->format_phone_number( $billing_address->get_phone() );
 		}
+		if ( empty( $customer_phone ) ) {
+			$customer_phone = '9999999999'; // Cashfree support suggested to pass 9999999999 as default phone.
+		}
 
 		$order_id       = $payment->get_transaction_id();
 		$order_amount   = $payment->get_total_amount()->number_format( null, '.', '' );

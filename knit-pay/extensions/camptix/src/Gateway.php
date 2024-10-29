@@ -421,7 +421,7 @@ class Gateway extends CampTix_Payment_Method {
 			wp_redirect( $payment->get_pay_redirect_url() );
 			exit;
 		} catch ( \Exception $e ) {
-		    $camptix->error( esc_html($e->getMessage()) );
+			$camptix->error( esc_html( $e->getMessage() ) );
 			
 			return $camptix->payment_result(
 				$payment_token,
