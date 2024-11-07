@@ -30,7 +30,6 @@ class Integration extends AbstractGatewayIntegration {
 	 */
 	public function __construct( $args = [] ) {
 		$this->omnipay_gateway = Omnipay::create( $args['omnipay_class'] );
-		$this->args            = $args;
 
 		$args = wp_parse_args(
 			$args,
@@ -53,6 +52,8 @@ class Integration extends AbstractGatewayIntegration {
 				'webhook_log',
 			];
 		}
+
+		$this->args = $args;
 
 		parent::__construct( $args );
 	}
@@ -171,8 +172,9 @@ class Integration extends AbstractGatewayIntegration {
 	 * @return Gateway
 	 */
 	public function get_gateway( $config_id ) {
-		$config  = $this->get_config( $config_id );
-		$gateway = new Gateway();
+		$this->args['config_id'] = $config_id;
+		$config                  = $this->get_config( $config_id );
+		$gateway                 = new Gateway();
 
 		$this->omnipay_gateway->initialize( $config );
 

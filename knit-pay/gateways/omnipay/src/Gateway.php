@@ -202,6 +202,10 @@ class Gateway extends Core_Gateway {
 			'email'                => $customer->get_email(),
 		];
 
+		if ( isset( $this->args['accept_notification'] ) ) {
+			$transaction_data['notifyUrl'] = \rest_url( '/knit-pay/' . $this->args['id'] . '/v1/notification/' . \wp_hash( home_url( '/' ) ) . '/' . $this->args['config_id'] . '/' );
+		}
+
 		// Replacements.
 		$replacements = [
 			'{customer_phone}'      => $billing_address->get_phone(),
