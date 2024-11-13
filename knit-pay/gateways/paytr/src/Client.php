@@ -43,6 +43,11 @@ class Client {
 		$result   = wp_remote_retrieve_body( $response );
 
 		$result = json_decode( $result );
+
+		if ( JSON_ERROR_NONE !== json_last_error() ) {
+			echo wp_remote_retrieve_body( $response );
+		}
+
 		if ( isset( $result->status ) && 'failed' === $result->status ) {
 			throw new Exception( $result->reason );
 		}

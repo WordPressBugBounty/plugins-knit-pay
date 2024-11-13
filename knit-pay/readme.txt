@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, SSLCommerz, payment, woocommerce
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 8.89.1.1
+Stable tag: 8.89.1.2
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Instamojo, Razorpay, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
@@ -240,8 +240,8 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Tutor LMS (supported with WooCommerce and Easy Digital Download)
 
 = Membership and Content Protection =
-* Paid Memberships Pro | PMPro
 * ProfilePress
+* [Paid Memberships Pro | PMPro](http://go.thearrangers.xyz/paidmembershipspro)
 * MemberPress (Try it for free with **Knit Pay - Pro**)
 * Restrict Content Pro (Try it for free with **Knit Pay - Pro**)
 * Indeed Ultimate Membership Pro by azzaroco (Try it for free with **Knit Pay - Pro**)

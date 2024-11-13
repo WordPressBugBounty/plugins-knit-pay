@@ -244,8 +244,8 @@ class Integration extends AbstractGatewayIntegration {
 		// Don't cache.
 		Core_Util::no_cache();
 
-		// This filter removes data that is potentially harmful for your application. It is used to strip tags and remove or encode unwanted characters.
-		$_GET = filter_var_array( $_GET, FILTER_SANITIZE_STRING );
+		// Sanitize GET parameters.
+		$_GET = array_map( 'sanitize_text_field', $_GET );
 
 		// Find Gateway Configuration for provided payment type id.
 		$query = new WP_Query(
