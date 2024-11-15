@@ -4,7 +4,7 @@
  * Plugin URI: https://www.knitpay.org
  * Description: Seamlessly integrates 500+ payment gateways, including Instamojo, Razorpay, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
  *
- * Version: 8.89.1.2
+ * Version: 8.90.0.0
  * Requires at least: 6.4
  * Requires PHP: 8.0
  *
@@ -77,6 +77,9 @@ add_filter(
 add_filter(
 	'pronamic_pay_plugin_integrations',
 	function( $integrations ) {
+		// BookingPress.
+		$integrations[] = new \KnitPay\Extensions\BookingPress\Extension();
+
 		// Camptix.
 		$integrations[] = new \KnitPay\Extensions\Camptix\Extension();
 

@@ -56,7 +56,7 @@ class RestController {
 	public function rest_api_init() {
 		if ( isset( $this->args['static_return_url'] ) ) {
 			\register_rest_route(
-				'/knit-pay/' . $this->integration->get_id() . '/v1',
+				'knit-pay/' . $this->integration->get_id() . '/v1',
 				'/return/(?P<hash>\w+)/(?P<config_id>\w+)/',
 				[
 					'args'                => [],
@@ -75,7 +75,7 @@ class RestController {
 
 		if ( isset( $this->args['accept_notification'] ) ) {
 			\register_rest_route(
-				'/knit-pay/' . $this->integration->get_id() . '/v1',
+				'knit-pay/' . $this->integration->get_id() . '/v1',
 				'/notification/(?P<hash>\w+)/(?P<config_id>\w+)/',
 				[
 					'args'                => [],

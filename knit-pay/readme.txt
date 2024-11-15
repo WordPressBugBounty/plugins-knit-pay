@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, SSLCommerz, payment, woocommerce
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 8.89.1.2
+Stable tag: 8.90.0.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Instamojo, Razorpay, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
@@ -287,6 +287,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * FooEvents for WooCommerce (Free to use with WooCommerce.)
 
 = Appointment Booking / Booking Calendar (Contact us for this premium addon.) =
+* BookingPress (Free)
 * Bookly Pro (Try it for free with **Knit Pay - Pro**)
 * LatePoint (Try it for free with **Knit Pay - Pro**)
 * Salon Booking System
@@ -296,7 +297,6 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Start Booking
 * Webba Booking
 * Team Booking
-* BookingPress
 * Booknetic
 * Amelia
 
