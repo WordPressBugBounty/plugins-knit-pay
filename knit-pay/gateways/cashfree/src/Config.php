@@ -9,7 +9,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  * Copyright: 2020-2024 Knit Pay
  *
  * @author  Knit Pay
- * @version 1.0.0
+ * @version 8.91.0.0
  * @since   2.4
  */
 class Config extends GatewayConfig {
@@ -20,4 +20,21 @@ class Config extends GatewayConfig {
 	public $secret_key;
 
 	public $default_customer_phone;
+
+	public $config_id;
+
+	// OAuth.
+	public $merchant_id;
+
+	public $access_token;
+
+	public $refresh_token;
+
+	public $token_expires_at;
+
+	public $is_connected;
+
+	public $connected_at;
+
+	public $expires_at;
 }

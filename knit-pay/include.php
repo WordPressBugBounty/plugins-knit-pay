@@ -24,9 +24,10 @@ spl_autoload_register( 'knit_pay_dependency_autoload' );
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 // Gateway.
+require_once KNITPAY_DIR . 'gateways/IntegrationModeTrait.php';
 require_once KNITPAY_DIR . 'gateways/Gateway.php';
 require_once KNITPAY_DIR . 'gateways/Integration.php';
-require_once KNITPAY_DIR . 'gateways/IntegrationModeTrait.php';
+require_once KNITPAY_DIR . 'gateways/IntegrationOAuthClient.php';
 require_once KNITPAY_DIR . 'gateways/PaymentMethods.php';
 
 // Add Knit Pay Deactivate Confirmation Box on Plugin Page

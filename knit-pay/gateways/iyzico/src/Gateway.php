@@ -20,6 +20,11 @@ class Gateway extends Core_Gateway {
 	const NAME = 'iyzico';
 
 	/**
+	 * @var \Iyzipay\Options
+	 */
+	private $options;
+
+	/**
 	 * Initializes an Iyzico gateway
 	 *
 	 * @param Config $config

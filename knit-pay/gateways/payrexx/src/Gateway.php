@@ -15,6 +15,16 @@ use Exception;
  */
 class Gateway extends Core_Gateway {
 	/**
+	 * @var Config
+	 */
+	private $config;
+
+	/**
+	 * @var \Payrexx\Payrexx
+	 */
+	private $payrexx;
+
+	/**
 	 * Initializes an Payrexx gateway
 	 *
 	 * @param Config $config

@@ -4,13 +4,13 @@ Tags: instamojo, razorpay, SSLCommerz, payment, woocommerce
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 8.90.0.0
+Stable tag: 8.91.0.1
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Instamojo, Razorpay, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
 
 == Description ==
-One plugin to integrate various Payment Gateways like Instamojo, Razorpay, CCAvenue, Cashfree, Easebuzz, etc with WordPress plugins like WooCommerce, Easy Digital Downloads, Paid Memberships Pro, Learn Press, Give, Ninja Forms, Tourmaster, Memberpress, Bookly, etc.
+One plugin to integrate various Payment Gateways like Instamojo, Razorpay, Cashfree, CCAvenue, Easebuzz, etc with WordPress plugins like WooCommerce, Easy Digital Downloads, Paid Memberships Pro, Learn Press, Give, Ninja Forms, Tourmaster, Memberpress, Bookly, etc.
 
 = Key Benefits =
 
@@ -32,6 +32,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 = Payment Gateways in Knit Pay =
 * Instamojo
 * RazorPay
+* Cashfree (API v3 2022-09-01)
 * SSLCommerz - Bangladesh
 * Stripe Connect (For Indian Businesses) (Use Stripe at just 0.75% additional fee.)
 * GoUrl - Crypto Currency Gateway
@@ -39,7 +40,6 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 = Indian Payment Gateways (Try for free with **Knit Pay - Pro and Knit Pay - UPI**) =
 * PayU India/PayUBiz
 * PayUMoney/Citrus Pay
-* Cashfree (API v3 2022-09-01)
 * EaseBuzz
 * Open Money/BankOpen
 * CCAvenue
@@ -78,6 +78,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Stripe
 * CyberSource
 * Payrexx
+* SumUp
 * toyyibPay
 * DPO Group | DPO Pay (The Direct Pay Online Group)
 * Midtrans
@@ -145,7 +146,6 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Payscape
 * Buckaroo
 * MultiSafepay
-* SumUp
 * Ceca
 * HiPay
 * Venmo

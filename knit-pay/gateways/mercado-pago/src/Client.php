@@ -14,6 +14,7 @@ use Exception;
  */
 class Client {
 	private $access_token;
+	private $endpoint_url;
 
 	public function __construct( Config $config ) {
 		$this->access_token = $config->access_token;

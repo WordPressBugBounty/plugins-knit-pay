@@ -4,7 +4,7 @@
  * Plugin URI: https://www.knitpay.org
  * Description: Seamlessly integrates 500+ payment gateways, including Instamojo, Razorpay, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
  *
- * Version: 8.90.0.0
+ * Version: 8.91.0.1
  * Requires at least: 6.4
  * Requires PHP: 8.0
  *
@@ -151,9 +151,10 @@ add_filter(
 	'pronamic_pay_gateways',
 	function( $gateways ) {
 		// Cashfree.
-		if ( defined( 'KNIT_PAY_CASHFREE' ) ) {
-			$gateways[] = new \KnitPay\Gateways\Cashfree\Integration();
+		if ( !defined( 'KNIT_PAY_CASHFREE' ) ) {
+			define( 'KNIT_PAY_CASHFREE', true );
 		}
+		$gateways[] = new \KnitPay\Gateways\Cashfree\Integration();
 
 		// Instamojo.
 		$gateways[] = new \KnitPay\Gateways\Instamojo\Integration();
@@ -223,12 +224,6 @@ function knitpay_admin_no_config_error() {
 		$message            = sprintf( __( '<b>Knit Pay:</b> No Payment Gateway configuration was found. %1$s and visit %2$s to add the first configuration before start using Knit Pay.', 'knit-pay-lang' ), $supported_gateways, $link );
 
 		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message );
-
-		// Cashfree Offer.
-		/*
-		$supported_gateways = '<br><a href="https://www.knitpay.org/cashfree-signup-form/?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=payu-halt">' . __( 'Click here to know more.', 'knit-pay-lang' ) . '</a>';
-		$message            = sprintf( __( '<b>Knit Pay: Special Offer at Cashfree:</b> Charges waived off on transactions worth upto Rs 1 lakh (First month). No TDR for the first month of onboarding for new signup. (limited period offer) %1$s', 'knit-pay-lang' ), $supported_gateways, $link );
-		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message );*/
 	}
 }
 add_action( 'admin_notices', 'knitpay_admin_no_config_error' );

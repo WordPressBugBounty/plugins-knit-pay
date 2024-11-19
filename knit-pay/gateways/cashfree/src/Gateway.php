@@ -6,13 +6,14 @@ use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Exception;
+use Pronamic\WordPress\Pay\Payments\FailureReason;
 
 /**
  * Title: Cashfree Gateway
  * Copyright: 2020-2024 Knit Pay
  *
  * @author Knit Pay
- * @version 1.0.0
+ * @version 8.91.0.0
  * @since 2.4
  */
 class Gateway extends Core_Gateway {
@@ -42,7 +43,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		$this->config = $config;
-		$this->api    = new API( $config->api_id, $config->secret_key, $this->test_mode );
+		$this->api    = new API( $config, $this->test_mode );
 
 		$this->register_payment_methods();
 	}
@@ -53,16 +54,6 @@ class Gateway extends Core_Gateway {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::DEBIT_CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::NET_BANKING ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::UPI ) );
-	}
-
-	/**
-	 * Get available payment methods.
-	 *
-	 * @return array<int, string>
-	 * @see Core_Gateway::get_available_payment_methods()
-	 */
-	public function get_available_payment_methods() {
-		return $this->get_supported_payment_methods();
 	}
 
 	/**
@@ -214,6 +205,13 @@ class Gateway extends Core_Gateway {
 		
 		$current_payment = reset( $order_payments );
 		$payment->add_note( '<strong>Cashfree Current Payment:</strong><br><pre>' . print_r( $current_payment, true ) . '</pre><br>' );
+
+		if ( isset( $current_payment->error_details ) ) {
+			$failure_reason = new FailureReason();
+			$failure_reason->set_message( $current_payment->error_details->error_description_raw );
+			$failure_reason->set_code( $current_payment->error_details->error_code_raw );
+			$payment->set_failure_reason( $failure_reason );
+		}
 
 		if ( isset( $current_payment->payment_status ) ) {
 			$payment_status = $current_payment->payment_status;

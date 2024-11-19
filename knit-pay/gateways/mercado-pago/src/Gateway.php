@@ -16,7 +16,7 @@ use Exception;
  */
 class Gateway extends Core_Gateway {
 	private $config;
-	private $api;
+	private $api_client;
 
 	/**
 	 * Initializes an Mercado Pago gateway
