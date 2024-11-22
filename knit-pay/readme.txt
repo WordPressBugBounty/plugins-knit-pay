@@ -4,13 +4,13 @@ Tags: instamojo, razorpay, SSLCommerz, payment, woocommerce
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 8.91.0.1
+Stable tag: 8.91.1.0
 License: GPL-3.0-or-later
 
-Seamlessly integrates 500+ payment gateways, including Instamojo, Razorpay, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
+Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, Razorpay, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
 
 == Description ==
-One plugin to integrate various Payment Gateways like Instamojo, Razorpay, Cashfree, CCAvenue, Easebuzz, etc with WordPress plugins like WooCommerce, Easy Digital Downloads, Paid Memberships Pro, Learn Press, Give, Ninja Forms, Tourmaster, Memberpress, Bookly, etc.
+One plugin to integrate various Payment Gateways like Cashfree, Instamojo, Razorpay, CCAvenue, Easebuzz, etc with WordPress plugins like WooCommerce, Easy Digital Downloads, Paid Memberships Pro, Learn Press, Give, Ninja Forms, Tourmaster, Memberpress, Bookly, etc.
 
 = Key Benefits =
 

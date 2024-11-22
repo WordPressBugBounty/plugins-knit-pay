@@ -168,7 +168,8 @@ class Integration extends AbstractGatewayIntegration {
 				'title'    => 'Alternatives',
 				'callback' => function () {
 					echo sprintf(
-						'You can choose an alternate free payment gateway, like %s and %s. You can also use Knit Pay Pro for using PayU with Knit Pay.',
+						'You can choose an alternate free payment gateway, like %s, %s and %s. You can also use Knit Pay Pro for using PayU with Knit Pay.',
+						'<a target="_blank" href="http://go.thearrangers.xyz/cashfree?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=payu-pro" role="button">Cashfree</a>',
 						'<a target="_blank" href="http://go.thearrangers.xyz/instamojo?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=payu-pro" role="button">Instamojo</a>',
 						'<a target="_blank" href="http://go.thearrangers.xyz/razorpay?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=payu-pro" role="button">Razorpay</a>'
 					);

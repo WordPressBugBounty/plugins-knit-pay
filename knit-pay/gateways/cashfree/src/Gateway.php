@@ -135,6 +135,7 @@ class Gateway extends Core_Gateway {
 				'payment_methods' => PaymentMethods::transform( $payment->get_payment_method() ),
 			],
 			'order_note'       => $order_note,
+			// TODO: order_tags.
 		];
 	}
 	

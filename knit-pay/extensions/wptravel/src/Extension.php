@@ -19,6 +19,8 @@ use WP_Travel;
  * @since   8.78.0.0
  */
 class Extension extends AbstractPluginIntegration {
+	private $wt_settings;
+
 	/**
 	 * Slug
 	 *
@@ -66,6 +68,9 @@ class Extension extends AbstractPluginIntegration {
 				
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 		
+		// Add Knit Pay Gateway to WP Travel when On-Page Booking is Enabled.
+		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
+
 		// Could not find option to show error message in WP Travel Checkout page, this is workaround.
 		add_action( 'wp_travel_before_checkout_page_wrap', [ $this, 'show_error_on_checkout_page' ] );
 
@@ -168,6 +173,11 @@ class Extension extends AbstractPluginIntegration {
 			),
 			'before'
 		);
+	}
+
+	public function wp_enqueue_scripts() {
+		// Enqueue the custom JavaScript file
+		wp_enqueue_script( 'knit-pay-wptravel-custom-payment-gateway', plugins_url( '', __FILE__ ) . '/front/custom-payment-gateway.js', [ 'jquery' ], KNITPAY_VERSION, true );
 	}
 
 	public function wp_travel_payment_gateway_lists( $gateway ) {

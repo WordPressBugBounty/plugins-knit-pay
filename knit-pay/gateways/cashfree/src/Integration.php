@@ -27,7 +27,7 @@ class Integration extends IntegrationOAuthClient {
 			$args,
 			[
 				'id'            => 'cashfree',
-				'name'          => 'Cashfree (Beta)',
+				'name'          => 'Cashfree',
 				'url'           => 'http://go.thearrangers.xyz/cashfree?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=',
 				'product_url'   => 'http://go.thearrangers.xyz/cashfree?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=product-url',
 				'dashboard_url' => 'http://go.thearrangers.xyz/cashfree?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=dashboard-url',
