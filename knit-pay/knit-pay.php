@@ -4,7 +4,7 @@
  * Plugin URI: https://www.knitpay.org
  * Description: Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, Razorpay, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
  *
- * Version: 8.91.1.0
+ * Version: 8.91.2.0
  * Requires at least: 6.4
  * Requires PHP: 8.0
  *
@@ -151,7 +151,7 @@ add_filter(
 	'pronamic_pay_gateways',
 	function( $gateways ) {
 		// Cashfree.
-		if ( !defined( 'KNIT_PAY_CASHFREE' ) ) {
+		if ( ! defined( 'KNIT_PAY_CASHFREE' ) ) {
 			define( 'KNIT_PAY_CASHFREE', true );
 		}
 		$gateways[] = new \KnitPay\Gateways\Cashfree\Integration();
@@ -244,20 +244,25 @@ add_filter( "network_admin_plugin_action_links_$plugin", 'knitpay_filter_plugin_
 add_filter( "plugin_action_links_$plugin", 'knitpay_filter_plugin_action_links' );
 
 
-// Added to fix Razorpay double ? issue in callback URL
+// Fix URLs with multiple question marks by converting extras to ampersands.
 function knitpay_fix_get_url() {
+	if ( $_SERVER['REQUEST_METHOD'] !== 'GET' ) {
+		return;
+	}
+
 	$current_url = home_url( $_SERVER['REQUEST_URI'] );
-	if ( 1 < substr_count( $current_url, '?' ) ) {
-		$current_url = str_replace_n( '?', '&', $current_url, 2 );
-		$current_url = str_replace( '&amp;', '&', $current_url ); // CBK Gateway sending &amp; instead of &
-		wp_redirect( $current_url );
+
+	// Only process if there are multiple question marks
+	if ( substr_count( $current_url, '?' ) > 1 ) {
+		// Split URL at first question mark
+		list($base, $query) = explode( '?', $current_url, 2 );
+
+		// Replace remaining question marks with ampersands and fix encoded ampersands
+		$query = str_replace( [ '?', '&amp;' ], [ '&', '&' ], $query );
+
+		wp_safe_redirect( $base . '?' . $query );
 		exit;
 	}
-}
-// https://vijayasankarn.wordpress.com/2017/01/03/string-replace-nth-occurrence-php/
-function str_replace_n( $search, $replace, $subject, $occurrence ) {
-	$search = preg_quote( $search );
-	return preg_replace( "/^((?:(?:.*?$search){" . --$occurrence . "}.*?))$search/", "$1$replace", $subject );
 }
 add_action( 'init', 'knitpay_fix_get_url', 0 );
 

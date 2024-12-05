@@ -176,8 +176,12 @@ class Extension extends AbstractPluginIntegration {
 	}
 
 	public function wp_enqueue_scripts() {
-		// Enqueue the custom JavaScript file
-		wp_enqueue_script( 'knit-pay-wptravel-custom-payment-gateway', plugins_url( '', __FILE__ ) . '/front/custom-payment-gateway.js', [ 'jquery' ], KNITPAY_VERSION, true );
+		// Add JavaScript in frontend for Knit Pay Gateway when On-Page Booking is Enabled.
+		$wt_settings = wptravel_get_settings();
+		if ( $wt_settings['enable_one_page_booking'] ) {
+			// Enqueue the custom JavaScript file
+			wp_enqueue_script( 'knit-pay-wptravel-custom-payment-gateway', plugins_url( '', __FILE__ ) . '/front/custom-payment-gateway.js', [ 'jquery' ], KNITPAY_VERSION, true );
+		}
 	}
 
 	public function wp_travel_payment_gateway_lists( $gateway ) {

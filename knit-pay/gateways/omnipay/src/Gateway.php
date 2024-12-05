@@ -25,7 +25,7 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Initializes an Omnipay gateway
 	 *
-	 * @param Config $config
+	 * @param array $config
 	 *            Config.
 	 */
 	public function init( AbstractGateway $omnipay_gateway, $config, $args ) {
@@ -79,11 +79,11 @@ class Gateway extends Core_Gateway {
 		} else {
 			$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
 			if ( ! is_null( $response->getMessage() ) ) {
-				 throw new \Exception( $response->getMessage() );
+				 throw new Exception( $response->getMessage() );
 			} elseif ( isset( $response->getData()->message ) ) {
-				throw new \Exception( $response->getData()->message );
+				throw new Exception( $response->getData()->message );
 			} else {
-				throw new \Exception( 'Something went wrong.' );
+				throw new Exception( 'Something went wrong.' );
 			}
 		}
 
@@ -149,24 +149,24 @@ class Gateway extends Core_Gateway {
 
 		// @see https://omnipay.thephpleague.com/api/cards/
 		$credit_card = [
-			'firstName',
-			'lastName',
-			'number',
-			'expiryMonth',
-			'expiryYear',
-			'startMonth',
-			'startYear',
-			'cvv',
-			'issueNumber',
-			'type',
-			'billingAddress1' => $billing_address->get_line_1(),
-			'billingAddress2' => $billing_address->get_line_2(),
-			'billingCity'     => $billing_address->get_city(),
-			'billingPostcode' => $billing_address->get_postal_code(),
-			'billingState'    => $billing_address->get_region(),
-			'billingCountry'  => $billing_address->get_country_code(),
-			'billingPhone'    => $billing_address->get_phone(),
-			'company'         => $billing_address->get_company_name(),
+			'firstName'       => '',
+			'lastName'        => '',
+			'number'          => '',
+			'expiryMonth'     => '',
+			'expiryYear'      => '',
+			'startMonth'      => '',
+			'startYear'       => '',
+			'cvv'             => '',
+			'issueNumber'     => '',
+			'type'            => '',
+			'billingAddress1' => '',
+			'billingAddress2' => '',
+			'billingCity'     => '',
+			'billingPostcode' => '',
+			'billingState'    => '',
+			'billingCountry'  => '',
+			'billingPhone'    => '',
+			'company'         => '',
 			'email'           => $customer->get_email(),
 		];
 
@@ -175,7 +175,18 @@ class Gateway extends Core_Gateway {
 			$credit_card['lastName']  = $customer->get_name()->get_last_name();
 		}
 
-		if ( ! empty( $delivery_address ) ) {
+		if ( ! is_null( $billing_address ) ) {
+			$credit_card['billingAddress1'] = $billing_address->get_line_1();
+			$credit_card['billingAddress2'] = $billing_address->get_line_2();
+			$credit_card['billingCity']     = $billing_address->get_city();
+			$credit_card['billingPostcode'] = $billing_address->get_postal_code();
+			$credit_card['billingState']    = $billing_address->get_region();
+			$credit_card['billingCountry']  = $billing_address->get_country_code();
+			$credit_card['billingPhone']    = $billing_address->get_phone();
+			$credit_card['company']         = $billing_address->get_company_name();
+		}
+
+		if ( ! is_null( $delivery_address ) ) {
 			$credit_card['shippingAddress1'] = $delivery_address->get_line_1();
 			$credit_card['shippingAddress2'] = $delivery_address->get_line_2();
 			$credit_card['shippingCity']     = $delivery_address->get_city();
@@ -203,12 +214,12 @@ class Gateway extends Core_Gateway {
 		];
 
 		if ( isset( $this->args['accept_notification'] ) ) {
-			$transaction_data['notifyUrl'] = \rest_url( '/knit-pay/' . $this->args['id'] . '/v1/notification/' . \wp_hash( home_url( '/' ) ) . '/' . $this->args['config_id'] . '/' );
+			$transaction_data['notifyUrl'] = rest_url( '/knit-pay/' . $this->args['id'] . '/v1/notification/' . wp_hash( home_url( '/' ) ) . '/' . $this->args['config_id'] . '/' );
 		}
 
 		// Replacements.
 		$replacements = [
-			'{customer_phone}'      => $billing_address->get_phone(),
+			'{customer_phone}'      => $billing_address ? $billing_address->get_phone() : '',
 			'{customer_email}'      => $customer->get_email(),
 			'{customer_name}'       => substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 20 ),
 			'{customer_language}'   => $customer->get_language(),
