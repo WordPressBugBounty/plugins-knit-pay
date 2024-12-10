@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, SSLCommerz, payment, woocommerce
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 8.91.2.0
+Stable tag: 8.93.0.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, Razorpay, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
@@ -48,7 +48,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Zaakpay/Mobikwik
 * Sodexo/Zeta
 * EBS
-* HDFC Payment Gateway
+* HDFC Smart Gateway
 * ICICI Eazypay Payment Gateway
 * SBIePay/SBI Bank Payment Gateway
 * Get ePay
@@ -208,10 +208,10 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Ninja Forms
 * Contact Form 7 | Redirection for Contact Form 7
 * Gravity Forms
-* WPForms (Try it for free with **Knit Pay - Pro**)
+* WPForms Pro(Try it for free with **Knit Pay - Pro**)
 * Formidable Forms (Try it for free with **Knit Pay - Pro**)
+* Fluent Forms Pro (Try it for free with **Knit Pay - Pro**)
 * WS Form (Contact us for this premium addon.)
-* Fluent Forms (Contact us for this premium addon.)
 * Everest Forms (Contact us for this premium addon.)
 * Caldera Forms (Contact us for this premium addon.)
 * RegistrationMagic (Contact us for this premium addon.)

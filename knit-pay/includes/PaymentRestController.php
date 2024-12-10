@@ -13,7 +13,7 @@ use WP_REST_Server;
 use Pronamic\WordPress\Http\Facades\Http;
 
 class PaymentRestController extends WP_REST_Controller {
-    protected $rest_base = 'knit-pay';
+	protected $rest_base = 'knit-pay';
 
 	// Here initialize our namespace and resource name.
 	public function __construct() {
@@ -65,7 +65,7 @@ class PaymentRestController extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Current request.
 	 */
 	public function get_item_permissions_check( $request ) {
-	    $post_type = get_post_type_object( $this->post_type );
+		$post_type = get_post_type_object( $this->post_type );
 
 		if ( ! current_user_can( $post_type->cap->edit_posts ) ) {
 			return new WP_Error(
@@ -200,9 +200,9 @@ class PaymentRestController extends WP_REST_Controller {
 					'type'     => 'integer',
 					'readonly' => true,
 				],
-			    'config_id' => [
-			        'type' => 'integer',
-			    ],
+				'config_id'        => [
+					'type' => 'integer',
+				],
 				'total_amount'     => [
 					'type'       => 'object',
 					'required'   => true,
@@ -268,9 +268,9 @@ class PaymentRestController extends WP_REST_Controller {
 				'customer'         => [
 					'type' => 'object',
 				],
-			    'billing_address' => [
-			        'type' => 'object'
-			    ],
+				'billing_address'  => [
+					'type' => 'object',
+				],
 				'mode'             => [
 					'type'     => 'string',
 					'readonly' => true,
@@ -319,31 +319,44 @@ class PaymentRestController extends WP_REST_Controller {
 }
 
 // Payment redirect URL.
-add_filter( 'pronamic_payment_redirect_url', function ($url, $payment){
-    // Set Redirect URL if defined in REST API.
-    if ( $payment->get_meta( 'rest_redirect_url' ) ) {
-        return $payment->get_meta( 'rest_redirect_url' );
-    }
-    
-    return $url;
-}, 10, 2 );
+add_filter(
+	'pronamic_payment_redirect_url',
+	function ( $url, $payment ) {
+		// Set Redirect URL if defined in REST API.
+		if ( $payment->get_meta( 'rest_redirect_url' ) ) {
+			return $payment->get_meta( 'rest_redirect_url' );
+		}
 
-add_action( 'pronamic_payment_status_update', function ( $payment, $can_redirect, $old_status, $new_status ) {        
-    // Trigger webhook.
-    if ( $payment->get_meta( 'rest_notify_url' ) ) {
-        $notify_url = $payment->get_meta( 'rest_notify_url' );
-        $response   = Http::post(
-            $notify_url,
-            [
-                'body' => wp_json_encode( $payment->get_json() ),
-            ]
-        );
-    }
-}, 10, 4 );
+		return $url;
+	},
+	10,
+	2
+);
+
+add_action(
+	'pronamic_payment_status_update',
+	function ( $payment, $can_redirect, $old_status, $new_status ) {
+		// Trigger webhook.
+		if ( $payment->get_meta( 'rest_notify_url' ) ) {
+			$notify_url = $payment->get_meta( 'rest_notify_url' );
+			$response   = Http::post(
+				$notify_url,
+				[
+					'body' => wp_json_encode( $payment->get_json() ),
+				]
+			);
+		}
+	},
+	10,
+	4
+);
 
 // Payment Rest API.
-add_action( 'rest_api_init', function () {
-    // @link https://developer.wordpress.org/rest-api/extending-the-rest-api/controller-classes/#controllers
-    $payment_rest_controller = new PaymentRestController();
-    $payment_rest_controller->register_routes();
-});
+add_action(
+	'rest_api_init',
+	function () {
+		// @link https://developer.wordpress.org/rest-api/extending-the-rest-api/controller-classes/#controllers
+		$payment_rest_controller = new PaymentRestController();
+		$payment_rest_controller->register_routes();
+	}
+);
