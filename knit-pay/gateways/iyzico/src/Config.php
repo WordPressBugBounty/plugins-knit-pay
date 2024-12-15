@@ -13,6 +13,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  * @since   5.6.0
  */
 class Config extends GatewayConfig {
+	public $mode;
 	public $api_key;
 	public $secret_key;
 }

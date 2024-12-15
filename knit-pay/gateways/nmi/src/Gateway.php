@@ -16,6 +16,12 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
  * @since 8.83.0.0
  */
 class Gateway extends Core_Gateway {
+	/** @var Config */
+	private $config;
+	
+	/** @var API */
+	private $api;
+
 	/**
 	 * Initializes an NMI gateway
 	 *

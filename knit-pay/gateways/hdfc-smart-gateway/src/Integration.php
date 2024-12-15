@@ -109,7 +109,7 @@ class Integration extends AbstractGatewayIntegration {
 	 */
 	public function get_gateway( $config_id ) {
 		$config  = $this->get_config( $config_id );
-		$gateway = new Gateway( $config );
+		$gateway = new Gateway();
 		
 		$mode = Gateway::MODE_LIVE;
 		if ( Gateway::MODE_TEST === $config->mode ) {
@@ -124,11 +124,7 @@ class Integration extends AbstractGatewayIntegration {
 	}
 
 	public static function handle_returns() {
-		if ( ! ( filter_has_var( INPUT_POST, 'order_id' ) ) ) {
-			return;
-		}
-
-		if ( 'kp-hdfc-smart-gateway-return' !== end( explode( '/', $_SERVER['REQUEST_URI'] ) ) ) {
+		if ( ! ( filter_has_var( INPUT_POST, 'kp_hdfc_smart_gateway_payment_id' ) ) ) {
 			return;
 		}
 

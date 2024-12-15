@@ -220,6 +220,7 @@ class Gateway extends Learndash_Payment_Gateway {
 	}
 
 	protected function is_test_mode(): bool {
+		return false;
 	}
 
 	public static function get_label(): string {

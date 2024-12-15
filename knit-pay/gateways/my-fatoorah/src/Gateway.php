@@ -19,6 +19,11 @@ require_once 'lib/API.php';
  * @since 6.63.0.0
  */
 class Gateway extends Core_Gateway {
+	/** @var bool */
+	private $test_mode;
+
+	/** @var API */
+	private $api;
 
 	/**
 	 * Constructs and initializes an MyFatoorah gateway
@@ -26,9 +31,7 @@ class Gateway extends Core_Gateway {
 	 * @param Config $config
 	 *            Config.
 	 */
-	public function __construct( Config $config ) {
-		parent::__construct( $config );
-
+	public function init( Config $config ) {
 		$this->set_method( self::METHOD_HTTP_REDIRECT );
 
 		// Supported features.
@@ -53,14 +56,10 @@ class Gateway extends Core_Gateway {
 	 *            Payment.
 	 */
 	public function start( Payment $payment ) {
-		try {
-			$payment_data = $this->api->send_payment( $this->get_payment_data( $payment ) );
+		$payment_data = $this->api->send_payment( $this->get_payment_data( $payment ) );
 
-			$payment->set_transaction_id( $payment_data->InvoiceId );
-			$payment->set_action_url( $payment_data->InvoiceURL );
-		} catch ( Exception $e ) {
-			$this->error = new WP_Error( 'my_fatoorah_error', $e->getMessage() );
-		}
+		$payment->set_transaction_id( $payment_data->InvoiceId );
+		$payment->set_action_url( $payment_data->InvoiceURL );
 	}
 
 	/**

@@ -19,6 +19,8 @@ use WP_Post;
  * @since 4.0.0
  */
 class Gateway extends Core_Gateway {
+	/** @var Config */
+	private $config;
 
 	/**
 	 * Constructs and initializes an Multi gateway
@@ -27,7 +29,7 @@ class Gateway extends Core_Gateway {
 	 *            Config.
 	 */
 	public function __construct( Config $config ) {
-		parent::__construct( $config );
+		parent::__construct();
 		
 		$this->config = $config;
 

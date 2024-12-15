@@ -14,6 +14,9 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  * @since 6.67.0.0
  */
 class Gateway extends Core_Gateway {    
+	/** @var API */
+	private $api;
+
 	/**
 	 * Initializes an Slydepay gateway
 	 *

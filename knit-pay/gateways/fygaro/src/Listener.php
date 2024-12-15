@@ -12,8 +12,6 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  * @since 5.0.0
  */
 class Listener {
-
-
 	public static function listen() {
 		if ( ! filter_has_var( INPUT_GET, 'kp_fygaro_webhook' ) ) {
 			return;

@@ -188,6 +188,10 @@ class Integration extends AbstractGatewayIntegration {
 	 * @return Gateway
 	 */
 	public function get_gateway( $config_id ) {
-		return new Gateway( $this->get_config( $config_id ) );
+		$config  = $this->get_config( $config_id );
+		$gateway = new Gateway();
+		$gateway->init( $config );
+
+		return $gateway;
 	}
 }

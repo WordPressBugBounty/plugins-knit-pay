@@ -54,11 +54,13 @@ class Gateway extends Core_Gateway {
 	 *            Payment.
 	 */
 	public function start( Payment $payment ) {
-		$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
+		$transaction_id = $payment->key . '_' . $payment->get_source_id();
+		$transaction_id = substr( trim( html_entity_decode( $transaction_id, ENT_QUOTES, 'UTF-8' ) ), -21 );
+		$payment->set_transaction_id( $transaction_id );
 
-			$payment_link = $this->api_client->create_session( $this->get_payment_data( $payment ) );
+		$payment_link = $this->api_client->create_session( $this->get_payment_data( $payment ) );
 
-			$payment->set_action_url( $payment_link );
+		$payment->set_action_url( $payment_link );
 	}
 
 	/**
@@ -92,6 +94,9 @@ class Gateway extends Core_Gateway {
 			$cust_id = 'CUST_' . $payment->get_id();
 		}
 
+		$return_url = $payment->get_return_url();
+		$return_url = add_query_arg( 'kp_hdfc_smart_gateway_payment_id', $payment->get_id(), $return_url );
+
 		$data = [
 			'order_id'               => $payment->get_transaction_id(),
 			'amount'                 => $total_amount->number_format( null, '.', '' ),
@@ -100,7 +105,7 @@ class Gateway extends Core_Gateway {
 			'customer_phone'         => $phone,
 			'payment_page_client_id' => $this->config->client_id,
 			'action'                 => 'paymentPage',
-			'return_url'             => home_url( '/kp-hdfc-smart-gateway-return' ),
+			'return_url'             => $return_url,
 			'description'            => $payment->get_description(),
 			'first_name'             => $first_name,
 			'last_name'              => $last_name,

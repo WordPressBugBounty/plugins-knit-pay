@@ -72,6 +72,18 @@ class Integration extends AbstractGatewayIntegration {
 	 * @return Gateway
 	 */
 	public function get_gateway( $config_id ) {
-		return new Gateway( $this->get_config( $config_id ) );
+		$config  = $this->get_config( $config_id );
+		$gateway = new Gateway();
+		
+		$mode = Gateway::MODE_LIVE;
+		if ( Gateway::MODE_TEST === $config->mode ) {
+			$mode = Gateway::MODE_TEST;
+		}
+		
+		$this->set_mode( $mode );
+		$gateway->set_mode( $mode );
+		$gateway->init( $config );
+		
+		return $gateway;
 	}
 }

@@ -34,9 +34,9 @@ class Gateway extends Core_Gateway {
 	 * @param GatewayConfig $config
 	 *            Config.
 	 */
-	public function __construct( GatewayConfig $config = null ) {
+	public function __construct() {
 
-		parent::__construct( $config );
+		parent::__construct();
 
 		$this->payment_page_title       = 'Redirecting…';
 		$this->payment_page_description = '<p>You will be automatically redirected to the online payment environment.</p><p>Please click the button below if you are not automatically redirected.</p>';

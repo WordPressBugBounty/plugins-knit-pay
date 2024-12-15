@@ -190,7 +190,7 @@ class Gateway extends Core_Gateway {
 			throw new Exception( 'Access Code missmatch' );
 		}
 
-		$decrypted_response = $this->api->decrypt( $post_enc_response, $this->config->working_key );
+		$decrypted_response = $this->api->decrypt( $post_enc_response );
 		parse_str( $decrypted_response, $response_array );
 
 		if ( $response_array['order_id'] !== $post_order_no ) {
@@ -222,7 +222,7 @@ class Gateway extends Core_Gateway {
 
 		$ccavenue_order_id = strtr( $this->config->order_id_format, $replacements );
 		$ccavenue_order_id = str_replace( ' ', '_', $ccavenue_order_id );
-		$ccavenue_order_id = substr( trim( ( html_entity_decode( $ccavenue_order_id, ENT_QUOTES, 'UTF-8' ) ) ), 0, 29 );
+		$ccavenue_order_id = substr( trim( html_entity_decode( $ccavenue_order_id, ENT_QUOTES, 'UTF-8' ) ), 0, 29 );
 
 		return $ccavenue_order_id;
 	}

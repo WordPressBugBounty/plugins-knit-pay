@@ -5,6 +5,8 @@ namespace KnitPay\Gateways\NMI;
 use Pronamic\WordPress\Pay\Payments\Payment;
 
 class API {
+	/** @var string */
+	private $login;
 
 	// Initial Setting Functions
 	function setLogin( $security_key ) {

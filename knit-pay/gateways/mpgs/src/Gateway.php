@@ -17,6 +17,12 @@ use Exception;
  * @since 8.81.0.0
  */
 class Gateway extends Core_Gateway {
+	/** @var Config */
+	private $config;
+	
+	/** @var API */
+	private $api;
+
 	/**
 	 * Initializes an MPGS gateway
 	 *

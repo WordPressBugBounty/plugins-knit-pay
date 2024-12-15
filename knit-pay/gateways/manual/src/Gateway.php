@@ -15,6 +15,8 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  * @since 4.5.0
  */
 class Gateway extends Core_Gateway {
+	/** @var Config */
+	private $config;
 
 	/**
 	 * Constructs and initializes an Manual Gateway
@@ -23,7 +25,7 @@ class Gateway extends Core_Gateway {
 	 *            Config.
 	 */
 	public function __construct( Config $config ) {
-		parent::__construct( $config );
+		parent::__construct();
 		
 		$this->config = $config;
 

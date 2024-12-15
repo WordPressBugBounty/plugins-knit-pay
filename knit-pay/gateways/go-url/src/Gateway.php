@@ -17,6 +17,9 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  * @since 8.76.0.0
  */
 class Gateway extends Core_Gateway {
+	/** @var Config */
+	private $config;
+
 	/**
 	 * Initializes an GoUrl gateway
 	 *

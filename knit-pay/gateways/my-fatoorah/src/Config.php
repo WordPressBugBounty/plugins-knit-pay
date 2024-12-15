@@ -13,5 +13,6 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  * @since   6.63.0.0
  */
 class Config extends GatewayConfig {
+	public $mode;
 	public $api_token_key;
 }
