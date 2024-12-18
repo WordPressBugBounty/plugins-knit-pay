@@ -16,7 +16,22 @@ class KnitPaySIGateway extends SI_Offsite_Processors {
 	protected static $title_setting;
 	protected static $payment_description_setting;
 	protected static $config_id_setting;
-	
+
+	protected function __construct() {
+		parent::__construct();
+
+		$default_title = 'Pay Online';
+		if ( 'knit_pay' !== static::$knit_pay_payment_method ) {
+			$default_title = $default_title . ' - ' . static::$knit_pay_payment_method;
+		}
+
+		static::$title_setting               = get_option( self::get_setting_prefix() . 'title', $default_title );
+		static::$payment_description_setting = get_option( self::get_setting_prefix() . 'payment_description', 'Invoice {invoice_id}' );
+		static::$config_id_setting           = get_option( self::get_setting_prefix() . 'config_id', get_option( 'pronamic_pay_config_id' ) );
+
+		add_action( 'si_checkout_action_' . SI_Checkouts::PAYMENT_PAGE, [ $this, 'send_offsite' ], 0, 1 );
+	}
+
 	public static function payment_init( $si_payment_method_name, $kp_payment_method ) {
 		static::$si_payment_method_name  = $si_payment_method_name;
 		static::$knit_pay_payment_method = $kp_payment_method;
@@ -41,7 +56,12 @@ class KnitPaySIGateway extends SI_Offsite_Processors {
 	}
 
 	public static function register() {
-		self::add_payment_processor( static::$class_alias, static::$si_payment_method_name );
+		if ( is_admin() ) {
+			self::add_payment_processor( static::$class_alias, static::$si_payment_method_name );
+		} else {
+			$title_setting = get_option( self::get_setting_prefix() . 'title', 'Pay Online' );
+			self::add_payment_processor( static::$class_alias, $title_setting );
+		}
 	}
 
 	public static function public_name() {
@@ -55,21 +75,6 @@ class KnitPaySIGateway extends SI_Offsite_Processors {
 			'cc'    => [],
 		];
 		return $option;
-	}
-
-	protected function __construct() {
-		parent::__construct();
-		
-		$default_title = 'Pay Online';
-		if ( 'knit_pay' !== static::$knit_pay_payment_method ) {
-			$default_title = $default_title . ' - ' . static::$knit_pay_payment_method;
-		}
-		
-		static::$title_setting               = get_option( self::get_setting_prefix() . 'title', $default_title );
-		static::$payment_description_setting = get_option( self::get_setting_prefix() . 'payment_description', 'Invoice {invoice_id}' );
-		static::$config_id_setting           = get_option( self::get_setting_prefix() . 'config_id', get_option( 'pronamic_pay_config_id' ) );
-
-		add_action( 'si_checkout_action_' . SI_Checkouts::PAYMENT_PAGE, [ $this, 'send_offsite' ], 0, 1 );
 	}
 
 	/**
@@ -149,6 +154,12 @@ class KnitPaySIGateway extends SI_Offsite_Processors {
 
 		$invoice        = $checkout->get_invoice();
 		$payment_amount = ( si_has_invoice_deposit( $invoice->get_id() ) ) ? $invoice->get_deposit() : $invoice->get_balance();
+
+		// Refer SI_Stripe_Checkout for service fee implementation.
+		if ( class_exists( 'SI_Service_Fee' ) ) {
+			$service_fee_percent = SI_Service_Fee::get_service_fee( $this );
+			$payment_amount      = $payment_amount + ( $payment_amount * $service_fee_percent / 100 );
+		}
 
 		/**
 		 * Build payment.

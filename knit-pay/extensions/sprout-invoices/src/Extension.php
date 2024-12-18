@@ -206,6 +206,7 @@ class Extension extends AbstractPluginIntegration {
 
 			$class_name = sanitize_text_field( $match[0] );
 
+			// TODO: This is a temporary solution to load the class. Implement a better solution.
 			eval(
 				"class $class_name extends KnitPaySIGateway {
     	            protected static \$si_payment_method_name;

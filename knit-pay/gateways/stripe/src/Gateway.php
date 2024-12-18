@@ -41,10 +41,12 @@ class Gateway extends Core_Gateway {
 	}
 
 	private function register_payment_methods() {
+		// ref: https://docs.stripe.com/api/payment_methods/object
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::ALIPAY ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::IDEAL ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::BANCONTACT ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::BLIK ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::GIROPAY ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::EPS ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::SOFORT ) );

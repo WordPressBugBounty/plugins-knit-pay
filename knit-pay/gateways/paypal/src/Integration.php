@@ -1,23 +1,23 @@
 <?php
 
-namespace KnitPay\Gateways\GetEpay;
+namespace KnitPay\Gateways\Paypal;
 
 use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
 
 /**
- * Title: Get ePay Integration
+ * Title: Paypal Integration
  * Copyright: 2020-2024 Knit Pay
  *
  * @author  Knit Pay
- * @version 8.87.0.0
- * @since   8.87.0.0
+ * @version 8.94.0.0
+ * @since   8.94.0.0
  */
 class Integration extends AbstractGatewayIntegration {
 	use IntegrationModeTrait;
 
 	/**
-	 * Construct Get ePay integration.
+	 * Construct Paypal integration.
 	 *
 	 * @param array $args Arguments.
 	 */
@@ -25,9 +25,9 @@ class Integration extends AbstractGatewayIntegration {
 		$args = wp_parse_args(
 			$args,
 			[
-				'id'       => 'get-epay',
-				'name'     => 'Get ePay',
-				'provider' => 'get-epay',
+				'id'       => 'paypal',
+				'name'     => 'Paypal',
+				'provider' => 'paypal',
 			]
 		);
 
@@ -45,44 +45,22 @@ class Integration extends AbstractGatewayIntegration {
 		// Get mode from Integration mode trait.
 		$fields[] = $this->get_mode_settings_fields();
 
-		// MID.
+		// Client ID.
 		$fields[] = [
 			'section'  => 'general',
-			'meta_key' => '_pronamic_gateway_get_epay_mid',
-			'title'    => __( 'MID', 'knit-pay-lang' ),
+			'meta_key' => '_pronamic_gateway_paypal_client_id',
+			'title'    => __( 'Client ID', 'knit-pay-lang' ),
 			'type'     => 'text',
 			'classes'  => [ 'regular-text', 'code' ],
-			'required' => true,
 		];
 
-		// Terminal ID.
+		// Client Secret.
 		$fields[] = [
 			'section'  => 'general',
-			'meta_key' => '_pronamic_gateway_get_epay_terminal_id',
-			'title'    => __( 'Terminal ID', 'knit-pay-lang' ),
+			'meta_key' => '_pronamic_gateway_paypal_client_secret',
+			'title'    => __( 'Client Secret', 'knit-pay-lang' ),
 			'type'     => 'text',
 			'classes'  => [ 'regular-text', 'code' ],
-			'required' => true,
-		];
-
-		// Key.
-		$fields[] = [
-			'section'  => 'general',
-			'meta_key' => '_pronamic_gateway_get_epay_key',
-			'title'    => __( 'Key', 'knit-pay-lang' ),
-			'type'     => 'text',
-			'classes'  => [ 'regular-text', 'code' ],
-			'required' => true,
-		];
-
-		// IV.
-		$fields[] = [
-			'section'  => 'general',
-			'meta_key' => '_pronamic_gateway_get_epay_iv',
-			'title'    => __( 'IV', 'knit-pay-lang' ),
-			'type'     => 'text',
-			'classes'  => [ 'regular-text', 'code' ],
-			'required' => true,
 		];
 
 		// Return fields.
@@ -92,11 +70,10 @@ class Integration extends AbstractGatewayIntegration {
 	public function get_config( $post_id ) {
 		$config = new Config();
 
-		$config->mid         = $this->get_meta( $post_id, 'get_epay_mid' );
-		$config->terminal_id = $this->get_meta( $post_id, 'get_epay_terminal_id' );
-		$config->key         = $this->get_meta( $post_id, 'get_epay_key' );
-		$config->iv          = $this->get_meta( $post_id, 'get_epay_iv' );
-		$config->mode        = $this->get_meta( $post_id, 'mode' );
+		$config->client_id     = $this->get_meta( $post_id, 'paypal_client_id' );
+		$config->client_secret = $this->get_meta( $post_id, 'paypal_client_secret' );
+
+		$config->mode = $this->get_meta( $post_id, 'mode' );
 
 		return $config;
 	}

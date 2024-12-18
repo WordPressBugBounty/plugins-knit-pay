@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, SSLCommerz, payment, woocommerce
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 8.93.1.0
+Stable tag: 8.94.0.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, Razorpay, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
@@ -59,6 +59,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * HDFC SmartHub Vyapar
 
 = non-Indian Payment Gateways (Try for free with **Knit Pay - Pro**) =
+* Paypal
 * Elavon Converge
 * Slydepay
 * MyFatoorah
@@ -121,7 +122,6 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * iPay
 * iPay88
 * Spreedly
-* Paypal
 * 2checkout/Verifone
 * PayU
 * Braintree
