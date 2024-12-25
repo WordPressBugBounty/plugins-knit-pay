@@ -9,7 +9,8 @@ function generateQR(user_input) {
 		height: 250,
 		colorDark: '#000000',
 		colorLight: '#ffffff',
-		correctLevel: QRCode.CorrectLevel.H
+		correctLevel: QRCode.CorrectLevel.H,
+		quietZone: 10,
 	});
 	paymentClicked();
 

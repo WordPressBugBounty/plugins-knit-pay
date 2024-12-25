@@ -104,7 +104,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 				'user_details'      => [
 					'name'   => 'user_details',
 					'type'   => 'section',
-					'title'  => __( 'User details (Optional)', 'knit-pay-lang' ),
+					'title'  => __( 'User details (Required for some payment gateways)', 'knit-pay-lang' ),
 					'footer' => __( '<div>' . $this->get_formatted_mail_tags() . '</div>', 'knit-pay-lang' ),
 					'class'  => '',
 					'fields' => [
@@ -286,7 +286,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 		} catch ( \Exception $e ) {
 			$response = [
 				'type'          => 'error',
-				'error_message' => Plugin::get_default_error_message() . ' ' . $e->getMessage(),
+				'error_message' => $e->getMessage(),
 			];
 		}
 		

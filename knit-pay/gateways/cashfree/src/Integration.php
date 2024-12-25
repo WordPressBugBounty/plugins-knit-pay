@@ -50,6 +50,11 @@ class Integration extends IntegrationOAuthClient {
 		}
 	}
 	
+	public function allowed_redirect_hosts( $hosts ) {
+		$hosts[] = 'auth.cashfree.com';
+		return $hosts;
+	}
+
 	/**
 	 * Gateway configuration display value.
 	 *
@@ -76,9 +81,6 @@ class Integration extends IntegrationOAuthClient {
                      role="button"><strong>Sign Up Now</strong></a>'
 			),
 		];
-		
-		// Get mode from Integration mode trait.
-		$fields[] = $this->get_mode_settings_fields();
 
 		// Client ID.
 		$fields[] = [
@@ -144,6 +146,12 @@ class Integration extends IntegrationOAuthClient {
 			$config->mode = Gateway::MODE_LIVE;
 		}
 
+		if ( 'cashfree-pro' !== $this->get_id() && $this->is_auth_basic_connected( $config ) && defined( 'KNIT_PAY_PRO' ) ) {
+			update_post_meta( $post_id, '_pronamic_gateway_id', 'cashfree-pro' );
+			$this->set_id( 'cashfree-pro' );
+			$config = $this->get_child_config( $post_id );
+		}
+
 		return $config;
 	}
 
@@ -183,7 +191,7 @@ class Integration extends IntegrationOAuthClient {
 	}
 
 	protected function is_auth_basic_enabled( $config ) {
-		return $this->is_auth_basic_connected( $config );
+		return 'cashfree-pro' === $this->get_id();
 	}
 
 	private function is_auth_basic_connected( $config ) {

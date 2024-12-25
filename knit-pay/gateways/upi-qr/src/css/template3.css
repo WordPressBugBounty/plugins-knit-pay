@@ -32,7 +32,7 @@ body {
 }
 
 .qr-code {
-	padding: 2rem 2.25rem 2rem 2.25rem;
+	padding: 1.4rem 1.6rem 1.4rem 1.6rem;
 	width: -moz-available;
 	width: -webkit-fill-available;
 	width: fill-available;

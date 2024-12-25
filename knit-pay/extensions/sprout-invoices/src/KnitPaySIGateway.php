@@ -65,7 +65,7 @@ class KnitPaySIGateway extends SI_Offsite_Processors {
 	}
 
 	public static function public_name() {
-		return __( 'Knit Pay', 'sprout-invoices' );
+		return __( 'Knit Pay', 'knit-pay-lang' );
 	}
 
 	public static function checkout_options() {
@@ -102,7 +102,7 @@ class KnitPaySIGateway extends SI_Offsite_Processors {
 					],
 				],
 				self::get_setting_prefix() . 'config_id' => [
-					'label'  => __( 'Configuration', 'sprout-invoices' ),
+					'label'  => __( 'Configuration', 'knit-pay-lang' ),
 					'option' => [
 						'type'        => 'select',
 						'options'     => Plugin::get_config_select_options( $payment_method ),

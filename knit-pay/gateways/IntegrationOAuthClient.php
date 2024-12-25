@@ -7,8 +7,6 @@ use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
-use Pronamic\WordPress\Pay\Payments\PaymentStatus;
-use WP_Query;
 use KnitPay\Utils;
 
 /**
@@ -19,7 +17,7 @@ use KnitPay\Utils;
  * @version 1.0.0
  * @since   1.7.0
  */
-class IntegrationOAuthClient extends AbstractGatewayIntegration {
+abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	use IntegrationModeTrait;
 
 	private $config;
@@ -40,10 +38,9 @@ class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		$this->can_create_connection = true;
 	}
 
-	public function allowed_redirect_hosts( $hosts ) {
-		$hosts[] = 'auth.cashfree.com';
-		return $hosts;
-	}
+	abstract public function get_child_config( $post_id );
+	abstract public function clear_child_config( $post_id );
+	abstract public function allowed_redirect_hosts($hosts);
 
 	/**
 	 * Setup.
@@ -96,10 +93,11 @@ class IntegrationOAuthClient extends AbstractGatewayIntegration {
 
 		$mode = isset( $_GET['gateway_mode'] ) ? sanitize_text_field( $_GET['gateway_mode'] ) : null;
 
+		// Get mode from Integration mode trait.
+		$fields[] = $this->get_mode_settings_fields();
+
 		if ( $this->is_auth_basic_enabled( $this->config ) ) {
-			// Get mode from Integration mode trait.
-			$fields[] = $this->get_mode_settings_fields();
-			$fields   = $this->get_basic_auth_fields( $fields );
+			$fields = $this->get_basic_auth_fields( $fields );
 		} elseif ( ! $this->is_oauth_connected( $this->config ) ) {
 			$fields = $this->get_oauth_connect_button_fields( $fields );
 		} else {
@@ -108,6 +106,10 @@ class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		
 		$fields = $this->show_remaining_setting_fields( $fields );
 		
+		return $fields;
+	}
+
+	protected function get_basic_auth_fields( $fields ) {
 		return $fields;
 	}
 
@@ -132,7 +134,7 @@ class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		$config = $this->get_config( $config_id );
 
 		$gateway = new Gateway();
-		
+
 		$mode = Gateway::MODE_LIVE;
 		if ( Gateway::MODE_TEST === $config->mode ) {
 			$mode = Gateway::MODE_TEST;

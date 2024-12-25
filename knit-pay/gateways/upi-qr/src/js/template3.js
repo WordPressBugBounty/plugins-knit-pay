@@ -8,6 +8,7 @@ function generateQR(user_input) {
 		colorDark: '#000000',
 		colorLight: '#ffffff',
 		correctLevel: QRCode.CorrectLevel.H,
+		quietZone: 10,
 		//logo: jQuery("#image_dir_path").val() + "upi.svg",
 		//logoHeight: '32',
 	});

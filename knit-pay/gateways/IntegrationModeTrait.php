@@ -17,8 +17,8 @@ trait IntegrationModeTrait {
 	public function get_mode_settings_fields( $modes = [] ) {
 		if ( empty( $modes ) ) {
 			$modes = [
-				Gateway::MODE_LIVE => 'Live',
-				Gateway::MODE_TEST => 'Test',
+				Gateway::MODE_LIVE => __('Live/Production', 'knit-pay-lang'),
+				Gateway::MODE_TEST => __('Test/Development/Sandbox', 'knit-pay-lang'),
 			];
 		}
 
