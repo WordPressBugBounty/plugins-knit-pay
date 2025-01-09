@@ -42,7 +42,7 @@ class Gateway {
 	protected function get_title() {
 		$name = $this->setting['title'];
 		if ( empty( $name ) ) {
-			$name = __( 'Pay Online', 'knit-pay-lang' );
+			$name = __( 'Online Payment', 'knit-pay-lang' );
 		}
 		return $name;
 	}

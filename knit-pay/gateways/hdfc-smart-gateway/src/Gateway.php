@@ -56,6 +56,7 @@ class Gateway extends Core_Gateway {
 	public function start( Payment $payment ) {
 		$transaction_id = $payment->key . '_' . $payment->get_source_id();
 		$transaction_id = substr( trim( html_entity_decode( $transaction_id, ENT_QUOTES, 'UTF-8' ) ), -21 );
+		$transaction_id = ltrim($transaction_id, 'pay_');
 		$payment->set_transaction_id( $transaction_id );
 
 		$payment_link = $this->api_client->create_session( $this->get_payment_data( $payment ) );
@@ -125,7 +126,6 @@ class Gateway extends Core_Gateway {
 
 			$note = '<strong>HDFC Transaction Status:</strong><br><pre>' . print_r( $transaction_status, true ) . '</pre>';
 			$payment->add_note( $note );
-
 		if ( isset( $transaction_status->status ) ) {
 			$payment->set_status( Statuses::transform( $transaction_status->status ) );
 		}

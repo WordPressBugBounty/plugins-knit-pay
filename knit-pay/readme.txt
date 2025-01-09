@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, SSLCommerz, payment, woocommerce
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 8.94.1.0
+Stable tag: 8.95.0.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, Razorpay, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
@@ -37,7 +37,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Stripe Connect (For Indian Businesses) (Use Stripe at just 0.75% additional fee.)
 * GoUrl - Crypto Currency Gateway
 
-= Indian Payment Gateways (Try for free with **Knit Pay - Pro and Knit Pay - UPI**) =
+= Indian Payment Gateways (Try for free with Knit Pay - Pro and Knit Pay - UPI) =
 * Cashfree Pro (Integration using API Keys)
 * PayU India/PayUBiz
 * PayUMoney/Citrus Pay
@@ -59,7 +59,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * BharatPe QR
 * HDFC SmartHub Vyapar
 
-= non-Indian Payment Gateways (Try for free with **Knit Pay - Pro**) =
+= non-Indian Payment Gateways (Try for free with Knit Pay - Pro) =
 * Paypal
 * Elavon Converge
 * Slydepay
@@ -88,6 +88,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * AmeriaBank | Ameria | ArCa
 * RedSys
 * Worldline Saferpay
+* SabPaisa
 
 = Indian Payment Gateways (Contact us for this premium addon.) =
 * JioPay
@@ -103,7 +104,6 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Google Pay
 * PayAbbhi
 * Sezzle
-* SabPaisa
 * TrakNPay
 * Pay10
 * Pine Labs
@@ -168,6 +168,11 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * HitPay
 * Adyen
 * Clover
+* ePayco
+* Yoco
+* Wompi
+* IfthenPay
+* Vipps
 * and many more...
 
 = Crypto Currencies Payment Gateways (Contact us for this premium addon.) =
@@ -232,13 +237,13 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * LearnPress
 * LearnDash
 * LifterLMS
-* MasterStudy LMS (Contact us for this premium addon.)
 * WPLMS Learning Management System (Contact us for this premium addon.)
 * CoursePress Pro (Contact us for this premium addon.)
 * Ultimate Learning Pro (Contact us for this premium addon.)
 * Sensei LMS (Contact us for this premium addon.)
 * Quiz Maker Pro (Contact us for this premium addon.)
 * Tutor LMS (supported with WooCommerce and Easy Digital Download)
+* MasterStudy LMS (supported with WooCommerce)
 
 = Membership and Content Protection =
 * ProfilePress

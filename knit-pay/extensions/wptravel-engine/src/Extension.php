@@ -88,7 +88,7 @@ class Extension extends AbstractPluginIntegration {
 	public function add_payment_gateways_old( $gateways_list ) {
 		$wp_travel_engine_settings = get_option( 'wp_travel_engine_settings' );
 		$knit_pay_settings         = isset( $wp_travel_engine_settings['knit_pay_settings'] ) ? $wp_travel_engine_settings['knit_pay_settings'] : [];
-		$title                     = ! empty( $knit_pay_settings['title'] ) ? $knit_pay_settings['title'] : __( 'Pay Online', 'knit-pay-lang' );
+		$title                     = ! empty( $knit_pay_settings['title'] ) ? $knit_pay_settings['title'] : __( 'Online Payment', 'knit-pay-lang' );
 		$icon                      = ! empty( $knit_pay_settings['icon'] ) ? $knit_pay_settings['icon'] : '';
 
 		$gateways_list['knit_pay'] = [
@@ -116,7 +116,7 @@ class Extension extends AbstractPluginIntegration {
 			'icon'   => esc_attr( KNITPAY_URL ) . '/images/knit-pay/icon.svg',
 		];
 		$settings['knit_pay_settings']  = [
-			'title'               => (string) $plugin_settings->get( 'knit_pay_settings.title', __( 'Pay Online', 'knit-pay-lang' ) ),
+			'title'               => (string) $plugin_settings->get( 'knit_pay_settings.title', __( 'Online Payment', 'knit-pay-lang' ) ),
 			'description'         => (string) $plugin_settings->get( 'knit_pay_settings.description', '' ),
 			'icon'                => (string) $plugin_settings->get( 'knit_pay_settings.icon', '' ),
 			'payment_description' => (string) $plugin_settings->get( 'knit_pay_settings.payment_description', __( 'WTE Booking {booking_id}', 'knit-pay-lang' ) ),

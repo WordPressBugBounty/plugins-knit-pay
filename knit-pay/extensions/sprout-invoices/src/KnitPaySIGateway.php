@@ -20,7 +20,7 @@ class KnitPaySIGateway extends SI_Offsite_Processors {
 	protected function __construct() {
 		parent::__construct();
 
-		$default_title = 'Pay Online';
+		$default_title = 'Online Payment';
 		if ( 'knit_pay' !== static::$knit_pay_payment_method ) {
 			$default_title = $default_title . ' - ' . static::$knit_pay_payment_method;
 		}
@@ -59,7 +59,7 @@ class KnitPaySIGateway extends SI_Offsite_Processors {
 		if ( is_admin() ) {
 			self::add_payment_processor( static::$class_alias, static::$si_payment_method_name );
 		} else {
-			$title_setting = get_option( self::get_setting_prefix() . 'title', 'Pay Online' );
+			$title_setting = get_option( self::get_setting_prefix() . 'title', 'Online Payment' );
 			self::add_payment_processor( static::$class_alias, $title_setting );
 		}
 	}

@@ -65,6 +65,19 @@ class API {
 		throw new Exception( 'Something went wrong. Please try again later.' );
 	}
 
+	public function create_refund( $data ) {
+		$endpoint = $this->get_endpoint() . 'orders/' . $data['order_id'] . '/refunds';
+		unset( $data['order_id'] );
+
+		$result = $this->create_connection( $endpoint, 'POST', $data );
+
+		if ( isset( $result->cf_refund_id ) ) {
+			return $result->cf_refund_id;
+		}
+
+		throw new Exception( 'Something went wrong. Please try again later.' );
+	}
+
 	private function create_connection( $url, $method, $data = [], $allow_retry = true ) {
 		$args = [
 			'method'  => $method,

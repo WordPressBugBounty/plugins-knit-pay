@@ -88,7 +88,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Knit
 					'type'      => 'text',
 					'label'     => esc_html__( 'Title', 'knit-pay-lang' ),
 					'help_text' => esc_html__( 'This controls the title which the user sees during checkout.', 'knit-pay-lang' ),
-					'value'     => ( ( isset( $this->setting_option_values['title'] ) ) && ( ! empty( $this->setting_option_values['title'] ) ) ) ? $this->setting_option_values['title'] : 'Pay Online',
+					'value'     => ( ( isset( $this->setting_option_values['title'] ) ) && ( ! empty( $this->setting_option_values['title'] ) ) ) ? $this->setting_option_values['title'] : 'Online Payment',
 					'class'     => 'regular-text',
 				],
 				'config_id'           => [

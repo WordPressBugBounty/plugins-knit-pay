@@ -83,7 +83,7 @@ class Extension extends AbstractPluginIntegration {
 		if ( 'payment_knit_pay' === $type ) {
 			$arr = [
 				'ihc_knit_pay_status'            => 1,
-				'ihc_knit_pay_label'             => 'Pay Online',
+				'ihc_knit_pay_label'             => 'Online Payment',
 				'ihc_knit_pay_select_order'      => 1,
 				'ihc_knit_pay_short_description' => '',
 			];

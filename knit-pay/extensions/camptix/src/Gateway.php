@@ -34,7 +34,7 @@ class Gateway extends CampTix_Payment_Method {
 	 * The following variables are required for every payment method.
 	 */
 	public $id                   = '';
-	public $name                 = 'Pay Online';
+	public $name                 = 'Online Payment';
 	public $description          = ' ';
 	public $supported_currencies = [
 		'AED',

@@ -283,7 +283,7 @@ class Gateway extends Learndash_Payment_Gateway {
 		$this->settings = LearnDash_Settings_Section::get_section_settings_all( __NAMESPACE__ . '\KnitPaySettingsSection' );
 
 		if ( empty( $this->settings['title'] ) ) {
-			$this->settings['title'] = __( 'Pay Online', 'knit-pay-lang' );
+			$this->settings['title'] = __( 'Online Payment', 'knit-pay-lang' );
 		}
 	}
 

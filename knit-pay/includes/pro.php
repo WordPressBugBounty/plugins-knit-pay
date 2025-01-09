@@ -20,7 +20,7 @@ class KnitPayPro {
 		self::check_knit_pay_pro_setup();
 
 		$invalid_gateways = [ 'instamojo', 'cashfree', 'manual', 'go-url', 'razorpay', 'sslcommerz', 'upi-qr', 'test' ];
-		$invalid_sources  = [ 'woocommerce', 'camptix', 'charitable', 'contact-form-7', 'easydigitaldownloads', 'give', 'gravityformsideal', 'knit-pay-payment-button', 'knit-pay-payment-link', 'learndash', 'learnpress', 'lifterlms', 'ninja-forms', 'paid-memberships-pro', 'profile-press', 'tourmaster', 'wp-travel', 'wp-travel-engine', 'bookingpress' ];
+		$invalid_sources  = [ 'woocommerce', 'camptix', 'charitable', 'contact-form-7', 'easydigitaldownloads', 'give', 'gravityformsideal', 'knit-pay-payment-button', 'knit-pay-payment-link', 'learndash', 'learnpress', 'lifterlms', 'ninja-forms', 'paid-memberships-pro', 'profile-press', 'tourmaster', 'wp-travel', 'wp-travel-engine', 'bookingpress', 'test' ];
 
 		$gateway = \get_post_meta( $payment->get_config_id(), '_pronamic_gateway_id', true );
 		$source  = $payment->get_source();

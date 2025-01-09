@@ -138,7 +138,7 @@ class Extension extends AbstractPluginIntegration {
 				'method_title'       => __( 'Knit Pay', 'knit-pay-lang' ),
 				'method_description' => __( "This payment method does not use a predefined payment method for the payment. Some payment providers list all activated payment methods for your account to choose from. Use payment method specific gateways (such as 'Instamojo') to let customers choose their desired payment method at checkout.", 'knit-pay-lang' ),
 				'icon'               => '',
-				'title'              => 'Pay Online',
+				'title'              => 'Online Payment',
 			]
 		);
 

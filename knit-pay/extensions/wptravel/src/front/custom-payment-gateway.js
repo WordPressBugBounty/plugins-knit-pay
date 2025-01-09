@@ -22,7 +22,6 @@ jQuery(document).ready(function($) {
                     id: 'wp-travel-payment-gateway',
                     class: 'wp-travel-radio-group wp-travel-payment-field f-booking-with-payment f-partial-payment f-full-payment',
                     value: gateway,
-                    'data-parsley-multiple': 'wp_travel_payment_gateway'
                 });
 
                 const labelElement = $('<label>', {
@@ -53,5 +52,21 @@ jQuery(document).ready(function($) {
     observer.observe(document.body, {
         childList: true,
         subtree: true
+    });
+
+    // the event on Book Now button causing issue, this is workaround to remove the event.
+    jQuery(document).on('click', 'input[name="wp_travel_payment_gateway"][value="knit_pay"]', function() {
+        const buttonField = jQuery('.wptravel-onepage-navigation-btn .wp-travel-form-field.button-field');
+
+        if (buttonField.length) {
+            // Store the current HTML content
+            const originalHtml = buttonField.html();
+
+            // Clear the content
+            buttonField.empty();
+
+            // Recreate the same HTML content
+            buttonField.html(originalHtml);
+        }
     });
 });

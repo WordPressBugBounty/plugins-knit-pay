@@ -115,7 +115,7 @@ class Gateway {
 			}
 
 			if ( 'knit_pay' === $this->id ) {
-				$this->name = 'Pay Online';
+				$this->name = 'Online Payment';
 			}
 
 			?>

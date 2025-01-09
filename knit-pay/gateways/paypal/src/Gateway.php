@@ -4,7 +4,6 @@ namespace KnitPay\Gateways\Paypal;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Payments\Payment;
-use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use KnitPay\Gateways\PaymentMethods;
 
 /**

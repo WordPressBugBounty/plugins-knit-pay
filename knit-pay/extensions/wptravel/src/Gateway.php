@@ -66,7 +66,7 @@ class Gateway {
 	
 	public function wptravel_knit_pay_default_settings_fields( $settings_fields ) {
 		$settings_fields['payment_option_knit_pay']     = 'no';
-		$settings_fields['wp_travel_knit_pay_settings'] = [ 'title' => 'Pay Online' ];
+		$settings_fields['wp_travel_knit_pay_settings'] = [ 'title' => 'Online Payment' ];
 		
 		return $settings_fields;
 	}

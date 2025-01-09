@@ -47,7 +47,7 @@ class Gateway extends AbstractPaymentMethod {
 		
 		$this->id             = 'knit_pay'; // TODO
 		$this->payment_method = 'knit_pay'; // TODO
-		$this->title          = PaymentMethods::get_name( $this->payment_method, __( 'Pay Online', 'knit-pay-lang' ) );
+		$this->title          = PaymentMethods::get_name( $this->payment_method, __( 'Online Payment', 'knit-pay-lang' ) );
 		$this->description    = '';
 		
 		$this->method_title = sprintf(

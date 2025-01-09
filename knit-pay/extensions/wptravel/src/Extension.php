@@ -112,7 +112,7 @@ class Extension extends AbstractPluginIntegration {
 		}
 
 		$booking_conf_message = esc_html( apply_filters( 'wp_travel_booked_message', __( "Thank you for booking! We'll reach out to you soon.", 'knit-pay-lang' ) ) );
-		$booking_details      = esc_html( apply_filters( 'wp_travel_booked_message_after_text', sprintf( '(Booking Option : Booking with Payment, Payment Methode : %s, Transaction ID : %s.)', $this->get_gateway_public_title(), $payment->get_transaction_id() ) ) );
+		$booking_details      = esc_html( apply_filters( 'wp_travel_booked_message_after_text', sprintf( '(Booking Option : Booking with Payment, Payment Method : %s, Transaction ID : %s.)', $this->get_gateway_public_title(), $payment->get_transaction_id() ) ) );
 
 		switch ( $payment->get_status() ) {
 			case Core_Statuses::CANCELLED:
@@ -196,7 +196,7 @@ class Extension extends AbstractPluginIntegration {
 		} elseif ( ! empty( $this->wt_settings['wp_travel_knit_pay_settings']['title'] ) ) {
 			$gateway_public_title = $this->wt_settings['wp_travel_knit_pay_settings']['title'];
 		} else {
-			$gateway_public_title = __( 'Pay Online', 'knit-pay-lang' );
+			$gateway_public_title = __( 'Online Payment', 'knit-pay-lang' );
 		}
 
 		return $gateway_public_title;

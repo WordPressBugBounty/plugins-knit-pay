@@ -81,6 +81,7 @@ class Gateway extends Core_Gateway {
 			'paymentInstrument'     => [
 				'type' => 'PAY_PAGE',
 			],
+			// TODO mobileNumber
 		];
 		return wp_json_encode( $data );
 	}

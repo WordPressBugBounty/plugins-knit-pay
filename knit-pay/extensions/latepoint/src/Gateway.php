@@ -126,7 +126,7 @@ class Gateway {
 		return [
 			$this->processor_code => [
 				'name'      => __( 'Knit Pay', 'knit-pay-lang' ),
-				'label'     => __( 'Pay Online', 'knit-pay-lang' ),
+				'label'     => __( 'Online Payment', 'knit-pay-lang' ),
 				'image_url' => $this->images_url(),
 				'code'      => $this->processor_code,
 				'time_type' => 'now',

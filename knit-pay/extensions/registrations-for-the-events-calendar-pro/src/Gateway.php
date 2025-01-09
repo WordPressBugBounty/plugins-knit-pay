@@ -173,7 +173,7 @@ class Gateway extends RTEC_Payment {
 	}
 
 	public function knit_pay_form_inputs( $checkout_options ) {
-		$checkout_options['button_text'] = 'Pay Online';// TODO make it changable.
+		$checkout_options['button_text'] = 'Online Payment';// TODO make it changable.
 
 		$quantity = isset( $this->payment_data['transaction']['quantity'] ) ? $this->payment_data['transaction']['quantity'] : 1;
 		?>

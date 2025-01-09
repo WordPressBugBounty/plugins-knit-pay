@@ -26,7 +26,7 @@ class API {
 
 	private function set_endpoint( $test_mode ) {
 		if ( $test_mode ) {
-			$this->api_endpoint = 'https://api-preprod.phonepe.com/apis/hermes';
+			$this->api_endpoint = 'https://api-preprod.phonepe.com/apis/pg-sandbox';
 			return;
 		}
 		$this->api_endpoint = 'https://api.phonepe.com/apis/hermes';

@@ -94,7 +94,7 @@ class Extension extends AbstractPluginIntegration {
 	}
 
 	public function knit_pay_payment_button( Gateway $gateway ) {
-		$checkout_options['button_text'] = 'Pay Online';// TODO make it changable.
+		$checkout_options['button_text'] = 'Online Payment';// TODO make it changable.
 		?>
 		<form id="rtec-payment-form" action="<?php echo $gateway->get_form_action_url(); ?>" method="post">
 			<?php $gateway->knit_pay_form_inputs( $checkout_options ); ?>

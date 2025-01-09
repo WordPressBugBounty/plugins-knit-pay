@@ -54,7 +54,7 @@ class Gateway extends LLMS_Payment_Gateway {
 		$this->id                   = 'knit_pay';
 		$this->admin_description    = __( 'This payment method does not use a predefined payment method for the payment. Some payment providers list all activated payment methods for your account to choose from. Use payment method specific gateways (such as "Instamojo") to let customers choose their desired payment method at checkout.', 'lifterlms' );
 		$this->admin_title          = __( 'Knit Pay', 'lifterlms' );
-		$this->title                = __( 'Pay Online', 'lifterlms' );
+		$this->title                = __( 'Online Payment', 'lifterlms' );
 		$this->description          = __( '', 'lifterlms' );
 		$this->payment_instructions = 'This payment method does not use a predefined payment method for the payment. Some payment providers list all activated payment methods for your account to choose from. Use payment method specific gateways (such as "Instamojo") to let customers choose their desired payment method at checkout.';
 		// $this->test_mode_title = "Test mode title";

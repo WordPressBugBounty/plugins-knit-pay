@@ -41,7 +41,7 @@ class Gateway extends TC_Gateway_API {
 		global $tc;
 
 		$this->admin_name  = __( 'Knit Pay', 'knit-pay-lang' );
-		$this->public_name = $this->get_option( 'title', __( 'Pay Online', 'knit-pay-lang' ), $this->plugin_name );
+		$this->public_name = $this->get_option( 'title', __( 'Online Payment', 'knit-pay-lang' ), $this->plugin_name );
 
 		$this->method_img_url      = apply_filters( 'tc_gateway_method_img_url', $tc->plugin_url . 'images/gateways/custom-offline-payments.png', $this->plugin_name );
 		$this->admin_img_url       = apply_filters( 'tc_gateway_admin_img_url', $tc->plugin_url . 'images/gateways/small-custom-offline-payments.png', $this->plugin_name );
@@ -130,7 +130,7 @@ class Gateway extends TC_Gateway_API {
 						'title'       => __( 'Title', 'knit-pay-lang' ),
 						'type'        => 'text',
 						'description' => __( 'This controls the title which the user sees during checkout.', 'knit-pay-lang' ),
-						'default'     => __( 'Pay Online', 'knit-pay-lang' ),
+						'default'     => __( 'Online Payment', 'knit-pay-lang' ),
 					],
 					'config_id'           => [
 						'title'       => __( 'Configuration', 'knit-pay-lang' ),

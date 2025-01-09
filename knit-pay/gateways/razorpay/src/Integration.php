@@ -36,7 +36,7 @@ class Integration extends AbstractGatewayIntegration {
 			$args,
 			[
 				'id'            => 'razorpay',
-				'name'          => 'Razorpay',
+				'name'          => 'Razorpay - Easy Connect',
 				'url'           => 'http://go.thearrangers.xyz/razorpay?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=',
 				'product_url'   => 'http://go.thearrangers.xyz/razorpay?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=product-url',
 				'dashboard_url' => 'http://go.thearrangers.xyz/razorpay?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=dashboard-url',

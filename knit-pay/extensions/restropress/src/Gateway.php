@@ -67,7 +67,7 @@ class Gateway {
 	}
 
 	public function rpress_payment_gateways( $gateways ) {
-		$checkout_lable = rpress_get_option( $this->id . '_title', 'Pay Online' );
+		$checkout_lable = rpress_get_option( $this->id . '_title', 'Online Payment' );
 
 		$gateways[ $this->id ] = [
 			'admin_label'    => $this->title,

@@ -93,7 +93,7 @@ class KnitPayPro_Setup {
 				'label_for'   => 'knit_pay_pro_setup_rapidapi_key',
 				'required'    => '',
 				'class'       => 'regular-text',
-				'description' => '<a target="_blank" href="https://rapidapi.com/knitpay/api/knit-pay-pro1/pricing">Before entering the keys, make sure to subscribe to this Rapid API</a>',
+				'description' => 'Before entering the keys, make sure that you subscribe to the above Rapid API.',
 			]
 		);
 	}

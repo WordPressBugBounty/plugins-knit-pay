@@ -7,6 +7,8 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Exception;
 use Pronamic\WordPress\Pay\Payments\FailureReason;
+use Pronamic\WordPress\Pay\Refunds\Refund;
+
 
 /**
  * Title: Cashfree Gateway
@@ -19,7 +21,6 @@ use Pronamic\WordPress\Pay\Payments\FailureReason;
 class Gateway extends Core_Gateway {
 	private $test_mode;
 	private $config;
-	private $api;
 
 	const NAME = 'cashfree';
 
@@ -35,6 +36,7 @@ class Gateway extends Core_Gateway {
 		// Supported features.
 		$this->supports = [
 			'payment_status_request',
+			'refunds',
 		];
 
 		$this->test_mode = 0;
@@ -43,7 +45,6 @@ class Gateway extends Core_Gateway {
 		}
 
 		$this->config = $config;
-		$this->api    = new API( $config, $this->test_mode );
 
 		$this->register_payment_methods();
 	}
@@ -81,7 +82,8 @@ class Gateway extends Core_Gateway {
 		$cashfree_order_id = $payment->key . '_' . $payment->get_id();
 		$payment->set_transaction_id( $cashfree_order_id );
 
-		$cashfree_payment_session_id = $this->api->create_order( $this->get_payment_data( $payment ) );
+		$api_client                  = new API( $this->config, $this->test_mode );
+		$cashfree_payment_session_id = $api_client->create_order( $this->get_payment_data( $payment ) );
 
 		$payment->add_note( 'Cashfree payment_session_id: ' . $cashfree_payment_session_id );
 		$payment->set_meta( 'cashfree_payment_session_id', $cashfree_payment_session_id );
@@ -135,7 +137,7 @@ class Gateway extends Core_Gateway {
 				'payment_methods' => PaymentMethods::transform( $payment->get_payment_method() ),
 			],
 			'order_note'       => $order_note,
-			// TODO: order_tags.
+			'order_tags'       => $this->get_order_tags( $payment ),
 		];
 	}
 	
@@ -182,13 +184,14 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 
-		$order_details = $this->api->get_order_details( $payment->get_transaction_id() );
+		$api_client    = new API( $this->config, $this->test_mode );
+		$order_details = $api_client->get_order_details( $payment->get_transaction_id() );
 		if ( pronamic_pay_plugin()->is_debug_mode() ) {
 			$payment->add_note( '<strong>Cashfree Order Details:</strong><br><pre>' . print_r( $order_details, true ) . '</pre><br>' );
 		}
 		
 		// @see https://docs.cashfree.com/reference/getpaymentsfororder
-		$order_payments = $this->api->get_order_data( $order_details->payments );
+		$order_payments = $api_client->get_order_data( $order_details->payments );
 		if ( pronamic_pay_plugin()->is_debug_mode() ) {
 			$payment->add_note( '<strong>Cashfree Order Payments:</strong><br><pre>' . print_r( $order_payments, true ) . '</pre><br>' );
 		}
@@ -229,5 +232,55 @@ class Gateway extends Core_Gateway {
 		$customer_phone = 10 < strlen( $customer_phone ) ? ltrim( $customer_phone, '0' ) : $customer_phone;
 
 		return $customer_phone;
+	}
+
+	/**
+	 * Create refund.
+	 *
+	 * @param Refund $refund Refund.
+	 * @return void
+	 * @throws \Exception Throws exception on unknown resource type.
+	 */
+	public function create_refund( Refund $refund ) {
+		$amount         = $refund->get_amount();
+		$transaction_id = $refund->get_payment()->get_transaction_id();
+		$description    = $refund->get_description();
+
+		// @see https://docs.cashfree.com/reference/pgordercreaterefund
+		$refund_data = [
+			'order_id'      => $transaction_id,
+			'refund_amount' => $amount->number_format( null, '.', '' ),
+			'refund_id'     => uniqid( 'refund_' ),
+			'refund_note'   => $description,
+		];
+
+		$api_client         = new API( $this->config, $this->test_mode );
+		$cashfree_refund_id = $api_client->create_refund( $refund_data );
+
+		$refund->psp_id = $cashfree_refund_id;
+	}
+
+	private function get_order_tags( Payment $payment ) {
+		$source = $payment->get_source();
+		if ( 'woocommerce' === $source ) {
+			$source = 'wc';
+		}
+
+		$notes = [
+			'1_knitpay_payment_id' => strval( $payment->get_id() ),
+			'2_knitpay_extension'  => $source,
+			'3_knitpay_source_id'  => $payment->get_source_id(),
+			'4_knitpay_order_id'   => $payment->get_order_id(),
+			'5_knitpay_version'    => KNITPAY_VERSION,
+			'6_php_version'        => PHP_VERSION,
+			'7_website_url'        => home_url( '/' ),
+		];
+
+		$notes['8_auth_type'] = 'Bearer';
+		if ( empty( $this->config->access_token ) ) {
+			$notes['8_auth_type'] = 'Basic';
+		}
+
+		return $notes;
 	}
 }

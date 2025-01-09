@@ -8,7 +8,7 @@ use Pronamic\WordPress\Html\Element;
 
 $wp_travel_engine_settings = get_option( 'wp_travel_engine_settings', [] );
 $knit_pay_settings         = isset( $wp_travel_engine_settings['knit_pay_settings'] ) ? $wp_travel_engine_settings['knit_pay_settings'] : [];
-$title                     = ! empty( $knit_pay_settings['title'] ) ? $knit_pay_settings['title'] : __( 'Pay Online', 'knit-pay-lang' );
+$title                     = ! empty( $knit_pay_settings['title'] ) ? $knit_pay_settings['title'] : __( 'Online Payment', 'knit-pay-lang' );
 $description               = ! empty( $knit_pay_settings['description'] ) ? $knit_pay_settings['description'] : '';
 $icon                      = ! empty( $knit_pay_settings['icon'] ) ? $knit_pay_settings['icon'] : '';
 $payment_description       = ! empty( $knit_pay_settings['payment_description'] ) ? $knit_pay_settings['payment_description'] : __( 'WTE Booking {booking_id}', 'knit-pay-lang' );
