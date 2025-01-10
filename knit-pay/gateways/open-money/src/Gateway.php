@@ -11,7 +11,7 @@ require_once 'lib/layer_api.php';
 
 /**
  * Title: Open Money Gateway
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
  * @version 5.3.0

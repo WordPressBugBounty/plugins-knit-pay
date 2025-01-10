@@ -6,7 +6,7 @@ use WP_Error;
 
 /**
  * Title: PayUmoney Client
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
  * @version 1.9.1

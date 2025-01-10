@@ -5,7 +5,7 @@
  * This file contains function to handle Knit Pay config logic in wp-admin
  * and config form.
  *
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay

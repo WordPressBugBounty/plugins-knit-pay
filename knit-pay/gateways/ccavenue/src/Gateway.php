@@ -7,11 +7,12 @@ use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Payments\FailureReason;
 use Pronamic\WordPress\Pay\Payments\Payment;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Exception;
 
 /**
  * Title: CCAvenue Gateway
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
  * @version 1.0.0
@@ -167,7 +168,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		$payment_status = Statuses::transform( $order_status['order_status'] );
-		if ( Statuses::SUCCESS === $payment_status ) {
+		if ( PaymentStatus::SUCCESS === $payment_status ) {
 			$payment->set_transaction_id( $order_status['reference_no'] );
 		} elseif ( isset( $order_status['order_bank_response'] ) ) {
 			$failure_reason = new FailureReason();

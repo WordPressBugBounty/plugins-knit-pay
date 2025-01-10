@@ -8,7 +8,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
 /**
  * Title: HDFC Smart Gateway Gateway
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
  * @version 8.93.0.0
@@ -56,7 +56,7 @@ class Gateway extends Core_Gateway {
 	public function start( Payment $payment ) {
 		$transaction_id = $payment->key . '_' . $payment->get_source_id();
 		$transaction_id = substr( trim( html_entity_decode( $transaction_id, ENT_QUOTES, 'UTF-8' ) ), -21 );
-		$transaction_id = ltrim($transaction_id, 'pay_');
+		$transaction_id = ltrim( $transaction_id, 'pay_' );
 		$payment->set_transaction_id( $transaction_id );
 
 		$payment_link = $this->api_client->create_session( $this->get_payment_data( $payment ) );

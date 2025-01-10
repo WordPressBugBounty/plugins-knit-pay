@@ -3,7 +3,7 @@
  * Mode Trait
  *
  * @author  Knit Pay
- * @copyright 2020-2024 Knit Pay
+ * @copyright 2020-2025 Knit Pay
  * @license   GPL-3.0-or-later
  */
 
@@ -17,8 +17,8 @@ trait IntegrationModeTrait {
 	public function get_mode_settings_fields( $modes = [] ) {
 		if ( empty( $modes ) ) {
 			$modes = [
-				Gateway::MODE_LIVE => __('Live/Production', 'knit-pay-lang'),
-				Gateway::MODE_TEST => __('Test/Development/Sandbox', 'knit-pay-lang'),
+				Gateway::MODE_LIVE => __( 'Live/Production', 'knit-pay-lang' ),
+				Gateway::MODE_TEST => __( 'Test/Development/Sandbox', 'knit-pay-lang' ),
 			];
 		}
 

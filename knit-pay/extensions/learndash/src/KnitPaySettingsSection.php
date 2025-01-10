@@ -8,7 +8,7 @@ use LearnDash_Settings_Section;
 /**
  * LearnDash Settings Section for Knit Pay Metabox.
  *
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay

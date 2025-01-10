@@ -11,7 +11,7 @@ use KnitPay\Utils;
 
 /**
  * Title: Integration for Gateway OAuth Client
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author  Knit Pay
  * @version 1.0.0
@@ -40,7 +40,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 
 	abstract public function get_child_config( $post_id );
 	abstract public function clear_child_config( $post_id );
-	abstract public function allowed_redirect_hosts($hosts);
+	abstract public function allowed_redirect_hosts( $hosts);
 
 	/**
 	 * Setup.

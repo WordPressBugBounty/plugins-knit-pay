@@ -13,7 +13,7 @@ use Indeed\Ihc\Gateways\PaymentAbstract as IHC_PaymentAbstract;
 /**
  * Title: Indeed Ultimate Membership Pro Gateway
  * Description:
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay

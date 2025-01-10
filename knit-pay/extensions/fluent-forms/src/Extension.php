@@ -9,7 +9,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 /**
  * Title: Fluent Forms extension
  * Description:
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -107,8 +107,6 @@ class Extension extends AbstractPluginIntegration {
 				break;
 			case Core_Statuses::SUCCESS:
 				$status = 'paid';
-				$processor->setMetaData( 'is_form_action_fired', 'yes' );
-
 
 				break;
 			case Core_Statuses::OPEN:
@@ -132,6 +130,10 @@ class Extension extends AbstractPluginIntegration {
 		$processor->changeSubmissionPaymentStatus( $status );
 		$processor->changeTransactionStatus( $transaction->id, $status );
 		$processor->recalculatePaidTotal();
+		if ( $status === 'paid' ) {
+			$processor->getReturnData();
+			$processor->setMetaData( 'is_form_action_fired', 'yes' );
+		}
 	}
 
 	/**

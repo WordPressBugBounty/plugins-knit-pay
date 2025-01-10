@@ -8,7 +8,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
  * Title: Open Money Integration
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author  Knit Pay
  * @version 5.3.0

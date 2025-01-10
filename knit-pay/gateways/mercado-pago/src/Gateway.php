@@ -3,12 +3,12 @@ namespace KnitPay\Gateways\MercadoPago;
 
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Payments\Payment;
-use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Exception;
 
 /**
  * Title: Mercado Pago Gateway
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
  * @version 8.88.0.0
@@ -111,7 +111,7 @@ class Gateway extends Core_Gateway {
 		$mp_payment = reset( $mp_payments );
 
 		$payment_status = Statuses::transform( $mp_payment->status );
-		if ( Core_Statuses::SUCCESS === $payment_status ) {
+		if ( PaymentStatus::SUCCESS === $payment_status ) {
 			$payment->set_transaction_id( $mp_payment->id );
 		}
 		$payment->set_status( $payment_status );

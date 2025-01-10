@@ -11,7 +11,7 @@ require_once 'lib/API.php';
 
 /**
  * Title: Paymark OE Gateway
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
  * @version 5.2.0

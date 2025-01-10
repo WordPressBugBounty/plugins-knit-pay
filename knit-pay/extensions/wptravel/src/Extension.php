@@ -12,7 +12,7 @@ use WP_Travel;
 /**
  * Title: WP Travel extension
  * Description:
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -150,7 +150,7 @@ class Extension extends AbstractPluginIntegration {
 	 * Enqueue scripts.
 	 */
 	public function admin_enqueue_scripts() {
-		$build_dir = 'admin/settings/build/';
+		$build_dir = 'app/build/admin/';
 		$deps      = include_once sprintf( $build_dir . 'index.asset.php' );
 		wp_enqueue_script( 'wp_travel_knit_pay_admin_settings', plugins_url( $build_dir . 'index.js', __FILE__ ), $deps['dependencies'], $deps['version'], true );
 	   
@@ -179,8 +179,10 @@ class Extension extends AbstractPluginIntegration {
 		// Add JavaScript in frontend for Knit Pay Gateway when On-Page Booking is Enabled.
 		$wt_settings = wptravel_get_settings();
 		if ( $wt_settings['enable_one_page_booking'] ) {
-			// Enqueue the custom JavaScript file
-			wp_enqueue_script( 'knit-pay-wptravel-custom-payment-gateway', plugins_url( '', __FILE__ ) . '/front/custom-payment-gateway.js', [ 'jquery' ], KNITPAY_VERSION, true );
+			$build_dir = 'app/build/front/';
+			$deps      = include_once sprintf( $build_dir . 'index.asset.php' );
+			wp_enqueue_script( 'knit-pay-wptravel-custom-payment-gateway', plugins_url( $build_dir . 'index.js', __FILE__ ), $deps['dependencies'], $deps['version'], true );
+
 		}
 	}
 

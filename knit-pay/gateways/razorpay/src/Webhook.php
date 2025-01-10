@@ -8,7 +8,7 @@ use WP_Error;
 
 /**
  * Title: Razorpay Webhook
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
  * @version 4.5.7.0

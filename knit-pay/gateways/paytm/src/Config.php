@@ -6,7 +6,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
 
 /**
  * Title: Paytm Config
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author  Knit Pay
  * @version 4.9.0

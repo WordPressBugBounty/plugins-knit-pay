@@ -4,11 +4,12 @@ namespace KnitPay\Gateways\SabPaisa;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Payments\FailureReason;
 use Pronamic\WordPress\Pay\Payments\Payment;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Exception;
 
 /**
  * Title: Sab Paisa Gateway
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
  * @version 8.95.0.0
@@ -67,6 +68,7 @@ class Gateway extends Core_Gateway {
 		$customer        = $payment->get_customer();
 		$billing_address = $payment->get_billing_address();
 
+		// https://sabpaisa.in/wp-content/uploads/2024/04/PHP-Server_Integration-April-24.pdf
 		$enc_data_array = [
 			'clientCode'        => $client_code,
 			'transUserName'     => $username,
@@ -84,6 +86,10 @@ class Gateway extends Core_Gateway {
 		if ( isset( $billing_address ) ) {
 			$enc_data_array['payerMobile'] = $billing_address->get_phone();
 		}
+
+		if ( empty( $enc_data_array['payerName'] ) ) {
+			$enc_data_array['payerName'] = 'Guest';
+		}
 		
 		return $this->api->get_encrypted_data_array( $enc_data_array );
 	}
@@ -95,12 +101,15 @@ class Gateway extends Core_Gateway {
 	 * @throws Exception If error occurs while updating payment status.
 	 */
 	public function update_status( Payment $payment ) {
+		if ( PaymentStatus::SUCCESS === $payment->get_status() ) {
+			return;
+		}
 
 		$transaction_status = $this->api->get_transaction_status( $payment->get_transaction_id() );
 
 		$payment_status = Statuses::transform( $transaction_status['status'] );
 
-		if ( Statuses::SUCCESS === $payment_status ) {
+		if ( PaymentStatus::SUCCESS === $payment_status ) {
 			$payment->set_transaction_id( $transaction_status['sabpaisaTxnId'] );
 		} elseif ( isset( $transaction_status['bankMessage'] ) ) {
 			$failure_reason = new FailureReason();

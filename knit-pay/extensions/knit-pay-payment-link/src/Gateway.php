@@ -13,7 +13,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 /**
  * Title: Knit Pay - Payment Link Gateway
  * Description:
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay

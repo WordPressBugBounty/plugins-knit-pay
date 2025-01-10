@@ -7,7 +7,7 @@ use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
 
 /**
  * Title: CBK (Commercial Bank of Kuwait - Al-Tijari) Integration
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author  Knit Pay
  * @version 6.68.0.0

@@ -15,7 +15,7 @@ require_once 'lib/CmiClient.php';
 
 /**
  * Title: CMI Gateway
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
  * @version 7.71.0.0
@@ -94,7 +94,7 @@ class Gateway extends Core_Gateway {
 			'BillToCompany'    => $billing_address->get_company_name(),
 			'BillToStreet12'   => $billing_address->get_line_1(),
 			'BillToCity'       => $billing_address->get_city(),
-			// 'BillToStateProv' => $billing_address->get_region(), // é causing issue.
+			// 'BillToStateProv' => $billing_address->get_region(), // ï¿½ causing issue.
 			'BillToPostalCode' => $billing_address->get_postal_code(),
 			'BillToCountry'    => $billing_address->get_country_code(),
 			'tel'              => $billing_address->get_phone(),

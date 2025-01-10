@@ -10,7 +10,7 @@ use JLoader;
 /**
  * Title: Vik WP extension
  * Description:
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay

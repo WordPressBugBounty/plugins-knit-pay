@@ -84,12 +84,12 @@ class API {
 
 		$result = wp_remote_retrieve_body( $response );
 
-		$xml   = simplexml_load_string( $result );
-		$json  = wp_json_encode( $xml );
-		$array = json_decode( $json, true );
+		$xml_object  = simplexml_load_string( $result );
+		$result_json = wp_json_encode( $xml_object );
+		$result_data = json_decode( $result_json, true );
 
-		if ( isset( $array['ssl_trans_status'] ) ) {
-			return $array;
+		if ( isset( $result_data['ssl_trans_status'] ) ) {
+			return $result_data;
 		}
 
 		throw new Exception( 'Something went wrong. Please try again later.' );

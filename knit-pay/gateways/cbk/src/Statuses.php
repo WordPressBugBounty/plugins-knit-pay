@@ -6,7 +6,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 
 /**
  * Title: CBK (Commercial Bank of Kuwait - Al-Tijari) Statuses
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author  Knit Pay
  * @version 6.68.0.0

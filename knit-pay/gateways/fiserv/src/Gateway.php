@@ -11,7 +11,7 @@ require_once 'lib/Utility.php';
 
 /**
  * Title: Fiserv Gateway
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
  * @version 6.64.0.0

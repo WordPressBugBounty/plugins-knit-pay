@@ -8,7 +8,7 @@ use KnitPay\Gateways\IntegrationOAuthClient;
 
 /**
  * Title: Cashfree Integration
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author  Knit Pay
  * @version 8.91.0.0
@@ -27,7 +27,7 @@ class Integration extends IntegrationOAuthClient {
 			$args,
 			[
 				'id'            => 'cashfree',
-				'name'          => 'Cashfree',
+				'name'          => 'Cashfree - Easy Connect',
 				'url'           => 'http://go.thearrangers.xyz/cashfree?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=',
 				'product_url'   => 'http://go.thearrangers.xyz/cashfree?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=product-url',
 				'dashboard_url' => 'http://go.thearrangers.xyz/cashfree?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=dashboard-url',

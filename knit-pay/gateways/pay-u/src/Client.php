@@ -6,7 +6,7 @@ use WP_Error;
 
 /**
  * Title: PayU Client
- * Copyright: 2020-2024 Knit Pay
+ * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
  * @version 5.4.0
