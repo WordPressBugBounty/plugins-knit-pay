@@ -17,16 +17,25 @@ use Omnipay\Common\CreditCard;
  * @since 8.72.0.0
  */
 class Gateway extends Core_Gateway {
+	/**
+	 * Omnipay gateway.
+	 *
+	 * @var AbstractGateway
+	 */
 	private $omnipay_gateway;
 	private $config;
 	private $transaction_options;
 	private $args;
 
 	/**
-	 * Initializes an Omnipay gateway
+	 * Initialize.
 	 *
-	 * @param array $config
-	 *            Config.
+	 * @param AbstractGateway $omnipay_gateway
+	 *            Omnipay gateway.
+	 * @param array           $config
+	 *            Configuration.
+	 * @param array           $args
+	 *            Arguments.
 	 */
 	public function init( AbstractGateway $omnipay_gateway, $config, $args ) {
 
@@ -264,30 +273,66 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 		
-		$transaction_data = $this->get_payment_data( $payment );
-		
-		// Do a purchase transaction on the gateway
-		if ( isset( $this->args['complete_purchase_method'] ) ) {
-			$complete_purchase_method = $this->args['complete_purchase_method'];
-			$transaction              = $this->omnipay_gateway->$complete_purchase_method( $transaction_data );
-		} else {
-			$transaction = $this->omnipay_gateway->completePurchase( $transaction_data );
-		}
-		$response = $transaction->send();
+		$response = $this->complete_purchase( $payment, 'complete_purchase_method' );
 
-		$payment->add_note( '<strong>Response Data:</strong><br><pre>' . print_r( $response->getData(), true ) . '</pre><br>' );
+		// If Successful, Transaction is either Authorized or Captured.
 		if ( $response->isSuccessful() ) {
+			// Set Transaction ID before attempting Capture.
 			$payment->set_transaction_id( $response->getTransactionReference() );
-			$payment->set_status( PaymentStatus::SUCCESS );
 
-			// Delete purchase data meta after successful payment to save the database storage.
-			$payment->delete_meta( 'purchase_data' );
-			$payment->delete_meta( 'redirect_data' );
-			$payment->delete_meta( 'redirect_method' );
+			// Capture the payment if required.
+			$response = $this->complete_purchase( $payment, 'capture_purchase_method', $response, false );
+
+			// Rechecking to make sure capture was also successful.
+			if ( $response->isSuccessful() ) {
+				$payment->set_status( PaymentStatus::SUCCESS );
+
+				// Delete purchase data meta after successful payment to save the database storage.
+				$payment->delete_meta( 'purchase_data' );
+				$payment->delete_meta( 'redirect_data' );
+				$payment->delete_meta( 'redirect_method' );
+			} else {
+				$payment->set_status( PaymentStatus::AUTHORIZED );
+			}
 		} elseif ( $response->isCancelled() ) {
 			$payment->set_status( PaymentStatus::CANCELLED );
 		} elseif ( method_exists( $response, 'isDeclined' ) && $response->isDeclined() ) { // TODO, make it dynamic
 			$payment->set_status( PaymentStatus::FAILURE );
 		}
+	}
+
+	/**
+	 * Complete Purchase.
+	 *
+	 * @param Payment $payment
+	 *            Payment.
+	 * @param string  $primary_method
+	 *            Primary Method.
+	 * @param mixed   $response
+	 *            Response.
+	 * @param bool    $try_complete_purchase
+	 *            Try Complete Purchase.
+	 *
+	 * @return mixed
+	 */
+	private function complete_purchase( $payment, $primary_method, $response = null, $try_complete_purchase = true ) {
+		// Do a purchase transaction on the gateway
+		if ( isset( $this->args[ $primary_method ] ) ) {
+			$transaction_data = $this->get_payment_data( $payment );
+
+			$complete_purchase_method = $this->args[ $primary_method ];
+			$transaction              = $this->omnipay_gateway->$complete_purchase_method( $transaction_data );
+		} elseif ( $try_complete_purchase ) {
+			$transaction_data = $this->get_payment_data( $payment );
+
+			$transaction = $this->omnipay_gateway->completePurchase( $transaction_data );
+		} else {
+			return $response;
+		}
+
+		$response = $transaction->send();
+
+		$payment->add_note( '<strong>Response Data:</strong><br><pre>' . print_r( $response->getData(), true ) . '</pre><br>' );
+		return $response;
 	}
 }

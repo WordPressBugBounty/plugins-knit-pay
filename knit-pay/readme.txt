@@ -1,10 +1,10 @@
-=== Knit Pay ===
+=== Knit Pay - Cashfree, Instamojo, Razorpay and more ===
 Contributors: knitpay, GautamMKGarg
-Tags: instamojo, razorpay, SSLCommerz, payment, woocommerce
+Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 8.96.0.0
+Stable tag: 8.96.1.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, Razorpay, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
@@ -173,6 +173,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Wompi
 * IfthenPay
 * Vipps
+* Montonio
 * and many more...
 
 = Crypto Currencies Payment Gateways (Contact us for this premium addon.) =

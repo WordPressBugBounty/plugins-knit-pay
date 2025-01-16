@@ -19,6 +19,11 @@ use KnitPay\Utils as KnitPayUtils;
 class Integration extends AbstractGatewayIntegration {
 	use IntegrationModeTrait;
 	
+	/**
+	 * Omnipay gateway.
+	 *
+	 * @var \Omnipay\Common\AbstractGateway
+	 */
 	private $omnipay_gateway;
 
 	private $args;

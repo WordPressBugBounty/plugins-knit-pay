@@ -87,7 +87,7 @@ class Integration extends Stripe_Integration {
 				'callback' => function () {
 					echo '<p><h1>' . __( 'How it works?' ) . '</h1></p>' .
 					'<p>' . __( 'Stripe Connect - Knit Pay integration enables Indian merchants to accept payments using their Stripe account without purchasing the "Knit Pay - Stripe" Premium addon.' ) . '</p>' .
-					'<p>' . __( '<strong>The free Stripe Connect integration includes an additional ' . self::STRIPE_CONNECT_APPLICATION_FEES_PERCENTAGE . '% fee above the Stripe pricing for processing payment.</strong> Additional charges will not be there in the Stripe premium addon, available at one-time fees.' ) . '</p>';
+					'<p>' . __( '<strong>The free Stripe Connect integration includes an additional ' . self::STRIPE_CONNECT_APPLICATION_FEES_PERCENTAGE . '% fee above the Stripe pricing for processing payment.</strong>' ) . '</p>';
 				},
 			];
 		}

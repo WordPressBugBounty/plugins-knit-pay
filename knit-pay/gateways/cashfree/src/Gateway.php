@@ -269,7 +269,7 @@ class Gateway extends Core_Gateway {
 		$notes = [
 			'1_knitpay_payment_id' => strval( $payment->get_id() ),
 			'2_knitpay_extension'  => $source,
-			'3_knitpay_source_id'  => $payment->get_source_id(),
+			'3_knitpay_source_id'  => strval( $payment->get_source_id() ),
 			'4_knitpay_order_id'   => $payment->get_order_id(),
 			'5_knitpay_version'    => KNITPAY_VERSION,
 			'6_php_version'        => PHP_VERSION,
