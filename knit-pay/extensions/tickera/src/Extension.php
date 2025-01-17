@@ -5,7 +5,7 @@ namespace KnitPay\Extensions\Tickera;
 use Pronamic\WordPress\Pay\AbstractPluginIntegration;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
-use TC_Order;
+use Tickera\TC_Order;
 
 /**
  * Title: Tickera extension
@@ -15,6 +15,7 @@ use TC_Order;
  *
  * @author  knitpay
  * @since   8.84.0.0
+ * @version 8.96.2.0
  */
 class Extension extends AbstractPluginIntegration {
 	/**
@@ -79,7 +80,7 @@ class Extension extends AbstractPluginIntegration {
 	public static function redirect_url( $url, $payment ) {
 		global $tc;
 
-		$order_id = tc_get_order_id_by_name( $payment->get_source_id() )->ID;
+		$order_id = tickera_get_order_id_by_name( $payment->get_source_id() )->ID;
 		$order    = new TC_Order( $order_id );
 
 		return $tc->tc_order_status_url( $order, '', '', false );
@@ -126,7 +127,7 @@ class Extension extends AbstractPluginIntegration {
 	 * @return string $text
 	 */
 	public function source_text( $text, Payment $payment ) {
-		$order = tc_get_order_id_by_name( $payment->get_source_id() );
+		$order = tickera_get_order_id_by_name( $payment->get_source_id() );
 
 		$text = __( 'Tickera', 'knit-pay-lang' ) . '<br />';
 
@@ -161,7 +162,7 @@ class Extension extends AbstractPluginIntegration {
 	 * @return string
 	 */
 	public function source_url( $url, Payment $payment ) {
-		$order = tc_get_order_id_by_name( $payment->get_source_id() );
+		$order = tickera_get_order_id_by_name( $payment->get_source_id() );
 
 		return get_edit_post_link( $order->ID );
 	}

@@ -16,7 +16,7 @@ class API {
 
 	const CONNECTION_TIMEOUT = 10;
 	
-	const API_VERSION = 66;
+	const API_VERSION = 100;
 
 	private $config;
 

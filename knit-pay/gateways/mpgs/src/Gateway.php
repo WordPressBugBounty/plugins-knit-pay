@@ -113,13 +113,13 @@ class Gateway extends Core_Gateway {
 				'merchant'       => [
 					/*
 					 'address' => [
-						'line1' => $this->getMerchantAddressLine1(),
-						'line2' => $this->getMerchantAddressLine2(),
+						'line1' => '',
+						'line2' => '',
 					], */
 					'name' => get_bloginfo(),
-					/* 'email' => $this->getMerchantEmail(), */
+					/* 'email' => '', */
 					'url'  => home_url( '/' ),
-					// 'logo' => get_site_icon_url(140),
+					// 'logo' => '',
 				],
 			],
 			'order'        => [

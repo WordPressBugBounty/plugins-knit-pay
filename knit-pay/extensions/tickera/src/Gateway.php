@@ -6,8 +6,8 @@ use Pronamic\WordPress\Money\Currency;
 use Pronamic\WordPress\Money\Money;
 use Pronamic\WordPress\Pay\Plugin;
 use Pronamic\WordPress\Pay\Payments\Payment;
-use TC_Form_Fields_API;
-use TC_Gateway_API;
+use Tickera\TC_Form_Fields_API;
+use Tickera\TC_Gateway_API;
 
 /**
  * Title: Tickera Gateway
@@ -17,6 +17,7 @@ use TC_Gateway_API;
  *
  * @author  knitpay
  * @since   8.84.0.0
+ * @version 8.96.2.0
  */
 
 /**
@@ -29,6 +30,7 @@ class Gateway extends TC_Gateway_API {
 	var $plugin_name = 'knit_pay';
 	var $config_id;
 	var $skip_payment_screen = true;
+	var $payment_description;
 
 	/**
 	 * Support for older payment gateway API
@@ -52,7 +54,7 @@ class Gateway extends TC_Gateway_API {
 	function process_payment( $cart ) {
 		global $tc;
 
-		tc_final_cart_check( $cart );
+		tickera_final_cart_check( $cart );
 		$this->save_cart_info();
 		$order_id  = $tc->generate_order_id();
 		$cart_info = $this->cart_info();
@@ -108,12 +110,24 @@ class Gateway extends TC_Gateway_API {
 			$payment_info = $this->save_payment_info();
 			$tc->create_order( $order_id, $this->cart_contents(), $this->cart_info(), $payment_info, false );
 
-			tc_redirect( $payment->get_pay_redirect_url(), true, true );
+			tickera_redirect( $payment->get_pay_redirect_url(), true, true );
 		} catch ( \Exception $e ) {
 			$tc->checkout_error = true;
 			$tc->session->set( 'tc_cart_errors', $e->getMessage() );
-			tc_redirect( $tc->get_payment_slug( true ), true );
+			tickera_redirect( $tc->get_payment_slug( true ), true );
 		}
+	}
+
+	function save_cart_info() {
+		global $tc;
+
+		$class_name = get_class( $this );
+
+		$session                                    = $tc->session->get();
+		$session['cart_info']['gateway']            = $this->plugin_name;
+		$session['cart_info']['gateway_admin_name'] = $this->admin_name;
+		$session['cart_info']['gateway_class']      = $class_name;
+		$tc->session->set( 'cart_info', $session['cart_info'] );
 	}
 
 	function gateway_admin_settings( $settings, $visible ) {
@@ -164,4 +178,4 @@ class Gateway extends TC_Gateway_API {
 	}
 }
 
-tc_register_gateway_plugin( 'KnitPay\Extensions\Tickera\Gateway', 'knit_pay', __( 'Knit Pay', 'knit-pay-lang' ) );
+\Tickera\tickera_register_gateway_plugin( 'KnitPay\Extensions\Tickera\Gateway', 'knit_pay', __( 'Knit Pay', 'knit-pay-lang' ) );
