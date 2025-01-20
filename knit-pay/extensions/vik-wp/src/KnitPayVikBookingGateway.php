@@ -111,16 +111,12 @@ class KnitPayVikBookingGateway extends AbstractKnitPayPayment {
 			$payment->save();
 			
 			$form  = '<form action="' . $payment->get_pay_redirect_url() . '" method="post">';
-			$form .= '<input type="submit" name="_submit" value="Pay Now!" />';
+			$form .= '<input class="vik-paynow-btn" type="submit" name="_submit" value="Pay Now" />';
 			$form .= '</form>';
 			
 			echo $form;
 		} catch ( \Exception $e ) {
-			die();// TODO
-			llms_add_notice( Plugin::get_default_error_message(), 'error' );
-			llms_add_notice( $e->getMessage(), 'error' );
-			$order->set_status( 'llms-failed' );
-			return;
+			echo "<p class='err'>Error: " . $e->getMessage() . '</p>';
 		}
 	}
 	

@@ -46,7 +46,7 @@ class Gateway extends TC_Gateway_API {
 		$this->public_name = $this->get_option( 'title', __( 'Online Payment', 'knit-pay-lang' ), $this->plugin_name );
 
 		$this->method_img_url      = apply_filters( 'tc_gateway_method_img_url', $tc->plugin_url . 'images/gateways/custom-offline-payments.png', $this->plugin_name );
-		$this->admin_img_url       = apply_filters( 'tc_gateway_admin_img_url', $tc->plugin_url . 'images/gateways/small-custom-offline-payments.png', $this->plugin_name );
+		$this->admin_img_url       = apply_filters( 'tc_gateway_admin_img_url', plugins_url( 'images/small-knit-pay.png', __FILE__ ), $this->plugin_name );
 		$this->config_id           = $this->get_option( 'config_id', '', $this->plugin_name );
 		$this->payment_description = $this->get_option( 'payment_description', '', $this->plugin_name );
 	}
@@ -131,44 +131,42 @@ class Gateway extends TC_Gateway_API {
 	}
 
 	function gateway_admin_settings( $settings, $visible ) {
-		global $tc;
+		$fields = [
+			'title'               => [
+				'title'       => __( 'Title', 'knit-pay-lang' ),
+				'type'        => 'text',
+				'description' => __( 'This controls the title which the user sees during checkout.', 'knit-pay-lang' ),
+				'default'     => __( 'Online Payment', 'knit-pay-lang' ),
+			],
+			'config_id'           => [
+				'title'       => __( 'Configuration', 'knit-pay-lang' ),
+				'type'        => 'select',
+				'default'     => get_option( 'pronamic_pay_config_id' ),
+				'options'     => Plugin::get_config_select_options(),
+				'description' => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.',
+			],
+			'payment_description' => [
+				'title'       => __( 'Payment Description', 'knit-pay-lang' ),
+				'type'        => 'text',
+				'description' => sprintf(
+					'%s<br />%s<br />%s',
+					__( 'This controls the payment description.', 'knit-pay-lang' ),
+					/* translators: %s: default code */
+					sprintf( __( 'Default: <code>%s</code>', 'knit-pay-lang' ), __( 'Order {order_id}', 'knit-pay-lang' ) ),
+					/* translators: %s: tags */
+					sprintf( __( 'Tags: %s', 'knit-pay-lang' ), sprintf( '<code>%s</code>', '{order_id}' ) )
+				),
+				'default'     => __( 'Order {order_id}', 'knit-pay-lang' ),
+			],
+		];
+		$form   = new TC_Form_Fields_API( $fields, 'tc', 'gateways', $this->plugin_name );
 		?>
+
 		<div id="<?php echo esc_attr( $this->plugin_name ); ?>"
 			 class="postbox" <?php echo( ! $visible ? 'style="display:none;"' : '' ); ?>>
 			<h3><span><?php printf( __( '%s Settings', 'knit-pay-lang' ), $this->admin_name ); ?></span>
 			</h3>
 			<div class="inside">
-				<?php
-				$fields = [
-					'title'               => [
-						'title'       => __( 'Title', 'knit-pay-lang' ),
-						'type'        => 'text',
-						'description' => __( 'This controls the title which the user sees during checkout.', 'knit-pay-lang' ),
-						'default'     => __( 'Online Payment', 'knit-pay-lang' ),
-					],
-					'config_id'           => [
-						'title'       => __( 'Configuration', 'knit-pay-lang' ),
-						'type'        => 'select',
-						'default'     => get_option( 'pronamic_pay_config_id' ),
-						'options'     => Plugin::get_config_select_options(),
-						'description' => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.',
-					],
-					'payment_description' => [
-						'title'       => __( 'Payment Description', 'knit-pay-lang' ),
-						'type'        => 'text',
-						'description' => sprintf(
-							'%s<br />%s<br />%s',
-							__( 'This controls the payment description.', 'knit-pay-lang' ),
-							/* translators: %s: default code */
-							sprintf( __( 'Default: <code>%s</code>', 'knit-pay-lang' ), __( 'Order {order_id}', 'knit-pay-lang' ) ),
-							/* translators: %s: tags */
-							sprintf( __( 'Tags: %s', 'knit-pay-lang' ), sprintf( '<code>%s</code>', '{order_id}' ) )
-						),
-						'default'     => __( 'Order {order_id}', 'knit-pay-lang' ),
-					],
-				];
-				$form   = new TC_Form_Fields_API( $fields, 'tc', 'gateways', $this->plugin_name );
-				?>
 				<table class="form-table">
 					<?php $form->admin_options(); ?>
 				</table>
