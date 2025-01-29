@@ -108,7 +108,7 @@ class Integration extends IntegrationOAuthClient {
 		return $fields;
 	}
 
-	protected function show_remaining_setting_fields( $fields ) {
+	protected function show_common_setting_fields( $fields ) {
 		// Default Customer Phone.
 		$fields[] = [
 			'section'  => 'advanced',
@@ -191,7 +191,7 @@ class Integration extends IntegrationOAuthClient {
 	}
 
 	protected function is_auth_basic_enabled( $config ) {
-		return 'cashfree-pro' === $this->get_id();
+		return defined( 'KNIT_PAY_CASHFREE' ) || 'cashfree-pro' === $this->get_id();
 	}
 
 	private function is_auth_basic_connected( $config ) {

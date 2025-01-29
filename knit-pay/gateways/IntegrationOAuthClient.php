@@ -104,7 +104,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			$fields = $this->get_oauth_connection_status_fields( $fields );
 		}
 		
-		$fields = $this->show_remaining_setting_fields( $fields );
+		$fields = $this->show_common_setting_fields( $fields );
 		
 		return $fields;
 	}
@@ -564,7 +564,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			return $fields;
 	}
 	
-	protected function show_remaining_setting_fields( $fields ) {
+	protected function show_common_setting_fields( $fields ) {
 		return $fields;
 	}
 }

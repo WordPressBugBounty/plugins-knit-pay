@@ -28,10 +28,22 @@ class Integration extends AbstractGatewayIntegration {
 				'id'       => 'phonepe',
 				'name'     => 'PhonePe PG',
 				'provider' => 'phonepe',
+				'supports' => [
+					'webhook',
+					'webhook_log',
+					'webhook_no_config',
+				],
 			]
 		);
 
 		parent::__construct( $args );
+
+		// Webhook Listener.
+		$function = [ __NAMESPACE__ . '\Listener', 'listen' ];
+
+		if ( ! has_action( 'wp_loaded', $function ) ) {
+			add_action( 'wp_loaded', $function );
+		}
 	}
 	
 	/**

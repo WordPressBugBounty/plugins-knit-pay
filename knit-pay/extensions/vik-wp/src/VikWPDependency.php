@@ -21,6 +21,6 @@ class VikWPDependency extends Dependency {
 	 * @return bool True if dependency is met, false otherwise.
 	 */
 	public function is_met() {
-		return \class_exists( '\VikBookingLicense' );
+		return \class_exists( '\JLoader' );
 	}
 }

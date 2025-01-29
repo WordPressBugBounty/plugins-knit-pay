@@ -59,12 +59,14 @@ class Extension extends AbstractPluginIntegration {
 		add_action( 'pronamic_payment_status_update_' . self::SLUG, [ $this, 'status_update' ], 10 );
 
 		// @link https://vikwp.com/support/documentation/payment-plugins
-		add_filter( 'get_supported_payments_vikbooking', [ $this, 'get_supported_payments_vikbooking' ] );
-		add_action( 'load_payment_gateway_vikbooking', [ $this, 'load_payment_gateway_vikbooking' ], 10, 2 );
+		add_filter( 'get_supported_payments_vikrentcar', [ $this, 'get_supported_payments' ] );
+		add_filter( 'get_supported_payments_vikbooking', [ $this, 'get_supported_payments' ] );
+		add_action( 'load_payment_gateway_vikrentcar', [ $this, 'load_payment_gateway' ], 10, 2 );
+		add_action( 'load_payment_gateway_vikbooking', [ $this, 'load_payment_gateway' ], 10, 2 );
 	}
 
-	public function get_supported_payments_vikbooking( $drivers ) {
-		$driver = 'KnitPayVikBookingGateway.php';
+	public function get_supported_payments( $drivers ) {
+		$driver = 'knit_pay';
 		
 		// make sure the driver exists
 		if ( $driver ) {
@@ -74,11 +76,12 @@ class Extension extends AbstractPluginIntegration {
 		return $drivers;
 	}
 	
-	public function load_payment_gateway_vikbooking( &$drivers, $payment ) {
+	public function load_payment_gateway( &$drivers, $payment ) {
 		// make sure the classname hasn't been generated yet by a different hook
-		// and the request payment matches 'mypay' string
-		if ( $payment == 'KnitPayVikBookingGateway' ) {
-			$drivers[] = 'KnitPay\\Extensions\\VikWP\\' . $payment;
+		// and the request payment matches 'knit_pay' string
+		// TODO: remove KnitPayVikBookingGateway after 31 March 2026
+		if ( 'knit_pay' === $payment || 'KnitPayVikBookingGateway' === $payment ) {
+			$drivers[] = __NAMESPACE__ . '\KnitPayGateway';
 		}
 	}
 
@@ -130,7 +133,7 @@ class Extension extends AbstractPluginIntegration {
 
 		$text .= sprintf(
 			'<a href="%s">%s</a>',
-			admin_url( 'admin.php?option=com_vikbooking&task=editorder&cid[0]=' . $payment->source_id ),
+			$this->source_url( '', $payment ),
 			/* translators: %s: source id */
 			sprintf( __( 'Order %s', 'knit-pay-lang' ), $payment->source_id )
 		);
@@ -159,7 +162,18 @@ class Extension extends AbstractPluginIntegration {
 	 * @return string
 	 */
 	public function source_url( $url, Payment $payment ) {
-		return admin_url( 'admin.php?option=com_vikbooking&task=editorder&cid[0]=' . $payment->source_id );
-	}
+		$sub_source = $payment->get_meta( 'vik_sub_source' );
+		if ( empty( $sub_source ) ) {
+			$sub_source = 'vikbooking';
+		}
 
+		return add_query_arg(
+			[
+				'option' => 'com_' . $sub_source,
+				'task'   => 'editorder',
+				'cid[0]' => $payment->source_id,
+			],
+			admin_url( 'admin.php' )
+		);
+	}
 }

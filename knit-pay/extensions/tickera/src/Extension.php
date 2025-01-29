@@ -127,15 +127,19 @@ class Extension extends AbstractPluginIntegration {
 	 * @return string $text
 	 */
 	public function source_text( $text, Payment $payment ) {
+		$text       = __( 'Tickera', 'knit-pay-lang' ) . '<br />';
+		$order_text = sprintf( __( 'Order %s', 'knit-pay-lang' ), $payment->source_id );
+
+		if ( ! function_exists( 'tickera_get_order_id_by_name' ) ) {
+			return $text . $order_text;
+		}
+
 		$order = tickera_get_order_id_by_name( $payment->get_source_id() );
-
-		$text = __( 'Tickera', 'knit-pay-lang' ) . '<br />';
-
 		$text .= sprintf(
 			'<a href="%s">%s</a>',
 			get_edit_post_link( $order->ID ),
 			/* translators: %s: source id */
-			sprintf( __( 'Order %s', 'knit-pay-lang' ), $payment->source_id )
+			$order_text
 		);
 
 		return $text;
@@ -162,6 +166,10 @@ class Extension extends AbstractPluginIntegration {
 	 * @return string
 	 */
 	public function source_url( $url, Payment $payment ) {
+		if ( ! function_exists( 'tickera_get_order_id_by_name' ) ) {
+			return $url;
+		}
+
 		$order = tickera_get_order_id_by_name( $payment->get_source_id() );
 
 		return get_edit_post_link( $order->ID );

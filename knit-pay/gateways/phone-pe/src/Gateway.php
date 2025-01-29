@@ -67,7 +67,16 @@ class Gateway extends Core_Gateway {
 	 * @return array
 	 */
 	private function get_payment_data( Payment $payment ) {
-		$cust_id = 'CUST_' . $payment->get_order_id() . '_' . $payment->get_id();
+		$cust_id      = 'CUST_' . $payment->get_order_id() . '_' . $payment->get_id();
+		$redirect_url = $payment->get_return_url();
+		$callback_url = remove_query_arg( [ 'key', 'payment' ], $redirect_url );
+		$callback_url = add_query_arg(
+			[
+				'kp_phonepe_webhook_payment_id' => $payment->get_id(),
+				'key'                           => $payment->get_key(),
+			],
+			$callback_url
+		);
 
 		// @see: https://developer.phonepe.com/v1/reference/pay-api
 		$data = [
@@ -75,9 +84,9 @@ class Gateway extends Core_Gateway {
 			'merchantTransactionId' => $payment->get_transaction_id(),
 			'merchantUserId'        => $cust_id,
 			'amount'                => $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' ),
-			'redirectUrl'           => $payment->get_return_url(),
+			'redirectUrl'           => $redirect_url,
 			'redirectMode'          => 'POST',
-			// 'callbackUrl' => '', // TODO implement webhook
+			'callbackUrl'           => $callback_url,
 			'paymentInstrument'     => [
 				'type' => 'PAY_PAGE',
 			],

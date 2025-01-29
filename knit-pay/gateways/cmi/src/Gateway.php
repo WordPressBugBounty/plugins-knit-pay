@@ -76,7 +76,7 @@ class Gateway extends Core_Gateway {
 		$require_opts = [
 			'storetype'        => '3D_PAY_HOSTING',
 			'trantype'         => 'PreAuth',
-			'currency'         => $payment->get_total_amount()->get_currency()->get_numeric_code(), // TODO MAD
+			'currency'         => $payment->get_total_amount()->get_currency()->get_numeric_code(),
 			'rnd'              => microtime(),
 			'lang'             => $language,
 			'hashAlgorithm'    => 'ver3',

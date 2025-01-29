@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 8.96.2.1
+Stable tag: 8.96.3.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, Razorpay, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
@@ -347,11 +347,11 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * HireBee
 
 = Vik WP Plugins (Contact us for this premium addon.) =
-* VikBooking (Try it for free with **Knit Pay - Pro**)
-* Vik Restaurants
-* Vik Rent Items
-* Vik Rent Car
-* Vik Appointments
+* VikBooking Pro (Try it for free with **Knit Pay - Pro**)
+* Vik Rent Car Pro (Try it for free with **Knit Pay - Pro**)
+* Vik Restaurants Pro
+* Vik Rent Items Pro
+* Vik Appointments Pro
 
 = Other WordPress Plugins =
 * myCRED - buyCRED Addon (Try it for free with **Knit Pay - Pro**)

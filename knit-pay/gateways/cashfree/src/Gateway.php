@@ -70,15 +70,6 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 
-		if ( ! defined( 'KNIT_PAY_CASHFREE' ) ) {
-			$error = sprintf(
-				/* translators: 1: Cashfree */
-				__( 'Knit Pay supports %1$s with a Premium Addon. But you can get this premium addon for free and also you can get a special discount on transaction fees. Visit the Knit Pay website (knitpay.org) to know more.', 'knit-pay-lang' ),
-				__( 'Cashfree', 'knit-pay-lang' )
-			);
-			throw new Exception( $error );
-		}
-
 		$cashfree_order_id = $payment->key . '_' . $payment->get_id();
 		$payment->set_transaction_id( $cashfree_order_id );
 

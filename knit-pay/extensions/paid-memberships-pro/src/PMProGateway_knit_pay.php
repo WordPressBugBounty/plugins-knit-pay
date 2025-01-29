@@ -289,7 +289,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 	 * @since 1.8
 	 */
 	static function pmpro_checkout_before_change_membership_level( $user_id, $morder ) {
-		global $wpdb, $discount_code_id, $knit_pay_redirect_url;
+		global $wpdb, $discount_code, $discount_code_id, $knit_pay_redirect_url;
 
 		// if no order, no need to pay
 		if ( empty( $morder ) || empty( $knit_pay_redirect_url ) ) {
@@ -299,6 +299,10 @@ class PMProGateway_knit_pay extends PMProGateway {
 		$morder->user_id = $user_id;
 		$morder->saveOrder();
 
+		// If we have a discount code but not the ID, get the ID.
+		if ( ! empty( $discount_code ) && empty( $discount_code_id ) ) {
+			$discount_code_id = $wpdb->get_var( "SELECT id FROM $wpdb->pmpro_discount_codes WHERE code = '" . esc_sql( $discount_code ) . "' LIMIT 1" );
+		}
 		// save discount code use
 		if ( ! empty( $discount_code_id ) ) {
 			$wpdb->query( "INSERT INTO $wpdb->pmpro_discount_codes_uses (code_id, user_id, order_id, timestamp) VALUES('" . $discount_code_id . "', '" . $user_id . "', '" . $morder->id . "', now())" );
@@ -369,7 +373,6 @@ class PMProGateway_knit_pay extends PMProGateway {
 			$payment = Plugin::start_payment( $payment );
 
 			$knit_pay_redirect_url = $payment->get_pay_redirect_url();
-			// $morder->knit_pay_redirect_url = $payment->get_pay_redirect_url();
 			return true;
 		} catch ( \Exception $e ) {
 			$morder->error = __( $e->getMessage(), 'knit-pay-lang' ) . '<br>' . __( Plugin::get_default_error_message(), 'knit-pay-lang' );

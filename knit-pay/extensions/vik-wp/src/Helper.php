@@ -37,7 +37,7 @@ class Helper {
 	 *
 	 * @return string
 	 */
-	public static function get_description( AbstractKnitPayPayment $gateway ) {
+	public static function get_description( KnitPayGateway $gateway ) {
 		$description = $gateway->getParam( 'payment_description' );
 
 		if ( empty( $description ) ) {
@@ -49,6 +49,7 @@ class Helper {
 			'{order_id}'         => $gateway->get( 'id' ),
 			'{room_name}'        => $gateway->get( 'rooms_name' ),
 			'{transaction_name}' => $gateway->get( 'transaction_name' ),
+			'{vehicle_name}'     => $gateway->get( 'vehicle_name' ),
 		];
 
 		return strtr( $description, $replacements );
@@ -85,7 +86,7 @@ class Helper {
 	/**
 	 * Get customer from order.
 	 */
-	public static function get_customer_from_order( AbstractKnitPayPayment $gateway ) {
+	public static function get_customer_from_order( KnitPayGateway $gateway ) {
 		$customer_details = self::get_customer_data( $gateway->get( 'custdata' ) );
 		return CustomerHelper::from_array(
 			[
