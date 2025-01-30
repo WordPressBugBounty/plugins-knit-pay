@@ -16,4 +16,6 @@ class Config extends GatewayConfig {
 	public $mode;
 	public $client_id;
 	public $store_key;
+	public $username;
+	public $password;
 }

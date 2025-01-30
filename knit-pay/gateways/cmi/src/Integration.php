@@ -30,10 +30,22 @@ class Integration extends AbstractGatewayIntegration {
 				'url'         => 'https://www.cmi.co.ma/',
 				'product_url' => 'https://www.cmi.co.ma/',
 				'provider'    => 'cmi',
+				'supports'    => [
+					'webhook',
+					'webhook_log',
+					'webhook_no_config',
+				],
 			]
 		);
 
 		parent::__construct( $args );
+
+		// Webhook Listener.
+		$function = [ __NAMESPACE__ . '\Listener', 'listen' ];
+
+		if ( ! has_action( 'wp_loaded', $function ) ) {
+			add_action( 'wp_loaded', $function );
+		}
 	}
 
 	/**
@@ -73,7 +85,7 @@ class Integration extends AbstractGatewayIntegration {
 		// Get mode from Integration mode trait.
 		$fields[] = $this->get_mode_settings_fields();
 
-		// Merchant API ID.
+		// Client ID.
 		$fields[] = [
 			'section'     => 'general',
 			'meta_key'    => '_pronamic_gateway_cmi_client_id',
@@ -83,7 +95,7 @@ class Integration extends AbstractGatewayIntegration {
 			'description' => __( 'Merchant ID', 'knit-pay-lang' ),
 		];
 		
-		// Merchant API Password.
+		// Store Key.
 		$fields[] = [
 			'section'  => 'general',
 			'meta_key' => '_pronamic_gateway_cmi_store_key',
@@ -92,15 +104,41 @@ class Integration extends AbstractGatewayIntegration {
 			'classes'  => [ 'regular-text', 'code' ],
 		];
 
+		// Username.
+		$fields[] = [
+			'section'  => 'general',
+			'meta_key' => '_pronamic_gateway_cmi_username',
+			'title'    => __( 'Username', 'knit-pay-lang' ),
+			'type'     => 'text',
+			'classes'  => [ 'regular-text', 'code' ],
+		];
+
+		// Password.
+		$fields[] = [
+			'section'  => 'general',
+			'meta_key' => '_pronamic_gateway_cmi_password',
+			'title'    => __( 'Password', 'knit-pay-lang' ),
+			'type'     => 'password',
+			'classes'  => [ 'regular-text', 'code' ],
+		];
+
 		// Return fields.
 		return $fields;
 	}
 
+	/**
+	 * Get config.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return Config
+	 */
 	public function get_config( $post_id ) {
 		$config = new Config();
 
 		$config->client_id = $this->get_meta( $post_id, 'cmi_client_id' );
 		$config->store_key = $this->get_meta( $post_id, 'cmi_store_key' );
+		$config->username  = $this->get_meta( $post_id, 'cmi_username' );
+		$config->password  = $this->get_meta( $post_id, 'cmi_password' );
 		$config->mode      = $this->get_meta( $post_id, 'mode' );
 
 		return $config;

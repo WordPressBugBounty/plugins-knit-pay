@@ -4,14 +4,6 @@ namespace KnitPay\Gateways\CMI;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
-use Mehdirochdi\CMI\CmiClient;
-use Mehdirochdi\CMI\Exception\InvalidArgumentException;
-
-
-require_once 'lib/Exception/ExceptionInterface.php';
-require_once 'lib/Exception/InvalidArgumentException.php';
-require_once 'lib/CmiClient.php';
-
 
 /**
  * Title: CMI Gateway
@@ -23,7 +15,6 @@ require_once 'lib/CmiClient.php';
  */
 class Gateway extends Core_Gateway {
 	private $config;
-	private $endpoint_url;
 
 	/**
 	 * CMI Client.
@@ -40,14 +31,15 @@ class Gateway extends Core_Gateway {
 	 */
 	public function init( Config $config ) {
 		$this->set_method( self::METHOD_HTML_FORM );
+
+		// Supported features.
+		$this->supports = [
+			'payment_status_request',
+		];
 		
 		$this->config = $config;
 		
-		$endpoint_urls      = [
-			self::MODE_TEST => 'https://testpayment.cmi.co.ma',
-			self::MODE_LIVE => 'https://payment.cmi.co.ma',
-		];
-		$this->endpoint_url = $endpoint_urls[ $this->get_mode() ];
+		$this->cmi_client = new Client( $config );
 	}
 
 	/**
@@ -61,59 +53,7 @@ class Gateway extends Core_Gateway {
 	public function start( Payment $payment ) {
 		$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
 
-		// Validate the fields
-		$this->cmi_client = $this->get_cmi_client( $payment );
-		
-		$payment->set_action_url( $this->endpoint_url . '/fim/est3Dgate' );
-	}
-
-	/**
-	 * Get CMI Client with Payment Data.
-	 *
-	 * @param Payment $payment
-	 *            Payment.
-	 *
-	 * @return array
-	 */
-	private function get_cmi_client( Payment $payment ) {
-		$customer        = $payment->get_customer();
-		$language        = $customer->get_language();
-		$billing_address = $payment->get_billing_address();
-		
-		// @see https://github.com/ismaail/cmi-php/blob/main/docs/CMI.md
-		// @see https://github.com/mehdirochdi/cmi-payment-php/blob/main/example/process.php
-		// @see https://www.youtube.com/watch?v=X7etohIC238
-		$require_opts = [
-			'currency'         => $payment->get_total_amount()->get_currency()->get_numeric_code(),
-			'lang'             => $language,
-				
-			'storekey'         => $this->config->store_key,
-			'clientid'         => $this->config->client_id,
-			'oid'              => $payment->get_transaction_id(), // COMMAND ID IT MUST BE UNIQUE
-			'shopurl'          => add_query_arg( 'cancelled', true, $payment->get_return_url() ),
-			'okUrl'            => $payment->get_return_url(),
-			'failUrl'          => $payment->get_return_url(),
-			'email'            => $customer->get_email(),
-			'BillToName'       => substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 50 ),
-			'BillToCompany'    => $billing_address->get_company_name(),
-			'BillToStreet12'   => $billing_address->get_line_1(),
-			'BillToCity'       => $billing_address->get_city(),
-			// 'BillToStateProv' => $billing_address->get_region(), // � causing issue.
-			'BillToPostalCode' => $billing_address->get_postal_code(),
-			'BillToCountry'    => $billing_address->get_country_code(),
-			'tel'              => $billing_address->get_phone(),
-			'amount'           => $payment->get_total_amount()->number_format( null, '.', '' ),
-			// 'CallbackURL' => '',
-			'AutoRedirect'     => 'true',
-		];
-
-		$require_opts = array_map( 'trim', $require_opts );
-		
-		$cmi_client = new CmiClient( $require_opts );
-		
-		$cmi_client->generateHash();
-		
-		return $cmi_client;
+		$payment->set_action_url( $this->cmi_client->get_endpoint_url() . '/fim/est3Dgate' );
 	}
 
 	/**
@@ -127,11 +67,58 @@ class Gateway extends Core_Gateway {
 	 * @return array
 	 */
 	public function get_output_fields( Payment $payment ) {
-		if ( is_null( $this->cmi_client ) ) {
-			$this->cmi_client = $this->get_cmi_client( $payment );
-		}
+		$customer        = $payment->get_customer();
+		$language        = $customer->get_language();
+		$billing_address = $payment->get_billing_address();
+		
+		// @see https://github.com/ismaail/cmi-php/blob/feature/new_package/docs/CMI.md
+		// @see https://github.com/mehdirochdi/cmi-payment-php/blob/main/example/process.php
+		// @see https://www.youtube.com/watch?v=X7etohIC238
+		$require_opts = [
+			'clientid'         => $this->config->client_id,
+			'storetype'        => '3D_PAY_HOSTING',
+			'trantype'         => 'PreAuth',
+			'amount'           => $payment->get_total_amount()->number_format( null, '.', '' ),
+			'currency'         => $payment->get_total_amount()->get_currency()->get_numeric_code(),
+			'oid'              => $payment->get_transaction_id(),
+			'okUrl'            => $payment->get_return_url(),
+			'failUrl'          => $payment->get_return_url(),
+			'lang'             => $language,
+			'email'            => $customer->get_email(),
+			'BillToName'       => substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 250 ),
+			'rnd'              => microtime(),
+			'hashAlgorithm'    => 'ver3',
 
-		return $this->cmi_client->getRequireOpts();
+			'encoding'         => 'UTF-8',
+			'description'      => $payment->get_description(),
+			'tel'              => $billing_address->get_phone(),
+			'BillToCompany'    => $billing_address->get_company_name(),
+			'BillToStreet1'    => $billing_address->get_line_1(),
+			'BillToStreet2'    => $billing_address->get_line_2(),
+			'BillToCity'       => $billing_address->get_city(),
+			// 'BillToStateProv' => $billing_address->get_region(), // � causing issue.
+			'BillToPostalCode' => $billing_address->get_postal_code(),
+			'BillToCountry'    => $billing_address->get_country_code(),
+
+			'CallbackURL'      => add_query_arg( 'kp_cmi_webhook', '', home_url( '/' ) ),
+			'shopurl'          => add_query_arg( 'cancelled', true, $payment->get_return_url() ),
+			'AutoRedirect'     => 'true',
+			'refreshtime'      => '5',
+		];
+
+		$require_opts = array_map(
+			function( $string ) {
+				if ( is_string( $string ) ) {
+					  return trim( $string );
+				}
+				return $string;
+			},
+			$require_opts
+		);
+
+		$require_opts['hash'] = $this->cmi_client->generate_hash( $require_opts );
+
+		return $require_opts;
 	}
 
 	/**
@@ -144,35 +131,30 @@ class Gateway extends Core_Gateway {
 		if ( PaymentStatus::SUCCESS === $payment->get_status() || PaymentStatus::EXPIRED === $payment->get_status() ) {
 			return;
 		}
-		
+
 		if ( filter_has_var( INPUT_GET, 'cancelled' ) ) {
 			$payment->set_status( PaymentStatus::CANCELLED );
 			return;
 		}
-		
-		$post_string = file_get_contents( 'php://input' );
-		
-		// Convert Query String to Array.
-		parse_str( $post_string, $post_array );
 
-		try {
-			$post_array['storekey'] = $this->config->store_key;
-			
-			$cmi_client = new CmiClient( $post_array );
-		} catch ( InvalidArgumentException $e ) {
-			$payment->add_note( 'Exception: ' . $e->getMessage() );
-			return;
+		if ( filter_has_var( INPUT_POST, 'HASH' ) ) {
+			$post_string = file_get_contents( 'php://input' );
+
+			// Convert Query String to Array.
+			parse_str( $post_string, $order_status );
+
+			if ( $this->cmi_client->generate_hash( $order_status ) !== $order_status['HASH'] ) {
+				$payment->add_note( 'Hash missmatch.' );
+				return;
+			}
+		} else {
+			$order_status = $this->cmi_client->get_order_status( $payment->get_transaction_id() );
 		}
-				
-		if ( $cmi_client->generateHash() !== $post_array['HASH'] ) {
-			$payment->add_note( 'Hash missmatch.' );
-			return;
-		}
-		
-		$payment->add_note( '<strong>CMI Response:</strong><br><pre>' . print_r( $post_array, true ) . '</pre><br>' );
-						
-		if ( isset( $post_array['Response'] ) ) {
-			$payment->set_status( Statuses::transform( $post_array['Response'] ) );
+
+		$payment->add_note( '<strong>CMI Response:</strong><br><pre>' . print_r( $order_status, true ) . '</pre><br>' );
+
+		if ( isset( $order_status['Response'] ) ) {
+			$payment->set_status( Statuses::transform( $order_status['Response'] ) );
 		}
 	}
 }
