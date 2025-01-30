@@ -24,7 +24,14 @@ require_once 'lib/CmiClient.php';
 class Gateway extends Core_Gateway {
 	private $config;
 	private $endpoint_url;
+
+	/**
+	 * CMI Client.
+	 *
+	 * @var CmiClient
+	 */
 	private $cmi_client;
+
 	/**
 	 * Initializes an CMI gateway
 	 *
@@ -53,6 +60,9 @@ class Gateway extends Core_Gateway {
 	 */
 	public function start( Payment $payment ) {
 		$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
+
+		// Validate the fields
+		$this->cmi_client = $this->get_cmi_client( $payment );
 		
 		$payment->set_action_url( $this->endpoint_url . '/fim/est3Dgate' );
 	}
@@ -74,17 +84,11 @@ class Gateway extends Core_Gateway {
 		// @see https://github.com/mehdirochdi/cmi-payment-php/blob/main/example/process.php
 		// @see https://www.youtube.com/watch?v=X7etohIC238
 		$require_opts = [
-			'storetype'        => '3D_PAY_HOSTING',
-			'trantype'         => 'PreAuth',
 			'currency'         => $payment->get_total_amount()->get_currency()->get_numeric_code(),
-			'rnd'              => microtime(),
 			'lang'             => $language,
-			'hashAlgorithm'    => 'ver3',
-			'encoding'         => 'UTF-8', // OPTIONAL
-			'refreshtime'      => '5', // OPTIONAL
 				
-			'storekey'         => $this->config->store_key, // STOREKEY
-			'clientid'         => $this->config->client_id, // CLIENTID
+			'storekey'         => $this->config->store_key,
+			'clientid'         => $this->config->client_id,
 			'oid'              => $payment->get_transaction_id(), // COMMAND ID IT MUST BE UNIQUE
 			'shopurl'          => add_query_arg( 'cancelled', true, $payment->get_return_url() ),
 			'okUrl'            => $payment->get_return_url(),
@@ -102,6 +106,8 @@ class Gateway extends Core_Gateway {
 			// 'CallbackURL' => '',
 			'AutoRedirect'     => 'true',
 		];
+
+		$require_opts = array_map( 'trim', $require_opts );
 		
 		$cmi_client = new CmiClient( $require_opts );
 		
@@ -121,7 +127,9 @@ class Gateway extends Core_Gateway {
 	 * @return array
 	 */
 	public function get_output_fields( Payment $payment ) {
-		$this->cmi_client = $this->get_cmi_client( $payment );
+		if ( is_null( $this->cmi_client ) ) {
+			$this->cmi_client = $this->get_cmi_client( $payment );
+		}
 
 		return $this->cmi_client->getRequireOpts();
 	}

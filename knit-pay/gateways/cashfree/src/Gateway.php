@@ -104,7 +104,7 @@ class Gateway extends Core_Gateway {
 		$order_id       = $payment->get_transaction_id();
 		$order_amount   = $payment->get_total_amount()->number_format( null, '.', '' );
 		$order_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
-		$order_note     = $payment->get_description();
+		$order_note     = substr( trim( $payment->get_description() ), 0, 250 );
 		$customer_name  = substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 20 );
 		$customer_email = $customer->get_email();
 		$return_url     = add_query_arg( 'order_id', '{order_id}', $payment->get_return_url() );
