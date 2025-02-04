@@ -4,6 +4,14 @@ namespace KnitPay\Gateways\CMI;
 
 use Exception;
 
+/**
+ * Title: CMI API Client
+ * Copyright: 2020-2025 Knit Pay
+ *
+ * @author Knit Pay
+ * @version 8.96.5.0
+ * @since 8.96.4.0
+ */
 class Client {
 	private $config;
 
@@ -69,7 +77,14 @@ class Client {
 			throw new Exception( $result['ErrMsg'] );
 		}
 
-		return $result;
+		$order_status = explode( "\t", $result['Extra']['TRX1'] );
+
+		return array_merge(
+			$order_status,
+			[
+				'ProcReturnCode' => $order_status[9],
+			]
+		);
 	}
 
 	public function generate_hash( array $data ): string {

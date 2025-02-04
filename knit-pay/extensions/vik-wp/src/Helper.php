@@ -7,6 +7,7 @@ use Pronamic\WordPress\Pay\AddressHelper;
 use Pronamic\WordPress\Pay\ContactName;
 use Pronamic\WordPress\Pay\ContactNameHelper;
 use Pronamic\WordPress\Pay\CustomerHelper;
+use JText;
 
 /**
  * Title: Vik WP Helper
@@ -63,6 +64,9 @@ class Helper {
 	 * @return string|null
 	 */
 	private static function get_value_from_array( $array, $key ) {
+		// Get translated key.
+		$key = JText::_( $key );
+
 		if ( ! array_key_exists( $key, $array ) ) {
 			return null;
 		}
@@ -106,8 +110,8 @@ class Helper {
 	public static function get_name_from_order( $customer_details ) {
 		return ContactNameHelper::from_array(
 			[
-				'first_name' => self::get_value_from_array( $customer_details, 'Name' ),
-				'last_name'  => self::get_value_from_array( $customer_details, 'Last Name' ),
+				'first_name' => self::get_value_from_array( $customer_details, 'ORDER_NAME' ),
+				'last_name'  => self::get_value_from_array( $customer_details, 'ORDER_LNAME' ),
 			]
 		);
 	}
@@ -117,15 +121,15 @@ class Helper {
 	 *
 	 * @return Address|null
 	 */
-	public static function get_address_from_order( $gateway ) {
+	public static function get_address_from_order( KnitPayGateway $gateway ) {
 		$customer_details = self::get_customer_data( $gateway->get( 'custdata' ) );
 		return AddressHelper::from_array(
 			[
 				'name'        => self::get_name_from_order( $customer_details ),
 				'line_1'      => self::get_value_from_array( $customer_details, 'Company Name' ),
-				'line_2'      => self::get_value_from_array( $customer_details, 'Address' ),
-				'postal_code' => self::get_value_from_array( $customer_details, 'Zip Code' ),
-				'city'        => self::get_value_from_array( $customer_details, 'City' ),
+				'line_2'      => self::get_value_from_array( $customer_details, 'ORDER_ADDRESS' ),
+				'postal_code' => self::get_value_from_array( $customer_details, 'ORDER_ZIP' ),
+				'city'        => self::get_value_from_array( $customer_details, 'ORDER_CITY' ),
 				'email'       => $gateway->get( 'custmail' ),
 				'phone'       => $gateway->get( 'phone' ),
 			]

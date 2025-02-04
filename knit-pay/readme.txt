@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 8.96.4.0
+Stable tag: 8.96.5.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, Razorpay, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
@@ -239,7 +239,6 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * LearnDash
 * LifterLMS
 * WPLMS Learning Management System (Contact us for this premium addon.)
-* CoursePress Pro (Contact us for this premium addon.)
 * Ultimate Learning Pro (Contact us for this premium addon.)
 * Sensei LMS (Contact us for this premium addon.)
 * Quiz Maker Pro (Contact us for this premium addon.)

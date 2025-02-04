@@ -10,7 +10,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
- * @version 7.71.0.0
+ * @version 8.96.5.0
  * @since 7.71.0.0
  */
 class Gateway extends Core_Gateway {
@@ -153,8 +153,8 @@ class Gateway extends Core_Gateway {
 
 		$payment->add_note( '<strong>CMI Response:</strong><br><pre>' . print_r( $order_status, true ) . '</pre><br>' );
 
-		if ( isset( $order_status['Response'] ) ) {
-			$payment->set_status( Statuses::transform( $order_status['Response'] ) );
+		if ( isset( $order_status['ProcReturnCode'] ) ) {
+			$payment->set_status( Statuses::transform( $order_status['ProcReturnCode'] ) );
 		}
 	}
 }

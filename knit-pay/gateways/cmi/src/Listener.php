@@ -2,13 +2,14 @@
 namespace KnitPay\Gateways\CMI;
 
 use Pronamic\WordPress\Pay\Plugin;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
 /**
  * Title: CMI Webhook Listner
  * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
- * @version 8.96.4.0
+ * @version 8.96.5.0
  * @since 8.96.4.0
  */
 class Listener {
@@ -21,6 +22,7 @@ class Listener {
 		$payment = get_pronamic_payment_by_transaction_id( $oid );
 
 		if ( null === $payment ) {
+			echo 'FAILURE';
 			exit;
 		}
 
@@ -38,6 +40,13 @@ class Listener {
 
 		// Update payment.
 		Plugin::update_payment( $payment, false );
+
+		if ( $payment->get_status() === PaymentStatus::SUCCESS ) {
+			echo 'ACTION=POSTAUTH';
+		} else {
+			echo 'APPROVED';
+		}
+
 		exit;
 	}
 }

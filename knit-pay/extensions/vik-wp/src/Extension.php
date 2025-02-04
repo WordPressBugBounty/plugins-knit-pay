@@ -94,7 +94,7 @@ class Extension extends AbstractPluginIntegration {
 	 * @return string
 	 */
 	public static function redirect_url( $url, $payment ) {
-		return $payment->get_meta( 'vik_return_url' );
+		return add_query_arg( 'refresh', microtime(), $payment->get_meta( 'vik_return_url' ) );
 	}
 
 	/**

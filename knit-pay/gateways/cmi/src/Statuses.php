@@ -9,23 +9,23 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
  * Copyright: 2020-2025 Knit Pay
  *
  * @author  Knit Pay
- * @version 7.71.0.0
+ * @version 8.96.5.0
  * @since   7.71.0.0
  */
 class Statuses {
 	/**
-	 * APPROVED
+	 * ACCEPTED
 	 *
 	 * @var string
 	 */
-	const APPROVED = 'Approved';
+	const ACCEPTED = '00';
 
 	/**
-	 * ERROR.
+	 * FAILED.
 	 *
 	 * @var string
 	 */
-	const ERROR = 'Error';
+	const FAILED = '99';
 
 	/**
 	 * Transform an CMI status to an Knit Pay status
@@ -36,10 +36,10 @@ class Statuses {
 	 */
 	public static function transform( $status ) {
 		switch ( $status ) {
-			case self::APPROVED:
+			case self::ACCEPTED:
 				return Core_Statuses::SUCCESS;
 
-			case self::ERROR:
+			case self::FAILED:
 				return Core_Statuses::FAILURE;
 
 			default:
