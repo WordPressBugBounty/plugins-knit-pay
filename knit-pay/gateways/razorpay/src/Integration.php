@@ -642,7 +642,7 @@ class Integration extends AbstractGatewayIntegration {
 		if ( isset( $result->razorpay_connect_status ) && 'failed' === $result->razorpay_connect_status ) {
 			$this->inc_refresh_token_fail_counter( $config, $config_id );
 
-			// Client config if access is revoked.
+			// Clear config if access is revoked.
 			if ( isset( $result->error ) && isset( $result->error->description )
 				&& ( 'Token has been revoked' === $result->error->description || 'Token has expired' === $result->error->description ) ) {
 					self::clear_config( $config_id );

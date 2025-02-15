@@ -70,51 +70,49 @@ class Gateway extends Core_Gateway {
 		$customer        = $payment->get_customer();
 		$language        = $customer->get_language();
 		$billing_address = $payment->get_billing_address();
-		
+
 		// @see https://github.com/ismaail/cmi-php/blob/feature/new_package/docs/CMI.md
 		// @see https://github.com/mehdirochdi/cmi-payment-php/blob/main/example/process.php
 		// @see https://www.youtube.com/watch?v=X7etohIC238
 		$require_opts = [
-			'clientid'         => $this->config->client_id,
-			'storetype'        => '3D_PAY_HOSTING',
-			'trantype'         => 'PreAuth',
-			'amount'           => $payment->get_total_amount()->number_format( null, '.', '' ),
-			'currency'         => $payment->get_total_amount()->get_currency()->get_numeric_code(),
-			'oid'              => $payment->get_transaction_id(),
-			'okUrl'            => $payment->get_return_url(),
-			'failUrl'          => $payment->get_return_url(),
-			'lang'             => $language,
-			'email'            => $customer->get_email(),
-			'BillToName'       => substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 250 ),
-			'rnd'              => microtime(),
-			'hashAlgorithm'    => 'ver3',
+			'clientid'      => $this->config->client_id,
+			'storetype'     => '3D_PAY_HOSTING',
+			'trantype'      => 'PreAuth',
+			'amount'        => $payment->get_total_amount()->number_format( null, '.', '' ),
+			'currency'      => $payment->get_total_amount()->get_currency()->get_numeric_code(),
+			'oid'           => $payment->get_transaction_id(),
+			'okUrl'         => $payment->get_return_url(),
+			'failUrl'       => $payment->get_return_url(),
+			'lang'          => $language,
+			'email'         => $customer->get_email(),
+			'BillToName'    => $this->get_clean_string( $customer->get_name() ),
+			'rnd'           => microtime(),
+			'hashAlgorithm' => 'ver3',
 
-			'encoding'         => 'UTF-8',
-			'description'      => $payment->get_description(),
-			'tel'              => $billing_address->get_phone(),
-			'BillToCompany'    => $billing_address->get_company_name(),
-			'BillToStreet1'    => $billing_address->get_line_1(),
-			'BillToStreet2'    => $billing_address->get_line_2(),
-			'BillToCity'       => $billing_address->get_city(),
-			// 'BillToStateProv' => $billing_address->get_region(), // � causing issue.
-			'BillToPostalCode' => $billing_address->get_postal_code(),
-			'BillToCountry'    => $billing_address->get_country_code(),
+			'encoding'      => 'UTF-8',
+			'description'   => $this->get_clean_string( $payment->get_description(), 125 ),
 
-			'CallbackURL'      => add_query_arg( 'kp_cmi_webhook', '', home_url( '/' ) ),
-			'shopurl'          => add_query_arg( 'cancelled', true, $payment->get_return_url() ),
-			'AutoRedirect'     => 'true',
-			'refreshtime'      => '5',
+			'CallbackURL'   => add_query_arg( 'kp_cmi_webhook', '', home_url( '/' ) ),
+			'shopurl'       => add_query_arg( 'cancelled', true, $payment->get_return_url() ),
+			'AutoRedirect'  => 'true',
+			'refreshtime'   => '5',
 		];
 
-		$require_opts = array_map(
-			function( $string ) {
-				if ( is_string( $string ) ) {
-					  return trim( $string );
-				}
-				return $string;
-			},
-			$require_opts
-		);
+		if ( isset( $billing_address ) ) {
+			$require_opts = array_merge(
+				$require_opts,
+				[
+					'tel'              => $this->get_clean_string( $billing_address->get_phone(), 32 ),
+					'BillToCompany'    => $this->get_clean_string( $billing_address->get_company_name(), 32 ),
+					'BillToStreet1'    => $this->get_clean_string( $billing_address->get_line_1() ),
+					'BillToStreet2'    => $this->get_clean_string( $billing_address->get_line_2() ),
+					'BillToCity'       => $this->get_clean_string( $billing_address->get_city(), 64 ),
+					'BillToStateProv'  => $this->get_clean_string( $billing_address->get_region(), 32 ),
+					'BillToPostalCode' => $this->get_clean_string( $billing_address->get_postal_code(), 32 ),
+					'BillToCountry'    => $billing_address->get_country_code(),
+				]
+			);
+		}
 
 		$require_opts['hash'] = $this->cmi_client->generate_hash( $require_opts );
 
@@ -156,5 +154,23 @@ class Gateway extends Core_Gateway {
 		if ( isset( $order_status['ProcReturnCode'] ) ) {
 			$payment->set_status( Statuses::transform( $order_status['ProcReturnCode'] ) );
 		}
+	}
+
+	/**
+	 * Clean a string by removing non-alphanumeric characters.
+	 *
+	 * @param string $subject The string to clean.
+	 * @param int    $max_length The maximum length of the cleaned string.
+	 * @return string The cleaned string.
+	 */
+	private function get_clean_string( $subject, $max_length = 250 ) {
+		if ( null === $subject ) {
+			return '';
+		}
+
+		$subject = preg_replace( '/[^a-zA-Z0-9\s]/', ' ', $subject ); // Keep only alphanumeric characters.
+		$subject = preg_replace( '/\s+/', ' ', $subject ); // Replace multiple spaces with a single space.
+		$subject = trim( $subject );
+		return substr( $subject, 0, $max_length );
 	}
 }

@@ -5,7 +5,6 @@ namespace KnitPay\Gateways\Cashfree;
 use Exception;
 
 class API {
-
 	const CONNECTION_TIMEOUT = 30;
 
 	private $api_endpoint;

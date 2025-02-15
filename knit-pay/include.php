@@ -68,8 +68,9 @@ define( 'KNITPAY_GLOBAL_GATEWAY_LIST_URL', 'https://wordpress.org/plugins/knit-p
 
 if ( ! function_exists( 'ppp' ) ) {
 	function ppp( $a = '' ) {
+		echo '<pre>';
 		print_r( $a );
-		echo '<br><br>';
+		echo '</pre><br><br>';
 	}
 }
 

@@ -20,4 +20,8 @@ class Config extends GatewayConfig {
 	public $gateway_selection_mode;
 	
 	public $enabled_payment_gateways;
+
+	public $gateway_currency;
+
+	public $exchange_rate;
 }

@@ -66,8 +66,7 @@ class Statuses {
 	public static function transform( $status ) {
 		$core_status = null;
 		switch ( $status ) {
-			case self::APPROVED:
-			case self::COMPLETED:
+			case self::COMPLETED: // FIXME: https://developer.paypal.com/docs/api/orders/v2/#orders_create
 				$core_status = Core_Statuses::SUCCESS;
 				break;
 
@@ -75,6 +74,7 @@ class Statuses {
 				$core_status = Core_Statuses::FAILURE;
 				break;
 
+			case self::APPROVED:
 			case self::CREATED:
 			case self::SAVED:
 			case self::PAYER_ACTION_REQUIRED:

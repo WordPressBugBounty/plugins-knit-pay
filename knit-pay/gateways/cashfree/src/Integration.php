@@ -131,12 +131,13 @@ class Integration extends IntegrationOAuthClient {
 		$config->secret_key = $this->get_meta( $post_id, 'cashfree_secret_key' );
 
 		// OAuth.
-		$config->merchant_id   = $this->get_meta( $post_id, 'cashfree_merchant_id' );
-		$config->is_connected  = $this->get_meta( $post_id, 'cashfree_is_connected' );
-		$config->connected_at  = $this->get_meta( $post_id, 'cashfree_connected_at' );
-		$config->expires_at    = $this->get_meta( $post_id, 'cashfree_expires_at' );
-		$config->access_token  = $this->get_meta( $post_id, 'cashfree_access_token' );
-		$config->refresh_token = $this->get_meta( $post_id, 'cashfree_refresh_token' );
+		$config->merchant_id           = $this->get_meta( $post_id, 'cashfree_merchant_id' );
+		$config->is_connected          = $this->get_meta( $post_id, 'cashfree_is_connected' );
+		$config->connected_at          = $this->get_meta( $post_id, 'cashfree_connected_at' );
+		$config->expires_at            = $this->get_meta( $post_id, 'cashfree_expires_at' );
+		$config->access_token          = $this->get_meta( $post_id, 'cashfree_access_token' );
+		$config->refresh_token         = $this->get_meta( $post_id, 'cashfree_refresh_token' );
+		$config->connection_fail_count = $this->get_meta( $post_id, 'cashfree_connection_fail_count' );
 
 		$config->default_customer_phone = $this->get_meta( $post_id, 'cashfree_default_customer_phone' );
 		$config->mode                   = $this->get_meta( $post_id, 'mode' );
@@ -144,6 +145,10 @@ class Integration extends IntegrationOAuthClient {
 		// Currently Cashfree Oauth does not support test mode.
 		if ( empty( $config->mode ) ) {
 			$config->mode = Gateway::MODE_LIVE;
+		}
+
+		if ( empty( $config->connection_fail_count ) ) {
+			$config->connection_fail_count = 0;
 		}
 
 		if ( ! $this->is_auth_basic_enabled( $config ) && $this->is_auth_basic_connected( $config ) && defined( 'KNIT_PAY_PRO' ) ) {
@@ -196,5 +201,17 @@ class Integration extends IntegrationOAuthClient {
 
 	private function is_auth_basic_connected( $config ) {
 		return ! empty( $config->secret_key );
+	}
+
+	protected function refresh_failed_action( $result, $config, $config_id ) {
+		if ( parent::refresh_failed_action( $result, $config, $config_id ) ) {
+			// Clear config if access is revoked.
+			if ( isset( $result->data->code ) && ( 'invalid_grant' === $result->data->code ) ) {
+					self::clear_config( $config_id );
+			}
+			return true;
+		}
+
+		return false;
 	}
 }

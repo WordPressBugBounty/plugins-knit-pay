@@ -78,7 +78,7 @@ class Extension extends AbstractPluginIntegration {
 		$settings_manager->add_settings_subgroup(
 			[
 				'id'       => $key,
-				'name'     => __( 'Knit Pay', 'awpcp-authorize.net' ),
+				'name'     => __( 'Knit Pay', 'knit-pay-lang' ),
 				'parent'   => 'payment-settings',
 				'priority' => 30,
 			]
@@ -87,13 +87,13 @@ class Extension extends AbstractPluginIntegration {
 		$settings_manager->add_settings_section(
 			[
 				'subgroup' => $key,
-				'name'     => __( 'Knit Pay Settings', 'knit_pay' ),
+				'name'     => __( 'Knit Pay Settings', 'knit-pay-lang' ),
 				'id'       => $key,
 				'priority' => 20,
 			]
 		);
 
-		$label = __( 'Activate Knit Pay', 'awpcp-authorize.net' );
+		$label = __( 'Activate Knit Pay', 'knit-pay-lang' );
 		$settings_manager->add_setting( $key, 'activate_knit_pay', $label, 'checkbox', 0, $label );
 
 		$settings_manager->add_setting(

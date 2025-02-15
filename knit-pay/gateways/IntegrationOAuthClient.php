@@ -20,7 +20,7 @@ use KnitPay\Utils;
 abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	use IntegrationModeTrait;
 
-	private $config;
+	protected $config;
 	private $can_create_connection;
 
 	const KNIT_PAY_OAUTH_SERVER_URL        = 'https://oauth-server.knitpay.org/api/';
@@ -40,7 +40,6 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 
 	abstract public function get_child_config( $post_id );
 	abstract public function clear_child_config( $post_id );
-	abstract public function allowed_redirect_hosts( $hosts);
 
 	/**
 	 * Setup.
@@ -64,6 +63,10 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 
 		// Get new access token if it's about to get expired.
 		add_action( 'knit_pay_' . $this->get_id() . '_refresh_access_token', [ $this, 'refresh_access_token' ], 10, 1 );
+	}
+
+	public function allowed_redirect_hosts( $hosts ) {
+		return $hosts;
 	}
 
 	/**
@@ -113,13 +116,21 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		return $fields;
 	}
 
+	/**
+	 * Get config.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return Config
+	 */
 	public function get_config( $post_id ) {
 		$config = $this->get_child_config( $post_id );
 
 		$config->config_id = $post_id;
 
 		// Schedule next refresh token if not done before.
-		self::schedule_next_refresh_access_token( $post_id, $config->expires_at );
+		if ( isset( $config->expires_at ) ) {
+			self::schedule_next_refresh_access_token( $post_id, $config->expires_at );
+		}
 
 		return $config;
 	}
@@ -179,7 +190,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		self::configure_webhook( $config_id );
 	}
 
-	private function init_oauth_connect( $config, $config_id ) {
+	protected function init_oauth_connect( $config, $config_id, $return_response_data = false ) {
 		// Clear Old config before creating new connection.
 		self::clear_config( $config_id );
 
@@ -198,23 +209,30 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		);
 		$result   = wp_remote_retrieve_body( $response );
 		$result   = json_decode( $result );
-		
+
 		if ( ! isset( $result->success ) ) {
-			echo 'Something went wrong, kindly retry';
+			echo 'Not receiving a valid response from the Knit Pay OAuth Server. Please try again after some time or report the issue to the Knit Pay support team.';
 			exit;
 		}
-		
+
 		if ( $result->success ) {
+			if ( $return_response_data ) {
+				return $result->data;
+			}
+
 			add_filter( 'allowed_redirect_hosts', [ $this, 'allowed_redirect_hosts' ] );
 			wp_safe_redirect( $result->data->auth_url );
 			exit;
-		} else {
+		} elseif ( isset( $result->data ) ) {
 			echo $result->data->message;
+			exit;
+		} elseif ( isset( $result->errors ) ) {
+			echo $result->errors[0]->message;
 			exit;
 		}
 	}
 
-	private function clear_config( $config_id ) {
+	protected function clear_config( $config_id ) {
 		$this->clear_child_config( $config_id );
 
 		// Stop Refresh Token Scheduler.
@@ -230,7 +248,12 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		$code                      = isset( $_GET['code'] ) ? sanitize_text_field( $_GET['code'] ) : null;
 		$state                     = isset( $_GET['state'] ) ? sanitize_text_field( $_GET['state'] ) : null;
 		$gateway_id                = isset( $_GET['gateway_id'] ) ? sanitize_text_field( $_GET['gateway_id'] ) : null;
+		$gateway                   = isset( $_GET['gateway'] ) ? sanitize_text_field( $_GET['gateway'] ) : null;
 		$knitpay_oauth_auth_status = isset( $_GET['knitpay_oauth_auth_status'] ) ? sanitize_text_field( $_GET['knitpay_oauth_auth_status'] ) : null;
+
+		if ( $this->get_id() !== $gateway ) {
+			return;
+		}
 
 		// Don't interfere if rzp-wppcommerce attempting to connect.
 		// TODO, move to Razorpay.
@@ -246,22 +269,22 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		$config = $this->get_config( $gateway_id );
 
 		// GET keys.
-		$response = wp_remote_post(
+		$oauth_token_request_body = [
+			'code'       => $code,
+			'state'      => $state,
+			'gateway_id' => $gateway_id,
+			'mode'       => $config->mode,
+		];
+		$oauth_token_request_body = $this->get_oauth_token_request_body( $oauth_token_request_body );
+		$response                 = wp_remote_post(
 			self::KNIT_PAY_OAUTH_SERVER_URL . $this->get_id() . '/oauth/token',
 			[
-				'body'    => wp_json_encode(
-					[
-						'code'       => $code,
-						'state'      => $state,
-						'gateway_id' => $gateway_id,
-						'mode'       => $config->mode,
-					]
-				),
+				'body'    => wp_json_encode( $oauth_token_request_body ),
 				'timeout' => 90,
 			]
 		);
-		$result   = wp_remote_retrieve_body( $response );
-		$result   = json_decode( $result );
+		$result                   = wp_remote_retrieve_body( $response );
+		$result                   = json_decode( $result );
 
 		if ( JSON_ERROR_NONE !== json_last_error() ) {
 			self::redirect_to_config( $gateway_id );
@@ -334,29 +357,22 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			return;
 		}
 
-		// TODO
-		if ( isset( $result->razorpay_connect_status ) && 'failed' === $result->razorpay_connect_status ) {
-			$this->inc_refresh_token_fail_counter( $config, $config_id );
-
-			// Client config if access is revoked.
-			if ( isset( $result->error ) && isset( $result->error->description )
-				&& ( 'Token has been revoked' === $result->error->description || 'Token has expired' === $result->error->description ) ) {
-					self::clear_config( $config_id );
-					return;
-			}
+		if ( $this->refresh_failed_action( $result, $config, $config_id ) ) {
+			return;
 		}
 
 		$this->save_token( $config_id, $result );
 	}
 
-	private function save_token( $gateway_id, $token_data, $new_connection = false ) {
+	protected function save_token( $gateway_id, $token_data, $new_connection = false ) {
 		if ( ! ( isset( $token_data->success ) && $token_data->success ) ) {
 			return;
 		}
 		
 		$token_data = $token_data->data;
+		$expires_id = isset( $token_data->expires_in ) ? $token_data->expires_in : 86400;
 
-		$token_data->expires_at   = time() + $token_data->expires_in - 60;
+		$token_data->expires_at   = time() + $expires_id - 1800;
 		$token_data->is_connected = true;
 		
 		if ( $new_connection ) {
@@ -370,7 +386,8 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		foreach ( $token_data as $key => $value ) {
 			update_post_meta( $gateway_id, '_pronamic_gateway_' . $this->get_id() . '_' . $key, $value );
 		}
-		
+
+		// Reset Connection Fail Counter.
 		delete_post_meta( $gateway_id, '_pronamic_gateway_' . $this->get_id() . '_connection_fail_count' );
 
 		$this->schedule_next_refresh_access_token( $gateway_id, $token_data->expires_at );
@@ -446,15 +463,19 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			$connected_at = new DateTime();
 			$connected_at->setTimestamp( $config->connected_at );
 		}
-		$expire_date = new DateTime();
-		$expire_date->setTimestamp( $config->expires_at );
-		$renew_schedule_time = new DateTime();
-		$renew_schedule_time->setTimestamp( wp_next_scheduled( 'knit_pay_' . $this->get_id() . '_refresh_access_token', [ 'config_id' => $config->config_id ] ) );
-		
 		$access_token_info  = '<dl>';
 		$access_token_info .= isset( $connected_at ) ? sprintf( '<dt><strong>Connected at:</strong></dt><dd>%s</dd>', $connected_at->format_i18n() ) : '';
-		$access_token_info .= sprintf( '<dt><strong>Access Token Expiry Date:</strong></dt><dd>%s</dd>', $expire_date->format_i18n() );
-		$access_token_info .= sprintf( '<dt><strong>Next Automatic Renewal Scheduled at:</strong></dt><dd>%s</dd>', $renew_schedule_time->format_i18n() );
+
+		if ( isset( $config->expires_at ) ) {
+			$expire_date = new DateTime();
+			$expire_date->setTimestamp( $config->expires_at );
+			$access_token_info .= sprintf( '<dt><strong>Access Token Expiry Date:</strong></dt><dd>%s</dd>', $expire_date->format_i18n() );
+
+			$renew_schedule_time = new DateTime();
+			$renew_schedule_time->setTimestamp( wp_next_scheduled( 'knit_pay_' . $this->get_id() . '_refresh_access_token', [ 'config_id' => $config->config_id ] ) );
+			$access_token_info .= sprintf( '<dt><strong>Next Automatic Renewal Scheduled at:</strong></dt><dd>%s</dd>', $renew_schedule_time->format_i18n() );
+		}
+
 		$access_token_info .= '</dl>';
 		echo $access_token_info;
 	}
@@ -465,7 +486,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		return defined( 'KNIT_PAY_RAZORPAY_API' ) || 'razorpay-pro' === $this->get_id();
 	}
 	
-	private function is_oauth_connected( $config ) {
+	protected function is_oauth_connected( $config ) {
 		return ! empty( $config->access_token );
 	}
 
@@ -477,7 +498,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		return false;
 	}
 	
-	private function get_oauth_connect_button_fields( $fields ) {
+	protected function get_oauth_connect_button_fields( $fields ) {
 		// Signup.
 		// TODO Add signup button code.
 		/*
@@ -523,7 +544,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		return $fields;
 	}
 
-	private function get_oauth_connection_status_fields( $fields ) {
+	protected function get_oauth_connection_status_fields( $fields ) {
 		// Remove Knit Pay as an Authorized Application.
 			/*
 			$fields[] = [
@@ -566,5 +587,19 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	
 	protected function show_common_setting_fields( $fields ) {
 		return $fields;
+	}
+
+	protected function get_oauth_token_request_body( $oauth_token_request_body ) {
+		return $oauth_token_request_body;
+	}
+
+	protected function refresh_failed_action( $result, $config, $config_id ) {
+		if ( isset( $result->success ) && ! $result->success ) {
+			$this->inc_refresh_token_fail_counter( $config, $config_id );
+			self::schedule_next_refresh_access_token( $config_id, $config->expires_at );
+
+			return true;
+		}
+		return false;
 	}
 }

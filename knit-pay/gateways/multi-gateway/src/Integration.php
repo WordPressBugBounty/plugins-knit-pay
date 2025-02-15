@@ -60,10 +60,31 @@ class Integration extends AbstractGatewayIntegration {
 		 // Enabled Payment Methods.
 		 $fields[] = [
 			 'section'  => 'general',
-			 'meta_key' => 'multi_gateway_enabled_payment_gateways',
 			 'title'    => __( 'Enabled Payment Gateways', 'knit-pay-lang' ),
 			 'type'     => 'description',
 			 'callback' => [ $this, 'field_enabled_payment_gateways' ],
+		 ];
+
+		 // Gateway Currency.
+		 $fields[] = [
+			 'section'  => 'advanced',
+			 'meta_key' => '_pronamic_gateway_multi_gateway_gateway_currency',
+			 'title'    => __( 'Gateway Currency', 'knit-pay-lang' ),
+			 'type'     => 'text',
+			 'classes'  => [ 'regular-text', 'code' ],
+			 'tooltip'  => __( '3 Character Currency Code. (eg. USD) ', 'knit-pay-lang' ),
+		 ];
+
+		 // Exchange Rate.
+		 $fields[] = [
+			 'section'  => 'advanced',
+			 'filter'   => FILTER_VALIDATE_FLOAT,
+			 'meta_key' => '_pronamic_gateway_multi_gateway_exchange_rate',
+			 'title'    => __( 'Exchange Rate', 'knit-pay-lang' ),
+			 'type'     => 'text',
+			 'classes'  => [ 'regular-text', 'code' ],
+			 'tooltip'  => __( 'Exchange Rate of Payment Currency.', 'knit-pay-lang' ),
+			 'default'  => 1.0,
 		 ];
 
 		 // Return fields.
@@ -115,12 +136,18 @@ class Integration extends AbstractGatewayIntegration {
 
 		$config->gateway_selection_mode   = $this->get_meta( $post_id, 'multi_gateway_gateway_selection_mode' );
 		$config->enabled_payment_gateways = $this->get_meta( $post_id, 'multi_gateway_enabled_payment_gateways' );
+		$config->gateway_currency         = $this->get_meta( $post_id, 'multi_gateway_gateway_currency' );
+		$config->exchange_rate            = $this->get_meta( $post_id, 'multi_gateway_exchange_rate' );
 
 		if ( '' === $config->gateway_selection_mode ) {
 			$config->gateway_selection_mode = 0;
 		}
 		if ( empty( $config->enabled_payment_gateways ) ) {
 			$config->enabled_payment_gateways = [];
+		}
+
+		if ( empty( $config->exchange_rate ) ) {
+			$config->exchange_rate = 1.0;
 		}
 
 		return $config;

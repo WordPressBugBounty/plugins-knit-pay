@@ -14,19 +14,20 @@ use Exception;
  */
 class API {
 	private $config;
+	private $api_base_url;
 
 	public function __construct( $config ) {
 		$this->config = $config;
 
 		if ( 'test' === $this->config->mode ) {
-			$this->api_base_url = 'https://api-m.sandbox.paypal.com/v2/checkout/';
+			$this->api_base_url = 'https://api-m.sandbox.paypal.com/v2/';
 		} else {
-			$this->api_base_url = 'https://api-m.paypal.com/v2/checkout/';
+			$this->api_base_url = 'https://api-m.paypal.com/v2/';
 		}
 	}
 
 	public function create_order( $data ) {
-		$endpoint = $this->api_base_url . 'orders';
+		$endpoint = $this->api_base_url . 'checkout/orders';
 
 		$response = wp_remote_post(
 			$endpoint,
@@ -50,8 +51,41 @@ class API {
 		throw new Exception( 'Something went wrong. Please try again later.' );
 	}
 
-	public function get_order_details( $transaction_id ) {
-		$endpoint = $this->api_base_url . 'orders/' . $transaction_id;
+	public function capture_payment( $paypal_order_id ) {
+		$endpoint = $this->api_base_url . 'checkout/orders/' . $paypal_order_id . '/capture';
+
+		$response = wp_remote_post(
+			$endpoint,
+			[
+				// 'body'    => wp_json_encode( $data ),
+				'headers' => $this->get_request_headers(),
+			]
+		);
+		$result   = wp_remote_retrieve_body( $response );
+
+		$result = json_decode( $result );
+
+		if ( isset( $result->message ) ) {
+			throw new Exception( trim( $result->message ) );
+		}
+
+		if ( $paypal_order_id === $result->id ) {
+			return $result;
+		}
+
+		throw new Exception( 'Something went wrong. Please try again later.' );
+	}
+
+	/**
+	 * Get order details.
+	 *
+	 * @param string $paypal_order_id Paypal Order ID.
+	 *
+	 * @return object
+	 * @throws Exception
+	 */
+	public function get_order_details( $paypal_order_id ) {
+		$endpoint = $this->api_base_url . 'checkout/orders/' . $paypal_order_id;
 
 		$response = wp_remote_get(
 			$endpoint,
@@ -67,7 +101,43 @@ class API {
 			throw new Exception( 'Something went wrong. Please try again later.' );
 		}
 
-		if ( $transaction_id === $result->id ) {
+		if ( $paypal_order_id === $result->id ) {
+			return $result;
+		}
+
+		throw new Exception( 'Something went wrong. Please try again later.' );
+	}
+
+	/**
+	 * Refund payment.
+	 *
+	 * @see: https://developer.paypal.com/docs/api/payments/v2/#captures_refund
+	 *
+	 * @param string $paypal_capture_id Paypal Capture ID.
+	 * @param array  $data Refund data.
+	 *
+	 * @return object
+	 * @throws Exception
+	 */
+	public function refund_payment( $paypal_capture_id, $data ) {
+		$endpoint = $this->api_base_url . "payments/captures/{$paypal_capture_id}/refund";
+
+		$response = wp_remote_post(
+			$endpoint,
+			[
+				'body'    => wp_json_encode( $data ),
+				'headers' => $this->get_request_headers(),
+			]
+		);
+		$result   = wp_remote_retrieve_body( $response );
+
+		$result = json_decode( $result );
+
+		if ( isset( $result->message ) ) {
+			throw new Exception( trim( $result->message ) );
+		}
+
+		if ( isset( $result->id ) ) {
 			return $result;
 		}
 
@@ -76,8 +146,8 @@ class API {
 
 	private function get_request_headers() {
 		return [
-			'Authorization' => 'Basic ' . base64_encode( $this->config->client_id . ':' . $this->config->client_secret ),
-			'Content-Type'  => 'application/json',
+			'Authorization'                 => 'Basic ' . base64_encode( $this->config->client_id . ':' . $this->config->client_secret ),
+			'Content-Type'                  => 'application/json',
 		];
 	}
 }

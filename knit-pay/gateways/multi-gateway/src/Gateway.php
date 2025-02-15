@@ -9,6 +9,8 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Pronamic\WordPress\Pay\Payments\StatusChecker;
 use WP_Post;
+use Pronamic\WordPress\Number\Number;
+use Pronamic\WordPress\Money\Money;
 
 /**
  * Title: Multi Gateway Gateway
@@ -104,6 +106,8 @@ class Gateway extends Core_Gateway {
 	 *            Payment.
 	 */
 	public function start( Payment $payment ) {
+		$this->change_currency( $payment );
+
 		$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
 		$payment->set_action_url( $payment->get_return_url() );
 	}
@@ -219,5 +223,44 @@ class Gateway extends Core_Gateway {
 			$form_inner
 		);
 
+	}
+
+	private function change_currency( Payment $payment ) {
+		$gateway_currency = $this->config->gateway_currency;
+		$exchange_rate    = $this->config->exchange_rate;
+
+		$payment_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
+
+		if ( empty( $gateway_currency ) ) {
+			return;
+		} elseif ( $gateway_currency === $payment_currency && 1.0 === floatval( $exchange_rate ) ) {
+			return;
+		}
+
+		$exchange_rate = new Number( $exchange_rate );
+		$total_amount  = $payment->get_total_amount();
+		$total_amount->set_currency( $gateway_currency );
+		$total_amount = $total_amount->multiply( $exchange_rate );
+		$payment->set_total_amount( $total_amount );
+
+		if ( ! is_null( $payment->get_lines() ) ) {
+			$line_iterator = $payment->get_lines()->getIterator();
+			foreach ( $line_iterator as $key => $payment_line ) {
+				if ( ! is_null( $payment_line->get_total_amount() ) ) {
+					$payment_line->get_total_amount()->set_currency( $gateway_currency );
+					$payment_line->set_total_amount( $payment_line->get_total_amount()->multiply( $exchange_rate ) );
+				}
+
+				if ( ! is_null( $payment_line->get_discount_amount() ) ) {
+					$payment_line->get_discount_amount()->set_currency( $gateway_currency );
+					$payment_line->set_discount_amount( $payment_line->get_discount_amount()->multiply( $exchange_rate ) );
+				}
+
+				if ( ! is_null( $payment_line->get_unit_price() ) ) {
+					$payment_line->get_unit_price()->set_currency( $gateway_currency );
+					$payment_line->set_unit_price( $payment_line->get_unit_price()->multiply( $exchange_rate ) );
+				}
+			}
+		}
 	}
 }

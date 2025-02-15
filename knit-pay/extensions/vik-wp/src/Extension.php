@@ -94,7 +94,29 @@ class Extension extends AbstractPluginIntegration {
 	 * @return string
 	 */
 	public static function redirect_url( $url, $payment ) {
-		return add_query_arg( 'refresh', microtime(), $payment->get_meta( 'vik_return_url' ) );
+		if ( empty( $payment->get_meta( 'vik_return_url' ) ) ) {
+			return $url;
+		}
+
+		switch ( $payment->get_status() ) {
+			case Core_Statuses::CANCELLED:
+			case Core_Statuses::EXPIRED:
+			case Core_Statuses::FAILURE:
+				// Call KnitPayVikBookingGateway->validateTransaction and KnitPayVikBookingGateway->complete.
+				$url = add_query_arg(
+					[
+						'payment_id' => $payment->get_id(),
+						'tmpl'       => 'component',
+						'task'       => 'notifypayment',
+					],
+					$payment->get_meta( 'vik_return_url' )
+				);
+				break;
+			default:
+				$url = $payment->get_meta( 'vik_return_url' );
+		}
+
+		return $url;
 	}
 
 	/**
@@ -108,8 +130,7 @@ class Extension extends AbstractPluginIntegration {
 		}
 		
 		// Calling KnitPayVikBookingGateway->validateTransaction.
-		$notify_url =
-		add_query_arg(
+		$notify_url = add_query_arg(
 			[
 				'payment_id' => $payment->get_id(),
 				'tmpl'       => 'component',

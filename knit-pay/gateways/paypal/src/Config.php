@@ -14,6 +14,12 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  */
 class Config extends GatewayConfig {
 	public $mode;
+	public $config_id;
 	public $client_id;
 	public $client_secret;
+
+	// OAuth.
+	public $merchant_id;
+	public $is_connected;
+	public $connected_at;
 }

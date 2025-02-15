@@ -37,4 +37,6 @@ class Config extends GatewayConfig {
 	public $connected_at;
 
 	public $expires_at;
+
+	public $connection_fail_count;
 }

@@ -1,14 +1,16 @@
 <?php
 namespace KnitPay\Extensions\VikWP;
 
-use Pronamic\WordPress\Money\Currency;
-use Pronamic\WordPress\Money\Money;
-use Pronamic\WordPress\Pay\Plugin;
-use Pronamic\WordPress\Pay\Payments\Payment;
-use JPaymentStatus;
-use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
+use Exception;
+use JFactory;
 use JLoader;
 use JPayment;
+use JPaymentStatus;
+use Pronamic\WordPress\Money\Currency;
+use Pronamic\WordPress\Money\Money;
+use Pronamic\WordPress\Pay\Payments\Payment;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
+use Pronamic\WordPress\Pay\Plugin;
 
 /**
  * Title: Vik WP Gateway
@@ -41,8 +43,18 @@ class KnitPayGateway extends JPayment {
 		parent::__construct( $alias, $order, $params );
 	}
 
-	protected function complete( $esit = 0 ) {
-		/** See the code below to build this method */
+	// Error message in case of failed payment is not getting displayed without this message.
+	protected function complete( $res = 0 ) {
+		$app = JFactory::getApplication();
+
+		if ( ! $res ) {
+			$url = $this->get( 'error_url' );
+
+			// display error message
+			$app->enqueueMessage( 'Payment Failed.', 'error' );
+		}
+
+		JFactory::getApplication()->redirect( $url );
 	}
 
 	protected function buildAdminParameters() {
@@ -125,7 +137,7 @@ class KnitPayGateway extends JPayment {
 		
 		try {
 			$payment = Plugin::start_payment( $payment );
-	
+
 			$payment->set_meta( 'vik_return_url', $this->get( 'return_url' ) );
 			$payment->set_meta( 'vik_sub_source', $this->getCaller() );
 			$payment->save();
@@ -135,7 +147,7 @@ class KnitPayGateway extends JPayment {
 			$form .= '</form>';
 			
 			echo $form;
-		} catch ( \Exception $e ) {
+		} catch ( Exception $e ) {
 			echo "<p class='err'>Error: " . $e->getMessage() . '</p>';
 		}
 	}
