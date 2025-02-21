@@ -5,7 +5,7 @@ namespace KnitPay\Gateways\Paypal;
 use Exception;
 
 /**
- * Title: Paypal API Client
+ * Title: PayPal API Client
  * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
@@ -20,9 +20,9 @@ class API {
 		$this->config = $config;
 
 		if ( 'test' === $this->config->mode ) {
-			$this->api_base_url = 'https://api-m.sandbox.paypal.com/v2/';
+			$this->api_base_url = 'https://api.sandbox.paypal.com/v2/';
 		} else {
-			$this->api_base_url = 'https://api-m.paypal.com/v2/';
+			$this->api_base_url = 'https://api.paypal.com/v2/';
 		}
 	}
 
@@ -40,7 +40,9 @@ class API {
 
 		$result = json_decode( $result );
 
-		if ( isset( $result->message ) ) {
+		if ( isset( $result->details ) ) {
+			throw new Exception( trim( $result->details[0]->description ) );
+		} elseif ( isset( $capture_status->message ) ) {
 			throw new Exception( trim( $result->message ) );
 		}
 
@@ -57,7 +59,6 @@ class API {
 		$response = wp_remote_post(
 			$endpoint,
 			[
-				// 'body'    => wp_json_encode( $data ),
 				'headers' => $this->get_request_headers(),
 			]
 		);
@@ -65,11 +66,7 @@ class API {
 
 		$result = json_decode( $result );
 
-		if ( isset( $result->message ) ) {
-			throw new Exception( trim( $result->message ) );
-		}
-
-		if ( $paypal_order_id === $result->id ) {
+		if ( isset( $result->message ) || $paypal_order_id === $result->id ) {
 			return $result;
 		}
 
@@ -79,7 +76,9 @@ class API {
 	/**
 	 * Get order details.
 	 *
-	 * @param string $paypal_order_id Paypal Order ID.
+	 * @see https://developer.paypal.com/docs/api/orders/v2/#orders_get
+	 *
+	 * @param string $paypal_order_id PayPal Order ID.
 	 *
 	 * @return object
 	 * @throws Exception
@@ -113,7 +112,7 @@ class API {
 	 *
 	 * @see: https://developer.paypal.com/docs/api/payments/v2/#captures_refund
 	 *
-	 * @param string $paypal_capture_id Paypal Capture ID.
+	 * @param string $paypal_capture_id PayPal Capture ID.
 	 * @param array  $data Refund data.
 	 *
 	 * @return object
@@ -146,8 +145,8 @@ class API {
 
 	private function get_request_headers() {
 		return [
-			'Authorization'                 => 'Basic ' . base64_encode( $this->config->client_id . ':' . $this->config->client_secret ),
-			'Content-Type'                  => 'application/json',
+			'Authorization' => 'Basic ' . base64_encode( $this->config->client_id . ':' . $this->config->client_secret ),
+			'Content-Type'  => 'application/json',
 		];
 	}
 }

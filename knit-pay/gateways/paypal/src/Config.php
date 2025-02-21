@@ -5,7 +5,7 @@ namespace KnitPay\Gateways\Paypal;
 use Pronamic\WordPress\Pay\Core\GatewayConfig;
 
 /**
- * Title: Paypal Config
+ * Title: PayPal Config
  * Copyright: 2020-2025 Knit Pay
  *
  * @author  Knit Pay

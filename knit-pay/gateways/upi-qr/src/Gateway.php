@@ -20,6 +20,7 @@ class Gateway extends Core_Gateway {
 	protected $config;
 	private $intent_url_parameters;
 	protected $payment_expiry_seconds = 300;
+	protected $enable_polling;
 
 	/**
 	 * Constructs and initializes an UPI QR gateway
@@ -67,8 +68,8 @@ class Gateway extends Core_Gateway {
 		}
 
 		if ( 100 > $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' ) ) {
-			$mobile_error = 'The amount should be at least ₹1.';
-			throw new Exception( $mobile_error );
+			$amount_error = 'The amount should be at least ₹1.';
+			throw new Exception( $amount_error );
 		}
 
 		if ( $this->config->hide_mobile_qr && $this->config->hide_pay_button ) {

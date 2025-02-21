@@ -86,4 +86,6 @@ function knit_pay_check_payment_status() {
 }
 
 let payment_status_counter = 0;
-payment_status_checker = setInterval(knit_pay_check_payment_status, 4000);
+if (jQuery("#enable_polling").val()){
+	payment_status_checker = setInterval(knit_pay_check_payment_status, 4000);
+}

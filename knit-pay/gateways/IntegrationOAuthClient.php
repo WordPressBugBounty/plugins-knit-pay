@@ -190,7 +190,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		self::configure_webhook( $config_id );
 	}
 
-	protected function init_oauth_connect( $config, $config_id, $return_response_data = false ) {
+	protected function init_oauth_connect( $config, $config_id, $return_response = false ) {
 		// Clear Old config before creating new connection.
 		self::clear_config( $config_id );
 
@@ -211,15 +211,17 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		$result   = json_decode( $result );
 
 		if ( ! isset( $result->success ) ) {
-			echo 'Not receiving a valid response from the Knit Pay OAuth Server. Please try again after some time or report the issue to the Knit Pay support team.';
-			exit;
+			$result = (object) [
+				'success' => false,
+				'data'    => (object) [
+					'message' => 'Not receiving a valid response from the Knit Pay OAuth Server. Please try again after some time or report the issue to the Knit Pay support team.',
+				],
+			];
 		}
 
-		if ( $result->success ) {
-			if ( $return_response_data ) {
-				return $result->data;
-			}
-
+		if ( $return_response ) {
+			return $result;
+		} elseif ( $result->success ) {
 			add_filter( 'allowed_redirect_hosts', [ $this, 'allowed_redirect_hosts' ] );
 			wp_safe_redirect( $result->data->auth_url );
 			exit;

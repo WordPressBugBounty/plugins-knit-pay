@@ -51,16 +51,17 @@ function paymentExpiredAction() {
 };
 
 function knit_pay_check_payment_status(utr = '') {
+	payment_status_counter++;
+
 	jQuery.post(knit_pay_upi_qr_vars.ajaxurl, {
 		'action': 'knit_pay_upi_qr_payment_status_check',
 		'knit_pay_transaction_id': document.querySelector('input[name=knit_pay_transaction_id]').value,
 		'knit_pay_payment_id': document.querySelector('input[name=knit_pay_payment_id]').value,
+		'check_status_count': payment_status_counter,
+		'knit_pay_nonce': document.querySelector('input[name=knit_pay_nonce]').value,
 		'knit_pay_utr': utr,
-		'knit_pay_nonce': document.querySelector('input[name=knit_pay_nonce]').value
 	}, function(msg) {
-		if (msg.data == 'Open') {
-			//clearInterval(payment_status_checker);
-
+		if ('' !== utr && msg.data == 'Open') {
 			Swal.fire({
 				'title': 'Transaction Not Found!',
 				'text': 'Please verify that the provided UTR is accurate.',
@@ -69,9 +70,8 @@ function knit_pay_check_payment_status(utr = '') {
 				payViaUPI();
 			});
 
-
 		} else if (msg.data == 'Success') {
-			//clearInterval(payment_status_checker);
+			knit_pay_upi_qr_stop_polling();
 
 			Swal.fire('Your Payment Received Successfully', 'Please Wait!', 'success')
 
@@ -79,7 +79,7 @@ function knit_pay_check_payment_status(utr = '') {
 				document.getElementById('formSubmit').submit();
 			}, 200);
 		} else if (msg.data == 'Failure') {
-			//clearInterval(payment_status_checker);
+			knit_pay_upi_qr_stop_polling();
 
 			Swal.fire('Payment Failed', 'Please Wait!', 'error')
 
@@ -90,10 +90,20 @@ function knit_pay_check_payment_status(utr = '') {
 	});
 }
 
+function knit_pay_upi_qr_stop_polling() {
+	if (undefined !== payment_status_checker){
+		clearInterval(payment_status_checker);
+	}
+}
+
+let payment_status_counter = 0;
+let payment_status_checker;
 window.onload = function() {
-	//payment_status_checker = setInterval(knit_pay_check_payment_status, 4000);
+	if (jQuery("#enable_polling").val()){
+		payment_status_checker = setInterval(knit_pay_check_payment_status, 4000);
+	}
 
 	generateQR(jQuery("#upi_qr_text").val());
 
-	knit_pay_countdown(600, 'countdown-timer', 'Expires in %mm:%ss', paymentExpiredAction);
+	knit_pay_countdown(jQuery("#payment_expiry_seconds").val(), 'countdown-timer', 'Expires in %mm:%ss', paymentExpiredAction);
 };

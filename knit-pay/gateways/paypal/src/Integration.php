@@ -6,7 +6,7 @@ use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
 use KnitPay\Gateways\IntegrationOAuthClient;
 
 /**
- * Title: Paypal Integration
+ * Title: PayPal Integration
  * Copyright: 2020-2025 Knit Pay
  *
  * @author  Knit Pay
@@ -15,9 +15,10 @@ use KnitPay\Gateways\IntegrationOAuthClient;
  */
 class Integration extends IntegrationOAuthClient {
 	use IntegrationModeTrait;
+	const PARTNER_ATTRIBUTION_ID = 'LogicBridgeTechnoMartLLP_SI';
 
 	/**
-	 * Construct Paypal integration.
+	 * Construct PayPal integration.
 	 *
 	 * @param array $args Arguments.
 	 */
@@ -26,7 +27,7 @@ class Integration extends IntegrationOAuthClient {
 			$args,
 			[
 				'id'       => 'paypal',
-				'name'     => 'Paypal',
+				'name'     => 'PayPal',
 				'provider' => 'paypal',
 			]
 		);
@@ -34,6 +35,36 @@ class Integration extends IntegrationOAuthClient {
 		parent::__construct( $args );
 
 		// TODO https://developer.paypal.com/docs/api/webhooks/v1/#webhooks_post
+	}
+
+		/**
+		 * Setup.
+		 */
+	public function setup() {
+		parent::setup();
+
+		// Display ID on Configurations page.
+		\add_filter(
+			'http_request_args',
+			[ $this, 'add_paypal_partner_id' ],
+			1000,
+			2
+		);
+	}
+
+	/**
+	 * Add PayPal Partner ID in request header.
+	 *
+	 * @param array  $parsed_args Parsed arguments.
+	 * @param string $url         URL.
+	 * @return array
+	 */
+	public function add_paypal_partner_id( $parsed_args, $url ) {
+		if ( strpos( $url, 'paypal.com', 8 ) !== false ) {
+			$parsed_args['headers']['PayPal-Partner-Attribution-Id'] = self::PARTNER_ATTRIBUTION_ID;
+		}
+
+		return $parsed_args;
 	}
 
 	/**
@@ -81,8 +112,26 @@ class Integration extends IntegrationOAuthClient {
 			'section'  => 'general',
 			'type'     => 'custom',
 			'callback' => function () {
-				$admin_url          = admin_url();
-				$auth_response_data = $this->init_oauth_connect( $this->config, $this->config->config_id, true );
+				// TODO: Implement mode change with AJAX.
+				echo '<script>
+					document.getElementById("_pronamic_gateway_mode").addEventListener("change", function(event){
+						document.getElementById("publish").click();
+					});
+					</script>';
+
+				$admin_url     = admin_url();
+				$auth_response = $this->init_oauth_connect( $this->config, $this->config->config_id, true );
+
+				if ( ! $auth_response->success ) {
+					if ( isset( $auth_response->data ) ) {
+						echo 'Error: ' . $auth_response->data->message;
+						return;
+					}
+					echo 'Error: ' . $auth_response->errors[0]->message;
+					return;
+				}
+
+				$auth_response_data = $auth_response->data;
 				$auth_url           = $auth_response_data->auth_url;
 				$state              = $auth_response_data->state;
 				$auth_url           = add_query_arg( [ 'displayMode' => 'minibrowser' ], $auth_url );
@@ -102,10 +151,12 @@ class Integration extends IntegrationOAuthClient {
 
 						// Close login window.
 						window.open("", "PPMiniWin").close();
+						document.body.insertAdjacentHTML("beforeend", "<div id=\"loading\" style=\"position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;\"><div style=\"font-size: 24px;\">Loading...</div></div>");
 						window.location.href = admin_url.toString();
 					}
+				 </script>
 				</script>
-				<script id="paypal-js" src="https://www.sandbox.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js"></script>';
+				<script id="paypal-js" src="https://www.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js"></script>';
 			},
 		];
 
@@ -117,8 +168,7 @@ class Integration extends IntegrationOAuthClient {
 	 *
 	 * @return array
 	 */
-	protected function get_basic_auth_fields( $fields ) {
-		/*
+	protected function get_oauth_connection_status_fields( $fields ) {
 		$fields = parent::get_oauth_connection_status_fields( $fields );
 
 		// Merchant ID.
@@ -129,7 +179,7 @@ class Integration extends IntegrationOAuthClient {
 			'type'     => 'text',
 			'classes'  => [ 'regular-text', 'code' ],
 			'readonly' => true,
-		];*/
+		];
 
 		// Client ID.
 		$fields[] = [
@@ -138,7 +188,7 @@ class Integration extends IntegrationOAuthClient {
 			'title'    => __( 'Client ID', 'knit-pay-lang' ),
 			'type'     => 'text',
 			'classes'  => [ 'regular-text', 'code' ],
-			// 'readonly' => true,
+			'readonly' => true,
 		];
 
 		// Client Secret.
@@ -148,7 +198,7 @@ class Integration extends IntegrationOAuthClient {
 			'title'    => __( 'Client Secret', 'knit-pay-lang' ),
 			'type'     => 'text',
 			'classes'  => [ 'regular-text', 'code' ],
-			// 'readonly' => true,
+			'readonly' => true,
 		];
 
 		// Return fields.
@@ -167,6 +217,11 @@ class Integration extends IntegrationOAuthClient {
 		$config->connected_at = $this->get_meta( $post_id, 'paypal_connected_at' );
 
 		$config->mode = $this->get_meta( $post_id, 'mode' );
+
+		// Mode is required to generate OAuth URL.
+		if ( empty( $config->mode ) ) {
+			$config->mode = 'live';
+		}
 
 		return $config;
 	}
@@ -202,10 +257,6 @@ class Integration extends IntegrationOAuthClient {
 		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_client_secret' );
 	}
 
-	protected function is_auth_basic_enabled( $config ) {
-		return true;
-	}
-
 	protected function is_oauth_connected( $config ) {
 		return ! empty( $config->client_secret );
 	}
@@ -238,9 +289,20 @@ class Integration extends IntegrationOAuthClient {
 	/**
 	 * Save post.
 	 *
-	 * @param int $post_id Post ID.
+	 * @param int $config_id The ID of the post being saved.
 	 * @return void
 	 */
-	public function save_post( $post_id ) {
+	public function save_post( $config_id ) {
+		// Execute below code only for OAuth Mode.
+		$config = $this->get_config( $config_id );
+
+		// Clear Keys if not connected.
+		if ( ! $config->is_connected && $this->is_oauth_connected( $config ) ) {
+			self::clear_config( $config_id );
+			return;
+		}
+
+		// TODO
+		// self::configure_webhook( $config_id );
 	}
 }

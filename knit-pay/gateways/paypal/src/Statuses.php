@@ -5,7 +5,7 @@ namespace KnitPay\Gateways\Paypal;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 
 /**
- * Title: Paypal Statuses
+ * Title: PayPal Statuses
  * Copyright: 2020-2025 Knit Pay
  *
  * @author  Knit Pay
@@ -56,6 +56,10 @@ class Statuses {
 	 */
 	const PAYER_ACTION_REQUIRED = 'PAYER_ACTION_REQUIRED';
 
+	const DECLINED = 'DECLINED';
+	const PENDING  = 'PENDING';
+	const FAILED   = 'FAILED';
+
 	/**
 	 * Transform a PayPal status to a Knit Pay status
 	 *
@@ -66,14 +70,17 @@ class Statuses {
 	public static function transform( $status ) {
 		$core_status = null;
 		switch ( $status ) {
-			case self::COMPLETED: // FIXME: https://developer.paypal.com/docs/api/orders/v2/#orders_create
+			case self::COMPLETED:
 				$core_status = Core_Statuses::SUCCESS;
 				break;
 
 			case self::VOIDED:
+			case self::DECLINED:
+			case self::FAILED:
 				$core_status = Core_Statuses::FAILURE;
 				break;
 
+			case self::PENDING:
 			case self::APPROVED:
 			case self::CREATED:
 			case self::SAVED:

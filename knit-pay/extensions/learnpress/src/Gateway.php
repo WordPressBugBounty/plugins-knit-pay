@@ -51,6 +51,8 @@ class Gateway extends LP_Gateway_Abstract {
 	 */
 	private $supports;
 
+	private $config_id;
+
 	/**
 	 * Bootstrap
 	 *

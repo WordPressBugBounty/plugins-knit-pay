@@ -68,6 +68,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<body>
 		<input type='hidden' id='upi_qr_text' value='<?php echo $upi_qr_text; ?>'>
+		<input type='hidden' id='payment_expiry_seconds' value='<?php echo $this->payment_expiry_seconds; ?>'>
+		<input type='hidden' id='enable_polling' value='<?php echo $this->enable_polling; ?>'>
 		<input type='hidden' id='image_dir_path' value='<?php echo KNIT_PAY_UPI_QR_IMAGE_URL; ?>'>
 		<input type='hidden' name='knit_pay_transaction_id' value='<?php echo $transaction_id; ?>'>
 		<input type='hidden' name='knit_pay_payment_id' value='<?php echo $payment->get_id(); ?>'>

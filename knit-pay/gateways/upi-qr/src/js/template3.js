@@ -61,9 +61,11 @@ function knit_pay_check_payment_status() {
 
 let payment_status_counter = 0;
 window.onload = function() {
-	payment_status_checker = setInterval(knit_pay_check_payment_status, 4000);
+	if (jQuery("#enable_polling").val()){
+		payment_status_checker = setInterval(knit_pay_check_payment_status, 4000);
+	}
 
 	generateQR(jQuery("#upi_qr_text").val());
 
-	knit_pay_countdown(300, 'countdown-timer', 'Expires in %mm:%ss', paymentExpiredAction);
+	knit_pay_countdown(jQuery("#payment_expiry_seconds").val(), 'countdown-timer', 'Expires in %mm:%ss', paymentExpiredAction);
 };
