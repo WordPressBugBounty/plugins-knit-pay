@@ -18,6 +18,8 @@ require_once 'lib/API.php';
  * @since 5.2.0
  */
 class Gateway extends Core_Gateway {
+	private $test_mode;
+	private $api;
 
 	/**
 	 * Initializes an Cashfree gateway
@@ -67,10 +69,10 @@ class Gateway extends Core_Gateway {
 		}
 
 
-			$this->session_id = $this->api->create_session( $this->get_payment_data( $payment ) );
+		$session_id = $this->api->create_session( $this->get_payment_data( $payment ) );
 
-			$payment->set_transaction_id( $this->session_id );
-			$payment->set_action_url( $payment->get_pay_redirect_url() );
+		$payment->set_transaction_id( $session_id );
+		$payment->set_action_url( $payment->get_pay_redirect_url() );
 	}
 
 	/**

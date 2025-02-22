@@ -18,4 +18,6 @@ class Config extends GatewayConfig {
 	public $consumer_secret;
 
 	public $merchant_id_code;
+
+	public $mode;
 }

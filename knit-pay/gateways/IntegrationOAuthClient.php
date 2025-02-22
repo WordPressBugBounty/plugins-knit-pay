@@ -102,6 +102,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		if ( $this->is_auth_basic_enabled( $this->config ) ) {
 			$fields = $this->get_basic_auth_fields( $fields );
 		} elseif ( ! $this->is_oauth_connected( $this->config ) ) {
+			$fields = $this->get_signup_button_field( $fields );
 			$fields = $this->get_oauth_connect_button_fields( $fields );
 		} else {
 			$fields = $this->get_oauth_connection_status_fields( $fields );
@@ -499,22 +500,27 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	private function is_mode_changed( $config ) {
 		return false;
 	}
+
+	private function get_signup_button_field( $fields ) {
+		 // SignUp.
+		$fields[] = [
+			'section'  => 'general',
+			'type'     => 'custom',
+			'title'    => 'Sign Up Now',
+			'callback' => function () {
+				echo sprintf(
+					__( 'Before proceeding, kindly create an account at %1$s if you don\'t have one already.%2$s', 'knit-pay-lang' ),
+					$this->get_name(),
+					'<br><br><a class="button button-primary button-large" target="_blank" href="' . $this->get_url() . 'help-signup"
+					 role="button"><strong>Sign Up for ' . $this->get_name() . '</strong></a>'
+				);
+			},
+		];
+
+		return $fields;
+	}
 	
 	protected function get_oauth_connect_button_fields( $fields ) {
-		// Signup.
-		// TODO Add signup button code.
-		/*
-		 $fields[] = array(
-		 'section' => 'general',
-		 'type'    => 'custom',
-		 'title'   => 'Limited Period Offer',
-		 'callback'    => function () {
-		 echo '<p>' . __( 'Encash your customer payments in an instant, at 0% additional charge. Offer valid on the new account for limited time.' ) . '</p>' .
-		 '<br /> <a class="button button-primary button-large" target="_blank" href="' . $this->get_url() . 'special-offer"
-		 role="button"><strong>Sign Up Now</strong></a>';
-		 }
-		 ); */
-		
 		// Oauth Connect Description.
 		$fields[] = [
 			'section'  => 'general',

@@ -4,6 +4,8 @@ namespace KnitPay\Gateways\Paypal;
 
 use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
 use KnitPay\Gateways\IntegrationOAuthClient;
+use KnitPay\Utils;
+
 
 /**
  * Title: PayPal Integration
@@ -26,9 +28,11 @@ class Integration extends IntegrationOAuthClient {
 		$args = wp_parse_args(
 			$args,
 			[
-				'id'       => 'paypal',
-				'name'     => 'PayPal',
-				'provider' => 'paypal',
+				'id'          => 'paypal',
+				'name'        => 'PayPal',
+				'url'         => 'http://go.thearrangers.xyz/paypal?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=',
+				'product_url' => 'http://go.thearrangers.xyz/paypal?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=product-url',
+				'provider'    => 'paypal',
 			]
 		);
 
@@ -81,19 +85,20 @@ class Integration extends IntegrationOAuthClient {
 	}
 
 	protected function get_oauth_connect_button_fields( $fields ) {
-		// Signup.
-		// TODO Add signup button code.
-		/*
-		 $fields[] = array(
-		 'section' => 'general',
-		 'type'    => 'custom',
-		 'title'   => 'Limited Period Offer',
-		 'callback'    => function () {
-		 echo '<p>' . __( 'Encash your customer payments in an instant, at 0% additional charge. Offer valid on the new account for limited time.' ) . '</p>' .
-		 '<br /> <a class="button button-primary button-large" target="_blank" href="' . $this->get_url() . 'special-offer"
-		 role="button"><strong>Sign Up Now</strong></a>';
-		 }
-		 ); */
+		// Save and reload page on change of gateway to fix PayPal connection issue.
+		if ( filter_has_var( INPUT_GET, 'gateway_id' ) && 'paypal' === \sanitize_text_field( $_GET['gateway_id'] ) ) {
+			$fields[] = [
+				'section'  => 'general',
+				'type'     => 'custom',
+				'callback' => function () {
+					echo '<script>
+							document.body.insertAdjacentHTML("beforeend", "<div id=\"loading\" style=\"position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;\"><div style=\"font-size: 24px;\">Loading...</div></div>");
+							document.getElementById("publish").click();
+						</script>';
+				},
+			];
+			return $fields;
+		}
 
 		// Oauth Connect Description.
 		$fields[] = [
@@ -115,6 +120,7 @@ class Integration extends IntegrationOAuthClient {
 				// TODO: Implement mode change with AJAX.
 				echo '<script>
 					document.getElementById("_pronamic_gateway_mode").addEventListener("change", function(event){
+						document.body.insertAdjacentHTML("beforeend", "<div id=\"loading\" style=\"position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;\"><div style=\"font-size: 24px;\">Changing Mode...</div></div>");
 						document.getElementById("publish").click();
 					});
 					</script>';
@@ -137,10 +143,15 @@ class Integration extends IntegrationOAuthClient {
 				$auth_url           = add_query_arg( [ 'displayMode' => 'minibrowser' ], $auth_url );
 
 				echo '
-				<a target="_blank" data-paypal-onboard-complete="onboardedCallback" href="' . $auth_url . '" data-paypal-button="true" class="button button-primary button-large"
-		                  role="button" style="font-size: 21px;background: #3395ff;">Connect with <strong>' . $this->get_name() . '</strong></a>
+				<a target="_blank" data-paypal-onboard-complete="knitpayPaypalOnboardedCallback" href="' . $auth_url . '" data-paypal-button="PPLtBlue">Connect with PayPal</a>
 				<script>
-					function onboardedCallback(authCode, sharedId) {
+					function knitpayPaypalOnboardedCallback(authCode, sharedId) {
+						// Close login window.
+						window.open("", "PPMiniWin").close();
+
+						// Show loading.
+						document.body.insertAdjacentHTML("beforeend", "<div id=\"loading\" style=\"position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;\"><div style=\"font-size: 24px;\">Loading...</div></div>");
+
 						const admin_url = new URL("' . $admin_url . '");
 						admin_url.searchParams.append("knitpay_oauth_auth_status", "connected");
 						admin_url.searchParams.append("code", authCode);
@@ -149,9 +160,6 @@ class Integration extends IntegrationOAuthClient {
 						admin_url.searchParams.append("gateway_id", ' . $this->config->config_id . ');
 						admin_url.searchParams.append("gateway", "' . $this->get_id() . '");
 
-						// Close login window.
-						window.open("", "PPMiniWin").close();
-						document.body.insertAdjacentHTML("beforeend", "<div id=\"loading\" style=\"position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;\"><div style=\"font-size: 24px;\">Loading...</div></div>");
 						window.location.href = admin_url.toString();
 					}
 				 </script>

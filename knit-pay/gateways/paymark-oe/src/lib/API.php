@@ -14,6 +14,8 @@ class API {
 
 	private $merchant_id_code;
 
+	private $test_mode;
+
 	public function __construct( $consumer_key, $consumer_secret, $merchant_id_code, $test_mode ) {
 		$this->consumer_key     = $consumer_key;
 		$this->consumer_secret  = $consumer_secret;

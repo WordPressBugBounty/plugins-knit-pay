@@ -19,7 +19,7 @@ class Listener {
 			return;
 		}
 
-		$order_id = filter_input( INPUT_POST, 'orderId', FILTER_SANITIZE_STRING );
+		$order_id = \sanitize_text_field( \wp_unslash( $_POST['orderId'] ) );
 		$payment  = get_pronamic_payment_by_transaction_id( $order_id );
 
 		if ( null === $payment ) {
