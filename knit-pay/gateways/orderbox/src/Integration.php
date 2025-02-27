@@ -9,6 +9,7 @@ use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use WP_Query;
+use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Orderbox Integration
@@ -79,6 +80,8 @@ class Integration extends AbstractGatewayIntegration {
 	public function get_settings_fields() {
 		$fields = [];
 
+		$config_id = KnitPayUtils::get_gateway_config_id();
+
 		// Payment Type ID.
 		$fields[] = [
 			'section'  => 'general',
@@ -131,7 +134,7 @@ class Integration extends AbstractGatewayIntegration {
 			'title'    => \__( 'Gateway URL', 'knit-pay-lang' ),
 			'type'     => 'text',
 			'classes'  => [ 'large-text', 'code' ],
-			'value'    => add_query_arg( 'kp_orderbox_payment_request', '', home_url( '/' ) ),
+			'value'    => add_query_arg( 'kp_orderbox_payment_request', $config_id, home_url( '/' ) ),
 			'readonly' => true,
 			'tooltip'  => sprintf(
 				/* translators: %s: PayUmoney */
@@ -199,6 +202,12 @@ class Integration extends AbstractGatewayIntegration {
 		return $fields;
 	}
 
+	/**
+	 * Get config.
+	 *
+	 * @param int $post_id Config ID.
+	 * @return Config
+	 */
 	public function get_config( $post_id ) {
 		$config = new Config();
 
@@ -247,33 +256,19 @@ class Integration extends AbstractGatewayIntegration {
 		// Sanitize GET parameters.
 		$_GET = array_map( 'sanitize_text_field', $_GET );
 
-		// Find Gateway Configuration for provided payment type id.
-		$query = new WP_Query(
-			[
-				'post_type'  => 'pronamic_gateway',
-				'fields'     => 'ids',
-				'nopaging'   => true,
-				'meta_query' => [
-					[
-						'key'   => '_pronamic_gateway_orderbox_payment_type_id',
-						'value' => $_GET['paymenttypeid'],
-					],
-				],
-			]
-		);
-		if ( empty( $query->post_count ) ) {
-			echo 'Gateway Configuration not found for provided payment type id.';
-			exit;
+		if ( ! empty( $_GET['kp_orderbox_payment_request'] ) ) {
+			$config_id = \sanitize_text_field( $_GET['kp_orderbox_payment_request'] );
+		} else {
+			$config_id = self::search_config_id( $_GET );
 		}
-		if ( 1 < $query->post_count ) {
-			echo 'More than 1 Gateway Configurations found for provided payment type id.';
-			exit;
-		}
-
-		$config_id = reset( $query->posts );
 
 		$integration = new Integration();
 		$config      = $integration->get_config( $config_id );
+
+		if ( $config->payment_type_id != $_GET['paymenttypeid'] ) {
+			echo 'Gateway Configuration not found for provided payment type id.';
+			exit;
+		}
 
 		$integration->init_payment( $_GET, $config, $config_id );
 	}
@@ -413,7 +408,8 @@ class Integration extends AbstractGatewayIntegration {
 			case PaymentStatus::AUTHORIZED:
 			case PaymentStatus::OPEN:
 			default:
-				$status = 'P';
+				$status = 'P'; // Admin will manually approve the payment. Once P is send, payment can not be automatically success/fail later.
+				break;
 		}
 
 		$rkey     = wp_rand( 1000000, 9999999 );
@@ -430,5 +426,33 @@ class Integration extends AbstractGatewayIntegration {
 			],
 			$redirect_url 
 		);
+	}
+
+	private function search_config_id( $get_array ) {
+		// Find Gateway Configuration for provided payment type id.
+		$query = new WP_Query(
+			[
+				'post_type'  => 'pronamic_gateway',
+				'fields'     => 'ids',
+				'nopaging'   => true,
+				'meta_query' => [
+					[
+						'key'   => '_pronamic_gateway_orderbox_payment_type_id',
+						'value' => $get_array['paymenttypeid'],
+					],
+				],
+			]
+		);
+		if ( empty( $query->post_count ) ) {
+			echo 'Gateway Configuration not found for provided payment type id.';
+			exit;
+		}
+		if ( 1 < $query->post_count ) {
+			echo 'More than 1 Gateway Configurations found for provided payment type id.';
+			exit;
+		}
+
+		$config_id = reset( $query->posts );
+		return $config_id;
 	}
 }

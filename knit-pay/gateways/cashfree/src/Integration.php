@@ -28,6 +28,7 @@ class Integration extends IntegrationOAuthClient {
 			[
 				'id'            => 'cashfree',
 				'name'          => 'Cashfree - Easy Connect',
+				'gateway_name'  => 'Cashfree', // Set this if display name and actual name are different.
 				'url'           => 'http://go.thearrangers.xyz/cashfree?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=',
 				'product_url'   => 'http://go.thearrangers.xyz/cashfree?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=product-url',
 				'dashboard_url' => 'http://go.thearrangers.xyz/cashfree?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=dashboard-url',
@@ -69,19 +70,6 @@ class Integration extends IntegrationOAuthClient {
 	}
 
 	protected function get_basic_auth_fields( $fields ) {
-		$fields[] = [
-			'section'     => 'general',
-			'type'        => 'custom',
-			'title'       => 'Sign Up',
-			'description' => sprintf(
-				/* translators: 1: Cashfree */
-				__( 'Before proceeding, kindly create an account at %1$s if you don\'t have one already.%2$s', 'knit-pay-lang' ),
-				__( 'Cashfree', 'knit-pay-lang' ),
-				'<br><a class="button button-primary" target="_blank" href="http://go.thearrangers.xyz/cashfree?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=help-signup"
-                     role="button"><strong>Sign Up Now</strong></a>'
-			),
-		];
-
 		// Client ID.
 		$fields[] = [
 			'section'  => 'general',

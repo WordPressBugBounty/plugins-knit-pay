@@ -498,7 +498,7 @@ class Gateway extends Core_Gateway {
 			$box_title = 'Pay via Razorpay';
 		}
 
-		// @see https://razorpay.com/docs/payment-gateway/web-integration/standard/checkout-options/
+		// @see https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/integration-steps/#123-checkout-options
 		// @see https://razorpay.com/docs/payment-gateway/web-integration/hosted/checkout-options/
 		$data = [
 			'key'          => $this->config->key_id,
@@ -589,11 +589,6 @@ class Gateway extends Core_Gateway {
 			$notes = [
 				'customer_name' => $customer_name,
 			] + $notes;
-		}
-
-		$notes['auth_type'] = 'Bearer';
-		if ( empty( $this->config->access_token ) ) {
-			$notes['auth_type'] = 'Basic';
 		}
 
 		return $notes;

@@ -131,14 +131,31 @@ class Extension extends AbstractPluginIntegration {
 	}
 
 	public static function add_payment( $methods ) {
-		$new_method['knit_pay'] = __NAMESPACE__ . '\Gateway_knit_pay';
-		self::create_gateway_clild_class( 'Gateway_knit_pay' );
+		$new_method['knit_pay'] = new Gateway(
+			[
+				'id'                 => 'knit_pay',
+				'payment_method'     => 'knit_pay',
+				'method_title'       => __( 'Knit Pay', 'knit-pay-lang' ),
+				'method_description' => __( "This payment method does not use a predefined payment method for the payment. Some payment providers list all activated payment methods for your account to choose from. Use payment method specific gateways (such as 'Instamojo') to let customers choose their desired payment method at checkout.", 'knit-pay-lang' ),
+				'icon'               => '',
+				'title'              => 'Online Payment',
+			]
+		);
 
 		$active_payment_methods = PaymentMethods::get_active_payment_methods();
 		foreach ( $active_payment_methods as $payment_method ) {
 			$id                = 'knit_pay_' . $payment_method;
-			$new_method[ $id ] = __NAMESPACE__ . '\Gateway_' . $payment_method;
-			self::create_gateway_clild_class( 'Gateway_' . $payment_method );
+			$method_name       = PaymentMethods::get_name( $payment_method );
+			$new_method[ $id ] = new Gateway(
+				[
+					'id'                 => $id,
+					'payment_method'     => $payment_method,
+					'method_title'       => __( 'Knit Pay', 'knit-pay-lang' ) . ' - ' . $method_name,
+					'method_description' => '',
+					'icon'               => '',
+					'title'              => $method_name,
+				]
+			);
 		}
 
 		return $new_method + $methods;
@@ -273,17 +290,5 @@ class Extension extends AbstractPluginIntegration {
 	 */
 	public function source_url( $url, Payment $payment ) {
 		return get_edit_post_link( $payment->source_id );
-	}
-
-	private static function create_gateway_clild_class( $class_name ) {
-		$class_name = preg_replace( '/[^a-zA-Z0-9_]/', '', $class_name );
-		if ( empty( $class_name ) ) {
-			return;
-		}
-
-		eval(
-			"namespace KnitPay\Extensions\LearnPress;
-			class $class_name extends Gateway {}"
-		);
 	}
 }

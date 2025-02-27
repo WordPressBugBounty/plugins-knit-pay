@@ -22,6 +22,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 
 	protected $config;
 	private $can_create_connection;
+	private $gateway_name;
 
 	const KNIT_PAY_OAUTH_SERVER_URL        = 'https://oauth-server.knitpay.org/api/';
 	const RENEWAL_TIME_BEFORE_TOKEN_EXPIRE = 15 * MINUTE_IN_SECONDS; // 15 minutes.
@@ -33,6 +34,8 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	 */
 	public function __construct( $args = [] ) {
 		parent::__construct( $args );
+
+		$this->gateway_name = isset( $args['gateway_name'] ) ? $args['gateway_name'] : $this->get_name();
 
 		// create connection if Merchant ID not available.
 		$this->can_create_connection = true;
@@ -100,6 +103,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		$fields[] = $this->get_mode_settings_fields();
 
 		if ( $this->is_auth_basic_enabled( $this->config ) ) {
+			$fields = $this->get_signup_button_field( $fields );
 			$fields = $this->get_basic_auth_fields( $fields );
 		} elseif ( ! $this->is_oauth_connected( $this->config ) ) {
 			$fields = $this->get_signup_button_field( $fields );
@@ -510,9 +514,9 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			'callback' => function () {
 				echo sprintf(
 					__( 'Before proceeding, kindly create an account at %1$s if you don\'t have one already.%2$s', 'knit-pay-lang' ),
-					$this->get_name(),
+					$this->gateway_name,
 					'<br><br><a class="button button-primary button-large" target="_blank" href="' . $this->get_url() . 'help-signup"
-					 role="button"><strong>Sign Up for ' . $this->get_name() . '</strong></a>'
+					 role="button"><strong>Sign Up for ' . $this->gateway_name . '</strong></a>'
 				);
 			},
 		];
@@ -525,11 +529,11 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		$fields[] = [
 			'section'  => 'general',
 			'type'     => 'custom',
-			'title'    => $this->get_name() . ' Connect',
+			'title'    => $this->gateway_name . ' Connect',
 			'callback' => function () {
 				echo '<p><h1>' . __( 'How it works?' ) . '</h1></p>' .
-				'<p>' . __( 'To provide a seamless integration experience, Knit Pay has introduced ' . $this->get_name() . ' Platform Connect. Now you can integrate ' . $this->get_name() . ' in Knit Pay with just a few clicks.' ) . '</p>' .
-				'<p>' . __( 'Click on "<strong>Connect with ' . $this->get_name() . '</strong>" below to initiate the connection.' ) . '</p>';
+				'<p>' . __( 'To provide a seamless integration experience, Knit Pay has introduced ' . $this->gateway_name . ' Platform Connect. Now you can integrate ' . $this->gateway_name . ' in Knit Pay with just a few clicks.' ) . '</p>' .
+				'<p>' . __( 'Click on "<strong>Connect with ' . $this->gateway_name . '</strong>" below to initiate the connection.' ) . '</p>';
 			},
 		];
 		
@@ -539,7 +543,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			'type'     => 'custom',
 			'callback' => function () {
 				echo '<a id="' . $this->get_id() . '-platform-connect" class="button button-primary button-large"
-		                  role="button" style="font-size: 21px;background: #3395ff;">Connect with <strong>' . $this->get_name() . '</strong></a>
+		                  role="button" style="font-size: 21px;">Connect with <strong>' . $this->gateway_name . '</strong></a>
                         <script>
                             document.getElementById("' . $this->get_id() . '-platform-connect").addEventListener("click", function(event){
                                 event.preventDefault();
@@ -557,7 +561,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			/*
 			$fields[] = [
 			'section'     => 'general',
-				'title'       => __( 'Remove Knit Pay as an Connected Application for my '. $this->get_name() .' account.', 'knit-pay-lang' ),
+				'title'       => __( 'Remove Knit Pay as an Connected Application for my '. $this->gateway_name .' account.', 'knit-pay-lang' ),
 				'type'        => 'custom',
 				'callback'    => function () {
 					echo '<script>
@@ -567,8 +571,8 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 							});
 				 </script>';
 				},
-				'description' => '<p>Removing Knit Pay as an Connected Application for your '.$this->get_name().' account will remove the connection between all the sites that you have connected to Knit Pay using the same '.$this->get_name().' account and connect method. Proceed with caution while disconnecting if you have multiple sites connected.</p>' .
-				'<br><a class="button button-primary button-large" target="_blank" href="https://dashboard.razorpay.com/app/website-app-settings/applications" role="button"><strong>View connected applications in '.$this->get_name().'</strong></a>',
+				'description' => '<p>Removing Knit Pay as an Connected Application for your '.$this->gateway_name.' account will remove the connection between all the sites that you have connected to Knit Pay using the same '.$this->gateway_name.' account and connect method. Proceed with caution while disconnecting if you have multiple sites connected.</p>' .
+				'<br><a class="button button-primary button-large" target="_blank" href="https://dashboard.razorpay.com/app/website-app-settings/applications" role="button"><strong>View connected applications in '.$this->gateway_name.'</strong></a>',
 			];*/
 
 			// Connected with OAuth.
@@ -576,10 +580,10 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 				'section'     => 'general',
 				'filter'      => FILTER_VALIDATE_BOOLEAN,
 				'meta_key'    => '_pronamic_gateway_' . $this->get_id() . '_is_connected',
-				'title'       => __( 'Connected with ', 'knit-pay-lang' ) . $this->get_name(),
+				'title'       => __( 'Connected with ', 'knit-pay-lang' ) . $this->gateway_name,
 				'type'        => 'checkbox',
-				'description' => 'This gateway configuration is connected with ' . $this->get_name() . ' Platform Connect. Uncheck this and save the configuration to disconnect it.',
-				'label'       => __( 'Uncheck and save to disconnect the ' . $this->get_name() . ' Account.', 'knit-pay-lang' ),
+				'description' => 'This gateway configuration is connected with ' . $this->gateway_name . ' Platform Connect. Uncheck this and save the configuration to disconnect it.',
+				'label'       => __( 'Uncheck and save to disconnect the ' . $this->gateway_name . ' Account.', 'knit-pay-lang' ),
 			];
 
 			// Connection Status.

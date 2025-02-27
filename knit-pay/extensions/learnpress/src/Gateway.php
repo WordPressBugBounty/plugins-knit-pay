@@ -6,7 +6,6 @@ use Pronamic\WordPress\Money\Currency;
 use Pronamic\WordPress\Money\Money;
 use Pronamic\WordPress\Pay\Plugin;
 use Pronamic\WordPress\Pay\Payments\Payment;
-use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Exception;
 use LP_Gateway_Abstract;
 use LP_Settings;
@@ -59,19 +58,18 @@ class Gateway extends LP_Gateway_Abstract {
 	 *
 	 * @param array $args Gateway properties.
 	 */
-	public function __construct() {
-		$called_class         = get_called_class();
-		$called_class         = str_replace( __NAMESPACE__ . '\\', '', $called_class ); // Remove namespace.
-		$this->payment_method = substr( $called_class, 8 ); // Remove Gateway_ prefix.
-
-		if ( 'knit_pay' === $this->payment_method ) {
-			$this->id = 'knit_pay';
-		} else {
-			$this->id = 'knit_pay_' . $this->payment_method;
-		}
+	public function __construct( $args = [] ) {
+		$this->id = $args['id'];
 
 		parent::__construct();
 		$this->init();
+
+		$this->payment_method     = $args['payment_method'];
+		$this->method_title       = $args['method_title'];
+		$this->method_description = $args['method_description'];
+		$this->icon               = isset( $args['icon'] ) ? $args['icon'] : '';
+		$this->title              = $this->settings->get( 'title' ) ? $this->settings->get( 'title' ) : $args['title'];
+		$this->description        = $this->settings->get( 'description' ) ? $this->settings->get( 'description' ) : sprintf( __( 'Pay with %s', 'knit-pay-lang' ), $this->title );
 	}
 
 	public function get_settings() {
@@ -128,22 +126,6 @@ class Gateway extends LP_Gateway_Abstract {
 	 * Init.
 	 */
 	private function init() {
-		if ( 'knit_pay' === $this->payment_method ) {
-			$this->method_title       = __( 'Knit Pay', 'knit-pay-lang' );
-			$this->method_description = __( "This payment method does not use a predefined payment method for the payment. Some payment providers list all activated payment methods for your account to choose from. Use payment method specific gateways (such as 'Instamojo') to let customers choose their desired payment method at checkout.", 'knit-pay-lang' );
-			$this->icon               = '';
-			$this->title              = $this->settings->get( 'title' ) ? $this->settings->get( 'title' ) : 'Online Payment';
-		} else {
-			$method_name = PaymentMethods::get_name( $this->payment_method );
-
-			$this->method_title       = __( 'Knit Pay', 'knit-pay-lang' ) . ' - ' . $method_name;
-			$this->method_description = '';
-			$this->icon               = '';
-			$this->title              = $this->settings->get( 'title' ) ? $this->settings->get( 'title' ) : $method_name;
-		}
-
-		$this->description = $this->settings->get( 'description' ) ? $this->settings->get( 'description' ) : sprintf( __( 'Pay with %s', 'knit-pay-lang' ), $this->title );
-
 		$this->config_id = $this->settings->get( 'config_id' );
 
 		add_filter( 'learn-press/payment-gateway/' . $this->id . '/available', [ $this, 'is_enabled' ] );

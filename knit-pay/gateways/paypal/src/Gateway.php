@@ -105,7 +105,7 @@ class Gateway extends Core_Gateway {
 						'user_action'               => 'PAY_NOW',
 						'locale'                    => str_replace( '_', '-', $customer->get_locale() ),
 						'return_url'                => $payment->get_return_url(),
-						'cancel_url'                => $payment->get_return_url(),
+						'cancel_url'                => add_query_arg( 'cancelled', true, $payment->get_return_url() ),
 						'payment_method_preference' => 'IMMEDIATE_PAYMENT_REQUIRED', // TODO add support for cheque payment.
 					],
 				],
@@ -144,6 +144,11 @@ class Gateway extends Core_Gateway {
 	 */
 	public function update_status( Payment $payment ) {
 		if ( PaymentStatus::SUCCESS === $payment->get_status() ) {
+			return;
+		}
+
+		if ( filter_has_var( INPUT_GET, 'cancelled' ) ) {
+			$payment->set_status( PaymentStatus::CANCELLED );
 			return;
 		}
 
