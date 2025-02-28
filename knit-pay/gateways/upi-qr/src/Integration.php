@@ -169,8 +169,8 @@ class Integration extends AbstractGatewayIntegration {
 			'title'    => 'Prerequisite',
 			'callback' => function () {
 				$knit_pay_pro_setup_url = admin_url( 'admin.php?page=knit_pay_pro_setup_page' );
-				$link                   = '<a target="_blank" href="' . $knit_pay_pro_setup_url . '">' . __( 'Knit Pay >> Knit Pay Pro Setup', 'knit-pay-upi' ) . '</a>';
-				$message                = sprintf( __( 'Please visit the %s page to configure "Knit Pay - Pro".', 'knit-pay-upi' ), $link );
+				$link                   = '<a target="_blank" href="' . $knit_pay_pro_setup_url . '">' . __( 'Knit Pay >> Knit Pay UPI Setup', 'knit-pay-upi' ) . '</a>';
+				$message                = sprintf( __( 'Please visit the %s page to configure "Knit Pay - UPI".', 'knit-pay-upi' ), $link );
 
 				echo '<ol><li>We rely on the third-party service provider RapidAPI for the setup of Knit Pay UPI. RapidAPI will charge you based on your monthly usage.</li>
                     	<li>Choose a plan that suits your usage. Each plan includes a certain

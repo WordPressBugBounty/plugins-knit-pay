@@ -428,7 +428,7 @@ class Integration extends AbstractGatewayIntegration {
 		);
 	}
 
-	private function search_config_id( $get_array ) {
+	private static function search_config_id( $get_array ) {
 		// Find Gateway Configuration for provided payment type id.
 		$query = new WP_Query(
 			[

@@ -11,8 +11,13 @@ class KnitPayPro {
 	}
 
 	public static function check_knit_pay_pro_setup() {
+		$pro_plugin_name = 'Knit Pay Pro';
+		if ( ! defined( 'KNIT_PAY_PRO' ) ) {
+			$pro_plugin_name = 'Knit Pay UPI';
+		}
+
 		if ( ! get_option( 'knit_pay_pro_setup_rapidapi_key' ) ) {
-			throw new Exception( 'The "Knit Pay - Pro" configuration is not set up correctly. Please visit the "Knit Pay >> Knit Pay Pro Setup" page to configure "Knit Pay - Pro".' );
+			throw new Exception( 'The "' . $pro_plugin_name . '" configuration is not set up correctly. Please visit the "Knit Pay >> ' . $pro_plugin_name . ' Setup" page to configure "' . $pro_plugin_name . '".' );
 		}
 	}
 

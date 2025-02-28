@@ -57,7 +57,7 @@ class Integration extends AbstractGatewayIntegration {
 				'section'     => 'general',
 				'type'        => 'custom',
 				'title'       => 'Install Knit Pay - Pro',
-				'description' => '<h1>If the Payment Gateway provider which you want to integrate is not on the list above, try installing Knit Pay - Pro. Now you can use 50+ Knit Pay premium addons with Knit Pay Pro.</h1>'
+				'description' => '<h1>If the Payment Gateway provider which you want to integrate is not on the list above, try installing Knit Pay - Pro. Now you can use 65+ Knit Pay premium addons with Knit Pay Pro.</h1>'
 				. '<br><br>' . $link,
 			];
 

@@ -4,29 +4,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-// Show error if dependencies are missing.
-add_action( 'admin_notices', 'knit_pay_pro_admin_notice_missing_dependencies' );
-function knit_pay_pro_admin_notice_missing_dependencies() {
-	if ( ! current_user_can( 'manage_options' ) ) {
-		return;
-	}
-
-	if ( ! get_option( 'knit_pay_pro_setup_rapidapi_key' ) ) {
-		$knit_pay_pro_setup_url = admin_url( 'admin.php?page=knit_pay_pro_setup_page' );
-		$link                   = '<a href="' . $knit_pay_pro_setup_url . '">' . __( 'Knit Pay >> Knit Pay Pro Setup', 'knit-pay-pro' ) . '</a>';
-		$message                = sprintf( __( '<b>Knit Pay Pro</b> is not set up correctly. Please visit the %s page to configure "Knit Pay - Pro".', 'knit-pay-pro' ), $link );
-
-		wp_admin_notice( $message, [ 'type' => 'error' ] );
-	}
-}
-
 class KnitPayPro_Setup {
+	private $setup_page_name;
+	private $pro_plugin_name;
+
 	public function __construct() {
 		// Create Knit Pay Pro Setup Menu.
 		add_action( 'admin_menu', [ $this, 'admin_menu' ], 1000 );
 
 		// Actions.
 		add_action( 'admin_init', [ $this, 'admin_init' ] );
+
+		// Show error if dependencies are missing.
+		add_action( 'admin_notices', [ $this, 'admin_notice_missing_dependencies' ] );
+
+		$this->setup_page_name = __( 'Knit Pay Pro Setup', 'knit-pay-lang' );
+		$this->pro_plugin_name = 'Knit Pay - Pro';
+		if ( ! defined( 'KNIT_PAY_PRO' ) ) {
+			$this->setup_page_name = __( 'Knit Pay UPI Setup', 'knit-pay-lang' );
+			$this->pro_plugin_name = 'Knit Pay - UPI';
+		}
 	}
 
 	/**
@@ -37,8 +34,8 @@ class KnitPayPro_Setup {
 	public function admin_menu() {
 		\add_submenu_page(
 			'pronamic_ideal',
-			__( 'Knit Pay Pro Setup', 'knit-pay-pro' ),
-			__( 'Knit Pay Pro Setup', 'knit-pay-pro' ),
+			$this->setup_page_name,
+			$this->setup_page_name,
 			'manage_options',
 			'knit_pay_pro_setup_page',
 			function() {
@@ -65,16 +62,16 @@ class KnitPayPro_Setup {
 		// Settings - General.
 		add_settings_section(
 			'knit_pay_pro_setup_section',
-			__( 'Knit Pay Pro Setup', 'knit-pay-pro' ),
+			$this->setup_page_name,
 			function () {
 			},
 			'knit_pay_pro_setup_page'
 		);
 
-		// How to setup Knit Pay Pro.
+		// How to setup.
 		add_settings_field(
 			'knit_pay_pro_setup_instruction',
-			__( 'How to setup Knit Pay Pro?', 'knit-pay-pro' ),
+			__( 'How to Setup?', 'knit-pay-lang' ),
 			function () {
 				require_once KNITPAY_DIR . '/views/template-knit-pay-pro-setup-instruction.php';
 			},
@@ -85,7 +82,7 @@ class KnitPayPro_Setup {
 		// Rapid API Key.
 		add_settings_field(
 			'knit_pay_pro_setup_rapidapi_key',
-			__( 'Rapid API Key*', 'knit-pay-pro' ),
+			__( 'Rapid API Key*', 'knit-pay-lang' ),
 			[ $this, 'input_field' ],
 			'knit_pay_pro_setup_page',
 			'knit_pay_pro_setup_section',
@@ -96,6 +93,20 @@ class KnitPayPro_Setup {
 				'description' => 'Before entering the keys, make sure that you subscribe to the above Rapid API.',
 			]
 		);
+	}
+
+	public function admin_notice_missing_dependencies() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		if ( ! get_option( 'knit_pay_pro_setup_rapidapi_key' ) ) {
+			$knit_pay_pro_setup_url = admin_url( 'admin.php?page=knit_pay_pro_setup_page' );
+			$link                   = '<a href="' . $knit_pay_pro_setup_url . '">' . sprintf( __( '%1$s >> %2$s', 'knit-pay-lang' ), 'Knit Pay', $this->setup_page_name ) . '</a>';
+			$message                = sprintf( __( '<b>%1$s</b> is not set up correctly. Please visit the %2$s page to configure "%3$s".', 'knit-pay-lang' ), $this->pro_plugin_name, $link, $this->pro_plugin_name );
+
+			wp_admin_notice( $message, [ 'type' => 'error' ] );
+		}
 	}
 
 	/**
