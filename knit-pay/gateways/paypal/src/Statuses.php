@@ -60,6 +60,9 @@ class Statuses {
 	const PENDING  = 'PENDING';
 	const FAILED   = 'FAILED';
 
+	// If payment is not paid within 6 hours, the payment is considered as dropoff.
+	const RESOURCE_NOT_FOUND = 'RESOURCE_NOT_FOUND';
+
 	/**
 	 * Transform a PayPal status to a Knit Pay status
 	 *
@@ -78,6 +81,10 @@ class Statuses {
 			case self::DECLINED:
 			case self::FAILED:
 				$core_status = Core_Statuses::FAILURE;
+				break;
+
+			case self::RESOURCE_NOT_FOUND:
+				$core_status = Core_Statuses::EXPIRED;
 				break;
 
 			case self::PENDING:

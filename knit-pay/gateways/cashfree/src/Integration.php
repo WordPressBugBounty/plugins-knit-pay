@@ -130,11 +130,6 @@ class Integration extends IntegrationOAuthClient {
 		$config->default_customer_phone = $this->get_meta( $post_id, 'cashfree_default_customer_phone' );
 		$config->mode                   = $this->get_meta( $post_id, 'mode' );
 
-		// Currently Cashfree Oauth does not support test mode.
-		if ( empty( $config->mode ) ) {
-			$config->mode = Gateway::MODE_LIVE;
-		}
-
 		if ( empty( $config->connection_fail_count ) ) {
 			$config->connection_fail_count = 0;
 		}
@@ -183,11 +178,11 @@ class Integration extends IntegrationOAuthClient {
 		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_secret_key' );
 	}
 
-	protected function is_auth_basic_enabled( $config ) {
+	protected function is_auth_basic_enabled() {
 		return defined( 'KNIT_PAY_CASHFREE' ) || 'cashfree-pro' === $this->get_id();
 	}
 
-	private function is_auth_basic_connected( $config ) {
+	protected function is_auth_basic_connected( $config ) {
 		return ! empty( $config->secret_key );
 	}
 

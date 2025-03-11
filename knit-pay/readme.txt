@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 8.96.8.2
+Stable tag: 8.96.9.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, Razorpay, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
@@ -272,6 +272,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * BA Book Everything (Contact us for this premium addon.)
 * Chauffeur Taxi Booking System (Contact us for this premium addon.)
 * WP Booking System (Contact us for this premium addon.)
+* WP Rentals (Contact us for this premium addon.)
 * Soho Hotel Booking Calendar (supported with WooCommerce.)
 * Bus Ticket Booking with Seat Reservation (supported with WooCommerce.)
 * Multipurpose Ticket Booking Manager (Bus/Train/Ferry/Boat/Shuttle) (supported with WooCommerce.)

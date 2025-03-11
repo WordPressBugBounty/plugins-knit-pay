@@ -24,6 +24,8 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	private $can_create_connection;
 	private $gateway_name;
 
+	protected $auto_save_on_mode_change = false;
+
 	const KNIT_PAY_OAUTH_SERVER_URL        = 'https://oauth-server.knitpay.org/api/';
 	const RENEWAL_TIME_BEFORE_TOKEN_EXPIRE = 15 * MINUTE_IN_SECONDS; // 15 minutes.
 
@@ -100,15 +102,25 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		$mode = isset( $_GET['gateway_mode'] ) ? sanitize_text_field( $_GET['gateway_mode'] ) : null;
 
 		// Get mode from Integration mode trait.
-		$fields[] = $this->get_mode_settings_fields();
+		$mode_options = [
+			'live' => __( 'Live/Production', 'knit-pay-lang' ),
+			'test' => __( 'Test/Development/Sandbox', 'knit-pay-lang' ),
+		];
+		if ( $this->is_oauth_connected( $this->config ) ) {
+			$mode_options = [
+				$this->config->mode => $mode_options[ $this->config->mode ],
+			];
+		}
+		$fields[] = $this->get_mode_settings_fields( $mode_options, [ $this, 'mode_settings_field_callback' ] );
 
-		if ( $this->is_auth_basic_enabled( $this->config ) ) {
+		if ( $this->is_auth_basic_enabled() ) {
 			$fields = $this->get_signup_button_field( $fields );
 			$fields = $this->get_basic_auth_fields( $fields );
 		} elseif ( ! $this->is_oauth_connected( $this->config ) ) {
 			$fields = $this->get_signup_button_field( $fields );
 			$fields = $this->get_oauth_connect_button_fields( $fields );
 		} else {
+			// if OAuth is connected.
 			$fields = $this->get_oauth_connection_status_fields( $fields );
 		}
 		
@@ -131,6 +143,11 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		$config = $this->get_child_config( $post_id );
 
 		$config->config_id = $post_id;
+
+		// Mode is required to generate OAuth URL.
+		if ( empty( $config->mode ) ) {
+			$config->mode = Gateway::MODE_LIVE;
+		}
 
 		// Schedule next refresh token if not done before.
 		if ( isset( $config->expires_at ) ) {
@@ -172,22 +189,21 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	public function save_post( $config_id ) {
 		parent::save_post( $config_id );
 
-		// Execute below code only for OAuth Mode.
-		$config = $this->get_config( $config_id );
-
-		if ( $this->is_auth_basic_enabled( $config ) ) {
+		if ( $this->is_auth_basic_enabled() ) {
 			$this->create_basic_connection( $config_id );
 
 			self::configure_webhook( $config_id );
 			return;
 		}
-		
-		if ( ! $this->is_oauth_connected( $config ) || $this->is_mode_changed( $config ) ) {
-			return $this->init_oauth_connect( $config, $config_id );
-		}
 
-		// Clear Keys if not connected.
-		if ( ! $config->is_connected && $this->is_oauth_connected( $config ) ) {
+		// Execute below code only for OAuth Connection.
+		$config = $this->get_config( $config_id );
+
+		if ( ! $this->is_oauth_connected( $config ) ) {
+			// Initiate OAuth Connection flow if not connected.
+			return $this->init_oauth_connect( $config, $config_id );
+		} elseif ( filter_has_var( INPUT_POST, 'knit_pay_oauth_client_disconnect' ) ) {
+			// Clear Keys if connected and disconnect action is initiated.
 			self::clear_config( $config_id );
 			return;
 		}
@@ -262,12 +278,6 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			return;
 		}
 
-		// Don't interfere if rzp-wppcommerce attempting to connect.
-		// TODO, move to Razorpay.
-		if ( 'rzp-woocommerce' === $gateway_id ) {
-			return;
-		}
-
 		if ( empty( $code ) || empty( $state ) || 'failed' === $knitpay_oauth_auth_status ) {
 			self::clear_config( $gateway_id );
 			$this->redirect_to_config( $gateway_id );
@@ -283,15 +293,16 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			'mode'       => $config->mode,
 		];
 		$oauth_token_request_body = $this->get_oauth_token_request_body( $oauth_token_request_body );
-		$response                 = wp_remote_post(
+
+		$response = wp_remote_post(
 			self::KNIT_PAY_OAUTH_SERVER_URL . $this->get_id() . '/oauth/token',
 			[
 				'body'    => wp_json_encode( $oauth_token_request_body ),
 				'timeout' => 90,
 			]
 		);
-		$result                   = wp_remote_retrieve_body( $response );
-		$result                   = json_decode( $result );
+		$result   = wp_remote_retrieve_body( $response );
+		$result   = json_decode( $result );
 
 		if ( JSON_ERROR_NONE !== json_last_error() ) {
 			self::redirect_to_config( $gateway_id );
@@ -304,7 +315,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		PaymentMethods::update_active_payment_methods();
 
 		// TODO move to razorpay.
-		// self::configure_webhook( $gateway_id );
+		self::configure_webhook( $gateway_id );
 
 		self::redirect_to_config( $gateway_id );
 	}
@@ -333,15 +344,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			return;
 		}
 
-		/*
-		 $time_left_before_expire = $config->expires_at - time();
-		if ( $time_left_before_expire > 0 && $time_left_before_expire > self::RENEWAL_TIME_BEFORE_TOKEN_EXPIRE + 432000 ) {
-			self::schedule_next_refresh_access_token( $config_id, $config->expires_at );
-			return;
-		} */
-
 		// GET keys.
-		// TODO fix cashfree refresh token.
 		$response = wp_remote_post(
 			self::KNIT_PAY_OAUTH_SERVER_URL . $this->get_id() . '/oauth/token',
 			[
@@ -433,11 +436,11 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		);
 	}
 
-	private static function configure_webhook( $config_id ) {
+	protected static function configure_webhook( $config_id ) {
 		return;
 	}
 
-	private function create_basic_connection( $config_id ) {
+	protected function create_basic_connection( $config_id ) {
 		return;
 	}
 	
@@ -484,24 +487,30 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		}
 
 		$access_token_info .= '</dl>';
-		echo $access_token_info;
+
+		$disconnect_button = '<a id="knit-pay-oauth-disconnect-button" class="button button-primary button-large"
+		role="button">Disconnect</strong></a>
+		<script>
+			document.getElementById("knit-pay-oauth-disconnect-button").addEventListener("click", function(event){
+				event.preventDefault();
+				if(!confirm("Are you sure you want to disconnect this connection?")) return;
+				event.target.insertAdjacentHTML("beforebegin", "<input type=\'hidden\' name=\'knit_pay_oauth_client_disconnect\' value=\'1\'>");
+				document.getElementById("publish").click();
+			});
+		</script>';
+
+		echo $access_token_info . $disconnect_button;
 	}
 
-	protected function is_auth_basic_enabled( $config ) {
+	protected function is_auth_basic_enabled() {
 		return false;
-		// TODO
-		return defined( 'KNIT_PAY_RAZORPAY_API' ) || 'razorpay-pro' === $this->get_id();
 	}
 	
 	protected function is_oauth_connected( $config ) {
 		return ! empty( $config->access_token );
 	}
 
-	private function is_auth_basic_connected( $config ) {
-		return false;
-	}
-
-	private function is_mode_changed( $config ) {
+	protected function is_auth_basic_connected( $config ) {
 		return false;
 	}
 
@@ -543,13 +552,13 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			'type'     => 'custom',
 			'callback' => function () {
 				echo '<a id="' . $this->get_id() . '-platform-connect" class="button button-primary button-large"
-		                  role="button" style="font-size: 21px;">Connect with <strong>' . $this->gateway_name . '</strong></a>
-                        <script>
-                            document.getElementById("' . $this->get_id() . '-platform-connect").addEventListener("click", function(event){
-                                event.preventDefault();
-                                document.getElementById("publish").click();
-                            });
-                        </script>';
+		            role="button" style="font-size: 21px;">Connect with <strong>' . $this->gateway_name . '</strong></a>
+                    <script>
+                        document.getElementById("' . $this->get_id() . '-platform-connect").addEventListener("click", function(event){
+                             event.preventDefault();
+                            document.getElementById("publish").click();
+                        });
+                    </script>';
 			},
 		];
 		
@@ -557,44 +566,15 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	}
 
 	protected function get_oauth_connection_status_fields( $fields ) {
-		// Remove Knit Pay as an Authorized Application.
-			/*
-			$fields[] = [
-			'section'     => 'general',
-				'title'       => __( 'Remove Knit Pay as an Connected Application for my '. $this->gateway_name .' account.', 'knit-pay-lang' ),
-				'type'        => 'custom',
-				'callback'    => function () {
-					echo '<script>
-					document.getElementById("_pronamic_gateway_mode").addEventListener("change", function(event){
-								event.preventDefault();
-								document.getElementById("publish").click();
-							});
-				 </script>';
-				},
-				'description' => '<p>Removing Knit Pay as an Connected Application for your '.$this->gateway_name.' account will remove the connection between all the sites that you have connected to Knit Pay using the same '.$this->gateway_name.' account and connect method. Proceed with caution while disconnecting if you have multiple sites connected.</p>' .
-				'<br><a class="button button-primary button-large" target="_blank" href="https://dashboard.razorpay.com/app/website-app-settings/applications" role="button"><strong>View connected applications in '.$this->gateway_name.'</strong></a>',
-			];*/
+		// Connection Status.
+		$fields[] = [
+			'section'  => 'general',
+			'title'    => __( 'Connection Status', 'knit-pay-lang' ),
+			'type'     => 'custom',
+			'callback' => [ $this, 'connection_status_box' ],
+		];
 
-			// Connected with OAuth.
-			$fields[] = [
-				'section'     => 'general',
-				'filter'      => FILTER_VALIDATE_BOOLEAN,
-				'meta_key'    => '_pronamic_gateway_' . $this->get_id() . '_is_connected',
-				'title'       => __( 'Connected with ', 'knit-pay-lang' ) . $this->gateway_name,
-				'type'        => 'checkbox',
-				'description' => 'This gateway configuration is connected with ' . $this->gateway_name . ' Platform Connect. Uncheck this and save the configuration to disconnect it.',
-				'label'       => __( 'Uncheck and save to disconnect the ' . $this->gateway_name . ' Account.', 'knit-pay-lang' ),
-			];
-
-			// Connection Status.
-			$fields[] = [
-				'section'  => 'general',
-				'title'    => __( 'Connection Status', 'knit-pay-lang' ),
-				'type'     => 'custom',
-				'callback' => [ $this, 'connection_status_box' ],
-			];
-
-			return $fields;
+		return $fields;
 	}
 	
 	protected function show_common_setting_fields( $fields ) {
@@ -613,5 +593,31 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			return true;
 		}
 		return false;
+	}
+
+	public function mode_settings_field_callback() {
+		if ( $this->is_oauth_connected( $this->config ) ) {
+			echo "<script>
+				document.getElementById('_pronamic_gateway_mode').addEventListener('click', function(event){
+					event.preventDefault();
+					event.stopPropagation();
+					this.blur();
+
+					alert('To change the mode, you need to disconnect from the current mode.');
+					document.getElementById('knit-pay-oauth-disconnect-button').click();
+				});
+			</script>";
+			echo '<p class="pronamic-pay-description description">' . 'Mode change is not allowed after connecting in a mode. To create the connection in the new mode, first disconnect from the current mode.' . '</p>';
+		}
+
+		if ( $this->auto_save_on_mode_change ) {
+			echo '<script>
+				// Show loading screen and save settings on mode change if not already connected.
+				document.getElementById("_pronamic_gateway_mode").addEventListener("change", function(event){
+					document.body.insertAdjacentHTML("beforeend", "<div id=\"loading\" style=\"position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;\"><div style=\"font-size: 24px;\">Changing Mode...</div></div>");
+					document.getElementById("publish").click();
+				});
+			</script>';
+		}
 	}
 }

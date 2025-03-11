@@ -36,6 +36,8 @@ class Config extends GatewayConfig {
 
 	public $show_download_qr_button;
 
+	public $config_id;
+
 	public function copy_properties( $source ) {
 		$reflection_source      = new ReflectionObject( $source );
 		$reflection_destination = new ReflectionObject( $this );

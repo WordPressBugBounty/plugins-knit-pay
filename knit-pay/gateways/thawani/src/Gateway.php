@@ -75,7 +75,7 @@ class Gateway extends Core_Gateway {
 	private function get_payment_data( Payment $payment ) {
 		$return_url = $payment->get_return_url();
 		
-		// @see https://docs.thawani.om/docs/thawani-ecommerce-api/a2a9e57e10521-create-session
+		// @see https://thawani-technologies.stoplight.io/docs/thawani-ecommerce-api/a2a9e57e10521-create-session
 		return [
 			'client_reference_id' => $payment->key . '_' . $payment->get_id(),
 			'mode'                => 'payment',

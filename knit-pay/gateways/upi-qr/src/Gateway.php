@@ -68,7 +68,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		if ( 100 > $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' ) ) {
-			$amount_error = 'The amount should be at least ₹1.';
+			$amount_error = 'The amount should be at least ₹2.';
 			throw new Exception( $amount_error );
 		}
 
@@ -250,7 +250,7 @@ class Gateway extends Core_Gateway {
 			'amount'              => $payment->get_total_amount()->number_format( null, '.', '' ),
 			'currency'            => $payment->get_total_amount()->get_currency()->get_alphabetic_code(),
 			'knitpay_version'     => KNITPAY_VERSION,
-			'knitpay_upi_version' => defined( 'KNITPAY_UPI_VERSION' ) ? KNITPAY_UPI_VERSION : '',
+			'knitpay_upi_version' => KNITPAY_UPI_VERSION,
 			'php_version'         => PHP_VERSION,
 			'website_url'         => home_url( '/' ),
 			'data'                => [
@@ -284,6 +284,40 @@ class Gateway extends Core_Gateway {
 		$payment->set_transaction_id( $transaction_id );
 
 		$payment->set_status( $this->config->payment_success_status );
+	}
+
+	protected function make_amount_unique( Payment $payment ) {
+		$actual_amount_minor = $payment->get_total_amount()->get_minor_units()->to_int();
+
+		if ( get_transient( 'knit_pay_upi_' . $this->config->config_id . '_' . $actual_amount_minor ) ) {
+			$unique_amount_minor = $this->find_unique_amount( $actual_amount_minor );
+			$unique_amount       = $unique_amount_minor / 100;
+			$actual_amount       = $actual_amount_minor / 100;
+			$payment->add_note( 'Actual amount: ₹' . $actual_amount . '<br>Unique amount generated: ₹' . $unique_amount );
+
+			$unique_money = new \Pronamic\WordPress\Money\Money( $unique_amount, $payment->get_total_amount()->get_currency() );
+			$payment->set_total_amount( $unique_money );
+		} else {
+			$unique_amount_minor = $actual_amount_minor;
+		}
+
+		// Hold the amount for 15 minutes and can be allocated to other transaction if not paid.
+		set_transient( 'knit_pay_upi_' . $this->config->config_id . '_' . $unique_amount_minor, true, 15 * MINUTE_IN_SECONDS );
+	}
+
+	private function find_unique_amount( $actual_amount_minor, $retry = 1 ) {
+		if ( $retry > 10 ) {
+			throw new Exception( 'Unable to generate a unique amount. Please try again after sometime.' );
+		}
+
+		$range               = $retry ** 2;
+		$random_amount_minor = rand( -$range, $range ) + $actual_amount_minor;
+
+		if ( get_transient( 'knit_pay_upi_' . $this->config->config_id . '_' . $random_amount_minor ) ) {
+			return $this->find_unique_amount( $actual_amount_minor, ++$retry );
+		}
+
+		return $random_amount_minor;
 	}
 
 	public function expire_old_upi_payment( Payment $payment ) {

@@ -14,7 +14,8 @@ namespace Pronamic\WordPress\Pay\Core;
  */
 trait IntegrationModeTrait {
 	
-	public function get_mode_settings_fields( $modes = [] ) {
+	public function get_mode_settings_fields( $modes = [], $callback_function = null ) {
+		// Default modes.
 		if ( empty( $modes ) ) {
 			$modes = [
 				Gateway::MODE_LIVE => __( 'Live/Production', 'knit-pay-lang' ),
@@ -29,6 +30,7 @@ trait IntegrationModeTrait {
 			'type'     => 'select',
 			'options'  => $modes,
 			'default'  => Gateway::MODE_LIVE,
+			'callback' => $callback_function,
 		];
 	}
 }

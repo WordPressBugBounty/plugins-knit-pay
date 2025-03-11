@@ -278,7 +278,15 @@ class Utils {
 		}
 	}
 	
-	public static function substr_after_trim( string $string = null, int $start, int $length = null ) {
+	/*
+	 * Get the substring after trimming the string
+	 *
+	 * @param string $string
+	 * @param int $start
+	 * @param int $length
+	 * @return string
+	 */
+	public static function substr_after_trim( $string = null, $start = 0, $length = null ) {
 		if ( null === $string ) {
 			return '';
 		}

@@ -196,13 +196,6 @@ class Gateway extends Core_Gateway {
 	}
 
 	private function update_payment_status( $payment, $razorpay_payment, $razorpay_subscription_id = null ) {
-		/*
-		TODO: It was creating conflict with razorpay Offers feature. Razorpay Payment contains lesser amount if offer was applied.
-		Remove it after Dec 2021 if not required.
-		if ( floatval( $razorpay_payment->amount ) !== $payment->get_total_amount()->number_format( null, '.', '' ) * 100 ) {
-			return;
-		} */
-
 		$razorpay_subscription_id = $payment->get_meta( 'razorpay_subscription_id' );
 
 		$note = '<strong>Razorpay Parameters:</strong>';

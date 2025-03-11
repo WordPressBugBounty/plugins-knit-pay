@@ -96,6 +96,12 @@ class API {
 
 		$result = json_decode( $result );
 
+		// return result after error occurs.
+		if ( isset( $result->name ) ) {
+			$result->status = $result->name;
+			return $result;
+		}
+
 		if ( ! isset( $result->status ) ) {
 			throw new Exception( 'Something went wrong. Please try again later.' );
 		}

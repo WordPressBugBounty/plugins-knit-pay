@@ -98,6 +98,8 @@ class Extension extends AbstractPluginIntegration {
 			return $url;
 		}
 
+		$vik_return_url = $payment->get_meta( 'vik_return_url' );
+
 		switch ( $payment->get_status() ) {
 			case Core_Statuses::CANCELLED:
 			case Core_Statuses::EXPIRED:
@@ -108,12 +110,13 @@ class Extension extends AbstractPluginIntegration {
 						'payment_id' => $payment->get_id(),
 						'tmpl'       => 'component',
 						'task'       => 'notifypayment',
+						'refresh'    => microtime(),
 					],
-					$payment->get_meta( 'vik_return_url' )
+					$vik_return_url
 				);
 				break;
 			default:
-				$url = $payment->get_meta( 'vik_return_url' );
+				$url = add_query_arg( 'refresh', microtime(), $vik_return_url );
 		}
 
 		return $url;

@@ -54,6 +54,8 @@ class Integration extends IntegrationOAuthClient {
 			1000,
 			2
 		);
+
+		$this->auto_save_on_mode_change = true;
 	}
 
 	/**
@@ -92,9 +94,9 @@ class Integration extends IntegrationOAuthClient {
 				'type'     => 'custom',
 				'callback' => function () {
 					echo '<script>
-							document.body.insertAdjacentHTML("beforeend", "<div id=\"loading\" style=\"position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;\"><div style=\"font-size: 24px;\">Loading...</div></div>");
-							document.getElementById("publish").click();
-						</script>';
+						document.body.insertAdjacentHTML("beforeend", "<div id=\"loading\" style=\"position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;\"><div style=\"font-size: 24px;\">Loading...</div></div>");
+						document.getElementById("publish").click();
+					</script>';
 				},
 			];
 			return $fields;
@@ -117,14 +119,6 @@ class Integration extends IntegrationOAuthClient {
 			'section'  => 'general',
 			'type'     => 'custom',
 			'callback' => function () {
-				// TODO: Implement mode change with AJAX.
-				echo '<script>
-					document.getElementById("_pronamic_gateway_mode").addEventListener("change", function(event){
-						document.body.insertAdjacentHTML("beforeend", "<div id=\"loading\" style=\"position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;\"><div style=\"font-size: 24px;\">Changing Mode...</div></div>");
-						document.getElementById("publish").click();
-					});
-					</script>';
-
 				$admin_url     = admin_url();
 				$auth_response = $this->init_oauth_connect( $this->config, $this->config->config_id, true );
 
@@ -162,7 +156,7 @@ class Integration extends IntegrationOAuthClient {
 
 						window.location.href = admin_url.toString();
 					}
-				 </script>
+				</script>
 				</script>
 				<script id="paypal-js" src="https://www.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js"></script>';
 			},
@@ -225,11 +219,6 @@ class Integration extends IntegrationOAuthClient {
 		$config->connected_at = $this->get_meta( $post_id, 'paypal_connected_at' );
 
 		$config->mode = $this->get_meta( $post_id, 'mode' );
-
-		// Mode is required to generate OAuth URL.
-		if ( empty( $config->mode ) ) {
-			$config->mode = 'live';
-		}
 
 		return $config;
 	}
@@ -304,13 +293,13 @@ class Integration extends IntegrationOAuthClient {
 		// Execute below code only for OAuth Mode.
 		$config = $this->get_config( $config_id );
 
-		// Clear Keys if not connected.
-		if ( ! $config->is_connected && $this->is_oauth_connected( $config ) ) {
+		// Clear Keys if connected and disconnect action is initiated.
+		if ( filter_has_var( INPUT_POST, 'knit_pay_oauth_client_disconnect' ) ) {
 			self::clear_config( $config_id );
 			return;
 		}
 
-		// TODO
-		// self::configure_webhook( $config_id );
+		// TODO: Implement Webhook Configuration.
+		self::configure_webhook( $config_id );
 	}
 }
