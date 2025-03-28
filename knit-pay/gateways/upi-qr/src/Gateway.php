@@ -67,7 +67,7 @@ class Gateway extends Core_Gateway {
 			throw new Exception( $currency_error );
 		}
 
-		if ( 100 > $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' ) ) {
+		if ( 200 > $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' ) ) {
 			$amount_error = 'The amount should be at least ₹2.';
 			throw new Exception( $amount_error );
 		}

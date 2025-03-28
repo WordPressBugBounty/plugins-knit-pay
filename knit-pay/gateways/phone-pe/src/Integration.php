@@ -4,6 +4,7 @@ namespace KnitPay\Gateways\PhonePe;
 
 use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
+use KnitPay\Utils;
 
 /**
  * Title: PhonePe Integration
@@ -71,7 +72,7 @@ class Integration extends AbstractGatewayIntegration {
 	public function gateway_configuration_display_value( $display_value, $post_id ) {
 		$config = $this->get_config( $post_id );
 		
-		return $config->merchant_id;
+		return ( 'v1' === $config->api_version ) ? $config->merchant_id : $config->client_id;
 	}
 
 	/**
@@ -85,6 +86,49 @@ class Integration extends AbstractGatewayIntegration {
 		// Get mode from Integration mode trait.
 		$fields[] = $this->get_mode_settings_fields();
 
+		$config_id = Utils::get_gateway_config_id();
+		if ( ! empty( $config_id ) ) {
+			$config = $this->get_config( $config_id );
+		}
+
+		$fields[] = [
+			'section'  => 'general',
+			'meta_key' => '_pronamic_gateway_phonepe_api_version',
+			'title'    => __( 'API Version', 'knit-pay-lang' ),
+			'type'     => 'select',
+			'options'  => [
+				'v1' => 'v1',
+				'v2' => 'v2',
+			],
+			'default'  => $config->api_version,
+			'callback' => function () {
+				?>
+				<script>
+					jQuery( document ).ready( function( $ ) {
+						$( '#_pronamic_gateway_phonepe_api_version' ).on( 'change', function(){
+							var api_version = $( this ).val();
+							if ( 'v1' === api_version ) {
+								$( '#_pronamic_gateway_phonepe_merchant_id' ).closest( 'tr' ).show();
+								$( '#_pronamic_gateway_phonepe_salt_key' ).closest( 'tr' ).show();
+								$( '#_pronamic_gateway_phonepe_salt_index' ).closest( 'tr' ).show();
+								$( '#_pronamic_gateway_phonepe_client_id' ).closest( 'tr' ).hide();
+								$( '#_pronamic_gateway_phonepe_client_secret' ).closest( 'tr' ).hide();
+								$( '#_pronamic_gateway_phonepe_client_version' ).closest( 'tr' ).hide();
+							} else {
+								$( '#_pronamic_gateway_phonepe_merchant_id' ).closest( 'tr' ).hide();
+								$( '#_pronamic_gateway_phonepe_salt_key' ).closest( 'tr' ).hide();
+								$( '#_pronamic_gateway_phonepe_salt_index' ).closest( 'tr' ).hide();
+								$( '#_pronamic_gateway_phonepe_client_id' ).closest( 'tr' ).show();
+								$( '#_pronamic_gateway_phonepe_client_secret' ).closest( 'tr' ).show();
+								$( '#_pronamic_gateway_phonepe_client_version' ).closest( 'tr' ).show();
+							}
+						} ).trigger( 'change' );
+					} );
+				</script>
+				<?php
+			},
+		];
+
 		// Merchant ID.
 		$fields[] = [
 			'section'  => 'general',
@@ -92,7 +136,6 @@ class Integration extends AbstractGatewayIntegration {
 			'title'    => __( 'Merchant ID', 'knit-pay-lang' ),
 			'type'     => 'text',
 			'classes'  => [ 'regular-text', 'code' ],
-			'required' => true,
 		];
 
 		// Salt Key.
@@ -102,9 +145,8 @@ class Integration extends AbstractGatewayIntegration {
 			'title'    => __( 'Salt Key', 'knit-pay-lang' ),
 			'type'     => 'text',
 			'classes'  => [ 'regular-text', 'code' ],
-			'required' => true,
 		];
-		
+
 		// Salt Index.
 		$fields[] = [
 			'section'  => 'general',
@@ -112,20 +154,63 @@ class Integration extends AbstractGatewayIntegration {
 			'title'    => __( 'Salt Index', 'knit-pay-lang' ),
 			'type'     => 'text',
 			'classes'  => [ 'regular-text', 'code' ],
-			'required' => true,
+		];
+
+		// Client ID.
+		$fields[] = [
+			'section'  => 'general',
+			'meta_key' => '_pronamic_gateway_phonepe_client_id',
+			'title'    => __( 'Client ID', 'knit-pay-lang' ),
+			'type'     => 'text',
+			'classes'  => [ 'regular-text', 'code' ],
+		];
+
+		// Client Secret.
+		$fields[] = [
+			'section'  => 'general',
+			'meta_key' => '_pronamic_gateway_phonepe_client_secret',
+			'title'    => __( 'Client Secret', 'knit-pay-lang' ),
+			'type'     => 'text',
+			'classes'  => [ 'regular-text', 'code' ],
+		];
+
+		// Client Version.
+		$fields[] = [
+			'section'  => 'general',
+			'meta_key' => '_pronamic_gateway_phonepe_client_version',
+			'title'    => __( 'Client Version', 'knit-pay-lang' ),
+			'type'     => 'text',
+			'classes'  => [ 'regular-text', 'code' ],
 		];
 
 		// Return fields.
 		return $fields;
 	}
 
+	/**
+	 * Get config.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return Config
+	 */
 	public function get_config( $post_id ) {
 		$config = new Config();
 
 		$config->merchant_id = $this->get_meta( $post_id, 'phonepe_merchant_id' );
 		$config->salt_key    = $this->get_meta( $post_id, 'phonepe_salt_key' );
 		$config->salt_index  = $this->get_meta( $post_id, 'phonepe_salt_index' );
+
+		$config->client_id      = $this->get_meta( $post_id, 'phonepe_client_id' );
+		$config->client_secret  = $this->get_meta( $post_id, 'phonepe_client_secret' );
+		$config->client_version = $this->get_meta( $post_id, 'phonepe_client_version' );
+
 		$config->mode        = $this->get_meta( $post_id, 'mode' );
+		$config->api_version = $this->get_meta( $post_id, 'phonepe_api_version' );
+
+		// Set API version to v1 if salt key is set and client secret is not set.
+		if ( ! empty( $config->salt_key ) && empty( $config->client_secret ) ) {
+			$config->api_version = 'v1';
+		}
 
 		return $config;
 	}

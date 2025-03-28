@@ -20,14 +20,14 @@ class API {
 		$this->config = $config;
 
 		if ( 'test' === $this->config->mode ) {
-			$this->api_base_url = 'https://api.sandbox.paypal.com/v2/';
+			$this->api_base_url = 'https://api.sandbox.paypal.com/';
 		} else {
-			$this->api_base_url = 'https://api.paypal.com/v2/';
+			$this->api_base_url = 'https://api.paypal.com/';
 		}
 	}
 
 	public function create_order( $data ) {
-		$endpoint = $this->api_base_url . 'checkout/orders';
+		$endpoint = $this->api_base_url . 'v2/checkout/orders';
 
 		$response = wp_remote_post(
 			$endpoint,
@@ -42,7 +42,7 @@ class API {
 
 		if ( isset( $result->details ) ) {
 			throw new Exception( trim( $result->details[0]->description ) );
-		} elseif ( isset( $capture_status->message ) ) {
+		} elseif ( isset( $result->message ) ) {
 			throw new Exception( trim( $result->message ) );
 		}
 
@@ -54,7 +54,7 @@ class API {
 	}
 
 	public function capture_payment( $paypal_order_id ) {
-		$endpoint = $this->api_base_url . 'checkout/orders/' . $paypal_order_id . '/capture';
+		$endpoint = $this->api_base_url . 'v2/checkout/orders/' . $paypal_order_id . '/capture';
 
 		$response = wp_remote_post(
 			$endpoint,
@@ -84,7 +84,7 @@ class API {
 	 * @throws Exception
 	 */
 	public function get_order_details( $paypal_order_id ) {
-		$endpoint = $this->api_base_url . 'checkout/orders/' . $paypal_order_id;
+		$endpoint = $this->api_base_url . 'v2/checkout/orders/' . $paypal_order_id;
 
 		$response = wp_remote_get(
 			$endpoint,
@@ -113,6 +113,88 @@ class API {
 		throw new Exception( 'Something went wrong. Please try again later.' );
 	}
 
+	public function create_webhook( $data ) {
+		$endpoint = $this->api_base_url . 'v1/notifications/webhooks';
+
+		$response = wp_remote_post(
+			$endpoint,
+			[
+				'body'    => wp_json_encode( $data ),
+				'headers' => $this->get_request_headers(),
+			]
+		);
+		$result   = wp_remote_retrieve_body( $response );
+
+		$result = json_decode( $result );
+
+		if ( isset( $result->details ) ) {
+			throw new Exception( trim( $result->details[0]->description ) );
+		} elseif ( isset( $result->message ) ) {
+			throw new Exception( trim( $result->message ) );
+		}
+
+		if ( isset( $result->id ) ) {
+			return $result;
+		}
+
+		throw new Exception( 'Something went wrong. Please try again later.' );
+	}
+
+	public function update_webhook( $data, $webhook_id ) {
+		$endpoint = $this->api_base_url . 'v1/notifications/webhooks/' . $webhook_id;
+
+		$payload = [
+			[
+				'op'    => 'replace',
+				'path'  => '/url',
+				'value' => $data['url'],
+			],
+			[
+				'op'    => 'replace',
+				'path'  => '/event_types',
+				'value' => $data['event_types'],
+			],
+		];
+
+		$response = wp_remote_request(
+			$endpoint,
+			[
+				'method'  => 'PATCH',
+				'body'    => wp_json_encode( $payload ),
+				'headers' => $this->get_request_headers(),
+			]
+		);
+		$result   = wp_remote_retrieve_body( $response );
+
+		$result = json_decode( $result );
+	}
+
+	public function list_webhooks() {
+		$endpoint = $this->api_base_url . 'v1/notifications/webhooks';
+
+		$response = wp_remote_get(
+			$endpoint,
+			[
+				'headers' => $this->get_request_headers(),
+			]
+		);
+		$result   = wp_remote_retrieve_body( $response );
+
+		$result = json_decode( $result );
+
+		if ( isset( $result->details ) ) {
+			throw new Exception( trim( $result->details[0]->description ) );
+		} elseif ( isset( $result->message ) ) {
+			throw new Exception( trim( $result->message ) );
+		}
+
+		if ( isset( $result->webhooks ) ) {
+			return $result->webhooks;
+		}
+
+		throw new Exception( 'Something went wrong. Please try again later.' );
+	}
+
 	/**
 	 * Refund payment.
 	 *
@@ -125,7 +207,7 @@ class API {
 	 * @throws Exception
 	 */
 	public function refund_payment( $paypal_capture_id, $data ) {
-		$endpoint = $this->api_base_url . "payments/captures/{$paypal_capture_id}/refund";
+		$endpoint = $this->api_base_url . "v2/payments/captures/{$paypal_capture_id}/refund";
 
 		$response = wp_remote_post(
 			$endpoint,

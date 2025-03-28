@@ -38,7 +38,12 @@ class Integration extends IntegrationOAuthClient {
 
 		parent::__construct( $args );
 
-		// TODO https://developer.paypal.com/docs/api/webhooks/v1/#webhooks_post
+		// Actions.
+		$function = [ __NAMESPACE__ . '\Webhook', 'listen' ];
+
+		if ( ! has_action( 'wp_loaded', $function ) ) {
+			add_action( 'wp_loaded', $function );
+		}
 	}
 
 		/**
@@ -232,16 +237,16 @@ class Integration extends IntegrationOAuthClient {
 	public function get_gateway( $config_id ) {
 		$config  = $this->get_config( $config_id );
 		$gateway = new Gateway();
-		
+
 		$mode = Gateway::MODE_LIVE;
 		if ( Gateway::MODE_TEST === $config->mode ) {
 			$mode = Gateway::MODE_TEST;
 		}
-		
+
 		$this->set_mode( $mode );
 		$gateway->set_mode( $mode );
 		$gateway->init( $config );
-		
+
 		return $gateway;
 	}
 
@@ -290,9 +295,6 @@ class Integration extends IntegrationOAuthClient {
 	 * @return void
 	 */
 	public function save_post( $config_id ) {
-		// Execute below code only for OAuth Mode.
-		$config = $this->get_config( $config_id );
-
 		// Clear Keys if connected and disconnect action is initiated.
 		if ( filter_has_var( INPUT_POST, 'knit_pay_oauth_client_disconnect' ) ) {
 			self::clear_config( $config_id );
@@ -301,5 +303,11 @@ class Integration extends IntegrationOAuthClient {
 
 		// TODO: Implement Webhook Configuration.
 		self::configure_webhook( $config_id );
+	}
+
+	protected static function configure_webhook( $config_id ) {
+		$integration = new self();
+		$webhook     = new Webhook( $config_id, $integration->get_config( $config_id ) );
+		$webhook->configure_webhook();
 	}
 }

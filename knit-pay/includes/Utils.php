@@ -12,7 +12,7 @@ use Pronamic\WordPress\Pay\ContactNameHelper;
  * @author Knit Pay
  */
 class Utils {    
-	public static function get_country_name( Country $country = null ) {
+	public static function get_country_name( ?Country $country ) {
 		if ( ! isset( $country ) ) {
 			return '';
 		}

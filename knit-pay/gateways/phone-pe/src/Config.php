@@ -14,10 +14,15 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  */
 class Config extends GatewayConfig {
 	public $mode;
+	public $api_version;
 
+	// V1
 	public $merchant_id;
-
 	public $salt_key;
-
 	public $salt_index;
+
+	// V2
+	public $client_id;
+	public $client_secret;
+	public $client_version;
 }

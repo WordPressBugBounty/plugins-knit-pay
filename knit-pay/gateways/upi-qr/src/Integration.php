@@ -330,7 +330,7 @@ class Integration extends AbstractGatewayIntegration {
 		}
 
 		// Merchant category code.
-		$fields[] = [
+		$fields['merchant_category_code'] = [
 			'section'     => 'general',
 			'meta_key'    => '_pronamic_gateway_upi_qr_merchant_category_code',
 			'title'       => __( 'Merchant Category Code', 'knit-pay-lang' ),

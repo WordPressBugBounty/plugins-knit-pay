@@ -123,8 +123,6 @@ class Integration extends AbstractGatewayIntegration {
                     take 10-15 minutes.<br />
                     <br /> <a class="button button-primary" target="_blank" href="' . $this->get_url() . 'help-signup"
                      role="button"><strong>Sign Up on Instamojo Live</strong></a>
-                    <a class="button button-primary" target="_blank" href="https://test.instamojo.com"
-                     role="button"><strong>Sign Up on Instamojo Test</strong></a>
                     </li>
                     <br />
 		    
