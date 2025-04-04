@@ -1,22 +1,22 @@
 <?php
-namespace KnitPay\Gateways\Paypal;
+namespace KnitPay\Gateways\Stripe;
 
 use WP_Error;
 use Exception;
 use Pronamic\WordPress\Pay\Plugin;
 
 /**
- * Title: PayPal Webhook
+ * Title: Stripe Webhook
  * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
- * @version 8.96.10.0
- * @since   8.96.10.0
+ * @version 8.96.11.0
+ * @since   8.96.11.0
  */
 class Webhook extends Gateway {
 	private $config_id;
 	private $webhook_url;
-	private $config;
+	protected $config;
 
 	/**
 	 * Constructs and initializes an Razorpay Webhook
@@ -30,12 +30,13 @@ class Webhook extends Gateway {
 
 		$this->config_id   = $config_id;
 		$this->config      = $config;
-		$this->webhook_url = add_query_arg( 'kp_paypal_webhook', $config_id, home_url( '/' ) );
+		$this->webhook_url = add_query_arg( 'kp_stripe_webhook', $config_id, home_url( '/' ) );
 	}
 
 	/**
 	 *  @return null
 	 */
+	/*
 	public function configure_webhook() {
 		$api = new API( $this->config );
 		try {
@@ -46,7 +47,7 @@ class Webhook extends Gateway {
 			// If webhook id is not available even after checking PayPal, create new.
 			if ( empty( $this->config->webhook_id ) ) {
 				$paypal_webhook = $api->create_webhook( $this->get_paypal_webhook_data() );
-				update_post_meta( $this->config_id, '_pronamic_gateway_paypal_webhook_id', $paypal_webhook->id );
+				update_post_meta( $this->config_id, '_pronamic_gateway_stripe_webhook_id', $paypal_webhook->id );
 				return;
 			}
 
@@ -97,29 +98,29 @@ class Webhook extends Gateway {
 			'url'         => $this->webhook_url,
 			'event_types' => $required_events,
 		];
-	}
+	}*/
 
 	public static function listen() {
-		if ( ! filter_has_var( INPUT_GET, 'kp_paypal_webhook' ) ) {
+		if ( ! filter_has_var( INPUT_GET, 'kp_stripe_webhook' ) ) {
 			return;
 		}
 
-		$post_body = file_get_contents( 'php://input' );
-		$data      = json_decode( $post_body, true );
+		$post_body = @file_get_contents( 'php://input' );
+		$event     = json_decode( $post_body );
 
 		if ( json_last_error() !== 0 ) {
 			exit;
 		}
 
-		if ( empty( $data['event_type'] ) ) {
+		if ( empty( $event->type ) ) {
 			exit;
 		}
 
-		$event_type = explode( '.', $data['event_type'] )[0];
+		$event_type = explode( '.', $event->type )[0];
 
-		switch ( $data['event_type'] ) {
-			case 'CHECKOUT.ORDER.APPROVED':
-				$payment = get_pronamic_payment_by_transaction_id( $data['resource']['id'] );
+		switch ( $event_type ) {
+			case 'checkout':
+				$payment = get_pronamic_payment( $event->data->object->metadata->knitpay_payment_id );
 				break;
 
 			default:
@@ -134,7 +135,7 @@ class Webhook extends Gateway {
 		$note = sprintf(
 		/* translators: %s: Razorpay */
 			__( 'Webhook requested by %s.', 'knit-pay-lang' ),
-			__( 'PayPal', 'knit-pay-lang' )
+			__( 'Stripe', 'knit-pay-lang' )
 		);
 
 		$payment->add_note( $note );

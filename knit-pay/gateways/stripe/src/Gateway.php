@@ -12,7 +12,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  * Copyright: 2020-2025 Knit Pay
  *
  * @author Knit Pay
- * @version 1.0.0
+ * @version 8.96.11.0
  * @since 3.1.0
  */
 class Gateway extends Core_Gateway {
@@ -28,7 +28,7 @@ class Gateway extends Core_Gateway {
 	public function init( Config $config ) {
 		$this->config = $config;
 
-		$this->set_method( self::METHOD_HTML_FORM );
+		$this->set_method( self::METHOD_HTTP_REDIRECT );
 
 		// Supported features.
 		$this->supports = [
@@ -85,33 +85,19 @@ class Gateway extends Core_Gateway {
 			throw new \Exception( 'Stripe is not connected in Test mode.' );
 		}
 
-		$this->stripe_session_id = $payment->get_meta( 'stripe_session_id' );
-
-		// Return if session_id already exists for this payments.
-		if ( $this->stripe_session_id ) {
-			return;
-		}
-
 		$stripe = $this->get_stripe_client();
-
-		$session_data = $this->create_session_data( $payment );
 		
 		try {
-			$stripe_session = $stripe->checkout->sessions->create( $session_data );
+			$session_data     = $this->create_session_data( $payment );
+			$checkout_session = $stripe->checkout->sessions->create( $session_data );
 		} catch ( \Stripe\Exception\ApiErrorException $e ) {
 			throw new \Exception( $e->getError()->message );
 		}
 
-		$payment->set_meta( 'stripe_session_id', $stripe_session->id );
-		$this->stripe_session_id = $stripe_session->id;
+		$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
+		$payment->set_meta( 'stripe_session_id', $checkout_session->id );
 
-		$payment->set_transaction_id( $stripe_session->payment_intent );
-
-		if ( self::MODE_LIVE === $payment->get_mode() && 'https' !== wp_parse_url( $payment->get_pay_redirect_url() )['scheme'] ) {
-			throw new \Exception( 'Live Stripe.js integrations must use HTTPS. For more information: https://stripe.com/docs/security/guide#tls' );
-		}
-
-		$payment->set_action_url( $payment->get_pay_redirect_url() );
+		$payment->set_action_url( $checkout_session->url );
 	}
 
 	protected function create_session_data( Payment $payment ) {
@@ -123,25 +109,25 @@ class Gateway extends Core_Gateway {
 		$payment_method_types = PaymentMethods::transform( $payment->get_payment_method(), $this->config->enabled_payment_methods );
 
 		$session_data = [
-			'success_url'          => $payment->get_return_url(),
 			'client_reference_id'  => $payment->get_id(),
 			'customer_email'       => $customer->get_email(),
-			'cancel_url'           => $payment->get_return_url(),
-			'payment_method_types' => $payment_method_types,
 			'line_items'           => [
 				[
 					'price_data' => [
 						'currency'     => $payment_currency,
-						'unit_amount'  => $payment_amount,
 						'product_data' => [
 							'name' => $payment->get_description(),
 						],
+						'unit_amount'  => $payment_amount,
 					],
 					'quantity'   => 1,
 				],
 			],
-			'mode'                 => 'payment',
 			'metadata'             => $this->get_metadata( $payment ),
+			'mode'                 => 'payment',
+			'success_url'          => $payment->get_return_url(),
+			'cancel_url'           => add_query_arg( 'cancelled', true, $payment->get_return_url() ),
+			'payment_method_types' => $payment_method_types,
 		];
 		// TODO: improve  line items.
 
@@ -172,30 +158,6 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
-	 * Output form.
-	 *
-	 * @param Payment $payment Payment.
-	 * @return void
-	 * @throws \Exception When payment action URL is empty.
-	 */
-	public function output_form( Payment $payment ) {
-		$publishable_key         = $this->config->get_publishable_key();
-		$this->stripe_session_id = $payment->get_meta( 'stripe_session_id' );
-
-		$form_inner = '<button class="pronamic-pay-btn" id="checkout-button">Checkout</button>';
-
-		$form_inner .= '<script src="https://js.stripe.com/v3/"></script>
-        <script type="text/javascript">
-	    // Create an instance of the Stripe object with your publishable API key
-	    var stripe = Stripe("' . $publishable_key . '");
-	    var checkoutButton = document.getElementById("checkout-button");
-        result = stripe.redirectToCheckout({sessionId: "' . $this->stripe_session_id . '"});
-	    </script>';
-
-		echo $form_inner;
-	}
-
-	/**
 	 * Update status of the specified payment.
 	 *
 	 * @param Payment $payment Payment.
@@ -205,21 +167,29 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 
-		$stripe = $this->get_stripe_client();
-
-		$stripe_payment_intents = $stripe->paymentIntents->retrieve( $payment->get_transaction_id(), [] );
-
-		// Return if payment not attempted yet.
-		if ( empty( $stripe_payment_intents->charges->total_count ) ) {
-			// Mark Payment as cancelled if it's return status check.
-			if ( filter_has_var( INPUT_GET, 'key' ) && filter_has_var( INPUT_GET, 'payment' ) ) {
-				$payment->set_status( PaymentStatus::CANCELLED );
-			}
+		if ( filter_has_var( INPUT_GET, 'cancelled' ) ) {
+			$payment->set_status( PaymentStatus::CANCELLED );
 			return;
 		}
 
+		$stripe = $this->get_stripe_client();
+
+		// Retrieve the Checkout Session from the API with line_items expanded
+		$checkout_session = $stripe->checkout->sessions->retrieve(
+			$payment->get_meta( 'stripe_session_id' )
+		);
+
+		if ( ! isset( $checkout_session->payment_intent ) ) {
+			return;
+		}
+
+		$payment->set_transaction_id( $checkout_session->payment_intent );
+		$stripe_payment_intents = $stripe->paymentIntents->retrieve( $checkout_session->payment_intent );
+
 		$payment->set_status( Statuses::transform( $stripe_payment_intents->status ) );
-		$note = 'Stripe Charge ID: ' . $stripe_payment_intents->charges->data[0]->id . '<br>Stripe Payment Status: ' . $stripe_payment_intents->status;
+
+		unset( $stripe_payment_intents->next_action );
+		unset( $stripe_payment_intents->client_secret );
 
 		if ( isset( $stripe_payment_intents->last_payment_error ) ) {
 			$failure_reason = new FailureReason();
@@ -227,10 +197,12 @@ class Gateway extends Core_Gateway {
 			$failure_reason->set_code( $stripe_payment_intents->last_payment_error->code );
 			$payment->set_failure_reason( $failure_reason );
 			$payment->set_status( PaymentStatus::FAILURE );
-			$note .= '<br>Error Message: ' . $stripe_payment_intents->last_payment_error->message;
-		}
-		$payment->add_note( $note );
 
+			unset( $stripe_payment_intents->last_payment_error->payment_method );
+		}
+
+		$note = '<strong>Stripe Payment Intents:</strong><br><pre>' . print_r( $stripe_payment_intents, true ) . '</pre><br>';
+		$payment->add_note( $note );
 	}
 
 	private function get_metadata( Payment $payment ) {
@@ -261,12 +233,10 @@ class Gateway extends Core_Gateway {
 	private function get_stripe_client() {
 		$secret_key = $this->config->get_secret_key();
 
-		// TODO: Knit Pay is currently not compatible with version above this. rewrite the code.
-		// refere: https://stripe.com/docs/upgrades
 		return new \Stripe\StripeClient(
 			[
 				'api_key'        => $secret_key,
-				'stripe_version' => '2020-08-27',
+				'stripe_version' => '2025-03-31.basil', // @see https://docs.stripe.com/changelog#2025-03-31.basil
 			]
 		);
 	}

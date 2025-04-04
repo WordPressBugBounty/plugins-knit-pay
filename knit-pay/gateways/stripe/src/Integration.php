@@ -11,7 +11,7 @@ use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
  * Copyright: 2020-2025 Knit Pay
  *
  * @author  Knit Pay
- * @version 1.0.0
+ * @version 8.96.11.0
  * @since   3.1.0
  */
 class Integration extends AbstractGatewayIntegration {
@@ -33,6 +33,13 @@ class Integration extends AbstractGatewayIntegration {
 		);
 
 		parent::__construct( $args );
+
+		// Actions.
+		$function = [ __NAMESPACE__ . '\Webhook', 'listen' ];
+
+		if ( ! has_action( 'wp_loaded', $function ) ) {
+			add_action( 'wp_loaded', $function );
+		}
 	}
 
 	/**
@@ -47,7 +54,7 @@ class Integration extends AbstractGatewayIntegration {
 		$fields[] = $this->get_mode_settings_fields();
 
 		// Publishable Key.
-		$fields[] = [
+		$fields['stripe_publishable_key'] = [
 			'section'  => 'general',
 			'meta_key' => '_pronamic_gateway_stripe_publishable_key',
 			'title'    => __( 'Publishable Key', 'knit-pay-lang' ),
@@ -57,7 +64,7 @@ class Integration extends AbstractGatewayIntegration {
 		];
 
 		// Secret Key.
-		$fields[] = [
+		$fields['stripe_secret_key'] = [
 			'section'  => 'general',
 			'meta_key' => '_pronamic_gateway_stripe_secret_key',
 			'title'    => __( 'Secret Key', 'knit-pay-lang' ),
@@ -67,7 +74,7 @@ class Integration extends AbstractGatewayIntegration {
 		];
 
 		// Test Publishable Key.
-		$fields[] = [
+		$fields['stripe_test_publishable_key'] = [
 			'section'  => 'general',
 			'meta_key' => '_pronamic_gateway_stripe_test_publishable_key',
 			'title'    => __( 'Publishable Key (Test)', 'knit-pay-lang' ),
@@ -77,7 +84,7 @@ class Integration extends AbstractGatewayIntegration {
 		];
 
 		// Test Secret Key.
-		$fields[] = [
+		$fields['stripe_test_secret_key'] = [
 			'section'  => 'general',
 			'meta_key' => '_pronamic_gateway_stripe_test_secret_key',
 			'title'    => __( 'Secret Key (Test)', 'knit-pay-lang' ),
@@ -115,6 +122,46 @@ class Integration extends AbstractGatewayIntegration {
 			'classes'  => [ 'regular-text', 'code' ],
 			'tooltip'  => __( 'Exchange Rate of Payment Currency.', 'knit-pay-lang' ),
 			'default'  => 1,
+		];
+
+
+		// Auto Webhook Setup Supported.
+		$fields[] = [
+			'section'     => 'feedback',
+			'title'       => __( 'Auto Webhook Setup Supported', 'knit-pay-lang' ),
+			'type'        => 'description',
+			'description' => 'Knit Pay automatically creates webhook configuration in Stripe Dashboard as soon as Stripe configuration is published or saved. Kindly raise the Knit Pay support ticket or configure the webhook manually if the automatic webhook setup fails.',
+		];
+
+		// Webhook URL.
+		$fields[] = [
+			'section'  => 'feedback',
+			'title'    => \__( 'Webhook URL', 'knit-pay-lang' ),
+			'type'     => 'text',
+			'classes'  => [ 'large-text', 'code' ],
+			'value'    => add_query_arg( 'kp_stripe_webhook', '', home_url( '/' ) ),
+			'readonly' => true,
+			'tooltip'  => sprintf(
+				/* translators: %s: Stripe */
+				__(
+					'Copy the Webhook URL to the %s dashboard to receive automatic transaction status updates.',
+					'knit-pay'
+				),
+				__( 'Stripe', 'knit-pay-lang' )
+			),
+		];
+
+		$fields[] = [
+			'section'  => 'feedback',
+			'meta_key' => '_pronamic_gateway_stripe_webhook_secret',
+			'title'    => \__( 'Webhook Secret', 'knit-pay-lang' ),
+			'type'     => 'text',
+			'classes'  => [ 'regular-text', 'code' ],
+			'tooltip'  =>
+			__(
+				'Create a new webhook secret. This can be a random string, and you don\'t have to remember it. Do not use your password or Key Secret here.',
+				'knit-pay'
+			),
 		];
 
 		// Return fields.

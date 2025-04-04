@@ -17,6 +17,7 @@ class Config extends GatewayConfig {
 	public $config_id;
 	public $client_id;
 	public $client_secret;
+	public $webhook_id;
 
 	// OAuth.
 	public $merchant_id;

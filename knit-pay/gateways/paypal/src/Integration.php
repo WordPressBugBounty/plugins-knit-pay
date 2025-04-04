@@ -33,6 +33,11 @@ class Integration extends IntegrationOAuthClient {
 				'url'         => 'http://go.thearrangers.xyz/paypal?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=',
 				'product_url' => 'http://go.thearrangers.xyz/paypal?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=product-url',
 				'provider'    => 'paypal',
+				'supports'    => [
+					'webhook',
+					'webhook_log',
+					'webhook_no_config',
+				],
 			]
 		);
 
@@ -46,9 +51,9 @@ class Integration extends IntegrationOAuthClient {
 		}
 	}
 
-		/**
-		 * Setup.
-		 */
+	/**
+	 * Setup.
+	 */
 	public function setup() {
 		parent::setup();
 
@@ -209,6 +214,43 @@ class Integration extends IntegrationOAuthClient {
 		];
 
 		// Return fields.
+		return $fields;
+	}
+
+	protected function show_common_setting_fields( $fields, $config ) {
+		// Auto Webhook Setup Supported.
+		$fields[] = [
+			'section'     => 'feedback',
+			'title'       => __( 'Auto Webhook Setup Supported', 'knit-pay-lang' ),
+			'type'        => 'description',
+			'description' => 'Knit Pay automatically creates webhook configuration in PayPal Dashboard as soon as PayPal configuration is published or saved. Kindly raise the Knit Pay support ticket or configure the webhook manually if the automatic webhook setup fails.',
+		];
+
+		// Webhook URL.
+		$fields[] = [
+			'section'  => 'feedback',
+			'title'    => \__( 'Webhook URL', 'knit-pay-lang' ),
+			'type'     => 'text',
+			'classes'  => [ 'large-text', 'code' ],
+			'value'    => add_query_arg( 'kp_paypal_webhook', $config->config_id, home_url( '/' ) ),
+			'readonly' => true,
+			'tooltip'  => sprintf(
+				/* translators: %s: PayPal */
+				__(
+					'Copy the Webhook URL to the %s dashboard to receive automatic transaction status updates.',
+					'knit-pay'
+				),
+				__( 'PayPal', 'knit-pay-lang' )
+			),
+		];
+
+		$fields[] = [
+			'section'     => 'feedback',
+			'title'       => \__( 'Supported Events', 'knit-pay-lang' ),
+			'type'        => 'description',
+			'description' => 'CHECKOUT.ORDER.APPROVED',
+		];
+
 		return $fields;
 	}
 

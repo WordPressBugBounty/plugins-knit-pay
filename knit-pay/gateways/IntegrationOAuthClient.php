@@ -99,8 +99,6 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			$this->config = $this->get_config( $config_id );
 		}
 
-		$mode = isset( $_GET['gateway_mode'] ) ? sanitize_text_field( $_GET['gateway_mode'] ) : null;
-
 		// Get mode from Integration mode trait.
 		$mode_options = [
 			'live' => __( 'Live/Production', 'knit-pay-lang' ),
@@ -124,7 +122,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			$fields = $this->get_oauth_connection_status_fields( $fields );
 		}
 		
-		$fields = $this->show_common_setting_fields( $fields );
+		$fields = $this->show_common_setting_fields( $fields, $this->config );
 		
 		return $fields;
 	}
@@ -577,7 +575,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		return $fields;
 	}
 	
-	protected function show_common_setting_fields( $fields ) {
+	protected function show_common_setting_fields( $fields, $config ) {
 		return $fields;
 	}
 

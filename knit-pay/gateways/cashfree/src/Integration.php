@@ -96,7 +96,7 @@ class Integration extends IntegrationOAuthClient {
 		return $fields;
 	}
 
-	protected function show_common_setting_fields( $fields ) {
+	protected function show_common_setting_fields( $fields, $config ) {
 		// Default Customer Phone.
 		$fields[] = [
 			'section'  => 'advanced',

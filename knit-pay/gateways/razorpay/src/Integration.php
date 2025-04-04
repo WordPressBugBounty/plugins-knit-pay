@@ -125,7 +125,7 @@ class Integration extends IntegrationOAuthClient {
 		return $fields;
 	}
 
-	protected function show_common_setting_fields( $fields ) {
+	protected function show_common_setting_fields( $fields, $config ) {
 		$checkout_modes_options = [
 			Config::CHECKOUT_STANDARD_MODE => 'Standard Checkout - Payment Box',
 		];
@@ -165,7 +165,7 @@ class Integration extends IntegrationOAuthClient {
 			'options'  => $checkout_modes_options,
 			'default'  => Config::CHECKOUT_STANDARD_MODE,
 		];
-		
+
 		// Transaction Fees Percentage.
 		$fields[] = [
 			'section'     => 'advanced',
@@ -175,7 +175,7 @@ class Integration extends IntegrationOAuthClient {
 			'classes'     => [ 'regular-text', 'code' ],
 			'description' => __( 'Percentage of transaction fees you want to collect from the customer. For example: 2.36 for 2% + GST; 3.54 for 3% + GST. Keep it blank for not collecting transaction fees from the customer.', 'knit-pay-lang' ),
 		];
-		
+
 		// Transaction Fees Fix Amount.
 		$fields[] = [
 			'section'     => 'advanced',

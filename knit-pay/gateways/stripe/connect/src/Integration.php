@@ -11,7 +11,7 @@ use KnitPay\Utils as KnitPayUtils;
  * Copyright: 2020-2025 Knit Pay
  *
  * @author  Knit Pay
- * @version 1.0.0
+ * @version 8.96.11.0
  * @since   3.7.0
  */
 class Integration extends Stripe_Integration {
@@ -93,21 +93,11 @@ class Integration extends Stripe_Integration {
 		}
 
 		// Get Parent settings fields.
-		$parent_fields = parent::get_settings_fields();
-		foreach ( $parent_fields as $field ) {
-			if ( ! in_array(
-				$field['meta_key'],
-				[
-					'_pronamic_gateway_stripe_publishable_key',
-					'_pronamic_gateway_stripe_secret_key',
-					'_pronamic_gateway_stripe_test_publishable_key',
-					'_pronamic_gateway_stripe_test_secret_key',
-				],
-				true
-			) ) {
-				$fields[] = $field;
-			}
-		}
+		$fields = array_merge( $fields, parent::get_settings_fields() );
+		unset( $fields['stripe_publishable_key'] );
+		unset( $fields['stripe_secret_key'] );
+		unset( $fields['stripe_test_publishable_key'] );
+		unset( $fields['stripe_test_secret_key'] );
 
 		// Get Config ID from Post.
 		$config_id = KnitPayUtils::get_gateway_config_id();
