@@ -138,7 +138,7 @@ class Gateway extends Core_Gateway {
 		$stripe_payment_currency = $this->config->payment_currency;
 		$exchange_rate           = $this->config->exchange_rate;
 
-		$payment_amount = $payment->get_total_amount()->number_format( null, '.', '' ) * 100;
+		$payment_amount = $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' );
 
 		if ( ! empty( $stripe_payment_currency ) ) {
 			$payment_amount = $exchange_rate * $payment_amount;

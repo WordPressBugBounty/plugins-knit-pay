@@ -15,6 +15,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  *
  * @author  knitpay
  * @since   5.60.0.0
+ * @version 8.96.12.0
  */
 
 /**
@@ -23,6 +24,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 defined( 'ABSPATH' ) || exit();
 
 class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
+	private $payment_method;
 	
 	/**
 	 * Init the parent action class
@@ -42,6 +44,14 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 		
 		return array_merge(
 			[
+				'save_lead_recommendation' => [
+					'name'        => 'save_lead_recommendation',
+					'type'        => 'notice',
+					'label'       => __( 'Setup Save Lead Action!', 'knit-pay-lang' ),
+					'sub_title'   => __( 'For Knit Pay to work properly, we highly recommend setting up the "Save Lead" action if you have not done so already.', 'knit-pay-lang' ),
+					'placeholder' => '',
+					'class'       => 'field-warning-alert',
+				],
 				[
 					'name'    => 'config_id',
 					'type'    => 'select',
@@ -58,7 +68,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 					'footer'      => '<div>' . $this->get_formatted_mail_tags() . '</div>',
 					'value'       => $this->get( 'payment_description' ),
 				],
-				'open_new_window'   => [
+				'open_new_window'          => [
 					'name'        => 'open_new_window',
 					'type'        => 'checkbox',
 					'label'       => __( 'Open in new window', 'knit-pay-lang' ),
@@ -66,7 +76,15 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 					'placeholder' => '',
 					'value'       => $this->get( 'open_new_window' ),
 				],
-				'redirection_pages' => [
+				'email_delay'              => [
+					'name'        => 'email_delay',
+					'type'        => 'checkbox',
+					'label'       => __( 'Send "Contact Form 7" emails only after payment confirmation. Setup of the "Save Lead" action of the "Redirection for Contact Form 7" plugin is mandatory for this feature to work. Emails sent by the "Redirection for Contact Form 7" plugin will not be delayed with this option.', 'knit-pay-lang' ),
+					'sub_title'   => '',
+					'placeholder' => '',
+					'value'       => $this->get( 'email_delay' ),
+				],
+				'redirection_pages'        => [
 					'name'        => 'general-alert',
 					'type'        => 'notice',
 					'label'       => __( 'Redirection Pages!', 'knit-pay-lang' ),
@@ -74,7 +92,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 					'placeholder' => '',
 					'class'       => 'field-notice-alert',
 				],
-				'pricing_details'   => [
+				'pricing_details'          => [
 					'name'   => $this->payment_method . '_pricing_details',
 					'type'   => 'section',
 					'title'  => __( 'Pricing Details (Required)', 'knit-pay-lang' ),
@@ -101,23 +119,21 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 						],
 					],
 				],
-				'user_details'      => [
+				'user_details'             => [
 					'name'   => 'user_details',
 					'type'   => 'section',
 					'title'  => __( 'User details (Required for some payment gateways)', 'knit-pay-lang' ),
 					'footer' => __( '<div>' . $this->get_formatted_mail_tags() . '</div>', 'knit-pay-lang' ),
 					'class'  => '',
 					'fields' => [
-						'merhcant_account_alert' => [
-							'name'          => 'general-alert',
-							'type'          => 'notice',
-							'label'         => __( 'Notice!', 'knit-pay-lang' ),
-							'sub_title'     => __( 'Some fields are mandatory for some payment gateways', 'knit-pay-lang' ),
-							'placeholder'   => '',
-							'class'         => 'field-notice-alert',
-							'show_selector' => '',
+						'optional_fields_alert' => [
+							'name'      => 'optional_fields_alert',
+							'type'      => 'notice',
+							'label'     => __( 'Notice!', 'knit-pay-lang' ),
+							'sub_title' => __( 'Some fields are mandatory for some payment gateways', 'knit-pay-lang' ),
+							'class'     => 'field-notice-alert',
 						],
-						'first_name'             => [
+						'first_name'            => [
 							'name'        => 'first_name',
 							'type'        => 'text',
 							'label'       => __( 'First name', 'knit-pay-lang' ),
@@ -125,7 +141,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 							'value'       => $this->get( 'first_name' ),
 							'class'       => 'qs-col qs-col-6 ',
 						],
-						'last_name'              => [
+						'last_name'             => [
 							'name'        => 'last_name',
 							'type'        => 'text',
 							'label'       => __( 'Last name', 'knit-pay-lang' ),
@@ -133,7 +149,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 							'value'       => $this->get( 'last_name' ),
 							'class'       => 'qs-col qs-col-6 ',
 						],
-						'buyer_phone'            => [
+						'buyer_phone'           => [
 							'name'        => 'buyer_phone',
 							'type'        => 'text',
 							'label'       => __( 'Phone number', 'knit-pay-lang' ),
@@ -141,7 +157,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 							'value'       => $this->get( 'buyer_phone' ),
 							'class'       => 'qs-col qs-col-6 ',
 						],
-						'buyer_email'            => [
+						'buyer_email'           => [
 							'name'        => 'buyer_email',
 							'type'        => 'text',
 							'label'       => __( 'Buyer email', 'knit-pay-lang' ),
@@ -149,7 +165,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 							'value'       => $this->get( 'buyer_email' ),
 							'class'       => 'qs-col qs-col-6 ',
 						],
-						'billing_address_1'      => [
+						'billing_address_1'     => [
 							'name'        => 'billing_address_1',
 							'type'        => 'text',
 							'label'       => __( 'Street name of the billing address.', 'knit-pay-lang' ),
@@ -157,7 +173,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 							'value'       => $this->get( 'billing_address_1' ),
 							'class'       => 'qs-col qs-col-6 ',
 						],
-						'billing_address_2'      => [
+						'billing_address_2'     => [
 							'name'        => 'billing_address_2',
 							'type'        => 'text',
 							'label'       => __( 'Street name of the billing address.', 'knit-pay-lang' ),
@@ -165,7 +181,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 							'value'       => $this->get( 'billing_address_2' ),
 							'class'       => 'qs-col qs-col-6 ',
 						],
-						'billing_city'           => [
+						'billing_city'          => [
 							'name'        => 'billing_city',
 							'type'        => 'text',
 							'label'       => __( 'City name of the billing address.', 'knit-pay-lang' ),
@@ -173,7 +189,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 							'value'       => $this->get( 'billing_city' ),
 							'class'       => 'qs-col qs-col-6 ',
 						],
-						'billing_state'          => [
+						'billing_state'         => [
 							'name'        => 'billing_state',
 							'type'        => 'text',
 							'label'       => __( 'State name of the billing address.', 'knit-pay-lang' ),
@@ -181,7 +197,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 							'value'       => $this->get( 'billing_state' ),
 							'class'       => 'qs-col qs-col-6 ',
 						],
-						'billing_country'        => [
+						'billing_country'       => [
 							'name'        => 'billing_country',
 							'type'        => 'text',
 							'label'       => __( 'Country Code of the billing address.', 'knit-pay-lang' ),
@@ -189,7 +205,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 							'value'       => $this->get( 'billing_country' ),
 							'class'       => 'qs-col qs-col-6 ',
 						],
-						'billing_zip'            => [
+						'billing_zip'           => [
 							'name'        => 'billing_zip',
 							'type'        => 'text',
 							'label'       => __( 'Zip code of the billing address.', 'knit-pay-lang' ),
@@ -204,16 +220,18 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 		);
 	}
 	
-	public function process_validation( $submission ) {
-	}
-	
 	/**
 	 * Handle a simple redirect rule
 	 *
 	 * @param $submission
 	 */
 	public function process( $submission ) {
-		// FIXME https://github.com/pronamic/wp-pay-core/issues/88
+		// Don't send email if the email delay is enabled.
+		// This is to prevent sending emails when the form is submitted and the payment is not completed.
+		if ( 'on' === $this->get( 'email_delay' ) ) {
+			add_filter( 'wpcf7_skip_mail', '__return_true' );
+		}
+
 		$response = [];   
 
 		$config_id      = $this->get( 'config_id' );
@@ -230,8 +248,6 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 			return false;
 		}
 
-		$order_id = $this->get_lead_id();
-
 		$amount = Helper::get_value_from_tag( $this, 'amount' );
 		try {
 			$amount = new Number( $amount );
@@ -242,7 +258,10 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 			];
 		}
 
-		$unique_id = \time();
+		$order_id = $this->get_lead_id();
+		if ( empty( $order_id ) ) {
+			$order_id = \time();
+		}
 
 		/**
 		 * Build payment.
@@ -254,9 +273,9 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 			$payment->source_id = $order_id;
 			$payment->order_id  = $order_id;
 
-			$payment->set_description( Helper::get_description( $this, $unique_id ) );
+			$payment->set_description( Helper::get_description( $this, $order_id ) );
 
-			$payment->title = Helper::get_title( $this, $unique_id );
+			$payment->title = Helper::get_title( $this, $order_id );
 
 			// Customer.
 			$payment->set_customer( Helper::get_customer( $this ) );
@@ -276,6 +295,8 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 			// Configuration.
 			$payment->config_id = $config_id;
 
+			$payment->set_meta( 'email_delay', $this->get( 'email_delay' ) );
+
 			// Start the Payment.
 			$payment = Plugin::start_payment( $payment );
 
@@ -291,5 +312,39 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 		}
 		
 		return $response;
+	}
+
+	/**
+	 * Enqueue extension scripts and styles.
+	 *
+	 * @return void
+	 */
+	public static function enqueue_backend_scripts() {
+		\wp_register_script(
+			'knit-pay-contact-form-7-admin',
+			plugins_url( 'js/knit-pay-contact-form-7-admin.js', dirname( __FILE__ ) ),
+			[ 'jquery' ],
+			KNITPAY_VERSION,
+			true
+		);
+
+		\wp_enqueue_script( 'knit-pay-contact-form-7-admin' );
+	}
+
+	/**
+	 * Enqueue extension scripts and styles.
+	 *
+	 * @return void
+	 */
+	public static function enqueue_frontend_scripts() {
+		\wp_register_script(
+			'knit-pay-contact-form-7',
+			plugins_url( 'js/payment-form-processor.js', dirname( __FILE__ ) ),
+			[ 'jquery' ],
+			KNITPAY_VERSION,
+			true
+		);
+
+		\wp_enqueue_script( 'knit-pay-contact-form-7' );
 	}
 }

@@ -4,6 +4,8 @@ namespace KnitPay\Extensions\ContactForm7;
 
 use Pronamic\WordPress\Pay\AbstractPluginIntegration;
 use Pronamic\WordPress\Pay\Payments\Payment;
+use WPCF7_ContactForm;
+use WPCF7_Mail;
 
 /**
  * Title: Contact Form 7 extension
@@ -13,6 +15,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  *
  * @author  knitpay
  * @since   5.60.0.0
+ * @version 8.96.12.0
  */
 class Extension extends AbstractPluginIntegration {
 	/**
@@ -54,10 +57,7 @@ class Extension extends AbstractPluginIntegration {
 		}
 
 		add_action( 'pronamic_payment_status_update_' . self::SLUG, [ $this, 'status_update' ], 10 );
-		
-		\add_action( 'wpcf7_redirect_enqueue_frontend', [ $this, 'enqueue_scripts' ] );
-		\add_action( 'wpcf_7_redirect_admin_scripts', [ $this, 'enqueue_admin_scripts' ] );
-				
+
 		if ( ! class_exists( 'WPCF7R_Action' ) ) {
 			add_filter( 'wpcf7_editor_panels', [ $this, 'missing_dependency_panel' ] );
 			return;
@@ -70,7 +70,7 @@ class Extension extends AbstractPluginIntegration {
 			__( 'Knit Pay Payment', 'knit-pay-lang' ),
 			'WPCF7R_Action_Knit_Pay'
 		);
-				
+
 		// FIXME refer: https://wordpress.org/support/topic/paypal-integration-addon-not-working-without-ajax/
 	}
 	
@@ -102,36 +102,6 @@ class Extension extends AbstractPluginIntegration {
 						  
 		echo '<p>' . sprintf( $error, $plugin_link, $link ) . '</p>';
 	}
-	
-	/**
-	 * Enqueue scripts.
-	 */
-	public function enqueue_scripts() {
-		\wp_register_script(
-			'knit-pay-contact-form-7',
-			plugins_url( 'js/payment-form-processor.js', dirname( __FILE__ ) ),
-			[ 'jquery' ],
-			KNITPAY_VERSION,
-			true
-		);
-		
-		\wp_enqueue_script( 'knit-pay-contact-form-7' );
-	}
-
-	/**
-	 * Enqueue Admin scripts.
-	 */
-	public function enqueue_admin_scripts() {
-		\wp_register_script(
-			'knit-pay-contact-form-7-admin',
-			plugins_url( 'js/knit-pay-contact-form-7-admin.js', dirname( __FILE__ ) ),
-			[ 'jquery' ],
-			KNITPAY_VERSION,
-			true
-		);
-
-		\wp_enqueue_script( 'knit-pay-contact-form-7-admin' );
-	}
 
 	/**
 	 * Update the status of the specified payment
@@ -141,9 +111,9 @@ class Extension extends AbstractPluginIntegration {
 	public static function status_update( Payment $payment ) {
 		$lead_id             = (int) $payment->get_source_id();
 		$save_lead_action_id = get_post_meta( $lead_id, 'cf7_action_id', true );
-		
-		if ( empty( $lead_id ) ) {
-			return $lead_id;
+
+		if ( empty( $save_lead_action_id ) ) {
+			return;
 		}
 		
 		$save_lead_action_lead_map = get_post_meta( $save_lead_action_id, 'leads_map', true );
@@ -166,10 +136,60 @@ class Extension extends AbstractPluginIntegration {
 		}
 		
 		update_post_meta( $lead_id, 'knit_pay_transaction_id', $payment->get_transaction_id() );
-		update_post_meta( $lead_id, 'knit_pay_status', $payment->status );
+		update_post_meta( $lead_id, 'knit_pay_status', $payment->get_status() );
 		update_post_meta( $lead_id, 'knit_pay_payment_id', $payment->get_id() );
 		update_post_meta( $lead_id, 'knit_pay_amount', $payment->get_total_amount()->get_value() );
+
+		// Send email if payment is successful and email delay is set.
+		if ( 'Success' === $payment->get_status() && 'on' === $payment->get_meta( 'email_delay' ) ) {
+			self::send_email( $lead_id, $save_lead_action_id );
+		}
+	}
+
+	private static function send_email( $lead_id, $save_lead_action_id ) {
+		$contact_form_id = get_post_meta( $save_lead_action_id, 'wpcf7_id', true );
+
+		$contact_form = WPCF7_ContactForm::get_instance( $contact_form_id );
 		
+		$result = self::send_cf_email( $lead_id, $contact_form->prop( 'mail' ) );
+
+		if ( $result ) {
+			$result = self::send_cf_email( $lead_id, $contact_form->prop( 'mail_2' ) );
+		}
+	}
+
+	private static function send_cf_email( $lead_id, $template ) {
+		if ( ! $template['active'] ) {
+			return false;
+		}
+
+		$all_post_meta = get_post_meta( $lead_id );
+
+		foreach ( $all_post_meta as $key => $value ) {
+			if ( is_array( $value ) ) {
+				$all_post_meta[ '[' . $key . ']' ] = implode( ',', $value );
+			}
+		}
+		$all_post_meta['[_site_title]']       = get_bloginfo( 'name' );
+		$all_post_meta['[_site_admin_email]'] = get_bloginfo( 'admin_email' );
+		$all_post_meta['[_site_url]']         = get_site_url();
+
+		$template['body']               = strtr( $template['body'], $all_post_meta );
+		$template['additional_headers'] = strtr( $template['additional_headers'], $all_post_meta );
+		$template['recipient']          = strtr( $template['recipient'], $all_post_meta );
+		$template['subject']            = strtr( $template['subject'], $all_post_meta );
+
+		// Process file attachments if they exist
+		// TODO Fix attachment.
+		/*
+		$template['attachments'] = strtr( $template['attachments'], $all_post_meta );
+		if (isset($all_post_meta['files'])) {
+			foreach ($all_post_meta['files'] as $file) {
+				$file = maybe_unserialize($file);
+			}
+		}*/
+
+		return WPCF7_Mail::send( $template, 'mail' );
 	}
 
 	/**

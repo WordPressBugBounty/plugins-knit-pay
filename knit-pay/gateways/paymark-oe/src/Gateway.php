@@ -87,7 +87,7 @@ class Gateway extends Core_Gateway {
 		$payment_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 
 		return [
-			'amount'      => intval( strval( $payment->get_total_amount()->number_format( null, '.', '' ) * 100 ) ),
+			'amount'      => intval( strval( $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' ) ) ),
 			'redirectUrl' => preg_replace( '/^http:/i', 'https:', $payment->get_return_url() ), // Paymark EO does not allow redirection on http URL
 			'currency'    => $payment_currency,
 			'description' => $payment->get_description(),
