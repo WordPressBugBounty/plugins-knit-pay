@@ -67,13 +67,12 @@ class Gateway extends Core_Gateway {
 	 * @return array
 	 */
 	private function get_payment_data( Payment $payment ) {
-		$txn_id   = $payment->get_transaction_id();
 		$customer = $payment->get_customer();
 
 		$data = [
 			'ssl_amount'          => $payment->get_total_amount()->number_format( null, '.', '' ),
 			'ssl_merchant_txn_id' => $payment->get_id(),
-			'ssl_invoice_number'  => $txn_id,
+			'ssl_invoice_number'  => $payment->get_transaction_id(),
 			'ssl_description'     => $payment->get_description(),
 		];
 
@@ -108,7 +107,8 @@ class Gateway extends Core_Gateway {
 
 		$api = new API( $this->config, $this->test_mode );
 
-
+		// TODO: Try to implement using search by Invoice.
+		// @see: https://developer.elavon.com/products/xml-api/v1/api-reference#tag/Process-Transaction-Online/operation/process
 		$transaction_details = $api->get_transaction_details( $ssl_txn_id );
 
 		if ( isset( $transaction_details['ssl_trans_status'] ) ) {

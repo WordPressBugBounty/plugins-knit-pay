@@ -75,7 +75,7 @@ class API {
 
 		$url = $this->xml_api_url . '?xmldata=' . $xml_out;
 
-		$response = wp_remote_get(
+		$response = wp_remote_post(
 			$url,
 			[
 				'timeout' => 30,

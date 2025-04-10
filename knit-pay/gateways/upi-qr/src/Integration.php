@@ -91,7 +91,7 @@ class Integration extends AbstractGatewayIntegration {
 						],
 						[
 							'key'     => '_pronamic_gateway_upi_qr_vpa',
-							'value'   => '(?i)^(q.+@ybl|paytmqr.+@[a-z]+|bharatpe.+@[a-z]+|.+@hdfcbank|.+@ikwik)$',
+							'value'   => '(?i)^(q.+@ybl|paytmqr.+@[a-z]+|bharatpe.+@[a-z]+|.+@hdfcbank|.+@ikwik|.+@freecharge)$',
 							'compare' => 'REGEXP',
 						],
 					],
@@ -206,9 +206,12 @@ class Integration extends AbstractGatewayIntegration {
 
 	public function get_about_settings_fields( $fields ) {
 		$fields[] = [
-			'section'     => 'general',
-			'type'        => 'custom',
-			'description' => '<h1><strong>Please Note:</strong> This module is highly unstable and your customers might face lots of payment failures while using it. Knit Pay strongly suggests that you integrate UPI using some payment gateway service provider instead of this module. Due to a high number of requests from website owners, we have kept this module active. Kindly use it only if you are ready to face potential risks.</h1>',
+			'section'  => 'general',
+			'title'    => 'Warning',
+			'type'     => 'custom',
+			'callback' => function () {
+				echo '<h1><strong>Please Note:</strong> This module is highly unstable and your customers might face lots of payment failures while using it. Knit Pay strongly suggests that you integrate UPI using some payment gateway service provider or use "Knit Pay - UPI" plugin instead of this module. Due to a high number of requests from website owners, we have kept this module active. Kindly use it only if you are ready to face potential risks.</h1>';
+			},
 		];
 
 		// Steps to Integrate.
@@ -376,7 +379,7 @@ class Integration extends AbstractGatewayIntegration {
 				PaymentStatus::SUCCESS => PaymentStatus::SUCCESS,
 			],
 			'default'     => PaymentStatus::ON_HOLD,
-			'description' => 'Knit Pay does not check if payment is received or not. Kindly deliver the product/service only after cross-checking the payment status with your bank.',
+			'description' => 'Knit Pay does not check if payment is received or not. Kindly deliver the product/service only after cross-checking the payment status with your bank.<br><strong>Note:</strong> You can also use the "Knit Pay - UPI" plugin to automatically check the payment status of your UPI payments.',
 		];
 		
 		// Transaction ID Field.

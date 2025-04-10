@@ -112,7 +112,7 @@ class Gateway extends Core_Gateway {
 			],
 		];
 
-		if ( isset( $shipping_address ) ) {
+		if ( isset( $shipping_address ) && null !== $shipping_address->get_country_code() ) {
 			$data['purchase_units'][0]['shipping'] = [
 				'name'          => [
 					'full_name' => substr( trim( ( html_entity_decode( $shipping_address->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 50 ),
