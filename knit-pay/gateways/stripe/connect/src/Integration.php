@@ -181,6 +181,10 @@ class Integration extends Stripe_Integration {
 		$config->application_fees_percentage = $this->get_meta( $post_id, 'stripe_application_fees_percentage' );
 		$config->is_connected                = $this->get_meta( $post_id, 'stripe_is_connected' );
 
+		if ( empty( $config->mode ) ) {
+			$config->mode = Gateway::MODE_LIVE;
+		}
+
 		return $config;
 	}
 

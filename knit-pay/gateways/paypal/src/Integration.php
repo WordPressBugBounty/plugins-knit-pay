@@ -259,6 +259,7 @@ class Integration extends IntegrationOAuthClient {
 
 		$config->client_id     = $this->get_meta( $post_id, 'paypal_client_id' );
 		$config->client_secret = $this->get_meta( $post_id, 'paypal_client_secret' );
+		$config->webhook_id    = $this->get_meta( $post_id, 'paypal_webhook_id' );
 
 		// OAuth.
 		$config->merchant_id  = $this->get_meta( $post_id, 'paypal_merchant_id' );

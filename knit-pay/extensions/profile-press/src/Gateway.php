@@ -160,7 +160,7 @@ class Gateway extends AbstractPaymentMethod {
 			
 			$checkoutResponse = new CheckoutResponse();
 				
-				return $checkoutResponse
+			return $checkoutResponse
 				->set_is_success( true )
 				->set_redirect_url( $payment->get_pay_redirect_url() );
 		} catch ( \Exception $e ) {

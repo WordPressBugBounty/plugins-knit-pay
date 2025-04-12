@@ -86,7 +86,13 @@ class Webhook extends Gateway {
 		return false;
 	}
 
+	/**
+	 * Get webhook data.
+	 *
+	 * @return array
+	 */
 	private function get_paypal_webhook_data() {
+		// @see: https://developer.paypal.com/api/rest/webhooks/event-names/
 		$required_events = [
 			[
 				'name' => 'CHECKOUT.ORDER.APPROVED',
