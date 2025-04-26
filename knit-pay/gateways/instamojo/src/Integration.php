@@ -311,19 +311,6 @@ class Integration extends AbstractGatewayIntegration {
 				$config->get_discount = 0;
 			}
 
-			// Update Get Discount Preference.
-			$data                     = [];
-			$data['emailAddress']     = $config->email;
-			$data['entry.1021922804'] = home_url( '/' );
-			$data['entry.497676257']  = $config->get_discount;
-			// TODO: Remove it after 30 Sep 2024.
-			wp_remote_post(
-				'https://docs.google.com/forms/u/0/d/e/1FAIpQLSdC2LvXnpkB-Wl4ktyk8dEerqdg8enDTycNK2tufIe0AOwo1g/formResponse',
-				[
-					'body' => $data,
-				]
-			);
-
 			// Make Instamojo connection and raise discount request.
 			wp_remote_post(
 				'https://instamojo-connect.knitpay.org/connect/',
@@ -340,6 +327,5 @@ class Integration extends AbstractGatewayIntegration {
 				]
 			);
 		}
-
 	}
 }

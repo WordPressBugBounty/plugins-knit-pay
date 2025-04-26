@@ -3,7 +3,6 @@ namespace KnitPay\Gateways\Stripe\Connect;
 
 use KnitPay\Gateways\Stripe\Gateway as Stripe_Gateway;
 use Pronamic\WordPress\Pay\Payments\Payment;
-use WP_Error;
 
 /**
  * Title: Stripe Connect Gateway

@@ -77,18 +77,6 @@ class Gateway extends Core_Gateway {
 			throw new \Exception( $error );
 		}
 
-		/*
-		 if ( ! $this->config->is_connected ) {
-			$error       = 'PayU is not connected. If you are a store owner, integrate PayU and try again.';
-			$this->error = new WP_Error( 'payu_error', $error );
-			return;
-		} */
-
-		if ( empty( $this->config->mid ) ) {
-			 $error = 'PayU Merchant ID is missing. Kindly enter the correct Merchant ID on the PayU configuration page.';
-			 throw new \Exception( $error );
-		}
-
 		if ( '0.00' === $payment->get_total_amount()->number_format( null, '.', '' ) ) {
 			throw new \Exception( 'The amount can not be zero.' );
 		}
@@ -319,43 +307,5 @@ class Gateway extends Core_Gateway {
 				break;
 		}
 		return $payu_lang;
-	}
-
-	// For now this function is not getting used, but might be used later.
-	private function get_verified_redirect_transaction_data( $payment, $post_array ) {
-		$status      = $post_array['status'];
-		$firstname   = $post_array['firstname'];
-		$amount      = $post_array['amount'];
-		$txnid       = $post_array['txnid'];
-		$posted_hash = $post_array['hash'];
-		$productinfo = $post_array['productinfo'];
-		$email       = $post_array['email'];
-		$mihpayid    = $post_array['mihpayid'];
-		$udf1        = $post_array['udf1'];
-		$udf2        = $post_array['udf2'];
-		$udf3        = $post_array['udf3'];
-		$udf4        = $post_array['udf4'];
-		$udf5        = $post_array['udf5'];
-
-		if ( ! ( $mihpayid === $payment->get_transaction_id() || $txnid === $payment->get_transaction_id() ) ) {
-			return;
-		}
-
-		$merchant_key  = $this->config->merchant_key;
-		$merchant_salt = $this->config->merchant_salt;
-
-		if ( isset( $post_array['additionalCharges'] ) ) {
-			$additionalCharges = $post_array['additionalCharges'];
-			$retHashSeq        = $additionalCharges . '|' . $merchant_salt . '|' . $status . '||||||' . $udf5 . '|' . $udf4 . '|' . $udf3 . '|' . $udf2 . '|' . $udf1 . '|' . $email . '|' . $firstname . '|' . $productinfo . '|' . $amount . '|' . $txnid . '|' . $merchant_key;
-		} else {
-			$retHashSeq = $merchant_salt . '|' . $status . '||||||' . $udf5 . '|' . $udf4 . '|' . $udf3 . '|' . $udf2 . '|' . $udf1 . '|' . $email . '|' . $firstname . '|' . $productinfo . '|' . $amount . '|' . $txnid . '|' . $merchant_key;
-		}
-		$hash = hash( 'sha512', $retHashSeq );
-
-		if ( $hash !== $posted_hash ) {
-			throw new \Exception( 'Invalid Transaction. Hash Missmatch.' );
-		} else {
-			return (object) $post_array;
-		}
 	}
 }

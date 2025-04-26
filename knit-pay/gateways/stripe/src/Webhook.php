@@ -1,7 +1,6 @@
 <?php
 namespace KnitPay\Gateways\Stripe;
 
-use WP_Error;
 use Exception;
 use Pronamic\WordPress\Pay\Plugin;
 

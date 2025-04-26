@@ -15,8 +15,6 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
 class Config extends GatewayConfig {
 	public $mode;
 
-	public $mid;
-
 	public $merchant_key;
 
 	public $merchant_salt;
@@ -24,6 +22,4 @@ class Config extends GatewayConfig {
 	public $transaction_fees_percentage;
 
 	public $transaction_fees_fix;
-
-	public $is_connected;
 }

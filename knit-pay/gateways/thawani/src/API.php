@@ -40,8 +40,11 @@ class API {
 		$result   = wp_remote_retrieve_body( $response );
 
 		$result = json_decode( $result );
-		if ( ! isset( $result->success ) || ! $result->success ) {
-			throw new Exception( wp_json_encode( $result->data ) );
+
+		if ( isset( $result->data ) && isset( $result->data->error ) && is_array( $result->data->error ) ) {
+			throw new Exception( wp_json_encode( $result->data->error[0]->message ) );
+		} elseif ( isset( $result->detail ) ) {
+			throw new Exception( $result->detail );
 		}
 
 		return $result->data;

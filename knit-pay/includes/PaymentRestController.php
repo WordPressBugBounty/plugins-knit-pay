@@ -136,8 +136,12 @@ class PaymentRestController extends WP_REST_Controller {
 		
 			$payment = Plugin::start_payment( $payment );
 
-			$payment->set_meta( 'rest_redirect_url', $request->get_param( 'redirect_url' ) );
-			$payment->set_meta( 'rest_notify_url', $request->get_param( 'notify_url' ) );
+			if ( ! is_null( $request->get_param( 'redirect_url' ) ) ) {
+				$payment->set_meta( 'rest_redirect_url', $request->get_param( 'redirect_url' ) );
+			}
+			if ( ! is_null( $request->get_param( 'notify_url' ) ) ) {
+				$payment->set_meta( 'rest_notify_url', $request->get_param( 'notify_url' ) );
+			}
 			$payment->save();
 
 			$response = $this->prepare_item_for_response( $payment, $request );

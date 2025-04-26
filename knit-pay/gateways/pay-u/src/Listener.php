@@ -12,8 +12,6 @@ use Pronamic\WordPress\Pay\Plugin;
  * @since 5.6.2.0
  */
 class Listener {
-
-
 	public static function listen() {
 		if ( ! filter_has_var( INPUT_GET, 'kp_payu_webhook' ) ) {
 			return;

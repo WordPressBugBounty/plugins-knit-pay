@@ -179,7 +179,12 @@ class API {
 		}
 
 		$response = wp_remote_request( $url, $args );
-		$result   = wp_remote_retrieve_body( $response );
+
+		if ( is_wp_error( $response ) ) {
+			throw new Exception( $response->get_error_message() );
+		}
+
+		$result = wp_remote_retrieve_body( $response );
 
 		$result = json_decode( $result );
 		return $result;

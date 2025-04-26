@@ -5,7 +5,6 @@ use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Exception;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
-use WP_Error;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 
 require_once 'lib/API.php';
@@ -103,15 +102,11 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 
-		try {
-			$payment_status = $this->api->get_payment_status( $payment->get_transaction_id() );
+		$payment_status = $this->api->get_payment_status( $payment->get_transaction_id() );
 
-			if ( isset( $payment_status->InvoiceStatus ) ) {
-				$payment->set_status( Statuses::transform( $payment_status->InvoiceStatus ) );
-				$payment->add_note( '<strong>MyFatoorah Payment Status:</strong><br><pre>' . print_r( $payment_status, true ) . '</pre><br>' );
-			}
-		} catch ( Exception $e ) {
-			$this->error = new WP_Error( 'my_fatoorah_error', $e->getMessage() );
+		if ( isset( $payment_status->InvoiceStatus ) ) {
+			$payment->set_status( Statuses::transform( $payment_status->InvoiceStatus ) );
+			$payment->add_note( '<strong>MyFatoorah Payment Status:</strong><br><pre>' . print_r( $payment_status, true ) . '</pre><br>' );
 		}
 	}
 }

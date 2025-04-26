@@ -3,7 +3,6 @@ namespace KnitPay\Gateways\Iyzico;
 
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Payments\Payment;
-use WP_Error;
 
 
 /**

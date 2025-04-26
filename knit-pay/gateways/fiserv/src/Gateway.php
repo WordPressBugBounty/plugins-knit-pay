@@ -5,7 +5,6 @@ use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use KnitPay\Gateways\Fiserv\Lib\Utility;
-use WP_Error;
 
 require_once 'lib/Utility.php';
 

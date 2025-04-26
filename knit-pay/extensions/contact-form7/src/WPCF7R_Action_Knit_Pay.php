@@ -44,11 +44,11 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 		
 		return array_merge(
 			[
-				'save_lead_recommendation' => [
-					'name'        => 'save_lead_recommendation',
+				'save_entry_recommendation' => [
+					'name'        => 'save_entry_recommendation',
 					'type'        => 'notice',
-					'label'       => __( 'Setup Save Lead Action!', 'knit-pay-lang' ),
-					'sub_title'   => __( 'For Knit Pay to work properly, we highly recommend setting up the "Save Lead" action if you have not done so already.', 'knit-pay-lang' ),
+					'label'       => __( 'Setup Save Entry Action!', 'knit-pay-lang' ),
+					'sub_title'   => __( 'For Knit Pay to work properly, we highly recommend setting up the "Save Entry" action if you have not done so already.', 'knit-pay-lang' ),
 					'placeholder' => '',
 					'class'       => 'field-warning-alert',
 				],
@@ -79,7 +79,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 				'email_delay'              => [
 					'name'        => 'email_delay',
 					'type'        => 'checkbox',
-					'label'       => __( 'Send "Contact Form 7" emails only after payment confirmation. Setup of the "Save Lead" action of the "Redirection for Contact Form 7" plugin is mandatory for this feature to work. Emails sent by the "Redirection for Contact Form 7" plugin will not be delayed with this option.', 'knit-pay-lang' ),
+					'label'       => __( 'Send "Contact Form 7" emails only after payment confirmation. Setup of the "Save Entry" action of the "Redirection for Contact Form 7" plugin is mandatory for this feature to work. Emails sent by the "Redirection for Contact Form 7" plugin will not be delayed with this option.', 'knit-pay-lang' ),
 					'sub_title'   => '',
 					'placeholder' => '',
 					'value'       => $this->get( 'email_delay' ),
@@ -340,7 +340,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 		\wp_register_script(
 			'knit-pay-contact-form-7',
 			plugins_url( 'js/payment-form-processor.js', dirname( __FILE__ ) ),
-			[ 'jquery' ],
+			[ 'jquery', 'wpcf7-redirect-script' ],
 			KNITPAY_VERSION,
 			true
 		);

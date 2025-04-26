@@ -2,7 +2,6 @@
 namespace KnitPay\Gateways\PayU;
 
 use Exception;
-use WP_Error;
 
 /**
  * Title: PayU Client
@@ -78,7 +77,7 @@ class Client {
 			]
 		);
 
-		if ( $response instanceof WP_Error ) {
+		if ( is_wp_error( $response ) ) {
 			throw new Exception( $response->get_error_message() );
 		}
 
@@ -97,44 +96,6 @@ class Client {
 			throw new Exception( $error );
 		}
 		throw new Exception( 'Something went wrong. Please try again later.' );
-	}
-	
-	public function test_connection() {
-		$command    = 'get_Transaction_Details';
-		$start_date = '2020-10-20';
-		$end_date   = '2020-10-20';
-
-		$hash_str = "{$this->merchant_key}|{$command}|{$start_date}|{$this->merchant_salt}";
-		$hash     = strtolower( hash( 'sha512', $hash_str ) ); // generate hash for verify payment request
-
-		$data = [
-			'key'     => $this->merchant_key,
-			'command' => $command,
-			'var1'    => $start_date,
-			'var2'    => $end_date,
-			'hash'    => $hash,
-		];
-
-		$response = wp_remote_post(
-			$this->get_api_url() . '/merchant/postservice?form=2',
-			[
-				'body'    => $data,
-				'timeout' => self::CONNECTION_TIMEOUT,
-			]
-		);
-
-		if ( $response instanceof WP_Error ) {
-			throw new Exception( $response->get_error_message() );
-		}
-
-		$result = wp_remote_retrieve_body( $response );
-
-		$result = json_decode( $result );
-		if ( isset( $result->status ) && 1 === $result->status ) {
-			return true;
-		}
-
-		return false;
 	}
 
 	public function cancel_refund_transaction( $transaction_id, $token_id, $amount ) {
@@ -160,7 +121,7 @@ class Client {
 			]
 		);
 		
-		if ( $response instanceof WP_Error ) {
+		if ( is_wp_error( $response ) ) {
 			throw new Exception( $response->get_error_message() );
 		}
 		

@@ -2,8 +2,6 @@
 
 namespace KnitPay\Gateways\SumUp;
 
-use WP_Error;
-
 /**
  * Title: SumUp Client
  * Copyright: 2020-2025 Knit Pay

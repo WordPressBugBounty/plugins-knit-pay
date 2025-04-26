@@ -58,7 +58,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 	 * @since 1.8
 	 */
 	function init() {
-		$this->config_id = pmpro_getOption( 'knit_pay_config_id' );
+		$this->config_id = self::pmpro_getOption( 'knit_pay_config_id' );
 
 		// make sure knit pay is a gateway option
 		add_filter( 'pmpro_gateways', [ $this, 'pmpro_gateways' ] );
@@ -68,12 +68,16 @@ class PMProGateway_knit_pay extends PMProGateway {
 		add_filter( 'pmpro_payment_option_fields', [ $this, 'pmpro_payment_option_fields' ], 10, 2 );
 
 		// code to add at checkout if knit pay is the current gateway
-		$gateway = pmpro_getOption( 'gateway' );
-		if ( $gateway == $this->id ) {
+		$gateway = self::pmpro_getOption( 'gateway' );
+		if ( $gateway === $this->id ) {
 			add_filter( 'pmpro_include_payment_information_fields', '__return_false' );
 			add_filter( 'pmpro_required_billing_fields', [ $this, 'pmpro_required_billing_fields' ] );
 			add_action( 'pmpro_checkout_before_change_membership_level', [ $this, 'pmpro_checkout_before_change_membership_level' ], 10, 2 );
 			add_action( 'pmpro_checkout_before_form', [ $this, 'hide_checkout_fields' ] );
+
+			// Actions for adding support for Multiple Gateways.
+			add_action( 'pmpro_checkout_boxes', [ $this, 'pmpro_checkout_boxes_multi_gateway' ], 30 );
+			add_action( 'pmpro_after_saved_payment_options', [ $this, 'save_config_ids' ] );
 		}
 	}
 
@@ -136,11 +140,13 @@ class PMProGateway_knit_pay extends PMProGateway {
 	 * @since 1.8
 	 */
 	function pmpro_payment_option_fields( $values, $gateway ) {
-		$configurations       = Plugin::get_config_select_options( $this->id );
-		$payment_description  = pmpro_getOption( 'knit_pay_payment_description' );
-		$hide_billing_address = pmpro_getOption( 'knit_pay_hide_billing_address' );
-		$hide_phone_field     = pmpro_getOption( 'knit_pay_hide_phone' );
-		$title                = pmpro_getOption( 'knit_pay_title' );
+		$configurations = Plugin::get_config_select_options( $this->id );
+		unset( $configurations[0] );
+
+		$payment_description  = self::pmpro_getOption( 'knit_pay_payment_description' );
+		$hide_billing_address = self::pmpro_getOption( 'knit_pay_hide_billing_address' );
+		$hide_phone_field     = self::pmpro_getOption( 'knit_pay_hide_phone' );
+		$title                = self::pmpro_getOption( 'knit_pay_title' );
 
 		if ( empty( $this->config_id ) ) {
 			$this->config_id = get_option( 'pronamic_pay_config_id' );
@@ -151,7 +157,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 			pmpro_setOption( 'knit_pay_payment_description', $payment_description );
 		}
 		if ( empty( $title ) ) {
-			$title = 'Knit Pay';
+			$title = 'Online Payment';
 			pmpro_setOption( 'knit_pay_title', $title );
 		}
 
@@ -159,7 +165,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 		// TODO add message that recurring payments are not supported.
 		$form  = '';
 		$form .= '<tr class="pmpro_settings_divider gateway gateway_' . $this->id . '"';
-		if ( $gateway != $this->id ) {
+		if ( $gateway !== $this->id ) {
 			$form .= ' style="display: none;"';
 		}
 		$form .= '><td colspan="2">	<hr /><h2 class="title">Knit Pay Settings</h2></td></tr>';
@@ -182,14 +188,20 @@ class PMProGateway_knit_pay extends PMProGateway {
 		if ( $gateway != $this->id ) {
 			$form .= '	style="display: none;"';
 		}
-		$form .= '>
+		$form                       .= '>
             <th scope="row" valign="top"><label for="knit_pay_config_id">Configuration:</label></th>
-        	<td><select id="knit_pay_config_id" name="knit_pay_config_id">';
-		foreach ( $configurations as $key => $configuration ) {
-			$form .= '<option value="' . $key . '"' . selected( pmpro_getOption( 'knit_pay_config_id' ), $key, false ) . '>' . $configuration . '</option>';
+        	<td><select id="knit_pay_config_id" name="knit_pay_config_id[]" multiple size="8">';
+		$knit_pay_selected_config_id = self::pmpro_getOption( 'knit_pay_config_id' );
+		if ( is_string( $knit_pay_selected_config_id ) ) {
+			$knit_pay_selected_config_id = [ $knit_pay_selected_config_id ];
 		}
-				$form .= '	</select>
+		foreach ( $configurations as $key => $configuration ) {
+			$selected = in_array( $key, $knit_pay_selected_config_id ) ? 'selected ' : '';
+			$form    .= '<option value="' . $key . '"' . $selected . '>' . $configuration . '</option>';
+		}
+		$form .= '</select>
         		<p class="description">' . __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.', 'knit-pay-lang' ) . '</p>
+				<p class="description">' . __( 'Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.', 'knit-pay-lang' ) . '</p>
         	</td>
         </tr>';
 
@@ -273,7 +285,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 		unset( $fields['ExpirationYear'] );
 		unset( $fields['CVV'] );
 
-		if ( pmpro_getOption( 'knit_pay_hide_phone' ) ) {
+		if ( self::pmpro_getOption( 'knit_pay_hide_phone' ) ) {
 			unset( $fields['bphone'] );
 		}
 
@@ -324,15 +336,18 @@ class PMProGateway_knit_pay extends PMProGateway {
 		// TODO add recuring option
 		global $knit_pay_redirect_url;
 
-		$config_id      = $this->config_id = pmpro_getOption( 'knit_pay_config_id' );
-		$payment_method = $this->id;
-
+		$this->config_id = self::pmpro_getOption( 'knit_pay_config_id' );
+		if ( is_array( $this->config_id ) ) {
+			$this->config_id = isset( $_POST['knit_pay_config_id'] ) ? sanitize_text_field( $_POST['knit_pay_config_id'] ) : $this->config_id[0];
+		}
 		// Use default gateway if no configuration has been set.
-		if ( empty( $config_id ) ) {
-			$config_id = get_option( 'pronamic_pay_config_id' );
+		if ( empty( $this->config_id ) ) {
+			$this->config_id = get_option( 'pronamic_pay_config_id' );
 		}
 
-		$gateway = Plugin::get_gateway( $config_id );
+		$payment_method = $this->id;
+
+		$gateway = Plugin::get_gateway( $this->config_id );
 
 		if ( ! $gateway ) {
 			return false;
@@ -367,7 +382,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 		$payment->set_payment_method( $payment_method );
 
 		// Configuration.
-		$payment->config_id = $config_id;
+		$payment->config_id = $this->config_id;
 
 		try {
 			$payment = Plugin::start_payment( $payment );
@@ -385,12 +400,12 @@ class PMProGateway_knit_pay extends PMProGateway {
 			$order->code = $order->getRandomCode();
 		}
 
-		$title = pmpro_getOption( 'knit_pay_title' );
+		$title = self::pmpro_getOption( 'knit_pay_title' );
 		if ( empty( $title ) ) {
-			$title = 'Knit Pay';
+			$title = 'Online Payment';
 		}
 
-		if ( pmpro_getOption( 'knit_pay_hide_billing_address' ) ) {
+		if ( self::pmpro_getOption( 'knit_pay_hide_billing_address' ) ) {
 			$order->billing->country = '';
 		}
 
@@ -407,7 +422,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 	function hide_checkout_fields() {
 		$style = '';
 
-		if ( pmpro_getOption( 'knit_pay_hide_billing_address' ) ) {
+		if ( self::pmpro_getOption( 'knit_pay_hide_billing_address' ) ) {
 			$style .= '.pmpro_form_field.pmpro_form_field-baddress1,';
 			$style .= '.pmpro_form_field.pmpro_form_field-baddress2,';
 			$style .= '.pmpro_form_field.pmpro_form_field-bcity,';
@@ -424,7 +439,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 			$style .= '.pmpro_checkout-field-bcountry,';
 		}
 
-		if ( pmpro_getOption( 'knit_pay_hide_phone' ) ) {
+		if ( self::pmpro_getOption( 'knit_pay_hide_phone' ) ) {
 			$style .= '.pmpro_form_field.pmpro_form_field-bphone,';
 
 			// TODO remove deprecated classes which were getting used in pmpro 2 after Jan 2026.
@@ -438,5 +453,56 @@ class PMProGateway_knit_pay extends PMProGateway {
 		}
 
 		echo $style;
+	}
+
+	private static function pmpro_getOption( $s, $force = false ) {
+		return get_option( 'pmpro_' . $s, '' );
+	}
+
+	public function save_config_ids() {
+		if ( isset( $_POST['knit_pay_config_id'] ) ) {
+			$value = array_map( 'sanitize_text_field', $_POST['knit_pay_config_id'] );
+
+			update_option( 'pmpro_knit_pay_config_id', $value );
+		}
+	}
+
+	public function pmpro_checkout_boxes_multi_gateway() {
+		$knit_pay_selected_config_id = self::pmpro_getOption( 'knit_pay_config_id' );
+		if ( ! ( is_array( $knit_pay_selected_config_id ) && count( $knit_pay_selected_config_id ) > 1 ) ) {
+			return;
+		}
+
+		?>
+		<fieldset id="pmpro_payment_method" class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_fieldset', 'pmpro_payment_method' ) ); ?>">
+			<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_card' ) ); ?>">
+				<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_card_content' ) ); ?>">
+					<legend class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_legend' ) ); ?>">
+						<h2 class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_heading pmpro_font-large' ) ); ?>">
+							<?php esc_html_e( 'Choose Your Payment Method', 'knit-pay-lang' ); ?>
+						</h2>
+					</legend>
+					<input type="hidden" id="knit_pay_config_id" name="knit_pay_config_id" value="" />
+					<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_fields' ) ); ?>">
+						<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_field pmpro_form_field-radio' ) ); ?>">
+							<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_field-radio-items' ) ); ?>">
+								<?php
+								$knit_pay_gateways = Plugin::get_config_select_options();
+								foreach ( $knit_pay_selected_config_id as $config_id ) {
+									?>
+									<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_field pmpro_form_field-radio-item' ) ); ?> gateway_knit_pay">
+										<input type="radio" id="knit_pay_<?php echo $config_id; ?>" name="gateway" class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_input pmpro_form_input-radio' ) ); ?>" value="knit_pay" onclick="document.getElementById('knit_pay_config_id').value='<?php echo $config_id; ?>'" required />
+										<label for="knit_pay_<?php echo $config_id; ?>" class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_label pmpro_form_label-inline pmpro_clickable' ) ); ?>">
+											<?php esc_html_e( $knit_pay_gateways[ $config_id ] ); ?>
+										</label>
+									</div> <!-- end pmpro_form_field pmpro_form_field-radio-item -->
+								<?php } ?>
+							</div> <!-- end pmpro_form_field-radio-items -->
+						</div> <!-- end pmpro_form_field pmpro_form_field-radio -->
+					</div> <!-- end pmpro_form_fields -->
+				</div> <!-- end pmpro_card_content -->
+			</div> <!-- end pmpro_card -->
+		</fieldset> <!-- end pmpro_payment_method -->
+		<?php
 	}
 }

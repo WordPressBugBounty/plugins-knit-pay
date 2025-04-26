@@ -5,7 +5,6 @@ use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Exception;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
-use WP_Error;
 
 require_once 'lib/API.php';
 

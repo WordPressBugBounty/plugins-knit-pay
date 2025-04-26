@@ -91,7 +91,7 @@ class Integration extends AbstractGatewayIntegration {
 						],
 						[
 							'key'     => '_pronamic_gateway_upi_qr_vpa',
-							'value'   => '(?i)^(q.+@ybl|paytmqr.+@[a-z]+|bharatpe.+@[a-z]+|.+@hdfcbank|.+@ikwik|.+@freecharge)$',
+							'value'   => '(?i)^(q.+@ybl|paytmqr.+@[a-z]+|bharatpe.+@[a-z]+|.+@hdfcbank|.+@ikwik|.+@mbk|.+@freecharge)$',
 							'compare' => 'REGEXP',
 						],
 					],

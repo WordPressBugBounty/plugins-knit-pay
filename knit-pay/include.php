@@ -79,7 +79,7 @@ if ( ! function_exists( 'ddd' ) ) {
 		echo nl2br( '<pre>' . $a . PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL );
 		debug_print_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS );
 		echo '</pre>';
-		die( );
+		die();
 	}
 }
 
