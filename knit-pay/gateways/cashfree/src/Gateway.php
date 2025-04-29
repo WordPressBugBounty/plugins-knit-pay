@@ -111,7 +111,7 @@ class Gateway extends Core_Gateway {
 		$notify_url     = add_query_arg( 'kp_cashfree_webhook', '', home_url( '/' ) );
 		$cust_id        = 'CUST_' . $payment->get_order_id() . '_' . $payment->get_id();
 
-		// @see https://docs.cashfree.com/reference/createorder
+		// @see https://www.cashfree.com/docs/api-reference/payments/previous/v2022-09-01/orders/create-order
 		return [
 			'order_id'         => $order_id,
 			'order_amount'     => $order_amount,

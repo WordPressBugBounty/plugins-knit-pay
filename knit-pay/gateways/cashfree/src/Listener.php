@@ -15,11 +15,22 @@ class Listener {
 
 
 	public static function listen() {
-		if ( ! filter_has_var( INPUT_GET, 'kp_cashfree_webhook' ) || ! filter_has_var( INPUT_POST, 'orderId' ) ) {
+		if ( ! filter_has_var( INPUT_GET, 'kp_cashfree_webhook' ) ) {
 			return;
 		}
 
-		$order_id = \sanitize_text_field( \wp_unslash( $_POST['orderId'] ) );
+		$post_body = file_get_contents( 'php://input' );
+		$data      = json_decode( $post_body, true );
+
+		if ( JSON_ERROR_NONE !== json_last_error() ) {
+			exit;
+		}
+
+		if ( empty( $data['data'] ) || empty( $data['data']['order'] ) || empty( $data['data']['order']['order_id'] ) ) {
+			exit;
+		}
+
+		$order_id = \sanitize_text_field( \wp_unslash( $data['data']['order']['order_id'] ) );
 		$payment  = get_pronamic_payment_by_transaction_id( $order_id );
 
 		if ( null === $payment ) {

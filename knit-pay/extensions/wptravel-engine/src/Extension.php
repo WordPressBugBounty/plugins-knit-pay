@@ -7,6 +7,7 @@ use Pronamic\WordPress\Pay\Plugin;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 use WPTravelEngine\Core\Booking as WTE_Booking;
+use WPTravelEngine\PaymentGateways\BaseGateway;
 
 /**
  * Title: WP Travel Engine extension
@@ -72,11 +73,11 @@ class Extension extends AbstractPluginIntegration {
 		add_filter( 'wptravelengine_settings:tabs:payments', [ $this, 'add_knit_pay_sub_tabs' ], 10, 1 );
 		add_action( 'wptravelengine_api_update_settings', [ $this, 'wptravelengine_api_update_settings' ], 10, 2 );
 		add_filter( 'wptravelengine_settings_api_schema', [ $this, 'wptravelengine_settings_api_schema' ], 10, 2 );
+		add_filter( 'wptravelengine_registering_payment_gateways', [ $this, 'register_payment_gateways' ], 10, 1 );
 
 		add_action( 'wp_travel_engine_before_billing_form', [ $this, 'wp_travel_engine_before_billing_form' ], 10 );
 
 		// TODO Deprecated, remove after 31 Dec 2025
-		add_filter( 'wp_travel_engine_available_payment_gateways', [ $this, 'add_payment_gateways_old' ] );
 		add_filter( 'wpte_settings_get_global_tabs', [ $this, 'settings_get_global_tabs' ] );
 	}
 
@@ -85,25 +86,28 @@ class Extension extends AbstractPluginIntegration {
 		return wp_travel_engine_print_notices();
 	}
 
-	public function add_payment_gateways_old( $gateways_list ) {
+	public function register_payment_gateways( $payment_gateways ) {
 		$wp_travel_engine_settings = get_option( 'wp_travel_engine_settings' );
 		$knit_pay_settings         = isset( $wp_travel_engine_settings['knit_pay_settings'] ) ? $wp_travel_engine_settings['knit_pay_settings'] : [];
 		$title                     = ! empty( $knit_pay_settings['title'] ) ? $knit_pay_settings['title'] : __( 'Online Payment', 'knit-pay-lang' );
 		$icon                      = ! empty( $knit_pay_settings['icon'] ) ? $knit_pay_settings['icon'] : '';
 
-		$gateways_list['knit_pay'] = [
+		$gateway_args = [
 			'label'        => $title,
 			'input_class'  => 'knit-pay-payment',
 			'public_label' => '',
 			'icon_url'     => $icon,
+			'display_icon' => $icon,
 			'info_text'    => '',
 		];
 
 		if ( is_admin() ) {
-			$gateways_list['knit_pay']['label'] = __( 'Knit Pay', 'knit-pay-lang' );
+			$gateway_args['label'] = __( 'Knit Pay', 'knit-pay-lang' );
 		}
 
-		return $gateways_list;
+		$payment_gateways['knit_pay'] = BaseGateway::create( 'knit_pay', $gateway_args );
+
+		return $payment_gateways;
 	}
 
 	public static function add_payment_gateways( $settings, $request, $settings_controller ) {

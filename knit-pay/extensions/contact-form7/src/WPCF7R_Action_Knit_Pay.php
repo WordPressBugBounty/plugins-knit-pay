@@ -68,7 +68,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 					'footer'      => '<div>' . $this->get_formatted_mail_tags() . '</div>',
 					'value'       => $this->get( 'payment_description' ),
 				],
-				'open_new_window'          => [
+				'open_new_window'           => [
 					'name'        => 'open_new_window',
 					'type'        => 'checkbox',
 					'label'       => __( 'Open in new window', 'knit-pay-lang' ),
@@ -76,7 +76,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 					'placeholder' => '',
 					'value'       => $this->get( 'open_new_window' ),
 				],
-				'email_delay'              => [
+				'email_delay'               => [
 					'name'        => 'email_delay',
 					'type'        => 'checkbox',
 					'label'       => __( 'Send "Contact Form 7" emails only after payment confirmation. Setup of the "Save Entry" action of the "Redirection for Contact Form 7" plugin is mandatory for this feature to work. Emails sent by the "Redirection for Contact Form 7" plugin will not be delayed with this option.', 'knit-pay-lang' ),
@@ -84,7 +84,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 					'placeholder' => '',
 					'value'       => $this->get( 'email_delay' ),
 				],
-				'redirection_pages'        => [
+				'redirection_pages'         => [
 					'name'        => 'general-alert',
 					'type'        => 'notice',
 					'label'       => __( 'Redirection Pages!', 'knit-pay-lang' ),
@@ -92,7 +92,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 					'placeholder' => '',
 					'class'       => 'field-notice-alert',
 				],
-				'pricing_details'          => [
+				'pricing_details'           => [
 					'name'   => $this->payment_method . '_pricing_details',
 					'type'   => 'section',
 					'title'  => __( 'Pricing Details (Required)', 'knit-pay-lang' ),
@@ -119,7 +119,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 						],
 					],
 				],
-				'user_details'             => [
+				'user_details'              => [
 					'name'   => 'user_details',
 					'type'   => 'section',
 					'title'  => __( 'User details (Required for some payment gateways)', 'knit-pay-lang' ),

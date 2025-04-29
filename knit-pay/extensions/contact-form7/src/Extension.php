@@ -62,9 +62,24 @@ class Extension extends AbstractPluginIntegration {
 			add_filter( 'wpcf7_editor_panels', [ $this, 'missing_dependency_panel' ] );
 			return;
 		}
+
+		add_filter(
+			'wpcf7r_get_actions_categories',
+			function( $categories ) {
+				array_unshift(
+					$categories,
+					[
+						'label'   => __( 'Payments', 'knit-pay-lang' ),
+						'options' => [
+							'knit_pay' => __( 'Knit Pay', 'knit-pay-lang' ),
+						],
+					]
+				);
+				return $categories;
+			}
+		);
 		
 		require_once 'WPCF7R_Action_Knit_Pay.php';
-		
 		register_wpcf7r_actions(
 			'knit_pay',
 			__( 'Knit Pay Payment', 'knit-pay-lang' ),

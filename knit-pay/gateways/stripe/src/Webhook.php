@@ -107,7 +107,7 @@ class Webhook extends Gateway {
 		$post_body = @file_get_contents( 'php://input' );
 		$event     = json_decode( $post_body );
 
-		if ( json_last_error() !== 0 ) {
+		if ( JSON_ERROR_NONE !== json_last_error() ) {
 			exit;
 		}
 
