@@ -349,9 +349,8 @@ class Integration extends IntegrationOAuthClient {
 		parent::update_connection_status();
 	}
 
-	protected static function configure_webhook( $config_id ) {
-		$integration = new self();
-		$webhook     = new Webhook( $config_id, $integration->get_config( $config_id ) );
+	protected function configure_webhook( $config_id ) {
+		$webhook = new Webhook( $config_id, $this->get_config( $config_id ) );
 		$webhook->configure_webhook();
 	}
 

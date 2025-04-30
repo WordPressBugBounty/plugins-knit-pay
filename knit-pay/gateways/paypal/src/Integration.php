@@ -147,7 +147,7 @@ class Integration extends IntegrationOAuthClient {
 				$auth_url           = add_query_arg( [ 'displayMode' => 'minibrowser' ], $auth_url );
 
 				echo '
-				<a target="_blank" data-paypal-onboard-complete="knitpayPaypalOnboardedCallback" href="' . $auth_url . '" data-paypal-button="PPLtBlue">Connect with PayPal</a>
+				<a style="display: none;" target="_blank" data-paypal-onboard-complete="knitpayPaypalOnboardedCallback" href="' . $auth_url . '" data-paypal-button="PPLtBlue">Connect with PayPal</a>
 				<script>
 					function knitpayPaypalOnboardedCallback(authCode, sharedId) {
 						// Close login window.
@@ -166,7 +166,11 @@ class Integration extends IntegrationOAuthClient {
 
 						window.location.href = admin_url.toString();
 					}
-				</script>
+
+					// Show Connect Button after page load.
+					window.addEventListener("load", function() {
+						jQuery("a[data-paypal-onboard-complete]").removeAttr( "style" );
+					});
 				</script>
 				<script id="paypal-js" src="https://www.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js"></script>';
 			},
@@ -345,12 +349,11 @@ class Integration extends IntegrationOAuthClient {
 		}
 
 		// TODO: Implement Webhook Configuration.
-		self::configure_webhook( $config_id );
+		$this->configure_webhook( $config_id );
 	}
 
-	protected static function configure_webhook( $config_id ) {
-		$integration = new self();
-		$webhook     = new Webhook( $config_id, $integration->get_config( $config_id ) );
+	protected function configure_webhook( $config_id ) {
+		$webhook = new Webhook( $config_id, $this->get_config( $config_id ) );
 		$webhook->configure_webhook();
 	}
 }

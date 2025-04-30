@@ -190,7 +190,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		if ( $this->is_auth_basic_enabled() ) {
 			$this->create_basic_connection( $config_id );
 
-			self::configure_webhook( $config_id );
+			$this->configure_webhook( $config_id );
 			return;
 		}
 
@@ -206,7 +206,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			return;
 		}
 
-		self::configure_webhook( $config_id );
+		$this->configure_webhook( $config_id );
 	}
 
 	protected function init_oauth_connect( $config, $config_id, $return_response = false ) {
@@ -313,7 +313,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		PaymentMethods::update_active_payment_methods();
 
 		// TODO move to razorpay.
-		self::configure_webhook( $gateway_id );
+		$this->configure_webhook( $gateway_id );
 
 		self::redirect_to_config( $gateway_id );
 	}
@@ -434,7 +434,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		);
 	}
 
-	protected static function configure_webhook( $config_id ) {
+	protected function configure_webhook( $config_id ) {
 		return;
 	}
 
