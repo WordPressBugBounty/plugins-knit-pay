@@ -13,7 +13,6 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  * @since   8.96.0.0
  */
 class Config extends GatewayConfig {
-	public $mode;
 	public $country;
 	public $merchant_code;
 	public $merchant_key;

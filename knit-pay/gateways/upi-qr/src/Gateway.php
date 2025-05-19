@@ -302,7 +302,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Hold the amount for 15 minutes and can be allocated to other transaction if not paid.
-		set_transient( 'knit_pay_upi_' . $this->config->config_id . '_' . $unique_amount_minor, true, 15 * MINUTE_IN_SECONDS );
+		set_transient( 'knit_pay_upi_' . $this->config->config_id . '_' . $unique_amount_minor, $payment->get_id(), 15 * MINUTE_IN_SECONDS );
 	}
 
 	private function find_unique_amount( $actual_amount_minor, $retry = 1 ) {
@@ -321,6 +321,11 @@ class Gateway extends Core_Gateway {
 	}
 
 	public function expire_old_upi_payment( Payment $payment ) {
+		// Payment can be expired only if the payment current status is Pending.
+		if ( PaymentStatus::OPEN !== $payment->get_status() ) {
+			return;
+		}
+
 		// Make payment status as expired for payment older than 5 min.
 		if ( $this->payment_expiry_seconds < time() - $payment->get_date()->getTimestamp() ) {
 			$payment->set_status( PaymentStatus::EXPIRED );

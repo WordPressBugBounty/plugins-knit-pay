@@ -90,7 +90,7 @@ class API {
 
 		$response = wp_remote_request( $url, $args );
 
-		if ( 401 === wp_remote_retrieve_response_code( $response ) && $allow_retry ) {
+		if ( 401 === wp_remote_retrieve_response_code( $response ) && $this->config->access_token && $allow_retry ) {
 			// Refresh access token.
 			$integration = new Integration();
 			$integration->refresh_access_token( $this->config->config_id );

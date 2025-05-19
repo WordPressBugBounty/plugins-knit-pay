@@ -4,9 +4,6 @@ namespace KnitPay\Gateways\IPay88;
 
 use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
-use Pronamic\WordPress\Pay\Payments\Payment;
-use Pronamic\WordPress\Pay\Plugin;
-use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: iPay88 Integration
@@ -70,9 +67,6 @@ class Integration extends AbstractGatewayIntegration {
 	 */
 	public function get_settings_fields() {
 		$fields = [];
-		
-		// Get mode from Integration mode trait.
-		$fields[] = $this->get_mode_settings_fields();
 
 		// Country.
 		$fields[] = [
@@ -123,7 +117,6 @@ class Integration extends AbstractGatewayIntegration {
 		$config->country       = $this->get_meta( $post_id, 'ipay88_country' );
 		$config->merchant_code = $this->get_meta( $post_id, 'ipay88_merchant_code' );
 		$config->merchant_key  = $this->get_meta( $post_id, 'ipay88_merchant_key' );
-		$config->mode          = $this->get_meta( $post_id, 'mode' );
 
 		return $config;
 	}
@@ -139,9 +132,6 @@ class Integration extends AbstractGatewayIntegration {
 		$gateway = new Gateway();
 		
 		$mode = Gateway::MODE_LIVE;
-		if ( Gateway::MODE_TEST === $config->mode ) {
-			$mode = Gateway::MODE_TEST;
-		}
 		
 		$this->set_mode( $mode );
 		$gateway->set_mode( $mode );

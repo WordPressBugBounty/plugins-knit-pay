@@ -57,7 +57,7 @@ class Integration extends IntegrationOAuthClient {
 	public function setup() {
 		parent::setup();
 
-		// Display ID on Configurations page.
+		// Add Partner ID.
 		\add_filter(
 			'http_request_args',
 			[ $this, 'add_paypal_partner_id' ],

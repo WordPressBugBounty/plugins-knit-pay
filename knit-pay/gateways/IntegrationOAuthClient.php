@@ -448,8 +448,8 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	private function inc_refresh_token_fail_counter( $config, $config_id ) {
 		$connection_fail_count = ++$config->connection_fail_count;
 		
-		// Kill connection after 30 fail attempts
-		if ( 30 < $connection_fail_count ) {
+		// Kill connection after 10 fail attempts
+		if ( 10 < $connection_fail_count ) {
 			self::clear_config( $config_id );
 			return;
 		}

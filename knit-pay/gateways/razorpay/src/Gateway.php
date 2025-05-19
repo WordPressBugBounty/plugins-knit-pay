@@ -18,6 +18,7 @@ use Razorpay\Api\Errors\BadRequestError;
 use Razorpay\Api\Errors\ServerError;
 use Requests_Exception;
 use WP_Error;
+use Razorpay\Api\Errors\Error;
 
 /**
  * Title: Razorpay Gateway
@@ -115,8 +116,6 @@ class Gateway extends Core_Gateway {
 
 		$payment_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 
-		$api = $this->get_razorpay_api();
-
 		$customer = $payment->get_customer();
 
 		// Recurring payment method.
@@ -125,9 +124,9 @@ class Gateway extends Core_Gateway {
 		$is_subscription_payment = ( $subscriptions && $this->supports( 'recurring' ) );
 
 		if ( $is_subscription_payment ) {
-			$this->create_razorpay_subscription( $api, $payment, $subscriptions, $customer, $payment_currency );
+			$this->create_razorpay_subscription( $payment, $subscriptions, $customer, $payment_currency );
 		} else {
-			$this->create_razorpay_order( $api, $payment, $customer, $payment_currency );
+			$this->create_razorpay_order( $payment, $customer, $payment_currency );
 		}
 
 		$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
@@ -149,13 +148,11 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 
-		$api = $this->get_razorpay_api();
-
 		$razorpay_order_id        = $payment->get_meta( 'razorpay_order_id' );
 		$razorpay_subscription_id = $payment->get_meta( 'razorpay_subscription_id' );
 		if ( empty( $razorpay_order_id ) ) {
 			if ( ! empty( $razorpay_subscription_id ) ) {
-				$razorpay_subscription = $api->subscription->fetch( $razorpay_subscription_id );
+				$razorpay_subscription = $this->call_api( 'subscription', 'fetch', $razorpay_subscription_id );
 				$payment->add_note( '<strong>Razorpay Subscription Response:</strong><br><pre>' . print_r( $razorpay_subscription, true ) . '</pre><br>' );
 				$payment->set_status( Statuses::transform_subscription_status( $razorpay_subscription->status ) );
 			} else {
@@ -166,7 +163,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Fetch payments for this order.
-		$razorpay_payments = $api->order->fetch( $razorpay_order_id )->payments();
+		$razorpay_payments = $this->call_api( 'order', 'fetch', $razorpay_order_id )->payments();
 
 		// No further execution if payment is not attemped yet.
 		if ( empty( $razorpay_payments->count ) ) {
@@ -226,7 +223,7 @@ class Gateway extends Core_Gateway {
 		}
 	}
 
-	private function create_razorpay_order( $api, Payment $payment, $customer, $payment_currency ) {
+	private function create_razorpay_order( Payment $payment, $customer, $payment_currency ) {
 		$razorpay_order_id = $payment->get_meta( 'razorpay_order_id' );
 
 		// Return if order id already exists for this payments.
@@ -248,18 +245,18 @@ class Gateway extends Core_Gateway {
 			'payment_capture' => 1, // TODO: 1 for auto capture. give admin option to set auto capture. do re-search to see if razorpay has deprecate it or not.
 		];
 
-		$razorpay_order    = $api->order->create( $razorpay_order_data );
+		$razorpay_order    = $this->call_api( 'order', 'create', $razorpay_order_data );
 		$razorpay_order_id = $razorpay_order['id'];
 		self::set_order_id_meta( $payment, $razorpay_order_id );
 	}
 
-	private function create_razorpay_subscription( $api, Payment $payment, array $subscriptions, $customer, $payment_currency ) {
+	private function create_razorpay_subscription( Payment $payment, array $subscriptions, $customer, $payment_currency ) {
 		$subscription             = \reset( $subscriptions );
 		$razorpay_subscription_id = $subscription->get_meta( 'razorpay_subscription_id' );
 
 		// Return if subscription already exists for this payments.
 		if ( $razorpay_subscription_id ) {
-			$razorpay_invoices = $api->invoice->all( [ 'subscription_id' => $razorpay_subscription_id ] );
+			$razorpay_invoices = $this->call_api( 'invoice', 'all', [ 'subscription_id' => $razorpay_subscription_id ] );
 
 			if ( 0 === $razorpay_invoices->count ) {
 				return;
@@ -325,7 +322,7 @@ class Gateway extends Core_Gateway {
 		];
 		$plan_data['notes']['knitpay_subscription_id']  = $subscription->get_id();
 		$plan_data['notes']['knitpay_subscription_key'] = $subscription->get_key();
-		$razorpay_plan                                  = $api->plan->create( $plan_data );
+		$razorpay_plan                                  = $this->call_api( 'plan', 'create', $plan_data );
 
 		$total_count = $this->get_max_count_for_period( $period, $subscription_phase->get_total_periods() );
 
@@ -364,8 +361,8 @@ class Gateway extends Core_Gateway {
 				],
 			];
 		}
-		$razorpay_subscription = $api->subscription->create( $subscription_data );
-		$razorpay_invoices     = $api->invoice->all( [ 'subscription_id' => $razorpay_subscription->id ] );
+		$razorpay_subscription = $this->call_api( 'subscription', 'create', $subscription_data );
+		$razorpay_invoices     = $this->call_api( 'invoice', 'all', [ 'subscription_id' => $razorpay_subscription->id ] );
 
 		// Save Subscription and Plan ID.
 		$subscription->set_meta( 'razorpay_subscription_id', $razorpay_subscription->id );
@@ -560,6 +557,27 @@ class Gateway extends Core_Gateway {
 		return $api;
 	}
 
+	private function call_api( $entity, $method, $args, $allow_retry = true ) {
+		try {
+			$api      = $this->get_razorpay_api();
+			$response = $api->$entity->$method( $args );
+
+			return $response;
+		} catch ( Error $e ) {
+			if ( 401 === $e->getHttpStatusCode() && ! empty( $this->config->access_token ) && $allow_retry ) {
+				// Refresh access token.
+				$integration = new Integration();
+				$integration->refresh_access_token( $this->config->config_id );
+				$this->config = $integration->get_config( $this->config->config_id );
+
+				// Retry request.
+				return $this->call_api( $entity, $method, $args, false );
+			}
+
+			throw $e;
+		}
+	}
+
 	private function get_notes( Payment $payment ) {
 		$source = $payment->get_source();
 		if ( 'woocommerce' === $source ) {
@@ -599,9 +617,7 @@ class Gateway extends Core_Gateway {
 		$transaction_id = $refund->get_payment()->get_transaction_id();
 		$description    = $refund->get_description();
 
-		$api = $this->get_razorpay_api();
-
-		$razorpay_payment = $api->payment->fetch( $transaction_id );
+		$razorpay_payment = $this->call_api( 'payment', 'fetch', $transaction_id );
 		$refund           = $razorpay_payment->refund(
 			[
 				'amount' => $amount->get_minor_units()->format( 0, '.', '' ),
@@ -716,13 +732,12 @@ class Gateway extends Core_Gateway {
 	 */
 	public function subscription_status_update( $subscription, $can_redirect, $previous_status, $updated_status ) {
 		$razorpay_subscription_id = $subscription->get_meta( 'razorpay_subscription_id' );
-		$api                      = $this->get_razorpay_api();
 		
 		if ( empty( $razorpay_subscription_id ) ) {
 			return;
 		}
 
-		$razorpay_subscription = $api->subscription->fetch( $razorpay_subscription_id );
+		$razorpay_subscription = $this->call_api( 'subscription', 'fetch', $razorpay_subscription_id );
 
 		switch ( $updated_status ) {
 			case SubscriptionStatus::CANCELLED:
