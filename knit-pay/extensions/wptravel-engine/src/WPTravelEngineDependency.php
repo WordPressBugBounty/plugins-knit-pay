@@ -21,10 +21,6 @@ class WPTravelEngineDependency extends Dependency {
 	 * @return bool True if dependency is met, false otherwise.
 	 */
 	public function is_met() {
-		if ( ! \class_exists( '\Wp_Travel_Engine' ) ) {
-			return false;
-		}
-
-		return true;
+		return class_exists( '\WPTravelEngine\Plugin' ) || class_exists( '\Wp_Travel_Engine' );
 	}
 }

@@ -167,7 +167,7 @@ class API {
 		throw new Exception( 'Something went wrong. Please try again later.' );
 	}
 
-	private function create_connection( $url, $method, $data = [] ) {
+	private function create_connection( $url, $method, $data = [], $retry = 1 ) {
 		$args = [
 			'method'  => $method,
 			'headers' => $this->get_request_headers(),
@@ -181,12 +181,22 @@ class API {
 		$response = wp_remote_request( $url, $args );
 
 		if ( is_wp_error( $response ) ) {
-			throw new Exception( $response->get_error_message() );
+			if ( 5 === $retry ) {
+				throw new Exception( $response->get_error_message() );
+			}
+			usleep( 500000 ); // Wait for 500 ms before retrying.
+			return $this->create_connection( $url, $method, $data, ++$retry );
 		}
 
 		$result = wp_remote_retrieve_body( $response );
 
 		$result = json_decode( $result );
+
+		$response_code = wp_remote_retrieve_response_code( $response );
+		if ( 401 === $response_code ) {
+			throw new Exception( esc_html( $result->error_description ) );
+		}
+
 		return $result;
 	}
 

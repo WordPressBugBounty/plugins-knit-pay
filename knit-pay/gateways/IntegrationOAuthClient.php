@@ -218,9 +218,10 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			[
 				'body'    => wp_json_encode(
 					[
-						'admin_url'  => admin_url(),
-						'gateway_id' => $config_id,
-						'mode'       => $config->mode,
+						'admin_url'       => admin_url(),
+						'gateway_id'      => $config_id,
+						'mode'            => $config->mode,
+						'knitpay_version' => KNITPAY_VERSION,
 					]
 				),
 				'timeout' => 60,
@@ -285,10 +286,11 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 
 		// GET keys.
 		$oauth_token_request_body = [
-			'code'       => $code,
-			'state'      => $state,
-			'gateway_id' => $gateway_id,
-			'mode'       => $config->mode,
+			'code'            => $code,
+			'state'           => $state,
+			'gateway_id'      => $gateway_id,
+			'mode'            => $config->mode,
+			'knitpay_version' => KNITPAY_VERSION,
 		];
 		$oauth_token_request_body = $this->get_oauth_token_request_body( $oauth_token_request_body );
 
@@ -348,9 +350,10 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			[
 				'body'    => wp_json_encode(
 					[
-						'refresh_token' => $config->refresh_token,
-						'gateway_id'    => $config_id,
-						'mode'          => $config->mode,
+						'refresh_token'   => $config->refresh_token,
+						'gateway_id'      => $config_id,
+						'mode'            => $config->mode,
+						'knitpay_version' => KNITPAY_VERSION,
 					]
 				),
 				'timeout' => 90,

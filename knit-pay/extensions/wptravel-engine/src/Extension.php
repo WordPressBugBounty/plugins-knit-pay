@@ -90,7 +90,9 @@ class Extension extends AbstractPluginIntegration {
 		$wp_travel_engine_settings = get_option( 'wp_travel_engine_settings' );
 		$knit_pay_settings         = isset( $wp_travel_engine_settings['knit_pay_settings'] ) ? $wp_travel_engine_settings['knit_pay_settings'] : [];
 		$title                     = ! empty( $knit_pay_settings['title'] ) ? $knit_pay_settings['title'] : __( 'Online Payment', 'knit-pay-lang' );
-		$icon                      = ! empty( $knit_pay_settings['icon'] ) ? $knit_pay_settings['icon'] : '';
+
+		// There is bug in WP Travel Engine, if icon will be empty then it will throw error, so we are setting default icon.
+		$icon = ! empty( $knit_pay_settings['icon'] ) ? $knit_pay_settings['icon'] : '<svg></svg>';
 
 		$gateway_args = [
 			'label'        => $title,
