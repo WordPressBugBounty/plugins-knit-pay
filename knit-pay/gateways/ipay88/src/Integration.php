@@ -28,6 +28,11 @@ class Integration extends AbstractGatewayIntegration {
 				'id'       => 'ipay88',
 				'name'     => 'iPay88',
 				'provider' => 'ipay88',
+				'supports' => [
+					'webhook',
+					'webhook_log',
+					'webhook_no_config',
+				],
 			]
 		);
 
@@ -45,6 +50,45 @@ class Integration extends AbstractGatewayIntegration {
 			10,
 			2
 		);
+
+		add_filter(
+			'pronamic_pay_return_should_redirect',
+			[ $this, 'should_return_redirect' ],
+			10,
+			2
+		);
+
+		add_action(
+			'pronamic_pay_update_payment',
+			[ $this, 'exit_if_webhook' ]
+		);
+	}
+
+	public function should_return_redirect( $should_redirect, $payment ) {
+		if ( ! filter_has_var( INPUT_GET, 'kp_ipay88_webhook' ) ) {
+			return $should_redirect;
+		}
+
+		// Add note.
+		$note = sprintf(
+			/* translators: %s: iPay88 */
+			__( 'Webhook requested by %s.', 'knit-pay-lang' ),
+			__( 'iPay88', 'knit-pay-lang' )
+		);
+
+		$payment->add_note( $note );
+
+		// Log webhook request.
+		do_action( 'pronamic_pay_webhook_log_payment', $payment );
+
+		return false;
+	}
+
+	public function exit_if_webhook() {
+		if ( filter_has_var( INPUT_GET, 'kp_ipay88_webhook' ) ) {
+			echo 'RECEIVEOK';
+			exit;
+		}
 	}
 
 	/**

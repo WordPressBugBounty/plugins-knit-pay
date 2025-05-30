@@ -77,6 +77,7 @@ class Gateway extends Core_Gateway {
 		$remark         = $payment->get_description();
 		$signature_type = 'HMACSHA512';
 		$response_url   = $payment->get_return_url();
+		$backend_url    = add_query_arg( 'kp_ipay88_webhook', '', $response_url );
 
 		if ( isset( $billing_address ) ) {
 			$user_contact = $billing_address->get_phone();
@@ -95,6 +96,7 @@ class Gateway extends Core_Gateway {
 			'SignatureType' => $signature_type,
 			'Signature'     => $this->api->get_signature( [ $ref_no, $amount, $currency ] ),
 			'ResponseURL'   => $response_url,
+			'BackendURL'    => $backend_url,
 		];
 	}
 
