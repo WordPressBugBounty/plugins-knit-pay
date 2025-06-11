@@ -19,6 +19,7 @@ use Razorpay\Api\Errors\ServerError;
 use Requests_Exception;
 use WP_Error;
 use Razorpay\Api\Errors\Error;
+use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Razorpay Gateway
@@ -495,7 +496,7 @@ class Gateway extends Core_Gateway {
 			'name'         => $box_title,
 			'description'  => $payment->get_description(),
 			'prefill'      => [
-				'name'   => substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 45 ),
+				'name'   => KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 45 ),
 				'email'  => $customer->get_email(),
 				'method' => PaymentMethods::transform( $payment->get_payment_method() ),
 			],
@@ -595,7 +596,7 @@ class Gateway extends Core_Gateway {
 		];
 
 		$customer      = $payment->get_customer();
-		$customer_name = substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 45 );
+		$customer_name = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 45 );
 		if ( ! empty( $customer_name ) ) {
 			$notes = [
 				'customer_name' => $customer_name,

@@ -200,7 +200,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 			$form    .= '<option value="' . $key . '"' . $selected . '>' . $configuration . '</option>';
 		}
 		$form .= '</select>
-        		<p class="description">' . __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.', 'knit-pay-lang' ) . '</p>
+        		<p class="description">' . __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.', 'knit-pay-lang' ) . '</p>
 				<p class="description">' . __( 'Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.', 'knit-pay-lang' ) . '</p>
         	</td>
         </tr>';

@@ -9,6 +9,7 @@ use Pronamic\WordPress\Pay\Payments\FailureReason;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Exception;
+use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: iPay88 Gateway
@@ -71,7 +72,7 @@ class Gateway extends Core_Gateway {
 		$amount         = $payment->get_total_amount()->number_format( null, '.', '' );
 		$currency       = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 		$prod_desc      = $payment->get_description();
-		$user_name      = substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 100 );
+		$user_name      = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 100 );
 		$user_email     = $customer->get_email();
 		$user_contact   = '';
 		$remark         = $payment->get_description();

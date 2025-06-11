@@ -9,6 +9,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Pronamic\WordPress\Pay\Refunds\Refund;
 use Exception;
 use Pronamic\WordPress\Pay\Payments\FailureReason;
+use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: PayPal Gateway
@@ -115,7 +116,7 @@ class Gateway extends Core_Gateway {
 		if ( isset( $shipping_address ) && null !== $shipping_address->get_country_code() ) {
 			$data['purchase_units'][0]['shipping'] = [
 				'name'          => [
-					'full_name' => substr( trim( ( html_entity_decode( $shipping_address->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 50 ),
+					'full_name' => KnitPayUtils::substr_after_trim( html_entity_decode( $shipping_address->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 50 ),
 				],
 				'email_address' => $shipping_address->get_email(),
 				'address'       => [

@@ -7,6 +7,7 @@ use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Exception;
+use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: UPI QR Gateway
@@ -235,7 +236,7 @@ class Gateway extends Core_Gateway {
 		$data['cu'] = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 
 		// $data['tid'] = $payment->get_transaction_id();
-		$data['tn'] = rawurlencode( substr( trim( $payment->get_description() ), 0, 75 ) );
+		$data['tn'] = rawurlencode( KnitPayUtils::substr_after_trim( $payment->get_description(), 0, 75 ) );
 
 		return $data;
 	}

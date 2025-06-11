@@ -57,6 +57,26 @@ function knit_pay_pro_init() {
 	require_once 'includes/pro.php';
 }
 
+add_action(
+	'in_plugin_update_message-knit-pay/knit-pay.php',
+	function ( $plugin_data ) {
+		$new_version = implode( '.', array_slice( explode( '.', $plugin_data['new_version'] ), 0, 3 ) );
+		if ( version_compare( $new_version, KNITPAY_VERSION, '<=' ) ) {
+			return;
+		}
+
+		?>
+		<hr/>
+		<h3>
+			<?php echo esc_html__( 'Heads up! Please backup before upgrading!', 'knit-pay-lang' ); ?>
+		</h3>
+		<div>
+			<?php echo esc_html__( 'The latest update includes some substantial changes across different areas of the plugin. We highly recommend you backup your site before upgrading, and make sure you first update in a staging environment', 'knit-pay-lang' ); ?>
+		</div>
+		<?php
+	}
+);
+
 // Show Google Price Hike Notice.
 // require_once 'includes/google-workspace-price-hike-notice.php';
 

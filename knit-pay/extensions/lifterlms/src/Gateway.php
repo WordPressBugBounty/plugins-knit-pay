@@ -89,7 +89,7 @@ class Gateway extends LLMS_Payment_Gateway {
 
 		$fields[] = [
 			'title'   => __( 'Configuration', 'lifterlms' ),
-			'desc'    => '<br>' . __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.', 'lifterlms' ),
+			'desc'    => '<br>' . __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.', 'lifterlms' ),
 			'id'      => $this->get_option_name( 'config_id' ),
 			'default' => get_option( 'pronamic_pay_config_id' ),
 			'type'    => 'select',

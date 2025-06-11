@@ -5,6 +5,7 @@ use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
+use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: ICICI Eazypay Gateway
@@ -17,6 +18,8 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 class Gateway extends Core_Gateway {
 	/** @var Config */
 	private $config;
+
+	private $encrypt;
 
 	const DEFAULT_BASE_URL = 'https://eazypay.icicibank.com/EazyPG?';
 
@@ -79,7 +82,7 @@ class Gateway extends Core_Gateway {
 			'{phone}'           => $customer_phone,
 			'{customer_phone}'  => $customer_phone,
 			'{customer_email}'  => $customer->get_email(),
-			'{customer_name}'   => substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 20 ),
+			'{customer_name}'   => KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 20 ),
 			'{purpose}'         => $payment->get_description(),
 			'{order_id}'        => $payment->get_order_id(),
 			'{sub_merchant_id}' => $sub_merchant_id,

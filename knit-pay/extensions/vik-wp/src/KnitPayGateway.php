@@ -68,7 +68,7 @@ class KnitPayGateway extends JPayment {
 				'label'   => __( 'Configuration', 'knit-pay-lang' ),
 				'type'    => 'select',
 				'options' => Plugin::get_config_select_options( $this->payment_method ),
-				'help'    => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.',
+				'help'    => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.',
 			],
 		];
 	}

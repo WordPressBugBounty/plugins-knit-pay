@@ -3,7 +3,7 @@ namespace KnitPay\Gateways\Iyzico;
 
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Payments\Payment;
-
+use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Iyzico Gateway
@@ -117,7 +117,7 @@ class Gateway extends Core_Gateway {
 
 		$billingAddress = new \Iyzipay\Model\Address();
 		if ( null !== $customer->get_name() ) {
-			$buyer_name = substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 30 );
+			$buyer_name = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 30 );
 			$billingAddress->setContactName( $buyer_name );
 		}
 		$billingAddress->setCity( $city );

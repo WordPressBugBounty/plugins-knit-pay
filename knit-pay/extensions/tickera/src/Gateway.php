@@ -143,7 +143,7 @@ class Gateway extends TC_Gateway_API {
 				'type'        => 'select',
 				'default'     => get_option( 'pronamic_pay_config_id' ),
 				'options'     => Plugin::get_config_select_options(),
-				'description' => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.',
+				'description' => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.',
 			],
 			'payment_description' => [
 				'title'       => __( 'Payment Description', 'knit-pay-lang' ),

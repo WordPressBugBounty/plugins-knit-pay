@@ -146,7 +146,7 @@ class Gateway extends HotelBooking_Gateway {
 				[
 					'type'        => 'select',
 					'label'       => __( 'Configuration', 'knit-pay-lang' ),
-					'description' => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.',
+					'description' => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.',
 					'list'        => Plugin::get_config_select_options( $this->payment_method ),
 					'default'     => get_option( 'pronamic_pay_config_id' ),
 				]

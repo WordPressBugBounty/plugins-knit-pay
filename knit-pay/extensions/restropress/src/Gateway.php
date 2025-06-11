@@ -116,7 +116,7 @@ class Gateway {
 			$this->id . '_config_id'           => [
 				'id'      => $this->id . '_config_id',
 				'name'    => __( 'Configuration', 'knit-pay-lang' ),
-				'desc'    => '<br>' . __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.', 'knit-pay-lang' ),
+				'desc'    => '<br>' . __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.', 'knit-pay-lang' ),
 				'default' => get_option( 'pronamic_pay_config_id' ),
 				'type'    => 'select',
 				'size'    => 'regular',

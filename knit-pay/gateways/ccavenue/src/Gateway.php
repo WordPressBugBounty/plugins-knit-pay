@@ -9,6 +9,7 @@ use Pronamic\WordPress\Pay\Payments\FailureReason;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Exception;
+use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: CCAvenue Gateway
@@ -112,7 +113,7 @@ class Gateway extends Core_Gateway {
 		$data['payment_option'] = PaymentMethods::transform( $payment->get_payment_method() );
 		// $data['integration_type'] = 'iframe_normal'; // Parameter to activate iframe layout.
 
-		$data['billing_name']  = substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 50 );
+		$data['billing_name']  = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 50 );
 		$data['billing_email'] = $customer->get_email();
 
 		if ( isset( $billing_address ) ) {
@@ -125,7 +126,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		if ( isset( $delivery_address ) ) {
-			$data['delivery_name']    = substr( trim( ( html_entity_decode( $delivery_address->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 50 );
+			$data['delivery_name']    = KnitPayUtils::substr_after_trim( html_entity_decode( $delivery_address->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 50 );
 			$data['delivery_address'] = $delivery_address->get_line_1();
 			$data['delivery_city']    = $this->get_clean_string( '/[^a-zA-Z\s]/', $delivery_address->get_city() );
 			$data['delivery_state']   = $this->get_clean_string( '/[^a-zA-Z\s]/', $delivery_address->get_region() );
@@ -223,7 +224,7 @@ class Gateway extends Core_Gateway {
 
 		$ccavenue_order_id = strtr( $this->config->order_id_format, $replacements );
 		$ccavenue_order_id = str_replace( ' ', '_', $ccavenue_order_id );
-		$ccavenue_order_id = substr( trim( html_entity_decode( $ccavenue_order_id, ENT_QUOTES, 'UTF-8' ) ), 0, 29 );
+		$ccavenue_order_id = KnitPayUtils::substr_after_trim( html_entity_decode( $ccavenue_order_id, ENT_QUOTES, 'UTF-8' ), 0, 29 );
 
 		return $ccavenue_order_id;
 	}

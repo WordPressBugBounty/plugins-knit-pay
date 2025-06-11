@@ -6,6 +6,7 @@ use Pronamic\WordPress\Pay\Payments\FailureReason;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Exception;
+use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: SSLCommerz Gateway
@@ -26,8 +27,6 @@ class Gateway extends Core_Gateway {
 	 *            Config.
 	 */
 	public function init( Config $config ) {
-		$this->config = $config;
-
 		$this->set_method( self::METHOD_HTTP_REDIRECT );
 
 		// Supported features.
@@ -85,7 +84,7 @@ class Gateway extends Core_Gateway {
 			$customer_phone = $billing_address->get_phone();
 		}
 
-		$customer_name  = substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 40 );
+		$customer_name  = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 40 );
 		$customer_email = $customer->get_email();
 		$return_url     = $payment->get_return_url();
 

@@ -5,6 +5,7 @@ use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
+use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: HDFC Smart Gateway Gateway
@@ -55,7 +56,7 @@ class Gateway extends Core_Gateway {
 	 */
 	public function start( Payment $payment ) {
 		$transaction_id = $payment->key . '_' . $payment->get_source_id();
-		$transaction_id = substr( trim( html_entity_decode( $transaction_id, ENT_QUOTES, 'UTF-8' ) ), -21 );
+		$transaction_id = KnitPayUtils::substr_after_trim( html_entity_decode( $transaction_id, ENT_QUOTES, 'UTF-8' ), -21 );
 		$transaction_id = ltrim( $transaction_id, 'pay_' );
 		$payment->set_transaction_id( $transaction_id );
 

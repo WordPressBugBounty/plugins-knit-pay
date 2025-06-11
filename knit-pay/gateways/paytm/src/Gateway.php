@@ -7,6 +7,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Exception;
 use paytm\paytmchecksum\PaytmChecksum;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
+use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Paytm Gateway
@@ -245,7 +246,7 @@ class Gateway extends Core_Gateway {
 		$paytm_order_id = strtr( $this->config->order_id_format, $replacements );
 		$paytm_order_id = str_replace( ' ', '_', $paytm_order_id );
 		$paytm_order_id = preg_replace( '/[^a-zA-Z0-9_-]/s', '', $paytm_order_id ); // Remove special characters.
-		$paytm_order_id = substr( trim( ( html_entity_decode( $paytm_order_id, ENT_QUOTES, 'UTF-8' ) ) ), 0, 29 );
+		$paytm_order_id = KnitPayUtils::substr_after_trim( html_entity_decode( $paytm_order_id, ENT_QUOTES, 'UTF-8' ), 0, 29 );
 
 		// Paytm UPI does not support more than 35 characters.
 		$paytm_order_id = substr( $paytm_order_id, -35 );

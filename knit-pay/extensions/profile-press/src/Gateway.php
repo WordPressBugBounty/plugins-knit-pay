@@ -56,7 +56,7 @@ class Gateway extends AbstractPaymentMethod {
 			__( 'Knit Pay', 'knit-pay-lang' ),
 			PaymentMethods::get_name( $this->payment_method )
 		);
-		$this->method_description = __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.', 'knit-pay-lang' );
+		$this->method_description = __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.', 'knit-pay-lang' );
 
 		$this->icon = empty( $this->get_value( 'icon' ) ) ? PaymentMethods::get_icon_url( $this->payment_method ) : empty( $this->get_value( 'icon' ) );
 
@@ -82,7 +82,7 @@ class Gateway extends AbstractPaymentMethod {
 
 		$settings['config_id'] = [
 			'label'       => __( 'Configuration', 'knit-pay-lang' ),
-			'description' => __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.', 'knit-pay-lang' ),
+			'description' => __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.', 'knit-pay-lang' ),
 			'default'     => get_option( 'pronamic_pay_config_id' ),
 			'type'        => 'select',
 			'options'     => Plugin::get_config_select_options( $this->payment_method ),

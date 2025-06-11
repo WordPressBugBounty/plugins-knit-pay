@@ -5,7 +5,7 @@ use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
-
+use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: EBS Gateway
@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Core\PaymentMethod;
  * @since 3.0.0
  */
 class Gateway extends Core_Gateway {
-
+	private $config;
 
 	const NAME = 'ebs';
 
@@ -91,7 +91,7 @@ class Gateway extends Core_Gateway {
 		$mode       = strtoupper( $this->config->mode );
 
 		$customer         = $payment->get_customer();
-		$name             = substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 100 );
+		$name             = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 100 );
 		$billing_address  = $payment->get_billing_address();
 		$delivery_address = $payment->get_shipping_address();
 
@@ -114,7 +114,7 @@ class Gateway extends Core_Gateway {
 		$data['email']       = $customer->get_email();
 
 		if ( ! empty( $delivery_address ) ) {
-			$data['ship_name']        = substr( trim( ( html_entity_decode( $delivery_address->get_name()->get_full_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 100 );
+			$data['ship_name']        = KnitPayUtils::substr_after_trim( html_entity_decode( $delivery_address->get_name()->get_full_name(), ENT_QUOTES, 'UTF-8' ), 0, 100 );
 			$data['ship_address']     = $delivery_address->get_line_1();
 			$data['ship_city']        = $delivery_address->get_city();
 			$data['ship_state']       = $delivery_address->get_region();
@@ -193,7 +193,7 @@ class Gateway extends Core_Gateway {
 				$hash_value = sha1( $hash_string );
 				break;
 			case 'sha256':
-				$hash_value = sha512( $hash_string );
+				$hash_value = hash( 'sha256', $hash_string );
 				break;
 			case 'md5':
 				$hash_value = md5( $hash_string );

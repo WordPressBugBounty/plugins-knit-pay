@@ -96,7 +96,7 @@ class KnitPayPaymentMethod extends BasePaymentMethod {
 					'type'         => 'input-radio',
 					'label'        => __( 'Configuration', 'knit-pay-lang' ),
 					'options'      => Plugin::get_config_select_options( $this->key ),
-					'inline_help'  => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.',
+					'inline_help'  => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.',
 					'check_status' => 'yes',
 				],
 				[

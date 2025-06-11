@@ -249,7 +249,7 @@ class Extension extends AbstractPluginIntegration {
 				[
 					'divider'     => true,
 					'label'       => __( 'Configuration', 'knit-pay-lang' ),
-					'description' => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.',
+					'description' => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.',
 					'field_type'  => 'SELECT',
 					'name'        => 'knit_pay_settings.config_id',
 					'options'     => $payment_config_options,

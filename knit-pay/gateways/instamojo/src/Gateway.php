@@ -85,7 +85,7 @@ class Gateway extends Core_Gateway {
 		} else {
 			$api_data['purpose'] = 'Payment: ' . $payment->get_order_id();
 		}
-		$api_data['purpose'] = substr( trim( $api_data['purpose'] ), 0, 255 );
+		$api_data['purpose'] = KnitPayUtils::substr_after_trim( $api_data['purpose'], 0, 255 );
 
 		$customer               = $payment->get_customer();
 		$api_data['buyer_name'] = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 75 );

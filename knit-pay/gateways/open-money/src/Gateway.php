@@ -6,6 +6,7 @@ use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Exception;
+use KnitPay\Utils as KnitPayUtils;
 
 require_once 'lib/layer_api.php';
 
@@ -98,7 +99,7 @@ class Gateway extends Core_Gateway {
 
 		return [
 			'amount'         => $payment->get_total_amount()->number_format( null, '.', '' ),
-			'name'           => substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 20 ),
+			'name'           => KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 20 ),
 			'contact_number' => $customer_phone,
 			'email_id'       => $customer->get_email(),
 			'currency'       => $payment->get_total_amount()->get_currency()->get_alphabetic_code(),

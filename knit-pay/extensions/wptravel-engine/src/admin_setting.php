@@ -113,6 +113,6 @@ knit_pay_wte_render_setting_field(
 				<?php
 			endforeach;
 			?>
-	</select> <span class="wpte-tooltip"><?php echo ( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.' ); ?></span>
+	</select> <span class="wpte-tooltip"><?php echo ( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.' ); ?></span>
 </div>
 <?php

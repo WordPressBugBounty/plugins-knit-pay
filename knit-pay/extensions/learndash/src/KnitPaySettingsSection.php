@@ -95,7 +95,7 @@ if ( ( class_exists( 'LearnDash_Settings_Section' ) ) && ( ! class_exists( 'Knit
 					'name'      => 'config_id',
 					'type'      => 'select',
 					'label'     => esc_html__( 'Configuration', 'knit-pay-lang' ),
-					'help_text' => __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.', 'knit-pay-lang' ),
+					'help_text' => __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.', 'knit-pay-lang' ),
 					'value'     => ( ( isset( $this->setting_option_values['config_id'] ) ) && ( ! empty( $this->setting_option_values['config_id'] ) ) ) ? $this->setting_option_values['config_id'] : get_option( 'pronamic_pay_config_id' ),
 					'options'   => Plugin::get_config_select_options( $this->payment_method ),
 				],

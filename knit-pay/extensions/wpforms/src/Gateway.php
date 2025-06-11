@@ -70,7 +70,7 @@ class Gateway extends WPForms_Payment {
 			[
 				'parent'  => 'payments',
 				'options' => Plugin::get_config_select_options(),
-				'after'   => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.',
+				'after'   => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.',
 			]
 		);
 		

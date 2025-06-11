@@ -6,6 +6,7 @@ use Pronamic\WordPress\Pay\Payments\FailureReason;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Exception;
+use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Sab Paisa Gateway
@@ -73,7 +74,7 @@ class Gateway extends Core_Gateway {
 			'clientCode'        => $client_code,
 			'transUserName'     => $username,
 			'transUserPassword' => $password,
-			'payerName'         => substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 50 ),
+			'payerName'         => KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 50 ),
 			'payerMobile'       => $billing_address->get_phone(),
 			'payerEmail'        => $customer->get_email(),
 			'clientTxnId'       => $payment->get_transaction_id(),

@@ -3,6 +3,7 @@ namespace KnitPay\Gateways\Paytr;
 
 use KnitPay\Gateways\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Payments\Payment;
+use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: PayTR Gateway
@@ -72,7 +73,7 @@ class Gateway extends Core_Gateway {
 		$payment_amount = $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' );
 		$currency       = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 
-		$user_name      = substr( trim( ( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ) ) ), 0, 60 );
+		$user_name      = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 60 );
 		$customer_email = $customer->get_email();
 		$user_ip        = $customer->get_ip_address();
 

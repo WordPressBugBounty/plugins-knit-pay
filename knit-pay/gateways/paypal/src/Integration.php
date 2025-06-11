@@ -12,7 +12,7 @@ use KnitPay\Utils;
  * Copyright: 2020-2025 Knit Pay
  *
  * @author  Knit Pay
- * @version 8.94.0.0
+ * @version 8.96.19.0
  * @since   8.94.0.0
  */
 class Integration extends IntegrationOAuthClient {
@@ -58,12 +58,8 @@ class Integration extends IntegrationOAuthClient {
 		parent::setup();
 
 		// Add Partner ID.
-		\add_filter(
-			'http_request_args',
-			[ $this, 'add_paypal_partner_id' ],
-			1000,
-			2
-		);
+		add_filter( 'http_request_args', [ $this, 'add_paypal_partner_id' ], 1000, 2 );
+		add_filter( 'wp_redirect', [ $this, 'add_paypal_bn' ], 1000 );
 
 		$this->auto_save_on_mode_change = true;
 	}
@@ -81,6 +77,20 @@ class Integration extends IntegrationOAuthClient {
 		}
 
 		return $parsed_args;
+	}
+
+	/**
+	 * Add PayPal BN in redirect URL.
+	 *
+	 * @param string $location Redirect URL.
+	 * @return string
+	 */
+	public function add_paypal_bn( $location ) {
+		if ( strpos( $location, 'paypal.com', 8 ) !== false ) {
+			$location = add_query_arg( 'bn', self::PARTNER_ATTRIBUTION_ID, $location );
+		}
+
+		return $location;
 	}
 
 	/**

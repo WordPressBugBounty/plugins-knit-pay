@@ -28,7 +28,7 @@ foreach ( $payment_configurations as $key => $payment_config ) {
 			<?php Selects::renderSingle( 'bookly_' . $id . '_enabled' ); ?>
 			<div class="bookly-knit-pay">
 				<?php Inputs::renderText( 'bookly_l10n_label_pay_' . $id, __( 'Payment Label', 'knit-pay-lang' ) ); ?>
-				<?php Selects::renderSingle( 'bookly_' . $id . '_config_id', __( 'Configuration', 'knit-pay-lang' ), __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.', 'knit-pay-lang' ), $payment_config_options ); ?>
+				<?php Selects::renderSingle( 'bookly_' . $id . '_config_id', __( 'Configuration', 'knit-pay-lang' ), __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.', 'knit-pay-lang' ), $payment_config_options ); ?>
 				<?php Inputs::renderText( 'bookly_' . $id . '_payment_description', __( 'Payment Description', 'knit-pay-lang' ), sprintf( __( 'Available tags: %s', 'knit-pay-lang' ), sprintf( '<code>%s</code>', '{form_id}, {service_name}, {payment_id}' ) ) ); ?>
 				<?php Inputs::renderText( 'bookly_' . $id . '_icon_url', __( 'Icon URL', 'knit-pay-lang' ) ); ?>
 				<?php Payments::renderPriceCorrection( $id ); ?>

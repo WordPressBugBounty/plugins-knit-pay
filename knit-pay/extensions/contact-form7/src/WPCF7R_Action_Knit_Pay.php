@@ -57,7 +57,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 					'type'    => 'select',
 					'label'   => __( 'Configuration', 'knit-pay-lang' ),
 					'options' => Plugin::get_config_select_options( $this->payment_method ),
-					'footer'  => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.',
+					'footer'  => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.',
 					'value'   => $this->get( 'config_id' ),
 				],
 				[

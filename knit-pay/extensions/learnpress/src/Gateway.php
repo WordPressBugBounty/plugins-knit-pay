@@ -106,7 +106,7 @@ class Gateway extends LP_Gateway_Abstract {
 					'default' => get_option( 'pronamic_pay_config_id' ),
 					'type'    => 'select',
 					'options' => Plugin::get_config_select_options( $this->payment_method ),
-					'desc'    => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.',
+					'desc'    => 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.',
 				],
 				[
 					'title'   => __( 'Payment Description', 'knit-pay-lang' ),
