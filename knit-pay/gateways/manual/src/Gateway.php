@@ -56,9 +56,7 @@ class Gateway extends Core_Gateway {
 	 * @return void
 	 * @throws \Exception When payment action URL is empty.
 	 */
-	public function output_form(
-		Payment $payment
-		) {
+	public function output_form( Payment $payment ) {
 		$account_detail_page = get_post( $this->config->account_details_page );
 
 		$form_inner = '<hr>';

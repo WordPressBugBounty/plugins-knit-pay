@@ -23,7 +23,7 @@ class Integration extends AbstractGatewayIntegration {
 			$args,
 			[
 				'id'       => 'manual',
-				'name'     => 'Manual',
+				'name'     => 'Manual (not recommended)',
 				'provider' => 'manual',
 			]
 		);

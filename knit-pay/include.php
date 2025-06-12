@@ -44,6 +44,8 @@ require_once 'includes/custom-payment-methods.php';
 
 require_once 'includes/PaymentRestController.php';
 
+require_once 'includes/hooks_mapping.php';
+
 add_action( 'plugins_loaded', 'knit_pay_pro_init', -9 );
 function knit_pay_pro_init() {
 	if ( ! defined( 'KNIT_PAY_PRO' ) && ! defined( 'KNIT_PAY_UPI' ) ) {

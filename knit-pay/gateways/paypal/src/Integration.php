@@ -72,7 +72,7 @@ class Integration extends IntegrationOAuthClient {
 	 * @return array
 	 */
 	public function add_paypal_partner_id( $parsed_args, $url ) {
-		if ( strpos( $url, 'paypal.com', 8 ) !== false ) {
+		if ( strpos( $url, 'paypal.com' ) !== false ) {
 			$parsed_args['headers']['PayPal-Partner-Attribution-Id'] = self::PARTNER_ATTRIBUTION_ID;
 		}
 
@@ -86,7 +86,7 @@ class Integration extends IntegrationOAuthClient {
 	 * @return string
 	 */
 	public function add_paypal_bn( $location ) {
-		if ( strpos( $location, 'paypal.com', 8 ) !== false ) {
+		if ( strpos( $location, 'paypal.com' ) !== false ) {
 			$location = add_query_arg( 'bn', self::PARTNER_ATTRIBUTION_ID, $location );
 		}
 
