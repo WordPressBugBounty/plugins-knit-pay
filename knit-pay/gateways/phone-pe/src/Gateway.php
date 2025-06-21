@@ -7,6 +7,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Pronamic\WordPress\Pay\Payments\FailureReason;
 use Exception;
+use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: PhonePe Gateway
@@ -94,12 +95,26 @@ class Gateway extends Core_Gateway {
 		);
 		$amount       = $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' );
 
+		$customer        = $payment->get_customer();
+		$billing_address = $payment->get_billing_address();
+
+		$customer_details = [
+			'customer_name' => KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 50 ),
+			'email'         => $customer->get_email(),
+			'phone'         => $billing_address ? $billing_address->get_phone() : '',
+		];
+
 		if ( 'v2' === $this->config->api_version ) {
 			// @see: https://developer.phonepe.com/v1/reference/initiate-payment-standard-checkout/#Request-Parameters
 			$data = [
 				'merchantOrderId' => $payment->get_transaction_id(),
 				'amount'          => $amount,
-				// 'metaInfo' => [],
+				'metaInfo'        => array_merge(
+					[
+						'customer_details' => json_encode( $customer_details ),
+					],
+					$customer_details
+				),
 				'paymentFlow'     => [
 					'type'         => 'PG_CHECKOUT',
 					'message'      => $payment->get_description(),

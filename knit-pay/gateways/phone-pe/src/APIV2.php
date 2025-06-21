@@ -42,11 +42,17 @@ class APIV2 {
 			]
 		);
 
+		if ( 401 === wp_remote_retrieve_response_code( $response ) ) {
+			throw new Exception( 'Unauthorized request. Please check your credentials.', 401 );
+		}
+
 		$result = wp_remote_retrieve_body( $response );
 
 		$result = json_decode( $result );
 
-		if ( isset( $result->redirectUrl ) ) {
+		if ( isset( $result->success ) && false === $result->success ) {
+			throw new Exception( $result->message ?? 'Something went wrong. Please try again later.' );
+		} elseif ( isset( $result->redirectUrl ) ) {
 			return $result->redirectUrl;
 		}
 

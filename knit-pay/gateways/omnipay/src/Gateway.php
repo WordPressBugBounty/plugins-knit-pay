@@ -62,6 +62,11 @@ class Gateway extends Core_Gateway {
 	 *            Payment.
 	 */
 	public function start( Payment $payment ) {
+		$payment_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
+		if ( isset( $this->args['supported_currencies'] ) && ! in_array( $payment_currency, $this->args['supported_currencies'] ) ) {
+			throw new Exception( sprintf( 'The currency %s is not supported by this gateway.', $payment_currency ) );
+		}
+
 		if ( isset( $this->args['pre_purchase_callback'] ) ) {
 			call_user_func( $this->args['pre_purchase_callback'], $this->omnipay_gateway );
 		}
@@ -141,7 +146,6 @@ class Gateway extends Core_Gateway {
 	 * @return array
 	 */
 	private function get_payment_data( Payment $payment ) {
-
 		$customer         = $payment->get_customer();
 		$billing_address  = $payment->get_billing_address();
 		$delivery_address = $payment->get_shipping_address();
@@ -156,6 +160,7 @@ class Gateway extends Core_Gateway {
 		}
 		
 		$payment_return_url = $payment->get_return_url();
+		$payment_cancel_url = add_query_arg( 'cancelled', true, $payment_return_url );
 
 		// @see https://omnipay.thephpleague.com/api/cards/
 		$credit_card = [
@@ -218,7 +223,7 @@ class Gateway extends Core_Gateway {
 			'transactionReference' => $transaction_id,
 			'clientIp'             => $customer->get_ip_address(),
 			'returnUrl'            => $payment_return_url,
-			'cancelUrl'            => $payment_return_url,
+			'cancelUrl'            => $payment_cancel_url,
 			'notifyUrl'            => $payment_return_url,
 			'email'                => $customer->get_email(),
 		];
@@ -237,6 +242,7 @@ class Gateway extends Core_Gateway {
 			'{amount}'              => $amount,
 			'{amount_minor}'        => $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' ),
 			'{payment_return_url}'  => $payment_return_url,
+			'{payment_cancel_url}'  => $payment_cancel_url,
 			'{payment_description}' => $payment->get_description(),
 			'{order_id}'            => $payment->get_order_id(),
 			'{payment_id}'          => $payment->get_id(),
@@ -295,7 +301,7 @@ class Gateway extends Core_Gateway {
 			} else {
 				$payment->set_status( PaymentStatus::AUTHORIZED );
 			}
-		} elseif ( $response->isCancelled() ) {
+		} elseif ( $response->isCancelled() || filter_has_var( INPUT_GET, 'cancelled' ) ) {
 			$payment->set_status( PaymentStatus::CANCELLED );
 		} elseif ( method_exists( $response, 'isDeclined' ) && $response->isDeclined() ) { // TODO, make it dynamic
 			$payment->set_status( PaymentStatus::FAILURE );
