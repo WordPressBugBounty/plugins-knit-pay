@@ -66,8 +66,16 @@ class Extension extends AbstractPluginIntegration {
 	
 	public function wpforms_currencies( $currencies ) {
 		$currencies['INR'] = [
-			'name'                => esc_html__( 'Indian Rupee', 'wpforms' ),
+			'name'                => esc_html__( 'Indian Rupee', 'knit-pay-lang' ),
 			'symbol'              => '&#8377;',
+			'symbol_pos'          => 'left',
+			'thousands_separator' => ',',
+			'decimal_separator'   => '.',
+			'decimals'            => 2,
+		];
+		$currencies['NPR'] = [
+			'name'                => esc_html__( 'Nepalese Rupee', 'knit-pay-lang' ),
+			'symbol'              => '&#8360;',
 			'symbol_pos'          => 'left',
 			'thousands_separator' => ',',
 			'decimal_separator'   => '.',
@@ -121,43 +129,34 @@ class Extension extends AbstractPluginIntegration {
 	 * @param Payment $payment Payment.
 	 */
 	public static function status_update( Payment $payment ) {
-		$source_id = (int) $payment->get_source_id();
-		
-		$payment_meta['payment_transaction'] = $payment->get_transaction_id();
-		$payment_meta['payment_total']       = $payment->get_total_amount()->get_value();
-		$payment_meta['payment_type']        = $payment->get_payment_method();
-		$payment_meta['knit_pay_payment_id'] = $payment->get_id();
-		
-		$entry_data = [
-			'type' => 'payment',
+		$entry_id    = (int) $payment->get_source_id();
+		$wpf_payment = wpforms()->payment->get_by( 'entry_id', $entry_id );
+
+		$payment_data = [
+			'transaction_id' => $payment->get_transaction_id(),
+			'title'          => $payment->get_description(),
 		];
-		
 
 		switch ( $payment->get_status() ) {
 			case Core_Statuses::CANCELLED:
 			case Core_Statuses::EXPIRED:
-				$payment_meta['payment_note'] = 'Payment Cancelled.';
-				$entry_data['status']         = 'failed';
-				break;
 			case Core_Statuses::FAILURE:
-				$payment_meta['payment_note'] = 'Payment Failed.';
-				$entry_data['status']         = 'failed';
+				$payment_data['status'] = 'failed';
 
 				break;
 			case Core_Statuses::SUCCESS:
-				$entry_data['status'] = 'completed';
+				$payment_data['status'] = 'completed';
 
 				break;
 			case Core_Statuses::OPEN:
 			default:
-				$entry_data['status'] = 'pending';
+				$payment_data['status'] = 'pending';
 
 				break;
 		}
-		$entry_data['meta'] = wp_json_encode( $payment_meta );
-		
-		wpforms()->entry->update( $source_id, $entry_data, '', '', [ 'cap' => false ] );
-		
+
+		wpforms()->payment->update( $wpf_payment->id, $payment_data, '', '', [ 'cap' => false ] );
+		wpforms()->entry->update( $entry_id, [ 'type' => 'payment' ], '', '', [ 'cap' => false ] );
 	}
 
 	/**

@@ -109,12 +109,9 @@ class Gateway extends Core_Gateway {
 			$data = [
 				'merchantOrderId' => $payment->get_transaction_id(),
 				'amount'          => $amount,
-				'metaInfo'        => array_merge(
-					[
-						'customer_details' => json_encode( $customer_details ),
-					],
-					$customer_details
-				),
+				'metaInfo'        => [
+					'udf1' => json_encode( $customer_details ),
+				],
 				'paymentFlow'     => [
 					'type'         => 'PG_CHECKOUT',
 					'message'      => $payment->get_description(),

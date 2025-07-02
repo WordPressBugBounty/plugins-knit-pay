@@ -38,6 +38,7 @@ class Gateway extends WPForms_Payment {
 		$this->icon     = 'https://plugins.svn.wordpress.org/knit-pay/assets/icon.svg';
 		
 		add_action( 'wpforms_process_complete', [ $this, 'process_entry' ], 20, 4 );
+		add_filter( 'wpforms_forms_submission_prepare_payment_data', [ $this, 'prepare_payment_data' ], 10, 3 );
 		add_action( 'wpforms_form_settings_notifications_single_after', [ $this, 'notification_settings' ], 10, 2 );
 		add_filter( 'wpforms_entry_email_process', [ $this, 'process_email' ], 70, 5 );
 	}
@@ -50,7 +51,7 @@ class Gateway extends WPForms_Payment {
 	public function builder_content() {
 
 		wpforms_panel_field(
-			'checkbox',
+			'toggle',
 			$this->slug,
 			'enable',
 			$this->form_data,
@@ -60,7 +61,7 @@ class Gateway extends WPForms_Payment {
 				'default' => '0',
 			]
 		);
-		
+
 		wpforms_panel_field(
 			'select',
 			$this->slug,
@@ -203,12 +204,16 @@ class Gateway extends WPForms_Payment {
 		$form_has_payments  = wpforms_has_payment( 'form', $form_data );
 		$entry_has_paymemts = wpforms_has_payment( 'entry', $fields );
 		if ( ! $form_has_payments || ! $entry_has_paymemts ) {
+			$error_title = esc_html__( 'Payment stopped, missing payment fields', 'knit-pay-lang' );
+			\wpforms()->process->errors[ $form_data['id'] ]['footer'] = $error_title;
 			return;
 		}
 
 		// Check total charge amount.
 		$amount = wpforms_get_total_payment( $fields );
 		if ( empty( $amount ) || $amount === wpforms_sanitize_amount( 0 ) ) {
+			$error_title = esc_html__( 'Payment stopped, invalid/empty amount', 'knit-pay-lang' );
+			$errors[]    = $error_title;
 			return;
 		}
 		
@@ -284,9 +289,16 @@ class Gateway extends WPForms_Payment {
 			wp_safe_redirect( $payment->get_pay_redirect_url() );
 			exit;
 		} catch ( \Exception $e ) {
-			  \wpforms()->process->errors[ $form_data['id'] ]['footer'] = $e->getMessage();
+			\wpforms()->process->errors[ $form_data['id'] ]['footer'] = $e->getMessage();
 			return;
 		}
+	}
+
+	public function prepare_payment_data( $payment_data, $fields, $form_data ) {
+		$payment_data['status']  = 'pending';
+		$payment_data['gateway'] = sanitize_key( 'knit_pay' );
+
+		return $payment_data;
 	}
 
 	/**
