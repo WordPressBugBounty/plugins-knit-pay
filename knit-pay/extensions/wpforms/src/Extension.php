@@ -14,8 +14,11 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
  *
  * @author  knitpay
  * @since   5.9.0.0
+ * @version 8.96.22.0
  */
 class Extension extends AbstractPluginIntegration {
+	private $gateway;
+
 	/**
 	 * Slug
 	 *
@@ -130,7 +133,7 @@ class Extension extends AbstractPluginIntegration {
 	 */
 	public static function status_update( Payment $payment ) {
 		$entry_id    = (int) $payment->get_source_id();
-		$wpf_payment = wpforms()->payment->get_by( 'entry_id', $entry_id );
+		$wpf_payment = wpforms()->obj( 'payment' )->get_by( 'entry_id', $entry_id );
 
 		$payment_data = [
 			'transaction_id' => $payment->get_transaction_id(),
@@ -147,6 +150,7 @@ class Extension extends AbstractPluginIntegration {
 			case Core_Statuses::SUCCESS:
 				$payment_data['status'] = 'completed';
 
+				self::send_email( $entry_id, $wpf_payment );
 				break;
 			case Core_Statuses::OPEN:
 			default:
@@ -155,8 +159,37 @@ class Extension extends AbstractPluginIntegration {
 				break;
 		}
 
-		wpforms()->payment->update( $wpf_payment->id, $payment_data, '', '', [ 'cap' => false ] );
-		wpforms()->entry->update( $entry_id, [ 'type' => 'payment' ], '', '', [ 'cap' => false ] );
+		wpforms()->obj( 'payment' )->update( $wpf_payment->id, $payment_data, '', '', [ 'cap' => false ] );
+		wpforms()->obj( 'entry' )->update( $entry_id, [ 'type' => 'payment' ], '', '', [ 'cap' => false ] );
+	}
+
+	/**
+	 * Referred from: wpforms-paypal-standard/src/Plugin.php method:process_ipn
+	 * Send email notification for the completed payment.
+	 *
+	 * @param int                                $entry_id    Entry ID.
+	 * @param $wpf_payment WPForms Payment object.
+	 * @return void
+	 */
+	private static function send_email( $entry_id, $wpf_payment ) {
+		$gateway_slug = 'knit_pay_knit_pay'; // Slug of Gateway, remomve hardcoded slug later if required.
+		$form_data    = wpforms()->obj( 'form' )->get( $wpf_payment->form_id, [ 'content_only' => true ] );
+
+		if ( empty( $form_data['settings']['notifications'] ) ) {
+			return $form_data;
+		}
+
+		foreach ( $form_data['settings']['notifications'] as $id => $notification ) {
+			if ( empty( $notification[ $gateway_slug ] ) ) {
+				unset( $form_data['settings']['notifications'][ $id ] );
+			}
+		}
+
+		$entry = wpforms()->obj( 'entry' )->get( $entry_id );
+		if ( ! empty( $entry ) ) {
+			// Send notification emails if configured.
+			wpforms()->obj( 'process' )->entry_email( wpforms_decode( $entry->fields ), [], $form_data, $entry_id, $gateway_slug );
+		}
 	}
 
 	/**

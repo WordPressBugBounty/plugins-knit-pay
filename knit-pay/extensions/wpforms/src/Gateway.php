@@ -15,6 +15,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  *
  * @author  knitpay
  * @since   5.9.0.0
+ * @version 8.96.22.0
  */
 
 /**
@@ -23,6 +24,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 defined( 'ABSPATH' ) || exit();
 
 class Gateway extends WPForms_Payment {
+	private $fields;
 
 	/**
 	 * Initialize.
@@ -31,11 +33,12 @@ class Gateway extends WPForms_Payment {
 	 */
 	public function init() {
 
-		$this->version  = KNITPAY_VERSION;
-		$this->name     = 'Knit Pay';
-		$this->slug     = 'knit_pay_knit_pay';
-		$this->priority = 1;
-		$this->icon     = 'https://plugins.svn.wordpress.org/knit-pay/assets/icon.svg';
+		$this->version     = KNITPAY_VERSION;
+		$this->name        = 'Knit Pay';
+		$this->slug        = 'knit_pay_knit_pay';
+		$this->priority    = 1;
+		$this->icon        = 'https://plugins.svn.wordpress.org/knit-pay/assets/icon.svg';
+		$this->recommended = true;
 		
 		add_action( 'wpforms_process_complete', [ $this, 'process_entry' ], 20, 4 );
 		add_filter( 'wpforms_forms_submission_prepare_payment_data', [ $this, 'prepare_payment_data' ], 10, 3 );
@@ -343,7 +346,7 @@ class Gateway extends WPForms_Payment {
 	public function notification_settings( $settings, $id ) {
 
 		wpforms_panel_field(
-			'checkbox',
+			'toggle',
 			'notifications',
 			$this->slug,
 			$settings->form_data,
@@ -382,7 +385,6 @@ class Gateway extends WPForms_Payment {
 	 * @return bool
 	 */
 	public function process_email( $process, $fields, $form_data, $notification_id, $context ) {
-
 		if ( ! $process ) {
 			return false;
 		}

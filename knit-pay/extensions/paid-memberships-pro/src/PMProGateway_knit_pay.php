@@ -11,7 +11,7 @@ use KnitPay\Extensions\PaidMembershipsPro\Helper;
  *
  * @author knitpay
  * @since 2.0.0
- * @version 8.87.10.1
+ * @version 8.96.22.0
  */
 
 /**
@@ -96,10 +96,12 @@ class PMProGateway_knit_pay extends PMProGateway {
 
 	/**
 	 * Get a list of payment options that the knit pay gateway needs/supports.
+	 *  TODO: deprecated in PMPro 3.5, remove after Dec 2026.
 	 *
 	 * @since 1.8
 	 */
 	static function getGatewayOptions() {
+		_deprecated_function( __METHOD__, '8.96.22.0' );
 		$options = [
 			'sslseal',
 			'nuclear_HTTPS',
@@ -125,6 +127,9 @@ class PMProGateway_knit_pay extends PMProGateway {
 	 * @since 1.8
 	 */
 	function pmpro_payment_options( $options ) {
+		// TODO: Deprecated in PMPro 3.5, remove after Dec 2026.
+		_deprecated_function( __METHOD__, '8.96.22.0' );
+
 		// get knit pay options
 		$knit_pay_options = $this->getGatewayOptions();
 
@@ -134,23 +139,19 @@ class PMProGateway_knit_pay extends PMProGateway {
 		return $options;
 	}
 
-	/**
-	 * Display fields for Knit Pay options.
-	 *
-	 * @since 1.8
-	 */
-	function pmpro_payment_option_fields( $values, $gateway ) {
-		$configurations = Plugin::get_config_select_options( $this->id );
+	private static function setting_form( $form, $gateway = 'knit_pay', $id = 'knit_pay' ) {
+		$configurations = Plugin::get_config_select_options( $id );
 		unset( $configurations[0] );
 
 		$payment_description  = self::pmpro_getOption( 'knit_pay_payment_description' );
 		$hide_billing_address = self::pmpro_getOption( 'knit_pay_hide_billing_address' );
 		$hide_phone_field     = self::pmpro_getOption( 'knit_pay_hide_phone' );
 		$title                = self::pmpro_getOption( 'knit_pay_title' );
+		$config_id            = self::pmpro_getOption( 'knit_pay_config_id' );
 
-		if ( empty( $this->config_id ) ) {
-			$this->config_id = get_option( 'pronamic_pay_config_id' );
-			pmpro_setOption( 'knit_pay_config_id', $this->config_id );
+		if ( empty( $config_id ) ) {
+			$config_id = get_option( 'pronamic_pay_config_id' );
+			pmpro_setOption( 'knit_pay_config_id', $config_id );
 		}
 		if ( empty( $payment_description ) ) {
 			$payment_description = 'Paid Memberships Pro {order_id}';
@@ -161,18 +162,9 @@ class PMProGateway_knit_pay extends PMProGateway {
 			pmpro_setOption( 'knit_pay_title', $title );
 		}
 
-		// Knit Pay Settings Heading.
-		// TODO add message that recurring payments are not supported.
-		$form  = '';
-		$form .= '<tr class="pmpro_settings_divider gateway gateway_' . $this->id . '"';
-		if ( $gateway !== $this->id ) {
-			$form .= ' style="display: none;"';
-		}
-		$form .= '><td colspan="2">	<hr /><h2 class="title">Knit Pay Settings</h2></td></tr>';
-
 		// Title.
-		$form .= '<tr class="gateway gateway_' . $this->id . '"';
-		if ( $gateway != $this->id ) {
+		$form .= '<tr class="gateway gateway_' . $id . '"';
+		if ( $gateway != $id ) {
 			$form .= '	style="display: none;"';
 		}
 		$form .= '>
@@ -184,8 +176,8 @@ class PMProGateway_knit_pay extends PMProGateway {
         </tr>';
 
 		// Configuration.
-		$form .= '<tr class="gateway gateway_' . $this->id . '"';
-		if ( $gateway != $this->id ) {
+		$form .= '<tr class="gateway gateway_' . $id . '"';
+		if ( $gateway != $id ) {
 			$form .= '	style="display: none;"';
 		}
 		$form                       .= '>
@@ -206,8 +198,8 @@ class PMProGateway_knit_pay extends PMProGateway {
         </tr>';
 
 		// Payment Description.
-		$form .= '<tr class="gateway gateway_' . $this->id . '"';
-		if ( $gateway != $this->id ) {
+		$form .= '<tr class="gateway gateway_' . $id . '"';
+		if ( $gateway != $id ) {
 			$form .= '	style="display: none;"';
 		}
 		$form .= '>
@@ -223,8 +215,8 @@ class PMProGateway_knit_pay extends PMProGateway {
 			'0' => 'No',
 			'1' => 'Yes',
 		];
-		$form        .= '<tr class="gateway gateway_' . $this->id . '"';
-		if ( $gateway != $this->id ) {
+		$form        .= '<tr class="gateway gateway_' . $id . '"';
+		if ( $gateway != $id ) {
 			$form .= '	style="display: none;"';
 		}
 		$form .= '>
@@ -243,8 +235,8 @@ class PMProGateway_knit_pay extends PMProGateway {
 			'0' => 'No',
 			'1' => 'Yes',
 		];
-		$form        .= '<tr class="gateway gateway_' . $this->id . '"';
-		if ( $gateway != $this->id ) {
+		$form        .= '<tr class="gateway gateway_' . $id . '"';
+		if ( $gateway != $id ) {
 			$form .= '	style="display: none;"';
 		}
 		$form .= '>
@@ -258,10 +250,89 @@ class PMProGateway_knit_pay extends PMProGateway {
         	</td>
         </tr>';
 
+		return $form;
+	}
+
+	/**
+	 * Display fields for Knit Pay options.
+	 * TODO: old code for PMPro < 3.5, remove after Dec 2026.
+	 *
+	 * @since 1.8
+	 */
+	function pmpro_payment_option_fields( $values, $gateway ) {
+		// TODO: Deprecated in PMPro 3.5, remove after Dec 2026.
+		_deprecated_function( __METHOD__, '8.96.22.0' );
+
+		// Knit Pay Settings Heading.
+		// TODO add message that recurring payments are not supported.
+		$form  = '';
+		$form .= '<tr class="pmpro_settings_divider gateway gateway_' . $this->id . '"';
+		if ( $gateway !== $this->id ) {
+			$form .= ' style="display: none;"';
+		}
+		$form .= '><td colspan="2">	<hr /><h2 class="title">Knit Pay Settings</h2></td></tr>';
+
+		$form .= self::setting_form( $form, $gateway, $this->id );
+
 		// Display Currency Fields.
 		$form .= '<script>window.onload = function() {pmpro_changeGateway();}</script>';
 
 		echo $form;
+	}
+
+	/**
+	 * Display fields for Knit Pay options. Introduced in PMPro 3.5.
+	 */
+	public static function show_settings_fields() {
+		?>
+		<!-- TODO: add link of instructions<p>
+		<?php
+			printf(
+				/* translators: %s: URL to the Knit Pay gateway documentation. */
+				esc_html__( 'For detailed setup instructions, please visit our %s.', 'knit-pay-lang' ),
+				'<a href="" target="_blank">' . esc_html__( 'Knit Pay documentation', 'knit-pay-lang' ) . '</a>'
+			);
+		?>
+		</p>-->
+		<div id="pmpro_knit_pay" class="pmpro_section" data-visibility="shown" data-activated="true">
+			<div class="pmpro_section_toggle">
+				<button class="pmpro_section-toggle-button" type="button" aria-expanded="true">
+					<span class="dashicons dashicons-arrow-up-alt2"></span>
+					<?php esc_html_e( 'Settings', 'paid-memberships-pro' ); ?>
+				</button>
+			</div>
+			<div class="pmpro_section_inside">
+				<table class="form-table">
+					<tbody>
+
+						<?php
+						echo self::setting_form( '', 'knit_pay', 'knit_pay' );
+						?>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Save settings for Knit Pay. Introduced in PMPro 3.5.
+	 */
+	public static function save_settings_fields() {
+		$settings_to_save = [
+			'knit_pay_title',
+			'knit_pay_payment_description',
+			'knit_pay_config_id',
+			'knit_pay_hide_billing_address',
+			'knit_pay_hide_phone',
+		];
+
+		foreach ( $settings_to_save as $setting ) {
+			if ( isset( $_REQUEST[ $setting ] ) ) {
+				update_option( 'pmpro_' . $setting, sanitize_text_field( $_REQUEST[ $setting ] ) );
+			}
+		}
 	}
 
 	/**
