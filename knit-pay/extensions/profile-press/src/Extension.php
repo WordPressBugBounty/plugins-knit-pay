@@ -124,7 +124,7 @@ class Extension extends AbstractPluginIntegration {
 				break;
 			case Core_Statuses::OPEN:
 			default:
-				$order->set_status( OrderStatus::PENDING );
+				$order->update_status( OrderStatus::PENDING );
 				
 				break;
 		}
