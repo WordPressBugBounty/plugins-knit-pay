@@ -444,6 +444,7 @@ class Integration extends AbstractGatewayIntegration {
 			'0' => 'Default',
 			'2' => '2',
 			'3' => '3',
+			'5' => '5',
 		];
 	}
 
@@ -511,6 +512,7 @@ class Integration extends AbstractGatewayIntegration {
 	 * @return void
 	 */
 	public function field_qr_code_scanner( $field ) {
+		// Scan QR Code in Admin Panel.
 		wp_enqueue_script(
 			'knit-pay-nuintun-qrcode',
 			KNITPAY_URL . '/gateways/upi-qr/src/js/qrcode.js',

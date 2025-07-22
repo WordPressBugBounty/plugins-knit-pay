@@ -51,7 +51,13 @@ class Extension extends Pronamic_Give_Extension {
 
 		// if no gateway data is set, it means it's a legacy payment.
 		if ( ! isset( $gatewayData ) ) {
-			return parent::redirect_url( $url, $payment );
+			$donation_id = (int) $payment->get_source_id();
+			return add_query_arg(
+				[
+					'donation_id' => $donation_id,
+				],
+				parent::redirect_url( $url, $payment )
+			);
 		}
 		
 		switch ( $payment->get_status() ) {

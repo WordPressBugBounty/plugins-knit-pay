@@ -362,7 +362,7 @@ class Gateway extends Core_Gateway {
 		\wp_register_style(
 			"knit-pay-upi-qr-template-{$this->config->payment_template}",
 			KNITPAY_URL . "/gateways/upi-qr/src/css/template{$this->config->payment_template}.css",
-			[],
+			[ 'dashicons' ],
 			KNITPAY_VERSION
 		);
 
@@ -404,8 +404,15 @@ class Gateway extends Core_Gateway {
 			'knit-pay-easy-qrcode',
 			KNITPAY_URL . '/gateways/upi-qr/src/js/easy.qrcode.min.js',
 			[],
-			'4.6.0',
+			'4.6.2',
 			true
+		);
+
+		\wp_register_script(
+			'knit-pay-download-share',
+			KNITPAY_URL . '/gateways/upi-qr/src/js/download-share.js',
+			[ 'knit-pay-easy-qrcode' ],
+			KNITPAY_VERSION
 		);
 
 		\wp_register_script(
@@ -423,7 +430,7 @@ class Gateway extends Core_Gateway {
 		\wp_register_script(
 			"knit-pay-upi-qr-template-{$this->config->payment_template}",
 			KNITPAY_URL . "/gateways/upi-qr/src/js/template{$this->config->payment_template}.js",
-			[ 'jquery', 'knit-pay-sweet-alert-2', 'knit-pay-countdown-timer', 'knit-pay-easy-qrcode' ],
+			[ 'jquery', 'knit-pay-sweet-alert-2', 'knit-pay-countdown-timer', 'knit-pay-easy-qrcode', 'knit-pay-download-share' ],
 			KNITPAY_VERSION
 		);
 

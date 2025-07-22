@@ -38,15 +38,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$redirect_url            = $payment->get_return_url();
 		$image_path              = KNIT_PAY_UPI_QR_IMAGE_URL;
 		$hide_pay_button         = $this->config->hide_pay_button; // TODO make dynamic
+		$is_verified             = true; // TODO: Implement verification logic
 		$show_download_qr_button = 'yes' === $this->config->show_download_qr_button && 2000 >= $payment->get_total_amount()->number_format( null, '.', '' );
 
 		if ( ! wp_is_mobile() ) {
 			$hide_pay_button = true;
 		}
 
-		$intent_url_parameters = $this->get_intent_url_parameters( $payment );
-		$upi_qr_text           = $this->get_upi_qr_text( $payment );
-		$payee_name            = rawurldecode( $intent_url_parameters['pn'] );
+		$intent_url_parameters   = $this->get_intent_url_parameters( $payment );
+		$paytm_intent_url_params = array_merge(
+			$intent_url_parameters,
+			[
+				'sign'        => 'MEUCIHldtBS8sv53BbdI9jtTN4vRokbPT91Fm6wlPQCN/sVkAiEAs4p9TPwTvLvPsceQLjSOBL1lAKhrsHdHMnfiDFyu1Aw=',
+				'featuretype' => 'money_transfer',
+			]
+		);
+		$upi_qr_text             = $this->get_upi_qr_text( $payment );
+		$payee_name              = rawurldecode( $intent_url_parameters['pn'] );
 		
 		$nonce_action = 'knit_pay_payment_status_check|' . $payment->get_id() . "|$transaction_id";
 		echo wp_nonce_field( $nonce_action, 'knit_pay_nonce', true, true );
