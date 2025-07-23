@@ -20,7 +20,7 @@
 			<?php if ( $show_download_qr_button ) { ?>
 				<button class="template-4-button download-qr-button"><span class="dashicons dashicons-download"></span>Download QR</button>
 			<?php } ?>
-				<button class="template-4-button pay-button" onclick="payViaUPI()">Confirm Payment</button>
+				<button class="template-4-button pay-button" onclick="confirmPayment()">Confirm Payment</button>
 		</div>
 		<div id="countdown-timer" class="validity"></div>
 	</div>

@@ -409,8 +409,8 @@ class Gateway extends Core_Gateway {
 		);
 
 		\wp_register_script(
-			'knit-pay-download-share',
-			KNITPAY_URL . '/gateways/upi-qr/src/js/download-share.js',
+			'knit-pay-upi-common',
+			KNITPAY_URL . '/gateways/upi-qr/src/js/upi-common.js',
 			[ 'knit-pay-easy-qrcode' ],
 			KNITPAY_VERSION
 		);
@@ -430,7 +430,7 @@ class Gateway extends Core_Gateway {
 		\wp_register_script(
 			"knit-pay-upi-qr-template-{$this->config->payment_template}",
 			KNITPAY_URL . "/gateways/upi-qr/src/js/template{$this->config->payment_template}.js",
-			[ 'jquery', 'knit-pay-sweet-alert-2', 'knit-pay-countdown-timer', 'knit-pay-easy-qrcode', 'knit-pay-download-share' ],
+			[ 'jquery', 'knit-pay-sweet-alert-2', 'knit-pay-countdown-timer', 'knit-pay-easy-qrcode', 'knit-pay-upi-common' ],
 			KNITPAY_VERSION
 		);
 

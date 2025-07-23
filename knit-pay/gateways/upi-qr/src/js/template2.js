@@ -3,7 +3,7 @@ function generateQR(user_input) {
 	jQuery('#backBtn').attr('onclick', 'qr_back();')
 	document.getElementById('qrCodeWrapper').style.display = 'flex';
 	jQuery('.qrCodeBody').html('');
-	var qrcode = new QRCode(document.querySelector('.qrCodeBody'), {
+	window.knit_pay_qrcode = new QRCode(document.querySelector('.qrCodeBody'), {
 		text: user_input,
 		width: 250, //default 128
 		height: 250,
@@ -14,9 +14,7 @@ function generateQR(user_input) {
 	});
 	paymentClicked();
 
-	jQuery(".download-qr-button").on("click", function() {
-		qrcode.download("upi_qr");
-	});
+	knit_pay_load_download_share();
 }
 
 
@@ -55,37 +53,8 @@ function cancelTransaction() {
 	jQuery("#formSubmit").submit();
 }
 
-function knit_pay_check_payment_status() {
-	payment_status_counter++;
-
-	jQuery.post(knit_pay_upi_qr_vars.ajaxurl, {
-		'action': 'knit_pay_upi_qr_payment_status_check',
-		'knit_pay_transaction_id': document.querySelector('input[name=knit_pay_transaction_id]').value,
-		'knit_pay_payment_id': document.querySelector('input[name=knit_pay_payment_id]').value,
-		'check_status_count': payment_status_counter,
-		'knit_pay_nonce': document.querySelector('input[name=knit_pay_nonce]').value
-	}, function(msg) {
-		if (msg.data == 'Success') {
-			clearInterval(payment_status_checker);
-
-			Swal.fire('Your Payment Received Successfully', 'Please Wait!', 'success')
-
-			setTimeout(function() {
-				document.getElementById('formSubmit').submit();
-			}, 200);
-		} else if (msg.data == 'Failure') {
-			clearInterval(payment_status_checker);
-
-			Swal.fire('Payment Failed', 'Please Wait!', 'error')
-
-			setTimeout(function() {
-				document.getElementById('formSubmit').submit();
-			}, 200);
-		}
-	});
-}
-
-let payment_status_counter = 0;
-if (jQuery("#enable_polling").val()){
-	payment_status_checker = setInterval(knit_pay_check_payment_status, 4000);
-}
+window.onload = function() {
+	if (jQuery("#enable_polling").val()){
+		payment_status_checker = setInterval(knit_pay_check_payment_status, 4000);
+	}
+};

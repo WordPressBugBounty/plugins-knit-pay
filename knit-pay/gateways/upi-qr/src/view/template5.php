@@ -50,10 +50,17 @@
       <?php } ?>
     </div>
 
+    <!-- Confirm Payment Section -->
+    <div class="confirm-payment-section">
+      <button class="confirm-btn" id="confirmPaymentBtn" onclick="confirmPayment()">
+        <span id="btnText">I've Made the Payment</span>
+      </button>
+    </div>
+
     <!-- Payment Methods Section -->
     <?php if (wp_is_mobile()) { ?>
       <div class="payment-methods">
-        <div class="scan-text">Pay with other methods</div>
+        <div class="section-title">Pay with other methods</div>
         <div class="method-list">
 
           <a href="<?php echo add_query_arg($paytm_intent_url_params, 'paytmmp://cash_wallet'); ?>">
@@ -64,7 +71,7 @@
           </a>
 
           <?php if ($show_download_qr_button) { ?>
-            <a a href="#" class="share-qr-button">
+            <a href="#" class="share-qr-button">
               <div class="method-item">
                 <img src="<?php echo $image_path; ?>gpay_icon.svg" class="method-icon no-drag" alt="Google Pay">
                 <span class="method-name">Share QR</span>
@@ -75,6 +82,7 @@
       </div>
     <?php } ?>
 
+    <!-- Order Summary -->
     <div class="order-summary">
       <div class="order-row">
         <span class="label">Transaction ID:</span>
@@ -90,7 +98,7 @@
     <!-- Footer Section -->
     <div class="footer">
       <div>All UPI Accepted</div><br>
-      <div class="scan-text">Need help? <a href="mailto:<?php echo get_bloginfo('admin_email'); ?>" style="color:green !important"><?php echo get_bloginfo('admin_email'); ?></a></div>
+      <div>Need help? <a href="mailto:<?php echo get_bloginfo('admin_email'); ?>"><?php echo get_bloginfo('admin_email'); ?></a></div>
     </div>
   </div>
 </div>
