@@ -20,7 +20,9 @@ use KnitPay\Utils as KnitPayUtils;
 class Gateway extends Core_Gateway {
 	protected $config;
 	private $intent_url_parameters;
-	protected $payment_expiry_seconds = 300;
+	protected $payment_expiry_seconds   = 300;
+	protected $show_manual_confirmation = false;
+	protected $merchant_verified        = false;
 	protected $enable_polling;
 
 	/**

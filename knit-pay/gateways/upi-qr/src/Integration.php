@@ -436,6 +436,17 @@ class Integration extends AbstractGatewayIntegration {
 			];
 		}
 
+		$fields['support_email'] = [
+			'section'     => 'general',
+			'filter'      => FILTER_VALIDATE_EMAIL,
+			'meta_key'    => '_pronamic_gateway_upi_qr_support_email',
+			'title'       => __( 'Support Email', 'knit-pay-lang' ),
+			'type'        => 'text',
+			'classes'     => [ 'regular-text', 'code' ],
+			'default'     => get_bloginfo( 'admin_email' ),
+			'description' => __( 'Some templates show support email address, admin email address will be shown if left empty.', 'knit-pay-lang' ),
+		];
+
 		return $fields;
 	}
 
@@ -462,6 +473,7 @@ class Integration extends AbstractGatewayIntegration {
 		$config->hide_mobile_qr             = $this->get_meta( $post_id, 'upi_qr_hide_mobile_qr' );
 		$config->hide_pay_button            = $this->get_meta( $post_id, 'upi_qr_hide_pay_button' );
 		$config->show_download_qr_button    = $this->get_meta( $post_id, 'upi_qr_show_download_qr_button' );
+		$config->support_email              = $this->get_meta( $post_id, 'upi_qr_support_email' );
 
 		if ( empty( $config->payment_template ) ) {
 			$config->payment_template = '3';
@@ -477,6 +489,10 @@ class Integration extends AbstractGatewayIntegration {
 
 		if ( empty( $config->show_download_qr_button ) ) {
 			$config->show_download_qr_button = 'yes';
+		}
+
+		if ( empty( $config->support_email ) ) {
+			$config->support_email = get_bloginfo( 'admin_email' );
 		}
 
 		return $config;

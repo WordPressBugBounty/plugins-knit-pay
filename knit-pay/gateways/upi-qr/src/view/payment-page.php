@@ -38,7 +38,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$redirect_url            = $payment->get_return_url();
 		$image_path              = KNIT_PAY_UPI_QR_IMAGE_URL;
 		$hide_pay_button         = $this->config->hide_pay_button; // TODO make dynamic
-		$is_verified             = true; // TODO: Implement verification logic
 		$show_download_qr_button = 'yes' === $this->config->show_download_qr_button && 2000 >= $payment->get_total_amount()->number_format( null, '.', '' );
 
 		if ( ! wp_is_mobile() ) {

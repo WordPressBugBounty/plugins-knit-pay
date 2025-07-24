@@ -36,6 +36,8 @@ class Config extends GatewayConfig {
 
 	public $show_download_qr_button;
 
+	public $support_email;
+
 	public $config_id;
 
 	public function copy_properties( $source ) {
