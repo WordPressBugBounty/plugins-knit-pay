@@ -1,7 +1,7 @@
 <?php
 namespace KnitPay\Gateways\Omnipay;
 
-use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
+use KnitPay\Gateways\Gateway as Core_Gateway;
 use Exception;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
@@ -51,6 +51,10 @@ class Gateway extends Core_Gateway {
 		$this->omnipay_gateway     = $omnipay_gateway;
 		$this->config              = $config;
 		$this->transaction_options = $transaction_options;
+
+		if ( isset( $args['is_iframe_checkout'] ) ) {
+			$this->is_iframe_checkout_method = true;
+		}
 	}
 
 	/**
@@ -67,8 +71,8 @@ class Gateway extends Core_Gateway {
 			throw new Exception( sprintf( 'The currency %s is not supported by this gateway.', $payment_currency ) );
 		}
 
-		if ( isset( $this->args['pre_purchase_callback'] ) ) {
-			call_user_func( $this->args['pre_purchase_callback'], $this->omnipay_gateway );
+		if ( is_callable( $this->args['pre_purchase_callback'] ) ) {
+			$this->args['pre_purchase_callback']( $this->omnipay_gateway );
 		}
 
 		$transaction_data = $this->get_payment_data( $payment );
@@ -102,7 +106,9 @@ class Gateway extends Core_Gateway {
 			}
 		}
 
-		if ( isset( $this->args['omnipay_transaction_id'] ) ) {
+		if ( is_callable( $this->args['omnipay_transaction_id_callback'] ) ) {
+			$payment->set_transaction_id( $this->args['omnipay_transaction_id_callback']( $response, $transaction_data ) );
+		} elseif ( isset( $this->args['omnipay_transaction_id'] ) ) {
 			$omnipay_transaction_id_key = ltrim( $this->args['omnipay_transaction_id'], '{data:' );
 			$omnipay_transaction_id_key = rtrim( $omnipay_transaction_id_key, '}' );
 
@@ -118,6 +124,8 @@ class Gateway extends Core_Gateway {
 	}
 
 	public function payment_redirect( Payment $payment ) {
+		parent::payment_redirect( $payment );
+
 		if ( ! is_null( $payment->get_meta( 'redirect_method' ) ) ) {
 			$this->set_method( $payment->get_meta( 'redirect_method' ) );
 		}
@@ -234,20 +242,21 @@ class Gateway extends Core_Gateway {
 
 		// Replacements.
 		$replacements = [
-			'{customer_phone}'      => $billing_address ? $billing_address->get_phone() : '',
-			'{customer_email}'      => $customer->get_email(),
-			'{customer_name}'       => KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 20 ),
-			'{customer_language}'   => $customer->get_language(),
-			'{currency}'            => $currency,
-			'{amount}'              => $amount,
-			'{amount_minor}'        => $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' ),
-			'{payment_return_url}'  => $payment_return_url,
-			'{payment_cancel_url}'  => $payment_cancel_url,
-			'{payment_description}' => $payment->get_description(),
-			'{order_id}'            => $payment->get_order_id(),
-			'{payment_id}'          => $payment->get_id(),
-			'{transaction_id}'      => $transaction_id,
-			'{payment_timestamp}'   => $payment->get_date()->getTimestamp(),
+			'{customer_phone}'           => $billing_address ? $billing_address->get_phone() : '',
+			'{customer_email}'           => $customer->get_email(),
+			'{customer_name}'            => KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 20 ),
+			'{customer_language}'        => $customer->get_language(),
+			'{currency}'                 => $currency,
+			'{amount}'                   => $amount,
+			'{amount_minor}'             => $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' ),
+			'{payment_pay_redirect_url}' => $payment->get_pay_redirect_url(),
+			'{payment_return_url}'       => $payment_return_url,
+			'{payment_cancel_url}'       => $payment_cancel_url,
+			'{payment_description}'      => $payment->get_description(),
+			'{order_id}'                 => $payment->get_order_id(),
+			'{payment_id}'               => $payment->get_id(),
+			'{transaction_id}'           => $transaction_id,
+			'{payment_timestamp}'        => $payment->get_date()->getTimestamp(),
 		];
 		foreach ( $this->config as $key => $value ) {
 			$replacements[ '{config:' . $key . '}' ] = $value;
@@ -267,6 +276,28 @@ class Gateway extends Core_Gateway {
 		}
 
 		return $transaction_data;
+	}
+
+		/**
+		 * Output form.
+		 *
+		 * @param Payment $payment Payment.
+		 * @return void
+		 * @throws \Exception When payment action URL is empty.
+		 */
+	public function output_form( Payment $payment ) {
+		if ( ! $this->is_iframe_checkout_method ) {
+			parent::output_form( $payment );
+			return;
+		}
+
+		if ( PaymentStatus::SUCCESS === $payment->get_status() ) {
+			wp_safe_redirect( $payment->get_return_redirect_url() );
+		}
+
+		echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
+		echo $this->args['iframe_output_form']( $payment, $this->config );
+		exit;
 	}
 
 	/**

@@ -199,8 +199,8 @@ class Integration extends AbstractGatewayIntegration {
 	private function get_omnipay_params() {
 		$params             = isset( $this->args['default_parameters'] ) ? $this->args['default_parameters'] : [];
 		$params             = wp_parse_args(
-			$params,
-			$this->omnipay_gateway->getParameters()
+			$this->omnipay_gateway->getParameters(),
+			$params
 		);
 		$params['testMode'] = false;
 		return $params;
