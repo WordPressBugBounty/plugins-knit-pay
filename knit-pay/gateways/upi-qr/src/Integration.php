@@ -6,6 +6,7 @@ use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use WP_Query;
+use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 
 /**
  * Title: UPI QR Integration
@@ -476,7 +477,7 @@ class Integration extends AbstractGatewayIntegration {
 		$config->support_email              = $this->get_meta( $post_id, 'upi_qr_support_email' );
 
 		if ( empty( $config->payment_template ) ) {
-			$config->payment_template = '3';
+			$config->payment_template = '5';
 		}
 
 		if ( empty( $config->payment_success_status ) ) {
@@ -588,8 +589,10 @@ class Integration extends AbstractGatewayIntegration {
 		try {
 			$gateway->update_status( $payment );
 
-			// Update payment in data store.
-			$payment->save();
+			// Save New Status.
+			if ( PaymentStatus::OPEN !== $payment->get_status() ) {
+				$payment->save();
+			}
 
 			wp_send_json_success( $payment->get_status() );
 		} catch ( \Exception $error ) {

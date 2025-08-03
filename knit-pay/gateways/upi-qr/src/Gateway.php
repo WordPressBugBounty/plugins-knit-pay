@@ -346,6 +346,9 @@ class Gateway extends Core_Gateway {
 		if ( $this->supports( 'payment_status_request' ) ) {
 			try {
 				$this->update_status( $payment );
+
+				// Update payment in data store.
+				$payment->save();
 			} catch ( Exception $e ) {
 				echo $e->getMessage();
 				exit;
