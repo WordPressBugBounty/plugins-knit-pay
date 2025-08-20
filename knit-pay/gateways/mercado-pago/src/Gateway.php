@@ -66,7 +66,7 @@ class Gateway extends Core_Gateway {
 		$return_url = $payment->get_return_url();
 
 		// @see https://www.mercadopago.com.ar/developers/en/reference/preferences/_checkout_preferences/post
-		return [
+		$payment_data = [
 			'auto_return'        => 'all',
 			'back_urls'          => [
 				'success' => $return_url,
@@ -85,14 +85,20 @@ class Gateway extends Core_Gateway {
 			],
 			// 'notification_url' => '', // TODO
 			'payer'              => [
-				'name'    => $customer->get_name()->get_first_name(),
-				'surname' => $customer->get_name()->get_last_name(),
-				'email'   => $customer->get_email(),
+				'email' => $customer->get_email(),
 			],
 			'payment_methods'    => [
 				'installments' => 1,
 			],
 		];
+
+		if ( ! is_null( $customer->get_name() ) ) {
+			// Add first and last name to payer if available.
+			$payment_data['payer']['first_name'] = $customer->get_name()->get_first_name();
+			$payment_data['payer']['last_name']  = $customer->get_name()->get_last_name();
+		}
+
+		return $payment_data;
 	}
 
 	/**

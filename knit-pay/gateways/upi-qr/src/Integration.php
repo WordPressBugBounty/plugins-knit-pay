@@ -7,6 +7,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use WP_Query;
 use Pronamic\WordPress\Pay\Core\Util as Core_Util;
+use Pronamic\WordPress\Pay\Plugin;
 
 /**
  * Title: UPI QR Integration
@@ -42,6 +43,9 @@ class Integration extends AbstractGatewayIntegration {
 		// Add Ajax listener.
 		add_action( 'wp_ajax_nopriv_knit_pay_upi_qr_payment_status_check', [ $this, 'ajax_payment_status_check' ] );
 		add_action( 'wp_ajax_knit_pay_upi_qr_payment_status_check', [ $this, 'ajax_payment_status_check' ] );
+
+		// Payment status check events are scheduled after payment is expired. We want to check status once more.
+		add_action( 'knit_pay_upi_payment_status_check', [ $this, 'check_status' ], 10, 2 );
 
 		// Show notice if Knit Pay UPI supported.
 		add_action( 'admin_notices', [ $this, 'knit_pay_upi_supported_notice' ] );
@@ -92,7 +96,7 @@ class Integration extends AbstractGatewayIntegration {
 						],
 						[
 							'key'     => '_pronamic_gateway_upi_qr_vpa',
-							'value'   => '(?i)^(q.+@ybl|paytmqr.+@[a-z]+|bharatpe.+@[a-z]+|.+@hdfcbank|.+@ikwik|.+@mbk|.+@freecharge)$',
+							'value'   => '(?i)^(q.+@ybl|paytmqr.+@[a-z]+|bharatpe.+@[a-z]+|.+@hdfcbank|.+@freecharge)$',
 							'compare' => 'REGEXP',
 						],
 					],
@@ -475,6 +479,8 @@ class Integration extends AbstractGatewayIntegration {
 		$config->hide_pay_button            = $this->get_meta( $post_id, 'upi_qr_hide_pay_button' );
 		$config->show_download_qr_button    = $this->get_meta( $post_id, 'upi_qr_show_download_qr_button' );
 		$config->support_email              = $this->get_meta( $post_id, 'upi_qr_support_email' );
+		$config->config_id                  = $post_id;
+		$config->gateway_id                 = $this->get_id();
 
 		if ( empty( $config->payment_template ) ) {
 			$config->payment_template = '5';
@@ -561,6 +567,39 @@ class Integration extends AbstractGatewayIntegration {
 			?>
 		</p>
 		<?php
+	}
+
+	/**
+	 * Check status of the specified payment.
+	 *
+	 * @param int         $payment_id The payment ID to check.
+	 * @param string|null $gateway_id The gateway ID to check against.
+	 * @return void
+	 */
+	public function check_status( $payment_id = null, $gateway_id = null ) {
+		// Check only if this payment belongs to this gateway.
+		if ( $gateway_id !== $this->get_id() ) {
+			return;
+		}
+
+		$payment = get_pronamic_payment( $payment_id );
+
+		// No payment found, unable to check status.
+		if ( null === $payment ) {
+			return;
+		}
+
+		// Add note.
+		$note = sprintf(
+			/* translators: %s: Knit Pay UPI */
+			__( 'Payment status check at gateway by %s.', 'knit-pay-lang' ),
+			__( 'Knit Pay UPI', 'knit-pay-lang' )
+		);
+
+		$payment->add_note( $note );
+
+		// Update payment.
+		Plugin::update_payment( $payment, false );
 	}
 
 	public function ajax_payment_status_check() {

@@ -332,6 +332,18 @@ class Gateway extends Core_Gateway {
 		// Make payment status as expired for payment older than 5 min.
 		if ( $this->payment_expiry_seconds < time() - $payment->get_date()->getTimestamp() ) {
 			$payment->set_status( PaymentStatus::EXPIRED );
+
+			if ( wp_doing_ajax() ) {
+				\as_schedule_single_action(
+					time() + ( 15 * MINUTE_IN_SECONDS ),
+					'knit_pay_upi_payment_status_check',
+					[
+						'payment_id' => $payment->get_id(),
+						'gateway_id' => $this->config->gateway_id,
+					],
+					'knit-pay'
+				);
+			}
 		}
 	}
 
@@ -346,9 +358,6 @@ class Gateway extends Core_Gateway {
 		if ( $this->supports( 'payment_status_request' ) ) {
 			try {
 				$this->update_status( $payment );
-
-				// Update payment in data store.
-				$payment->save();
 			} catch ( Exception $e ) {
 				echo $e->getMessage();
 				exit;
@@ -356,6 +365,9 @@ class Gateway extends Core_Gateway {
 		}
 
 		if ( PaymentStatus::OPEN !== $payment->get_status() ) {
+			// Update payment in data store.
+			$payment->save();
+
 			wp_safe_redirect( $payment->get_return_redirect_url() );
 			exit;
 		}

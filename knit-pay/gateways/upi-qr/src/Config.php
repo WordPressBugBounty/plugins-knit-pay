@@ -40,6 +40,8 @@ class Config extends GatewayConfig {
 
 	public $config_id;
 
+	public $gateway_id;
+
 	public function copy_properties( $source ) {
 		$reflection_source      = new ReflectionObject( $source );
 		$reflection_destination = new ReflectionObject( $this );

@@ -66,8 +66,20 @@ function confirmPayment() {
 
 let payment_status_counter = 0;
 let payment_status_checker;
+let checking_payment_status = false;
+let skip_payment_status_check_counter = 0;
 function knit_pay_check_payment_status(utr = '') {
+	if (checking_payment_status) {
+		if (++skip_payment_status_check_counter > 3) {
+			skip_payment_status_check_counter = 0;
+			checking_payment_status = false;
+		} else {
+			return; // Skip if already checking
+		}
+	}
+
 	payment_status_counter++;
+	checking_payment_status = true;
 
 	jQuery.post(knit_pay_upi_qr_vars.ajaxurl, {
 		'action': 'knit_pay_upi_qr_payment_status_check',
@@ -77,6 +89,9 @@ function knit_pay_check_payment_status(utr = '') {
 		'knit_pay_nonce': document.querySelector('input[name=knit_pay_nonce]').value,
 		'knit_pay_utr': utr,
 	}, function(msg) {
+		checking_payment_status = false;
+		skip_payment_status_check_counter = 0;
+
 		if ('' !== utr && msg.data == 'Open') {
 			Swal.fire({
 				'title': 'Transaction Not Found!',
@@ -94,10 +109,10 @@ function knit_pay_check_payment_status(utr = '') {
 			setTimeout(function() {
 				document.getElementById('formSubmit').submit();
 			}, 200);
-		} else if (msg.data == 'Failure') {
+		} else if (msg.data == 'Failure' || msg.data == 'Expired') {
 			knit_pay_upi_qr_stop_polling();
 
-			Swal.fire('Payment Failed', 'Please Wait!', 'error')
+			Swal.fire('Payment '+ msg.data, 'Please Wait!', 'error')
 
 			setTimeout(function() {
 				document.getElementById('formSubmit').submit();
