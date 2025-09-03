@@ -53,7 +53,7 @@ body {
 .header {
     background: linear-gradient(135deg, #3366cc, #4285f4);
     color: white;
-    padding: 18px;
+    padding: 18px 50px 18px 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -137,17 +137,9 @@ body {
     margin-right: 4px;
     font-size: 12px;
     width: 12px;
-    height: 12px;
+    height: 15px;
     line-height: inherit;
     vertical-align: text-top;
-}
-
-.amount-display {
-    font-size: 20px;
-    font-weight: bold;
-    opacity: 0;
-    transform: translateX(10px);
-    animation: slideInRight 0.5s forwards 0.7s;
 }
 
 @keyframes slideInRight {
@@ -160,6 +152,51 @@ body {
         opacity: 1;
         transform: translateX(0);
     }
+}
+
+
+/* Cancel Button - Top Right Corner */
+.cancel-btn-top {
+    position: absolute;
+    top: 22px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cancel-btn-top:hover {
+    background: #f44336;
+    border-color: #f44336;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+}
+
+.cancel-btn-top span {
+    font-size: 18px;
+    height: initial;
+    font-weight: bold;
+    color: #666;
+    line-height: 1;
+    transition: color 0.3s ease;
+}
+
+.cancel-btn-top:hover span {
+    color: white;
+}
+
+.cancel-btn-top:active {
+    transform: scale(0.95);
 }
 
 /* Timer Styles */
@@ -583,7 +620,11 @@ a {
     }
 
     .header {
-		padding: 15px;
+		padding: 15px 50px 15px 15px;
+    }
+
+    .cancel-btn-top {
+        top: 20px;
     }
 
     .qr-section {

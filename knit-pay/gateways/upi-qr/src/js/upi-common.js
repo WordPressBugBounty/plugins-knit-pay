@@ -104,7 +104,7 @@ function knit_pay_check_payment_status(utr = '') {
 		} else if (msg.data == 'Success') {
 			knit_pay_upi_qr_stop_polling();
 
-			Swal.fire('Your Payment Received Successfully', 'Please Wait!', 'success')
+			Swal.fire('Payment Successful!', 'Your payment has been received successfully.', 'success')
 
 			setTimeout(function() {
 				document.getElementById('formSubmit').submit();
@@ -112,7 +112,7 @@ function knit_pay_check_payment_status(utr = '') {
 		} else if (msg.data == 'Failure' || msg.data == 'Expired') {
 			knit_pay_upi_qr_stop_polling();
 
-			Swal.fire('Payment '+ msg.data, 'Please Wait!', 'error')
+			Swal.fire('Payment ' + msg.data + "!", 'Please wait.', 'error')
 
 			setTimeout(function() {
 				document.getElementById('formSubmit').submit();

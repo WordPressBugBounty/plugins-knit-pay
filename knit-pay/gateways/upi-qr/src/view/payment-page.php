@@ -33,6 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php
 		
 		$transaction_id = $payment->get_transaction_id();
+		$order_id       = $payment->get_source_id();
 		
 		$amount                  = $payment->get_total_amount()->format_i18n( '%1$s%2$s' );
 		$redirect_url            = $payment->get_return_url();

@@ -14,7 +14,10 @@
 		  <?php } ?>
 		</div>
 	  </div>
-	  <div class="amount-display">₹<?php echo $intent_url_parameters['am']; ?></div>
+	  <!-- Cancel Button - Top Right -->
+	  <button class="cancel-btn-top" id="cancelPaymentBtnTop" onclick="cancelTransaction()" title="Cancel Payment">
+		<span class="dashicons dashicons-no-alt"></span>
+	  </button>
 	</div>
 
 	<!-- Timer Section -->
@@ -59,8 +62,8 @@
 	  </div>
 	<?php } ?>
 
-	<!-- Payment Methods Section -->
-	<?php if ( wp_is_mobile() ) { ?>
+	<!-- Payment Methods Section, Show this section only on android not working on apple. -->
+	<?php if ( str_contains( $_SERVER['HTTP_USER_AGENT'], 'Android' ) ) { ?>
 	  <div class="payment-methods">
 		<div class="section-title">Pay with other methods</div>
 		<div class="method-list">
@@ -86,6 +89,12 @@
 
 	<!-- Order Summary -->
 	<div class="order-summary">
+	  <?php if ( isset( $order_id ) ) { ?>
+	  <div class="order-row">
+		<span class="label">Order ID:</span>
+		<span class="value"><?php echo $order_id; ?></span>
+	  </div>
+	  <?php } ?>
 	  <div class="order-row">
 		<span class="label">Transaction ID:</span>
 		<span class="value"><?php echo $transaction_id; ?></span>
