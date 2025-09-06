@@ -87,9 +87,6 @@ class Gateway extends Core_Gateway {
 			'payer'              => [
 				'email' => $customer->get_email(),
 			],
-			'payment_methods'    => [
-				'installments' => 1,
-			],
 		];
 
 		if ( ! is_null( $customer->get_name() ) ) {
