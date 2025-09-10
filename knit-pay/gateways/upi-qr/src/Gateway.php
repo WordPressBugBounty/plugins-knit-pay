@@ -330,10 +330,12 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Make payment status as expired for payment older than 5 min.
-		if ( $this->payment_expiry_seconds < time() - $payment->get_date()->getTimestamp() ) {
+		$payment_timestamp = $payment->get_date()->getTimestamp();
+		if ( $this->payment_expiry_seconds < time() - $payment_timestamp ) {
 			$payment->set_status( PaymentStatus::EXPIRED );
 
-			if ( wp_doing_ajax() ) {
+			// Recheck status after 15 min if payment getting expired very soon.
+			if ( time() - $payment_timestamp < 15 * MINUTE_IN_SECONDS ) {
 				\as_schedule_single_action(
 					time() + ( 15 * MINUTE_IN_SECONDS ),
 					'knit_pay_upi_payment_status_check',

@@ -68,7 +68,7 @@
 		<div class="section-title">Pay with other methods</div>
 		<div class="method-list">
 
-		  <a href="<?php echo add_query_arg( $paytm_intent_url_params, 'paytmmp://cash_wallet' ); ?>">
+		  <a href="<?php echo add_query_arg( $paytm_intent_url_params, 'paytmmp://cash_wallet' ); ?>" target="_blank">
 			<div class="method-item">
 			  <img src="<?php echo $image_path; ?>paytm_icon.svg" class="method-icon no-drag" alt="Paytm">
 			  <span class="method-name">Paytm</span>
