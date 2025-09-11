@@ -458,7 +458,7 @@ class Integration extends AbstractGatewayIntegration {
 	protected function get_supported_template_list() {
 		return [
 			'0' => 'Default',
-			'2' => '2',
+			// '2' => '2', // FIXME: Need to fix the issue with this template.
 			'3' => '3',
 			'5' => '5',
 		];

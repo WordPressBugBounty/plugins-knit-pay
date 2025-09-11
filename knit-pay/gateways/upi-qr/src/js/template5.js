@@ -1,5 +1,10 @@
 function generateQR(user_input) {
-	document.getElementById('qrCodeWrapper').style.display = 'flex';
+	let qrWrapperElement =  document.getElementById('qrCodeWrapper');
+	if (!qrWrapperElement) {
+		return;
+	}
+
+	qrWrapperElement.style.display = 'flex';
 	jQuery('.qrCodeBody').html('');
 	window.knit_pay_qrcode = new QRCode(document.querySelector('.qrCodeBody'), {
 		text: user_input,

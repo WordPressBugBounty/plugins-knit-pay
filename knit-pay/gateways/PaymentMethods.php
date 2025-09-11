@@ -9,6 +9,8 @@ class PaymentMethods extends Core_PaymentMethods {
 
 	const UPI = 'upi';
 
+	const UPI_COLLECT = 'upi_collect';
+
 	/**
 	 * Debit Card
 	 *

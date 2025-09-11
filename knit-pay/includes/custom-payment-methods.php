@@ -23,6 +23,7 @@ add_filter(
 	'knit_pay_add_payment_methods_titles',
 	function ( $payment_methods ) {
 		$payment_methods['upi']         = 'UPI';
+		$payment_methods['upi_collect'] = 'UPI Collect';
 		$payment_methods['paytm']       = 'Paytm';
 		$payment_methods['debit_card']  = 'Debit Card';
 		$payment_methods['net_banking'] = 'NetBanking';

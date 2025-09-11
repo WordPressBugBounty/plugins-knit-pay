@@ -208,8 +208,132 @@ body {
     color: #e53935;
     font-size: 16px;
     opacity: 0;
-    animation: fadeIn 0.5s forwards 0.8s;
     border-left: 4px solid #e53935;
+    animation: fadeIn 0.5s forwards 0.8s, timerPulse 2s infinite;
+}
+
+@keyframes timerPulse {
+    0%, 100% {
+        background: linear-gradient(90deg, #ffebee, #fff3e0);
+        border-left-color: #e53935;
+    }
+    50% {
+        background: linear-gradient(90deg, #fce4ec, #fff8e1);
+        border-left-color: #d32f2f;
+    }
+}
+
+/* UPI ID Instructions Section */
+.upi-instructions {
+    padding: 32px 24px;
+    text-align: center;
+    background: linear-gradient(135deg, #f0f8ff, #e6f3ff);
+    border: 1px solid #e3f2fd;
+    margin: 0;
+    opacity: 0;
+    transform: scale(0.95);
+    animation: zoomIn 0.6s forwards 0.9s;
+}
+
+.instruction-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #4285f4, #3366cc);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 8px 25px rgba(66, 133, 244, 0.3);
+    font-size: 34px;
+    color: white;
+}
+
+.instruction-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+.instruction-steps {
+    margin: 24px 0;
+}
+
+.instruction-step {
+    display: flex;
+    align-items: flex-start;
+    text-align: left;
+    margin-bottom: 16px;
+    padding: 0 8px;
+}
+
+.step-number {
+    background: #4285f4;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.step-text {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.4;
+}
+
+.upi-id-display {
+    background: white;
+    border: 2px solid #4285f4;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 20px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.upi-id-label {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.upi-id-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    font-family: monospace;
+}
+
+.waiting-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    color: #4285f4;
+    font-weight: 500;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e3f2fd;
+    border-top: 2px solid #4285f4;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* QR Section Styles */
@@ -278,7 +402,7 @@ body {
 
 .qr-code:hover {
     transform: scale(1.02);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 35px rgba(66, 133, 244, 0.2);
 }
 
 .scan-text {
@@ -311,6 +435,33 @@ body {
 .upi-app-icon:hover {
     transform: scale(1.15);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* QR Waiting Indicator - slightly different styling from UPI instructions */
+.qr-waiting-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 16px;
+    background: linear-gradient(135deg, #f8f9ff, #eef4ff);
+    border: 1px solid #e0e8ff;
+    border-radius: 12px;
+    color: #3366cc;
+    font-weight: 500;
+    font-size: 14px;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards 1.4s;
+}
+
+.spinner-small {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #e0e8ff;
+    border-top: 2px solid #3366cc;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
 }
 
 /* Confirm Payment Button */
@@ -396,15 +547,15 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #3366cc, #2a56b3);
+    background: linear-gradient(135deg, #4285f4, #3366cc);
     color: white;
-    box-shadow: 0 3px 12px rgba(51, 102, 204, 0.3);
+    box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #2a56b3, #3366cc);
-    transform: translateY(-1px);
-    box-shadow: 0 5px 18px rgba(51, 102, 204, 0.4);
+    background: linear-gradient(135deg, #3366cc, #4285f4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4);
 }
 
 .btn-primary:active {
@@ -603,6 +754,29 @@ a {
     .container {
         margin: 0;
         width: 100%;
+    }
+
+    .upi-instructions {
+        padding: 24px 20px;
+    }
+
+    .instruction-title {
+        font-size: 18px;
+    }
+
+    .instruction-step {
+        margin-bottom: 12px;
+    }
+
+    .qr-waiting-indicator {
+        margin-top: 16px;
+        padding: 14px;
+        font-size: 13px;
+    }
+
+    .spinner-small {
+        width: 16px;
+        height: 16px;
     }
 
     .qr-overlay {
