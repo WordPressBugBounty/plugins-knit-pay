@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.4
 Tested up to: 6.8
 Requires PHP: 8.0
-Stable tag: 8.96.29.0
+Stable tag: 8.96.30.1
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, PayPal, Razorpay, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
@@ -117,6 +117,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Lyra
 * Tyche
 * YONO SBI
+* Zoho Payments
 * and many more...
 
 = non-Indian Payment Gateways (Contact us for this premium addon.) =

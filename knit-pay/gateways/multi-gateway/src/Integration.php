@@ -5,6 +5,7 @@ namespace KnitPay\Gateways\MultiGateway;
 use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 use Pronamic\WordPress\Pay\Plugin;
 use Pronamic\WordPress\Pay\Util;
+use KnitPay\Utils as KnitPayUtils;
 
 
 /**
@@ -98,12 +99,13 @@ class Integration extends AbstractGatewayIntegration {
 	 * @return void
 	 */
 	public function field_enabled_payment_gateways( $field ) {
+		$config_id = KnitPayUtils::get_gateway_config_id();
+		$config    = self::get_config( $config_id );
+
 		$gateways = Plugin::get_config_select_options();
 		unset( $gateways[0] );
-		ksort( $gateways );
-
-		$config_id = (int) \get_the_ID();
-		$config    = self::get_config( $config_id );
+		unset( $gateways[ $config_id ] );
+		asort( $gateways );
 
 		$attributes['type'] = 'checkbox';
 		$attributes['id']   = '_pronamic_gateway_multi_gateway_enabled_payment_gateways';
@@ -131,6 +133,12 @@ class Integration extends AbstractGatewayIntegration {
 		printf( '<br>Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.' );
 	}
 
+	/**
+	 * Get config.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return Config
+	 */
 	public function get_config( $post_id ) {
 		$config = new Config();
 

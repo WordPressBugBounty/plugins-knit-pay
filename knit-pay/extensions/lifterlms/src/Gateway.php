@@ -121,7 +121,7 @@ class Gateway extends LLMS_Payment_Gateway {
 	 * @version  3.10.0
 	 */
 	public function handle_payment_source_switch( $order, $form_data = [] ) {
-		die();
+		wp_die();
 		// TODO
 
 		$previous_gateway = $order->get( 'payment_gateway' );
@@ -261,7 +261,7 @@ class Gateway extends LLMS_Payment_Gateway {
 	 */
 	public function handle_recurring_transaction( $order ) {
 		// TODO: Add support for recurring payment
-		die();
+		wp_die();
 
 		// switch to order on hold if it's a paid order
 		if ( $order->get_price( 'total', [], 'float' ) > 0 ) {

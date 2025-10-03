@@ -46,6 +46,23 @@ require_once 'includes/PaymentRestController.php';
 
 require_once 'includes/hooks_mapping.php';
 
+/*
+ * FIXME: This is workaround for fixing
+ * Translation loading for the knit-pay-lang domain was triggered too early.
+ * see: https://make.wordpress.org/core/2024/10/21/i18n-improvements-6-7/
+ */
+add_filter(
+	'lang_dir_for_domain',
+	function( $dir, $domain ) {
+		if ( 'knit-pay-lang' === $domain ) {
+			return '';
+		}
+		return $dir;
+	},
+	10,
+	2
+);
+
 add_action( 'plugins_loaded', 'knit_pay_pro_init', -9 );
 function knit_pay_pro_init() {
 	if ( ! defined( 'KNIT_PAY_PRO' ) && ! defined( 'KNIT_PAY_UPI' ) ) {
@@ -93,6 +110,7 @@ if ( ! function_exists( 'ppp' ) ) {
 		echo '<pre>';
 		print_r( $a );
 		echo '</pre><br><br>';
+		do_action( 'qm/info', $a );
 	}
 }
 
@@ -101,7 +119,7 @@ if ( ! function_exists( 'ddd' ) ) {
 		echo nl2br( '<pre>' . $a . PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL );
 		debug_print_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS );
 		echo '</pre>';
-		die();
+		wp_die();
 	}
 }
 

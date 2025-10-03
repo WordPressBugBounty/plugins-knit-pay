@@ -102,7 +102,7 @@ class Gateway {
 		$settings = [
 			$this->id . '_settings'            => [
 				'id'   => $this->id . '_settings',
-				'name' => '<strong>' . __( 'Knit Pay Settings', 'restropress' ) . '</strong>',
+				'name' => '<strong>' . __( 'Knit Pay Settings', 'knit-pay-lang' ) . '</strong>',
 				'type' => 'header',
 			],
 			$this->id . '_title'               => [
@@ -147,7 +147,7 @@ class Gateway {
 	public function process_purchase( $purchase_data ) {
 
 		if ( ! wp_verify_nonce( $purchase_data['gateway_nonce'], 'rpress-gateway' ) ) {
-			wp_die( __( 'Nonce verification has failed', 'restropress' ), __( 'Error', 'restropress' ), [ 'response' => 403 ] );
+			wp_die( __( 'Nonce verification has failed', 'knit-pay-lang' ), __( 'Error', 'knit-pay-lang' ), [ 'response' => 403 ] );
 		}
 
 		// Record the pending payment
@@ -156,7 +156,7 @@ class Gateway {
 		// Check payment
 		if ( ! $payment_id ) {
 			// Record the error
-			rpress_record_gateway_error( __( 'Payment Error', 'knit-pay-lang' ), sprintf( __( 'Payment creation failed before sending buyer to ' . $this->title . '. Payment data: %s', 'restropress' ), wp_json_encode( $payment_data ) ), $payment );
+			rpress_record_gateway_error( __( 'Payment Error', 'knit-pay-lang' ), sprintf( __( 'Payment creation failed before sending buyer to ' . $this->title . '. Payment data: %s', 'knit-pay-lang' ), wp_json_encode( $payment_data ) ), $payment );
 			// Problems? send back
 			rpress_send_back_to_checkout( '?payment-mode=' . $purchase_data['post_data']['rpress-gateway'] );
 		}

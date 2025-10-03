@@ -33,11 +33,11 @@ function paymentExpiredAction() {
 };
 
 window.onload = function () {
-	if (jQuery("#enable_polling").val()) {
-		payment_status_checker = setInterval(knit_pay_check_payment_status, 4000);
-	}
+    if (jQuery("#enable_polling").val()) {
+        knit_pay_start_polling();
+    }
 
-	generateQR(jQuery("#upi_qr_text").val());
+    generateQR(jQuery("#upi_qr_text").val());
 
 	knit_pay_countdown(jQuery("#payment_expiry_seconds").val(), 'countdown-timer', 'Complete payment in %mm:%ss', paymentExpiredAction);
 };

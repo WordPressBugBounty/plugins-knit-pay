@@ -29,7 +29,7 @@ function paymentExpiredAction() {
 
 window.onload = function() {
 	if (jQuery("#enable_polling").val()){
-		payment_status_checker = setInterval(knit_pay_check_payment_status, 4000);
+		knit_pay_start_polling();
 	}
 
 	generateQR(jQuery("#upi_qr_text").val());

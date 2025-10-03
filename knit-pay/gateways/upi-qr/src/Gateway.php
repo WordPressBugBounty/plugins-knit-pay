@@ -81,6 +81,17 @@ class Gateway extends Core_Gateway {
 			throw new Exception( $mobile_error );
 		}
 
+		if ( PaymentMethods::UPI_COLLECT === $payment->get_payment_method() ) {
+			$upi_id = $payment->get_meta( 'customer_upi_id' );
+			if ( empty( $upi_id ) || ! preg_match( '/^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/', $upi_id ) ) {
+				throw new Exception( 'Invalid UPI ID format.' );
+			} elseif (2000 < $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' )){
+				//throw new Exception( 'UPI Collect payment method is only supported for payments up to ₹2000.' );
+			}elseif ( '5' !== $this->config->payment_template ) {
+				throw new Exception( 'UPI Collect payment method is currently only supported with Payment Template 5.' );
+			}
+		}
+
 		$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
 
 		$payment->set_action_url( $payment->get_pay_redirect_url() );
@@ -482,6 +493,7 @@ class Gateway extends Core_Gateway {
 			'knit_pay_upi_qr_vars',
 			[
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'payment_status_worker_url' => KNITPAY_URL . '/gateways/upi-qr/src/js/payment-status-worker.js',
 			]
 		);
 	}

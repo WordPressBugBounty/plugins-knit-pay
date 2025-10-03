@@ -2,42 +2,42 @@
 * Download and Share QR Code functionality for Knit Pay UPI QR Gateway
 */
 function knit_pay_load_download_share() {
-    jQuery(".download-qr-button").on("click", function () {
-        knit_pay_downloadQR();
-    });
+	jQuery(".download-qr-button").on("click", function () {
+		knit_pay_downloadQR();
+	});
 
-    if (navigator.canShare){
-        jQuery(".share-qr-button").on("click", function () {
-            knit_pay_shareQR(window.knit_pay_qrcode);
-        });
-    } else {
-        jQuery(".share-qr-button").remove();
-    }
+	if (navigator.canShare) {
+		jQuery(".share-qr-button").on("click", function () {
+			knit_pay_shareQR(window.knit_pay_qrcode);
+		});
+	} else {
+		jQuery(".share-qr-button").remove();
+	}
 }
 
 function knit_pay_downloadQR() {
-    window.knit_pay_qrcode.download("upi_qr_" + document.querySelector('input[name=knit_pay_transaction_id]').value);
+	window.knit_pay_qrcode.download("upi_qr_" + document.querySelector('input[name=knit_pay_transaction_id]').value);
 }
 
 async function knit_pay_shareQR(qrcode) {
-    const imageUrl = qrcode._oDrawing.dataURL;
-    const response = await fetch(imageUrl);
-    const blob = await response.blob();
-    const file = new File([blob], "upi_qr_" + document.querySelector('input[name=knit_pay_transaction_id]').value + ".png", {
-        type: blob.type
-    });
+	const imageUrl = qrcode._oDrawing.dataURL;
+	const response = await fetch(imageUrl);
+	const blob = await response.blob();
+	const file = new File([blob], "upi_qr_" + document.querySelector('input[name=knit_pay_transaction_id]').value + ".png", {
+		type: blob.type
+	});
 
-    if (navigator.canShare && navigator.canShare({
-        files: [file]
-    })) {
-        await navigator.share({
-            title: "Pay via Google Pay",
-            text: "Scan this QR code to pay via Google Pay.",
-            files: [file],
-        });
-    } else {
-        alert('Web Share API is not supported in your browser.');
-    }
+	if (navigator.canShare && navigator.canShare({
+		files: [file]
+	})) {
+		await navigator.share({
+			title: "Pay via Google Pay",
+			text: "Scan this QR code to pay via Google Pay.",
+			files: [file],
+		});
+	} else {
+		alert('Web Share API is not supported in your browser.');
+	}
 }
 
 /*
@@ -64,70 +64,71 @@ function confirmPayment() {
 	});
 }
 
-let payment_status_counter = 0;
-let payment_status_checker;
-let checking_payment_status = false;
-let skip_payment_status_check_counter = 0;
-function knit_pay_check_payment_status(utr = '') {
-	if (checking_payment_status) {
-		if (++skip_payment_status_check_counter > 3) {
-			skip_payment_status_check_counter = 0;
-			checking_payment_status = false;
-		} else {
-			return; // Skip if already checking
-		}
+let payment_status_worker;
+function knit_pay_start_polling() {
+	payment_status_worker = new Worker(knit_pay_upi_qr_vars.payment_status_worker_url);
+
+	const ajax_data = {
+		'ajaxurl': knit_pay_upi_qr_vars.ajaxurl,
+		'transaction_id': document.querySelector('input[name=knit_pay_transaction_id]').value,
+		'payment_id': document.querySelector('input[name=knit_pay_payment_id]').value,
+		'nonce': document.querySelector('input[name=knit_pay_nonce]').value
+	};
+
+	payment_status_worker.postMessage({ command: 'start', ajax_data: ajax_data });
+
+	payment_status_worker.onmessage = function (e) {
+		handle_payment_status_update(e.data);
+	};
+}
+
+function handle_payment_status_update(status) {
+	if (status === 'Success') {
+		knit_pay_upi_qr_stop_polling();
+		Swal.fire('Payment Successful!', 'Your payment has been received successfully.', 'success');
+		setTimeout(() => document.getElementById('formSubmit').submit(), 200);
+	} else if (status === 'Failure' || status === 'Expired') {
+		knit_pay_upi_qr_stop_polling();
+		Swal.fire('Payment ' + status + "!", 'Please wait.', 'error');
+		setTimeout(() => document.getElementById('formSubmit').submit(), 200);
 	}
+}
 
-	payment_status_counter++;
-	checking_payment_status = true;
-
+function knit_pay_check_payment_status(utr = '') {
 	jQuery.post(knit_pay_upi_qr_vars.ajaxurl, {
 		'action': 'knit_pay_upi_qr_payment_status_check',
 		'knit_pay_transaction_id': document.querySelector('input[name=knit_pay_transaction_id]').value,
 		'knit_pay_payment_id': document.querySelector('input[name=knit_pay_payment_id]').value,
-		'check_status_count': payment_status_counter,
 		'knit_pay_nonce': document.querySelector('input[name=knit_pay_nonce]').value,
 		'knit_pay_utr': utr,
-	}, function(msg) {
-		checking_payment_status = false;
-		skip_payment_status_check_counter = 0;
-
+	}, function (msg) {
 		if ('' !== utr && msg.data == 'Open') {
 			Swal.fire({
-				'title': 'Transaction Not Found!',
-				'text': 'Please verify that the provided UTR is accurate.',
-				'icon': 'error'
+				title: 'UTR Submitted!',
+				text: 'We have received your UTR number. Please wait while we confirm the payment.',
+				icon: 'success',
+				showConfirmButton: false,
+				timer: 3000,
+				allowOutsideClick: false
 			}).then((result) => {
 				confirmPayment();
 			});
 
-		} else if (msg.data == 'Success') {
-			knit_pay_upi_qr_stop_polling();
-
-			Swal.fire('Payment Successful!', 'Your payment has been received successfully.', 'success')
-
-			setTimeout(function() {
-				document.getElementById('formSubmit').submit();
-			}, 200);
-		} else if (msg.data == 'Failure' || msg.data == 'Expired') {
-			knit_pay_upi_qr_stop_polling();
-
-			Swal.fire('Payment ' + msg.data + "!", 'Please wait.', 'error')
-
-			setTimeout(function() {
-				document.getElementById('formSubmit').submit();
-			}, 200);
+		} else {
+			handle_payment_status_update(msg.data);
 		}
 	});
 }
 
 function knit_pay_upi_qr_stop_polling() {
-	if (undefined !== payment_status_checker){
-		clearInterval(payment_status_checker);
+	if (payment_status_worker) {
+		payment_status_worker.postMessage({ command: 'stop' });
+		payment_status_worker.terminate();
+		payment_status_worker = undefined;
 	}
 }
 
 // Stop monitoring when user leaves the page
-window.addEventListener('beforeunload', function() {
-    knit_pay_upi_qr_stop_polling();
+window.addEventListener('beforeunload', function () {
+	knit_pay_upi_qr_stop_polling();
 });
