@@ -16,7 +16,7 @@ function knit_pay_review_request_admin_notice() {
 		<p><strong>Knit Pay:</strong> Congratulations for completing more than three months with Knit Pay. Could you please spend a moment and write a 5-star review for us? It will motivate us to provide you with even better support in the future.
 		If you think we don't deserve a 5-star, <?php echo $contact_us; ?> and share your feedback. We ensure you that we will do our best to get a 5-star from you.</p>
 		<p><a href="https://wordpress.org/support/plugin/knit-pay/reviews/?filter=5#new-post" target="_blank" class="button button-primary"><?php _e( 'Rate 5-star', 'knit-pay-lang' ); ?></a>&nbsp;
-		   <a href="https://www.knitpay.org/contact-us/?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=review-support" target="_blank" class="button button-primary">Contact Us</a>&nbsp;
+			<a href="https://www.knitpay.org/contact-us/?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=review-support" target="_blank" class="button button-primary">Contact Us</a>&nbsp;
 		<a href="<?php echo $remind_later; ?>" class="button button-secondary" style="color: white;background: black;">Remind Later</a>&nbsp;
 		<a href="<?php echo $no_thanks; ?>" class="button button-secondary" style="color: white;background: green;">Already Reviewed</a></p>
 	</div>

@@ -6,7 +6,7 @@ use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 
 /**
  * Title: SumUp Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 8.91.0.0
@@ -58,31 +58,32 @@ class Integration extends AbstractGatewayIntegration {
 		$fields[] = [
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_EMAIL,
-			'meta_key' => '_pronamic_gateway_sumup_login_email',
-			'title'    => __( 'Login Email', 'knit-pay-lang' ),
+			'meta_key' => '_pronamic_gateway_sumup_merchant_code',
+			'title'    => __( 'Merchant Code', 'knit-pay-lang' ),
 			'type'     => 'text',
 			'classes'  => [ 'regular-text', 'code' ],
-			'tooltip'  => __( 'The email address used to login to your SumUp account.', 'knit-pay-lang' ),
+			'tooltip'  => __( 'Unique identifying code of the merchant profile.', 'knit-pay-lang' ),
+			'required' => true,
 		];
 
 		// Client ID.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_sumup_client_id',
 			'title'    => __( 'Client ID', 'knit-pay-lang' ),
 			'type'     => 'text',
 			'classes'  => [ 'regular-text', 'code' ],
+			'required' => true,
 		];
 
 		// Client Secret.
 		$fields[] = [
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_sumup_client_secret',
 			'title'    => __( 'Client Secret', 'knit-pay-lang' ),
 			'type'     => 'text',
 			'classes'  => [ 'regular-text', 'code' ],
+			'required' => true,
 		];
 
 		return $fields;
@@ -91,7 +92,7 @@ class Integration extends AbstractGatewayIntegration {
 	public function get_config( $post_id ) {
 		$config = new Config();
 
-		$config->login_email   = $this->get_meta( $post_id, 'sumup_login_email' );
+		$config->merchant_code = $this->get_meta( $post_id, 'sumup_merchant_code' );
 		$config->client_id     = $this->get_meta( $post_id, 'sumup_client_id' );
 		$config->client_secret = $this->get_meta( $post_id, 'sumup_client_secret' );
 

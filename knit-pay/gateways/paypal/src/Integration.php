@@ -9,7 +9,7 @@ use KnitPay\Utils;
 
 /**
  * Title: PayPal Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 8.96.19.0
@@ -17,6 +17,7 @@ use KnitPay\Utils;
  */
 class Integration extends IntegrationOAuthClient {
 	use IntegrationModeTrait;
+
 	const PARTNER_ATTRIBUTION_ID = 'LogicBridgeTechnoMartLLP_SI';
 
 	/**
@@ -58,8 +59,8 @@ class Integration extends IntegrationOAuthClient {
 		parent::setup();
 
 		// Add Partner ID.
-		add_filter( 'http_request_args', [ $this, 'add_paypal_partner_id' ], 1000, 2 );
-		add_filter( 'wp_redirect', [ $this, 'add_paypal_bn' ], 1000 );
+		add_filter( 'http_request_args', [ $this, 'http_request_args' ], 1000, 2 );
+		add_filter( 'wp_redirect', [ $this, 'wp_redirect' ], 1000 );
 
 		$this->auto_save_on_mode_change = true;
 	}
@@ -71,7 +72,7 @@ class Integration extends IntegrationOAuthClient {
 	 * @param string $url         URL.
 	 * @return array
 	 */
-	public function add_paypal_partner_id( $parsed_args, $url ) {
+	public function http_request_args( $parsed_args, $url ) {
 		if ( strpos( $url, 'paypal.com' ) !== false ) {
 			$parsed_args['headers']['PayPal-Partner-Attribution-Id'] = self::PARTNER_ATTRIBUTION_ID;
 		}
@@ -85,7 +86,7 @@ class Integration extends IntegrationOAuthClient {
 	 * @param string $location Redirect URL.
 	 * @return string
 	 */
-	public function add_paypal_bn( $location ) {
+	public function wp_redirect( $location ) {
 		if ( strpos( $location, 'paypal.com' ) !== false ) {
 			$location = add_query_arg( 'bn', self::PARTNER_ATTRIBUTION_ID, $location );
 		}
@@ -128,9 +129,9 @@ class Integration extends IntegrationOAuthClient {
 			'type'     => 'custom',
 			'title'    => $this->get_name() . ' Connect',
 			'callback' => function () {
-				echo '<p><h1>' . __( 'How it works?' ) . '</h1></p>' .
-				'<p>' . __( 'To provide a seamless integration experience, Knit Pay has introduced ' . $this->get_name() . ' Platform Connect. Now you can integrate ' . $this->get_name() . ' in Knit Pay with just a few clicks.' ) . '</p>' .
-				'<p>' . __( 'Click on "<strong>Connect with ' . $this->get_name() . '</strong>" below to initiate the connection.' ) . '</p>';
+				echo '<p><h1>' . __( 'How it works?', 'knit-pay-lang' ) . '</h1></p>' .
+				'<p>' . __( 'To provide a seamless integration experience, Knit Pay has introduced ' . $this->get_name() . ' Platform Connect. Now you can integrate ' . $this->get_name() . ' in Knit Pay with just a few clicks.', 'knit-pay-lang' ) . '</p>' .
+				'<p>' . __( 'Click on "<strong>Connect with ' . $this->get_name() . '</strong>" below to initiate the connection.', 'knit-pay-lang' ) . '</p>';
 			},
 		];
 
@@ -232,6 +233,17 @@ class Integration extends IntegrationOAuthClient {
 	}
 
 	protected function show_common_setting_fields( $fields, $config ) {
+		// Invoice Prefix.
+		$fields[] = [
+			'section'     => 'general',
+			'meta_key'    => '_pronamic_gateway_paypal_invoice_prefix',
+			'title'       => __( 'Invoice Prefix', 'knit-pay-lang' ),
+			'type'        => 'text',
+			'classes'     => [ 'regular-text' ],
+			'default'     => preg_replace( '/[^A-Za-z]/', 'i', wp_generate_password( 6, false ) ) . '-',
+			'description' => __( 'Add a unique prefix to invoice numbers for site-specific tracking (recommended).', 'knit-pay-lang' ),
+		];
+
 		// Auto Webhook Setup Supported.
 		$fields[] = [
 			'section'     => 'feedback',
@@ -271,14 +283,13 @@ class Integration extends IntegrationOAuthClient {
 	public function get_child_config( $post_id ) {
 		$config = new Config();
 
-		$config->client_id     = $this->get_meta( $post_id, 'paypal_client_id' );
-		$config->client_secret = $this->get_meta( $post_id, 'paypal_client_secret' );
-		$config->webhook_id    = $this->get_meta( $post_id, 'paypal_webhook_id' );
+		$config->client_id      = $this->get_meta( $post_id, 'paypal_client_id' );
+		$config->client_secret  = $this->get_meta( $post_id, 'paypal_client_secret' );
+		$config->invoice_prefix = $this->get_meta( $post_id, 'paypal_invoice_prefix' );
+		$config->webhook_id     = $this->get_meta( $post_id, 'paypal_webhook_id' );
 
 		// OAuth.
-		$config->merchant_id  = $this->get_meta( $post_id, 'paypal_merchant_id' );
-		$config->is_connected = $this->get_meta( $post_id, 'paypal_is_connected' );
-		$config->connected_at = $this->get_meta( $post_id, 'paypal_connected_at' );
+		$config->merchant_id = $this->get_meta( $post_id, 'paypal_merchant_id' );
 
 		$config->mode = $this->get_meta( $post_id, 'mode' );
 
@@ -308,10 +319,6 @@ class Integration extends IntegrationOAuthClient {
 	}
 
 	public function clear_child_config( $config_id ) {
-		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_is_connected' );
-		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_connected_at' );
-		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_merchant_id' );
-
 		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_client_id' );
 		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_client_secret' );
 	}

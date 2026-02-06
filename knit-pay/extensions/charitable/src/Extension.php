@@ -7,7 +7,7 @@ use Pronamic\WordPress\Pay\Extensions\Charitable\Extension as Pronamic_Charitabl
 /**
  * Title: Charitable extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay

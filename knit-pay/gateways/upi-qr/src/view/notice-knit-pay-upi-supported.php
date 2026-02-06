@@ -3,7 +3,7 @@
  * Admin View: Notice - Deprecated Razorpay API Keys
  *
  * @author    Knit Pay
- * @copyright 2020-2025 Knit Pay
+ * @copyright 2020-2026 Knit Pay
  * @license   GPL-3.0-or-later
  */
 

@@ -7,7 +7,7 @@ use KnitPay\Extensions\EngineThemes\Extension as EngineThemesExtension;
 /**
  * Title: Micro Job Engine extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -47,5 +47,4 @@ class Extension extends EngineThemesExtension {
 		
 		add_filter( 'mje_payment_gateway_setting_sections', [ $this, 'add_gateway_setting_fields' ] );
 	}
-
 }

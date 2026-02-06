@@ -5,13 +5,13 @@ use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
-use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use KnitPay\Gateways\PaymentMethods;
 use Exception;
 use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: MPGS Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.81.0.0
@@ -46,19 +46,10 @@ class Gateway extends Core_Gateway {
 
 	private function register_payment_methods() {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::VISA ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::MASTERCARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::AMERICAN_EXPRESS ) );
-	}
-
-	/**
-	 * Get available payment methods.
-	 *
-	 * @return array<int, string>
-	 * @see Core_Gateway::get_available_payment_methods()
-	 */
-	public function get_available_payment_methods() {
-		return $this->get_supported_payment_methods();
 	}
 
 	/**
@@ -96,7 +87,7 @@ class Gateway extends Core_Gateway {
 		$order_amount   = $payment->get_total_amount()->number_format( null, '.', '' );
 		$order_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 		
-		$customer_name = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 75 );
+		$customer_name = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 75 );
 
 		$data = [
 			'apiOperation' => 'INITIATE_CHECKOUT',
@@ -113,7 +104,7 @@ class Gateway extends Core_Gateway {
 				],
 				'merchant'       => [
 					/*
-					 'address' => [
+					'address' => [
 						'line1' => '',
 						'line2' => '',
 					], */
@@ -149,7 +140,7 @@ class Gateway extends Core_Gateway {
 	 */
 	public function output_form(
 		Payment $payment
-		) {
+	) {
 		if ( PaymentStatus::SUCCESS === $payment->get_status() || PaymentStatus::EXPIRED === $payment->get_status() ) {
 			wp_safe_redirect( $payment->get_return_redirect_url() );
 			exit;
@@ -160,7 +151,7 @@ class Gateway extends Core_Gateway {
 		$html .= '<script>';
 		$html .= "Checkout.configure({session: {id: '{$payment->get_meta('mpgs_session_id')}'}});";
 
-		if ( ! ( defined( '\PRONAMIC_PAY_DEBUG' ) && \PRONAMIC_PAY_DEBUG ) ) {
+		if ( ! ( defined( '\KNIT_PAY_DEBUG' ) && \KNIT_PAY_DEBUG ) ) {
 			$html .= 'Checkout.showPaymentPage();';
 		}
 
@@ -181,12 +172,12 @@ class Gateway extends Core_Gateway {
 		}
 		
 		if ( isset( $_GET['action'] ) && Statuses::CANCELLED === $_GET['action'] ) {
-			$payment->set_status( Statuses::transform( $_GET['action'] ) );
+			$payment->set_status( Statuses::transform( sanitize_text_field( $_GET['action'] ) ) );
 			return;
 		}
 
 		$order_details = $this->api->get_order( $payment->get_transaction_id() );
-		if ( pronamic_pay_plugin()->is_debug_mode() ) {
+		if ( knit_pay_plugin()->is_debug_mode() ) {
 			$payment->add_note( '<strong>MPGS Order Details:</strong><br><pre>' . print_r( $order_details, true ) . '</pre><br>' );
 		}
 		

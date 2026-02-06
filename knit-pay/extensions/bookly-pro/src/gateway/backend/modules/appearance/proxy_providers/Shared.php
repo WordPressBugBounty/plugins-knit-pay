@@ -46,5 +46,4 @@ class Shared extends Proxy\Shared {
 
 		return $options_to_save;
 	}
-
 }

@@ -7,7 +7,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
 /**
  * Title: Omnipay Redirect Controller
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.87.11.0
@@ -106,8 +106,9 @@ class RestController {
 			return;
 		}
 		
-		$omnipay_transaction_id_key = ltrim( $this->args['omnipay_transaction_id'], '{data:' );
-		$omnipay_transaction_id_key = rtrim( $omnipay_transaction_id_key, '}' );
+		$omnipay_transaction_id_key = $this->args['omnipay_transaction_id'];
+		$omnipay_transaction_id_key = substr( $omnipay_transaction_id_key, 6 ); // Remove "{data:" prefix.
+		$omnipay_transaction_id_key = substr( $omnipay_transaction_id_key, 0, -1 ); // Remove "}" suffix.
 		
 		$payment = get_pronamic_payment_by_meta( 'omnipay_transaction_id', $request->get_param( $omnipay_transaction_id_key ) );
 
@@ -145,8 +146,8 @@ class RestController {
 		}
 		
 		/*
-		 TODO not checking payment status again for now.
-		 $recheck_status = $request->get_param( 'recheck_status' );
+		TODO not checking payment status again for now.
+		$recheck_status = $request->get_param( 'recheck_status' );
 		if ( is_null( $recheck_status ) ) {
 			$recheck_status = 1;
 		}
@@ -180,8 +181,9 @@ class RestController {
 			return;
 		}
 
-		$omnipay_transaction_id_key = ltrim( $this->args['omnipay_transaction_id'], '{data:' );
-		$omnipay_transaction_id_key = rtrim( $omnipay_transaction_id_key, '}' );
+		$omnipay_transaction_id_key = $this->args['omnipay_transaction_id'];
+		$omnipay_transaction_id_key = substr( $omnipay_transaction_id_key, 6 ); // Remove "{data:" prefix.
+		$omnipay_transaction_id_key = substr( $omnipay_transaction_id_key, 0, -1 ); // Remove "}" suffix.
 
 		$payment = get_pronamic_payment_by_meta( 'omnipay_transaction_id', $request->get_param( $omnipay_transaction_id_key ) );
 

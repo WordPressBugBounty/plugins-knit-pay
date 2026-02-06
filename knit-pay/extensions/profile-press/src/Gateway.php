@@ -15,7 +15,7 @@ use Pronamic\WordPress\Pay\Refunds\Refund;
 /**
  * Title: ProfilePress Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -103,7 +103,6 @@ class Gateway extends AbstractPaymentMethod {
 		];
 
 		return $settings;
-
 	}
 
 	public function process_payment( $order_id, $subscription_id, $customer_id ) {
@@ -170,7 +169,6 @@ class Gateway extends AbstractPaymentMethod {
 			->set_is_success( false )
 			->set_error_message( $e->getMessage() );
 		}
-
 	}
 	
 	public function validate_fields() {

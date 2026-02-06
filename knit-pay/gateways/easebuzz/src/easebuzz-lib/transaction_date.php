@@ -259,7 +259,7 @@ function _emptyValidation( $params, $salt ) {
 }
 
 
-   /*
+	/*
 	* _email_validation method check email format validation
 	*
 	* param string $email - holds the email address.
@@ -479,5 +479,3 @@ function _curlCall( $url, $params_array ) {
 
 	return $temp_result;
 }
-
-

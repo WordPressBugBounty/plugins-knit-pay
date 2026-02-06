@@ -13,7 +13,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 /**
  * Class KnitPay Gateway
  */
-class KnitPayGateway  extends BooklyLib\Base\Gateway {
+class KnitPayGateway extends BooklyLib\Base\Gateway {
 	protected $type = '';
 	
 	public function __construct( $gateway, Request $request ) {

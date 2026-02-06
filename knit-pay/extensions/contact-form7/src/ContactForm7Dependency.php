@@ -1,19 +1,18 @@
 <?php
 
+namespace KnitPay\Extensions\ContactForm7;
+
+use Pronamic\WordPress\Pay\Dependencies\Dependency;
+
 /**
- * Title: Contact Form 7 extension
+ * Title: Contact Form 7 Dependency
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
  * @since   5.60.0.0
  */
-
-namespace KnitPay\Extensions\ContactForm7;
-
-use Pronamic\WordPress\Pay\Dependencies\Dependency;
-
 class ContactForm7Dependency extends Dependency {
 	/**
 	 * Is met.

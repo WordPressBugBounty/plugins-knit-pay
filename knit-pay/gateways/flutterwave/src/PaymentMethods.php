@@ -2,8 +2,8 @@
 
 namespace KnitPay\Gateways\Flutterwave;
 
-use Pronamic\WordPress\Pay\Core\PaymentMethods as Core_PaymentMethods;
+use KnitPay\Gateways\PaymentMethods as KP_PaymentMethods;
 
-class PaymentMethods extends Core_PaymentMethods {
+class PaymentMethods extends KP_PaymentMethods {
 	const FLUTTERWAVE = 'flutterwave';
 }

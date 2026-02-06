@@ -5,7 +5,7 @@ use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 
 /**
  * Title: Orderbox Gateway
- * Copyright: 2020-2021 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 6.65.0.0

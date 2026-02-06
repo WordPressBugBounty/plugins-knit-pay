@@ -14,7 +14,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 /**
  * Title: AWP Classifieds extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -64,7 +64,6 @@ class Extension extends AbstractPluginIntegration {
 
 		add_action( 'awpcp-register-payment-methods', [ $this, 'register_payment_methods' ] );
 		add_action( 'awpcp-load-modules', [ $this, 'awpcp_load_modules' ], 10, 2 );
-
 	}
 
 	function awpcp_load_modules( $manager ) {
@@ -99,7 +98,7 @@ class Extension extends AbstractPluginIntegration {
 		$settings_manager->add_setting(
 			[
 				'id'         => 'knit_pay_title',
-				'name'       => _x( 'Title', 'authorize.net', 'awpcp-authorize.net' ),
+				'name'       => __( 'Title', 'knit-pay-lang' ),
 				'type'       => 'textfield',
 				'default'    => PaymentMethods::get_name( $this->payment_method, __( 'Knit Pay', 'knit-pay-lang' ) ),
 				'behavior'   => [
@@ -159,7 +158,6 @@ class Extension extends AbstractPluginIntegration {
 			$name = get_awpcp_option( 'knit_pay_title' );
 			$payments->register_payment_method( new Gateway( 'knit_pay', $name, '', '' ) );
 		}
-
 	}
 
 	/**
@@ -244,5 +242,4 @@ class Extension extends AbstractPluginIntegration {
 	public function source_url( $url, Payment $payment ) {
 		return get_edit_post_link( $payment->source_id );
 	}
-
 }

@@ -8,7 +8,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
 /**
  * Title: SumUp Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.91.0.0
@@ -49,22 +49,19 @@ class Gateway extends Core_Gateway {
 	 * @param Payment $payment Payment.
 	 */
 	public function start( Payment $payment ) {
-		try {
-			$data = [
-				'pay_to_email'       => $this->config->login_email,
-				'amount'             => $payment->get_total_amount()->number_format( null, '.', '' ),
-				'currency'           => $payment->get_total_amount()->get_currency()->get_alphabetic_code(),
-				'description'        => $payment->get_description(),
-				'redirect_url'       => $payment->get_return_url(),
-				'return_url'         => $payment->get_return_url(),
-				'checkout_reference' => $payment->key . '_' . $payment->get_id(),
-			];
+		// @see https://developer.sumup.com/api/checkouts/create
+		$data = [
+			'checkout_reference' => $payment->key . '_' . $payment->get_id(),
+			'amount'             => $payment->get_total_amount()->number_format( null, '.', '' ),
+			'currency'           => $payment->get_total_amount()->get_currency()->get_alphabetic_code(),
+			'merchant_code'      => $this->config->merchant_code,
+			'description'        => $payment->get_description(),
+			'return_url'         => $payment->get_return_url(),
+			'redirect_url'       => $payment->get_return_url(),
+		];
 
-			$checkout_session = $this->client->create_checkout_session( $data );
-			$payment->set_transaction_id( $checkout_session['id'] );
-		} catch ( \Exception $e ) {
-			$payment->add_note( 'SumUp Error: ' . $e->getMessage() );
-		}
+		$checkout_session = $this->client->create_checkout_session( $data );
+		$payment->set_transaction_id( $checkout_session['id'] );
 	}
 
 	/**
@@ -106,20 +103,41 @@ class Gateway extends Core_Gateway {
 
 		$html = '<meta name="viewport" content="width=device-width, initial-scale=1.0"><div id="sumup-card"></div>';
 
+		// Get customer email if available for better APM support
+		$customer = $payment->get_customer();
+
+		// @see https://developer.sumup.com/online-payments/checkouts/card-widget#configurations
+		$mount_parameter = [
+			'id'          => 'sumup-card',
+			'checkoutId'  => $payment->get_transaction_id(),
+			'showZipCode' => true,
+			'showEmail'   => true,
+			'email'       => $customer->get_email(),
+			// 'donateSubmitButton' => true,
+			'locale'      => $customer->get_locale(),
+			'country'     => $payment->get_billing_address()->get_country_code(),
+			/*
+			'googlePay' => [
+				'merchantId' => $this->get_option( 'google_pay_merchant_id' ),
+				'merchantName' => $this->get_option( 'google_pay_merchant_name' ),
+			],*/
+		];
+
 		$script  = '<script src="' . $script_url . '"></script>';
 		$script .= '<script type="text/javascript">';
-		$script .= 'SumUpCard.mount({';
-		$script .= '    id: "sumup-card",';
-		$script .= '    checkoutId: "' . $payment->get_transaction_id() . '",';
-		$script .= '    onResponse: function(type, body) {';
-		$script .= '        console.log("Type", type);';
-		$script .= '        console.log("Body", body);';
-		$script .= '        if ("sent" !== type) {';
-		$script .= '            document.getElementById("sumup-card").style.display = "none";';
-		$script .= '            window.location.href = "' . $payment->get_return_url() . '";';
-		$script .= '        }';
+		$script .= 'var mount_parameter = ' . json_encode( $mount_parameter ) . ';';
+		$script .= 'mount_parameter.onResponse = function(type, body) {';
+		$script .= '    console.log("SumUp Response Type:", type);';
+		$script .= '    console.log("SumUp Response Body:", body);';
+		$script .= '    if ("sent" !== type) {';
+		$script .= '        document.getElementById("sumup-card").style.display = "none";';
+		$script .= '        window.location.href = "' . $payment->get_return_url() . '";';
 		$script .= '    }';
-		$script .= '});';
+		$script .= '};';
+		$script .= 'mount_parameter.onPaymentMethodsLoad = function(methods) {';
+		$script .= '    console.log("Available Payment Methods:", methods);';
+		$script .= '};';
+		$script .= 'SumUpCard.mount(mount_parameter);';
 		$script .= '</script>';
 
 		echo $html . $script;

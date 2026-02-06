@@ -18,13 +18,14 @@ if (! defined('ABSPATH')) {
 		<?php
         if (defined('KNIT_PAY_UPI')) {
             include_once KNIT_PAY_UPI_DIR . 'views/template-knit-pay-upi-pricing-table.php';
+			echo '<hr><br>';
         }
         ?>
-		<br>
 
 		<?php
         if (defined('KNIT_PAY_PRO')) {
             include_once KNIT_PAY_PRO_DIR . 'views/template-knit-pay-pro-pricing-table.php';
+			echo '<hr><br>';
         }
         ?>
 		<br>

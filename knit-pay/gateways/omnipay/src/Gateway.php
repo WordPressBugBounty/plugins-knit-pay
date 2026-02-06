@@ -11,7 +11,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Omnipay Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.72.0.0
@@ -39,7 +39,6 @@ class Gateway extends Core_Gateway {
 	 *            Arguments.
 	 */
 	public function init( AbstractGateway $omnipay_gateway, $config, $args ) {
-
 		// Supported features.
 		$this->supports = [
 			'payment_status_request',
@@ -54,6 +53,14 @@ class Gateway extends Core_Gateway {
 
 		if ( isset( $args['is_iframe_checkout'] ) ) {
 			$this->is_iframe_checkout_method = true;
+		}
+
+		if ( isset( $this->args['supported_currencies'] ) ) {
+			$this->supported_currencies = $this->args['supported_currencies'];
+			$this->default_currency     = $this->supported_currencies[0];
+			if ( ! empty( $this->args['default_currency'] ) ) {
+				$this->default_currency = $this->args['default_currency'];
+			}
 		}
 	}
 
@@ -71,7 +78,7 @@ class Gateway extends Core_Gateway {
 			throw new Exception( sprintf( 'The currency %s is not supported by this gateway.', $payment_currency ) );
 		}
 
-		if ( is_callable( $this->args['pre_purchase_callback'] ) ) {
+		if ( isset( $this->args['pre_purchase_callback'] ) && is_callable( $this->args['pre_purchase_callback'] ) ) {
 			$this->args['pre_purchase_callback']( $this->omnipay_gateway );
 		}
 
@@ -81,7 +88,7 @@ class Gateway extends Core_Gateway {
 		$transaction = $this->omnipay_gateway->purchase( $transaction_data );
 		$response    = $transaction->send();
 
-		if ( $response->isRedirect() ) {
+		if ( $response->isRedirect() && null !== $response->getRedirectUrl() ) {
 			$redirect_method = self::METHOD_HTTP_REDIRECT;
 			if ( 'POST' === $response->getRedirectMethod() ) {
 				$redirect_method = self::METHOD_HTML_FORM;
@@ -98,19 +105,22 @@ class Gateway extends Core_Gateway {
 		} else {
 			$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
 			if ( ! is_null( $response->getMessage() ) ) {
-				 throw new Exception( $response->getMessage() );
+				throw new Exception( $response->getMessage() );
 			} elseif ( isset( $response->getData()->message ) ) {
 				throw new Exception( $response->getData()->message );
+			} elseif ( isset( $response->getData()['message'] ) ) {
+				throw new Exception( $response->getData()['message'] );
 			} else {
 				throw new Exception( 'Something went wrong.' );
 			}
 		}
 
-		if ( is_callable( $this->args['omnipay_transaction_id_callback'] ) ) {
+		if ( isset( $this->args['omnipay_transaction_id_callback'] ) && is_callable( $this->args['omnipay_transaction_id_callback'] ) ) {
 			$payment->set_transaction_id( $this->args['omnipay_transaction_id_callback']( $response, $transaction_data ) );
 		} elseif ( isset( $this->args['omnipay_transaction_id'] ) ) {
-			$omnipay_transaction_id_key = ltrim( $this->args['omnipay_transaction_id'], '{data:' );
-			$omnipay_transaction_id_key = rtrim( $omnipay_transaction_id_key, '}' );
+			$omnipay_transaction_id_key = $this->args['omnipay_transaction_id'];
+			$omnipay_transaction_id_key = substr( $omnipay_transaction_id_key, 6 ); // Remove "{data:" prefix.
+			$omnipay_transaction_id_key = substr( $omnipay_transaction_id_key, 0, -1 ); // Remove "}" suffix.
 
 			$payment->set_transaction_id( $response->getData()[ $omnipay_transaction_id_key ] );
 		} elseif ( ! empty( $response->getTransactionReference() ) ) {
@@ -170,6 +180,11 @@ class Gateway extends Core_Gateway {
 		$payment_return_url = $payment->get_return_url();
 		$payment_cancel_url = add_query_arg( 'cancelled', true, $payment_return_url );
 
+		$customer_name = $customer->get_name();
+		if ( null !== $customer_name ) {
+			$customer_name = KnitPayUtils::substr_after_trim( $customer_name, 0, 20 );
+		}
+
 		// @see https://omnipay.thephpleague.com/api/cards/
 		$credit_card = [
 			'firstName'       => '',
@@ -199,14 +214,14 @@ class Gateway extends Core_Gateway {
 		}
 
 		if ( ! is_null( $billing_address ) ) {
+			$credit_card['company']         = $billing_address->get_company_name();
 			$credit_card['billingAddress1'] = $billing_address->get_line_1();
 			$credit_card['billingAddress2'] = $billing_address->get_line_2();
 			$credit_card['billingCity']     = $billing_address->get_city();
-			$credit_card['billingPostcode'] = $billing_address->get_postal_code();
 			$credit_card['billingState']    = $billing_address->get_region();
 			$credit_card['billingCountry']  = $billing_address->get_country_code();
+			$credit_card['billingPostcode'] = $billing_address->get_postal_code();
 			$credit_card['billingPhone']    = $billing_address->get_phone();
-			$credit_card['company']         = $billing_address->get_company_name();
 		}
 
 		if ( ! is_null( $delivery_address ) ) {
@@ -214,11 +229,11 @@ class Gateway extends Core_Gateway {
 			$credit_card['shippingAddress2'] = $delivery_address->get_line_2();
 			$credit_card['shippingCity']     = $delivery_address->get_city();
 			$credit_card['shippingState']    = $delivery_address->get_region();
+			$credit_card['shippingCountry']  = $delivery_address->get_country_code();
 			$credit_card['shippingPostcode'] = $delivery_address->get_postal_code();
-			$credit_card['shippingCountry']  = $delivery_address->get_country();
 			$credit_card['shippingPhone']    = $delivery_address->get_phone();
 		}
-		
+
 		$card = new CreditCard( $credit_card );
 		
 		// @see https://omnipay.thephpleague.com/api/authorizing/
@@ -244,7 +259,7 @@ class Gateway extends Core_Gateway {
 		$replacements = [
 			'{customer_phone}'           => $billing_address ? $billing_address->get_phone() : '',
 			'{customer_email}'           => $customer->get_email(),
-			'{customer_name}'            => KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 20 ),
+			'{customer_name}'            => $customer_name,
 			'{customer_language}'        => $customer->get_language(),
 			'{currency}'                 => $currency,
 			'{amount}'                   => $amount,
@@ -269,7 +284,7 @@ class Gateway extends Core_Gateway {
 
 		foreach ( $this->transaction_options as $option_key => $option_value ) {
 			if ( is_string( $option_value ) ) {
-				 $transaction_data[ $option_key ] = strtr( $option_value, $replacements );
+				$transaction_data[ $option_key ] = strtr( $option_value, $replacements );
 			} else {
 				$transaction_data[ $option_key ] = $option_value;
 			}

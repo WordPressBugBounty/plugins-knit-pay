@@ -1,0 +1,120 @@
+// White (http://www.colorhexa.com/ffffff)
+$white: #fff;
+
+// Gravity Forms feed list
+#tab_pronamic_pay {
+	h3 {
+		.dashicons {
+			&.fa- {
+				font-size: inherit;
+				width: auto;
+				height: auto;
+			}
+		}
+	}
+}
+
+// Gravity Forms feed editor
+#titlediv + #gf-pay-feed-editor {
+	margin-top: 1em;
+}
+
+#gf-pay-feed-editor {
+	.form-table {
+		ul {
+			margin: 10px 0 0;
+		}
+	}
+
+	.pronamic-pay-tab {
+		.pronamic-pay-tab-block {
+			background: $white;
+		}
+
+		.pronamic-pay-table-striped {
+			tr {
+				&:not(.even) {
+					background: $white;
+				}
+			}
+		}
+
+		input + select {
+			vertical-align: initial;
+		}
+	}
+
+	.pronamic-gf-subscription-tab {
+		fieldset {
+			.pronamic-pay-gf-subscription-trial-settings {
+				label {
+					display: block;
+				}
+			}
+		}
+	}
+}
+
+// Gravity Forms editor
+.gforms_edit_form {
+	.ideal-edit-link {
+		display: none;
+
+		float: right;
+
+		font-size: 10px;
+
+		line-height: 16px;
+
+		height: 16px;
+
+		text-decoration: none;
+	}
+
+	.field_hover,
+	.field_selected {
+		.ideal-edit-link {
+			display: block;
+		}
+	}
+}
+
+// Form table
+.form-table {
+	// Description
+	.pronamic-pay-description {
+		display: block;
+	}
+
+	// Status pages tab.
+	&.pronamic-gf-links-tab {
+		fieldset {
+			line-height: 2.75em;
+		}
+	}
+}
+
+// Form choice
+.pronamic-pay-gf-form-choice-list {
+	margin: 0 !important;
+}
+
+.pronamic-pay-gf-form-choice-list > li {
+	margin: 0;
+}
+
+.pronamic-pay-gf-form-choice {
+
+}
+
+.pronamic-pay-gf-form-choice .pronamic-pay-gf-form-choice-checked {
+	margin-left: 2em;
+}
+
+.pronamic-pay-gf-form-choice > input + label + .pronamic-pay-gf-form-choice-checked {
+	display: none;
+}
+
+.pronamic-pay-gf-form-choice > input:checked + label + .pronamic-pay-gf-form-choice-checked {
+	display: block;
+}

@@ -7,7 +7,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: PayTR Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.86.0.0
@@ -73,7 +73,7 @@ class Gateway extends Core_Gateway {
 		$payment_amount = $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' );
 		$currency       = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 
-		$user_name      = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 60 );
+		$user_name      = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 60 );
 		$customer_email = $customer->get_email();
 		$user_ip        = $customer->get_ip_address();
 
@@ -85,7 +85,7 @@ class Gateway extends Core_Gateway {
 		$no_installment  = 1;
 		$max_installment = 0;
 		$test_mode       = $this->test_mode;
-		$debug_on        = pronamic_pay_plugin()->is_debug_mode();
+		$debug_on        = knit_pay_plugin()->is_debug_mode();
 
 		$user_basket = base64_encode(
 			json_encode(

@@ -10,7 +10,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 /**
  * Title: Contact Form 7 Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -25,16 +25,6 @@ defined( 'ABSPATH' ) || exit();
 
 class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 	private $payment_method;
-	
-	/**
-	 * Init the parent action class
-	 *
-	 * @param $post
-	 */
-	public function __construct( $post ) {
-		parent::__construct( $post );
-		
-	}
 	
 	/**
 	 * Get the action admin fields
@@ -223,7 +213,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 	/**
 	 * Handle a simple redirect rule
 	 *
-	 * @param $submission
+	 * @param process $submission
 	 */
 	public function process( $submission ) {
 		// Don't send email if the email delay is enabled.
@@ -322,7 +312,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 	public static function enqueue_backend_scripts() {
 		\wp_register_script(
 			'knit-pay-contact-form-7-admin',
-			plugins_url( 'js/knit-pay-contact-form-7-admin.js', dirname( __FILE__ ) ),
+			plugins_url( 'js/knit-pay-contact-form-7-admin.js', __DIR__ ),
 			[ 'jquery' ],
 			KNITPAY_VERSION,
 			true
@@ -339,7 +329,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 	public static function enqueue_frontend_scripts() {
 		\wp_register_script(
 			'knit-pay-contact-form-7',
-			plugins_url( 'js/payment-form-processor.js', dirname( __FILE__ ) ),
+			plugins_url( 'js/payment-form-processor.js', __DIR__ ),
 			[ 'jquery', 'wpcf7-redirect-script' ],
 			KNITPAY_VERSION,
 			true

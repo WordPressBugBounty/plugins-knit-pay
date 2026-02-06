@@ -25,9 +25,13 @@ class PaymentMethods extends KP_PaymentMethods {
 			case self::DEBIT_CARD:
 				return 'dc';
 			case self::CREDIT_CARD:
-				return 'cc';
+				return 'cc,ccc';
 			case self::UPI:
 				return 'upi';
+			case self::CARD:
+				return 'cc,ccc,dc,ppc';
+			case self::PAYPAL:
+				return 'paypal';
 			default:
 				return '';
 		}

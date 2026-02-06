@@ -9,10 +9,11 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Exception;
 use KnitPay\Utils as KnitPayUtils;
 use KnitPay\Gateways\PaymentMethods;
+use Pronamic\WordPress\Http\Facades\Http;
 
 /**
  * Title: UPI QR Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 1.0.0
@@ -21,7 +22,6 @@ use KnitPay\Gateways\PaymentMethods;
 class Gateway extends Core_Gateway {
 	protected $config;
 	private $intent_url_parameters;
-	protected $payment_expiry_seconds   = 300;
 	protected $show_manual_confirmation = false;
 	protected $merchant_verified        = false;
 	protected $enable_polling;
@@ -79,17 +79,6 @@ class Gateway extends Core_Gateway {
 		if ( $this->config->hide_mobile_qr && $this->config->hide_pay_button ) {
 			$mobile_error = "QR code and Payment Button can't be hidden at the same time. Kindly show at least one of them from the configuration page.";
 			throw new Exception( $mobile_error );
-		}
-
-		if ( PaymentMethods::UPI_COLLECT === $payment->get_payment_method() ) {
-			$upi_id = $payment->get_meta( 'customer_upi_id' );
-			if ( empty( $upi_id ) || ! preg_match( '/^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/', $upi_id ) ) {
-				throw new Exception( 'Invalid UPI ID format.' );
-			} elseif (2000 < $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' )){
-				//throw new Exception( 'UPI Collect payment method is only supported for payments up to ₹2000.' );
-			}elseif ( '5' !== $this->config->payment_template ) {
-				throw new Exception( 'UPI Collect payment method is currently only supported with Payment Template 5.' );
-			}
 		}
 
 		$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
@@ -255,25 +244,6 @@ class Gateway extends Core_Gateway {
 		return $data;
 	}
 
-	public function knit_pay_upi_data( $payment ) {
-		return [
-			'knitpay_payment_id'  => $payment->get_id(),
-			'mode'                => $payment->get_mode(),
-			'gateway'             => \get_post_meta( $payment->get_config_id(), '_pronamic_gateway_id', true ),
-			'payment_method'      => $payment->get_payment_method(),
-			'source'              => $payment->get_source(),
-			'amount'              => $payment->get_total_amount()->number_format( null, '.', '' ),
-			'currency'            => $payment->get_total_amount()->get_currency()->get_alphabetic_code(),
-			'knitpay_version'     => KNITPAY_VERSION,
-			'knitpay_upi_version' => KNITPAY_UPI_VERSION,
-			'php_version'         => PHP_VERSION,
-			'website_url'         => home_url( '/' ),
-			'data'                => [
-				'payment_template' => $this->config->payment_template,
-			],
-		];
-	}
-
 	/**
 	 * Update status of the specified payment.
 	 *
@@ -281,10 +251,12 @@ class Gateway extends Core_Gateway {
 	 *            Payment.
 	 */
 	public function update_status( Payment $payment ) {
-		$transaction_id = filter_has_var( INPUT_POST, 'transaction_id' ) ? sanitize_text_field( $_POST['transaction_id'] ) : null;
-		$pay_status     = filter_has_var( INPUT_POST, 'pay-status' ) ? sanitize_text_field( $_POST['pay-status'] ) : null;
+		//phpcs:disable WordPress.Security.NonceVerification.Missing
+		$transaction_id = isset( $_POST['transaction_id'] ) ? sanitize_text_field( $_POST['transaction_id'] ) : null;
+		$pay_status     = isset( $_POST['pay-status'] ) ? sanitize_text_field( $_POST['pay-status'] ) : null;
+		//phpcs:enable WordPress.Security.NonceVerification.Missing
 
-		if ( $pay_status === 'Cancel' ) {
+		if ( 'Cancel' === $pay_status ) {
 			$payment->add_note( 'Payment Cancelled.' );
 			$payment->set_status( PaymentStatus::CANCELLED );
 			return;
@@ -301,63 +273,43 @@ class Gateway extends Core_Gateway {
 		$payment->set_status( $this->config->payment_success_status );
 	}
 
-	protected function make_amount_unique( Payment $payment ) {
-		$actual_amount_minor = $payment->get_total_amount()->get_minor_units()->to_int();
-
-		if ( get_transient( 'knit_pay_upi_' . $this->config->config_id . '_' . $actual_amount_minor ) ) {
-			$unique_amount_minor = $this->find_unique_amount( $actual_amount_minor );
-			$unique_amount       = $unique_amount_minor / 100;
-			$actual_amount       = $actual_amount_minor / 100;
-			$payment->add_note( 'Actual amount: ₹' . $actual_amount . '<br>Unique amount generated: ₹' . $unique_amount );
-
-			$unique_money = new \Pronamic\WordPress\Money\Money( $unique_amount, $payment->get_total_amount()->get_currency() );
-			$payment->set_total_amount( $unique_money );
-		} else {
-			$unique_amount_minor = $actual_amount_minor;
-		}
-
-		// Hold the amount for 15 minutes and can be allocated to other transaction if not paid.
-		set_transient( 'knit_pay_upi_' . $this->config->config_id . '_' . $unique_amount_minor, $payment->get_id(), 15 * MINUTE_IN_SECONDS );
-	}
-
-	private function find_unique_amount( $actual_amount_minor, $retry = 1 ) {
-		if ( $retry > 10 ) {
-			throw new Exception( 'Unable to generate a unique amount. Please try again after sometime.' );
-		}
-
-		$range               = $retry ** 2;
-		$random_amount_minor = rand( -$range, $range ) + $actual_amount_minor;
-
-		if ( get_transient( 'knit_pay_upi_' . $this->config->config_id . '_' . $random_amount_minor ) ) {
-			return $this->find_unique_amount( $actual_amount_minor, ++$retry );
-		}
-
-		return $random_amount_minor;
-	}
-
-	public function expire_old_upi_payment( Payment $payment ) {
-		// Payment can be expired only if the payment current status is Pending.
-		if ( PaymentStatus::OPEN !== $payment->get_status() ) {
+	protected function bulk_update_status( $transactions ) {
+		if ( empty( $transactions ) ) {
 			return;
 		}
 
-		// Make payment status as expired for payment older than 5 min.
-		$payment_timestamp = $payment->get_date()->getTimestamp();
-		if ( $this->payment_expiry_seconds < time() - $payment_timestamp ) {
-			$payment->set_status( PaymentStatus::EXPIRED );
-
-			// Recheck status after 15 min if payment getting expired very soon.
-			if ( time() - $payment_timestamp < 15 * MINUTE_IN_SECONDS ) {
-				\as_schedule_single_action(
-					time() + ( 15 * MINUTE_IN_SECONDS ),
-					'knit_pay_upi_payment_status_check',
-					[
-						'payment_id' => $payment->get_id(),
-						'gateway_id' => $this->config->gateway_id,
-					],
-					'knit-pay'
-				);
+		foreach ( $transactions as $transaction ) {
+			if ( PaymentStatus::OPEN === $transaction['status'] ) {
+				continue;
 			}
+
+			// Don't proceed if the transaction UTR is already linked to a payment.
+			$payment = get_pronamic_payment_by_transaction_id( $transaction['utr'] );
+			if ( null !== $payment ) {
+				break;
+			}
+
+			// Don't proceed if the transaction with transaction ID not found.
+			$payment = get_pronamic_payment_by_transaction_id( $transaction['kp_transaction_id'] );
+			if ( null === $payment ) {
+				continue;
+			}
+
+			if ( floatval( $payment->get_total_amount()->number_format( null, '.', '' ) ) !== floatval( $transaction['amount'] ) ) {
+				$payment->set_status( PaymentStatus::FAILURE );
+				return;
+			}
+
+			if ( $payment->get_status() === PaymentStatus::SUCCESS ) {
+				$payment->set_transaction_id( $transaction['utr'] );
+			}
+
+			$payment->set_status( $transaction['status'] );
+
+			//phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+			$payment->add_note( '<strong>Status Response:</strong><br><pre>' . print_r( $transaction['provider_response'], true ) . '</pre><br>' );
+
+			$payment->save();
 		}
 	}
 
@@ -413,7 +365,7 @@ class Gateway extends Core_Gateway {
 		exit;
 	}
 
-	public function get_intent_url_parameters( $payment ) {
+	protected function get_intent_url_parameters( $payment ) {
 		if ( isset( $this->intent_url_parameters ) ) {
 			return $this->intent_url_parameters;
 		}
@@ -426,7 +378,7 @@ class Gateway extends Core_Gateway {
 		return $this->intent_url_parameters;
 	}
 
-	public function get_upi_qr_text( $payment ) {
+	protected function get_upi_qr_text( $payment ) {
 		return add_query_arg( $this->get_intent_url_parameters( $payment ), 'upi://pay' );
 	}
 
@@ -459,40 +411,46 @@ class Gateway extends Core_Gateway {
 			KNITPAY_URL . '/gateways/upi-qr/src/js/easy.qrcode.min.js',
 			[],
 			'4.6.2',
-			true
+			[ 'in_footer' => true ]
 		);
 
 		\wp_register_script(
 			'knit-pay-upi-common',
 			KNITPAY_URL . '/gateways/upi-qr/src/js/upi-common.js',
 			[ 'knit-pay-easy-qrcode' ],
-			KNITPAY_VERSION
+			KNITPAY_VERSION,
+			[ 'in_footer' => true ]
 		);
 
 		\wp_register_script(
 			'knit-pay-countdown-timer',
 			KNITPAY_URL . '/gateways/upi-qr/src/js/countdown-timer.js',
-			[]
+			[],
+			KNITPAY_VERSION,
+			[ 'in_footer' => true ]
 		);
 
 		\wp_register_script(
 			'knit-pay-sweet-alert-2',
 			'https://cdn.jsdelivr.net/npm/sweetalert2@11',
 			[ 'jquery' ],
+			KNITPAY_VERSION,
+			[ 'in_footer' => true ]
 		);
 
 		\wp_register_script(
 			"knit-pay-upi-qr-template-{$this->config->payment_template}",
 			KNITPAY_URL . "/gateways/upi-qr/src/js/template{$this->config->payment_template}.js",
 			[ 'jquery', 'knit-pay-sweet-alert-2', 'knit-pay-countdown-timer', 'knit-pay-easy-qrcode', 'knit-pay-upi-common' ],
-			KNITPAY_VERSION
+			KNITPAY_VERSION,
+			[ 'in_footer' => true ]
 		);
 
 		wp_localize_script(
 			"knit-pay-upi-qr-template-{$this->config->payment_template}",
 			'knit_pay_upi_qr_vars',
 			[
-				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'ajaxurl'                   => admin_url( 'admin-ajax.php' ),
 				'payment_status_worker_url' => KNITPAY_URL . '/gateways/upi-qr/src/js/payment-status-worker.js',
 			]
 		);

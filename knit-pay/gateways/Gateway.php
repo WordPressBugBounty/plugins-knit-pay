@@ -6,10 +6,12 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
 use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
+use KnitPay\Utils;
+use Pronamic\WordPress\Number\Number;
 
 /**
  * Title: Custom Redirect Page Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 1.0.0
@@ -17,6 +19,9 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  */
 class Gateway extends Core_Gateway {
 	protected $is_iframe_checkout_method;
+
+	public $default_currency;
+	public $supported_currencies;
 	
 	/**
 	 * The method of this gateway
@@ -35,11 +40,46 @@ class Gateway extends Core_Gateway {
 	 *            Config.
 	 */
 	public function __construct() {
-
 		parent::__construct();
 
 		$this->payment_page_title       = 'Redirecting…';
 		$this->payment_page_description = '<p>You will be automatically redirected to the online payment environment.</p><p>Please click the button below if you are not automatically redirected.</p>';
+	}
+
+	public function change_currency( Payment $payment, $default_currency, $exchange_rate ) {
+		$payment_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
+
+		if ( empty( $default_currency ) ) {
+			return;
+		} elseif ( $default_currency === $payment_currency && 1.0 === floatval( $exchange_rate ) ) {
+			return;
+		}
+
+		$exchange_rate = new Number( $exchange_rate );
+		$total_amount  = $payment->get_total_amount();
+		$total_amount->set_currency( $default_currency );
+		$total_amount = $total_amount->multiply( $exchange_rate );
+		$payment->set_total_amount( $total_amount );
+
+		if ( ! is_null( $payment->get_lines() ) ) {
+			$line_iterator = $payment->get_lines()->getIterator();
+			foreach ( $line_iterator as $key => $payment_line ) {
+				if ( ! is_null( $payment_line->get_total_amount() ) ) {
+					$payment_line->get_total_amount()->set_currency( $default_currency );
+					$payment_line->set_total_amount( $payment_line->get_total_amount()->multiply( $exchange_rate ) );
+				}
+
+				if ( ! is_null( $payment_line->get_discount_amount() ) ) {
+					$payment_line->get_discount_amount()->set_currency( $default_currency );
+					$payment_line->set_discount_amount( $payment_line->get_discount_amount()->multiply( $exchange_rate ) );
+				}
+
+				if ( ! is_null( $payment_line->get_unit_price() ) ) {
+					$payment_line->get_unit_price()->set_currency( $default_currency );
+					$payment_line->set_unit_price( $payment_line->get_unit_price()->multiply( $exchange_rate ) );
+				}
+			}
+		}
 	}
 	
 	/**

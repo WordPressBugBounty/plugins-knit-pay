@@ -6,7 +6,7 @@ use KnitPay\Extensions\PaidMembershipsPro\Helper;
 /**
  * Title: Paid Memberships Pro extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author knitpay
@@ -298,7 +298,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 			<div class="pmpro_section_toggle">
 				<button class="pmpro_section-toggle-button" type="button" aria-expanded="true">
 					<span class="dashicons dashicons-arrow-up-alt2"></span>
-					<?php esc_html_e( 'Settings', 'paid-memberships-pro' ); ?>
+					<?php esc_html_e( 'Settings', 'knit-pay-lang' ); ?>
 				</button>
 			</div>
 			<div class="pmpro_section_inside">
@@ -405,6 +405,11 @@ class PMProGateway_knit_pay extends PMProGateway {
 	 */
 	private function sendToGateway( &$morder ) {
 		// TODO add recuring option
+		if ( pmpro_isLevelRecurring( $morder->membership_level ) ) {
+			$morder->error = __( 'This payment gateway currently does not support recurring payments. If you are the store owner, kindly uncheck the "Recurring Subscription" option in the Membership Level settings.', 'knit-pay-lang' );
+			return false;
+		}
+
 		global $knit_pay_redirect_url;
 
 		$this->config_id = self::pmpro_getOption( 'knit_pay_config_id' );
@@ -564,7 +569,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 									<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_field pmpro_form_field-radio-item' ) ); ?> gateway_knit_pay">
 										<input type="radio" id="knit_pay_<?php echo $config_id; ?>" name="gateway" class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_input pmpro_form_input-radio' ) ); ?>" value="knit_pay" onclick="document.getElementById('knit_pay_config_id').value='<?php echo $config_id; ?>'" required />
 										<label for="knit_pay_<?php echo $config_id; ?>" class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_label pmpro_form_label-inline pmpro_clickable' ) ); ?>">
-											<?php esc_html_e( $knit_pay_gateways[ $config_id ] ); ?>
+											<?php esc_html_e( $knit_pay_gateways[ $config_id ], 'knit-pay-lang' ); ?>
 										</label>
 									</div> <!-- end pmpro_form_field pmpro_form_field-radio-item -->
 								<?php } ?>

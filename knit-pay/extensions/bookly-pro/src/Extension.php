@@ -13,7 +13,7 @@ use Pronamic\WordPress\Pay\Core\PaymentMethods;
 /**
  * Title: Bookly Pro extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -64,9 +64,12 @@ class Extension extends AbstractPluginIntegration {
 
 		// TODO check if webhook is possible or not. Refer /bookly-addon-stripe/frontend/modules/stripe/Ajax.php
 		
-		// TODO check the solution for paymentStepDisabled() function;
-		// Bookly don't allow to accept payment if official payment gateway addons are not enabled.
-		// This is a workaround to make change in Bookly code so that Thirdparty payment gateway become supported.
+		/*
+		 * TODO check the solution for paymentStepDisabled() function;
+		 * There is a bug in Bookly which don't allow to accept payment if official payment gateway addons are not enabled.
+		 * This is a workaround to make change in Bookly code so that Thirdparty payment gateway become supported.
+		 * This workaround might not work on some hosting providers.
+		 */
 		if ( class_exists( '\Bookly\Lib\Config' ) && BooklyConfig::paymentStepDisabled() ) {
 			$edited_code      = 'return false;';
 			$reflector        = new \ReflectionClass( '\Bookly\Lib\Config' );
@@ -74,7 +77,7 @@ class Extension extends AbstractPluginIntegration {
 			$filecontent      = file_get_contents( $config_file_path );
 			$pos              = strpos( $filecontent, 'return ! ( self::payLocallyEnabled()' );
 			$filecontent      = substr( $filecontent, 0, $pos ) . $edited_code . "\r\n\t\t" . substr( $filecontent, $pos );
-			file_put_contents( $config_file_path, $filecontent );
+			file_put_contents( $config_file_path, $filecontent ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_file_put_contents
 		}
 	}
 
@@ -158,5 +161,4 @@ class Extension extends AbstractPluginIntegration {
 		$active_payment_methods = self::get_active_payment_methods();
 		return in_array( $gateway, $active_payment_methods ) && get_option( 'bookly_' . $gateway . '_enabled' );
 	}
-
 }

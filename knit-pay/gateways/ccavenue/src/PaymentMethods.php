@@ -29,7 +29,7 @@ class PaymentMethods extends KP_PaymentMethods {
 			case self::UPI:
 				return 'OPTUPI';
 			default:
-				return ''; // TODO OPTCASHC, OPTMOBP, OPTEMI.
+				return ''; // TODO OPTCASHC, OPTMOBP, OPTEMI, OPTWLT.
 		}
 	}
 }

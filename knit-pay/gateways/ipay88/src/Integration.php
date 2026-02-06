@@ -7,7 +7,7 @@ use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
 
 /**
  * Title: iPay88 Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 8.96.0.0
@@ -161,6 +161,10 @@ class Integration extends AbstractGatewayIntegration {
 		$config->country       = $this->get_meta( $post_id, 'ipay88_country' );
 		$config->merchant_code = $this->get_meta( $post_id, 'ipay88_merchant_code' );
 		$config->merchant_key  = $this->get_meta( $post_id, 'ipay88_merchant_key' );
+
+		if ( '' === $config->country ) {
+			$config->country = 'my';
+		}
 
 		return $config;
 	}

@@ -7,7 +7,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
 /**
  * Title: CMI Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.96.5.0

@@ -7,13 +7,13 @@ use Pronamic\WordPress\Money\Currencies;
 use Pronamic\WordPress\Money\Currency;
 use Pronamic\WordPress\Money\Money;
 use Pronamic\WordPress\Pay\Plugin;
-use Pronamic\WordPress\Pay\Util;
 use Pronamic\WordPress\Pay\Payments\Payment;
+use KnitPay\Utils;
 
 /**
  * Title: Knit Pay - Payment Link Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -209,12 +209,17 @@ class Gateway {
 
 		$element = new Element( 'select', $args );
 
+		$selected_config_id = Utils::get_gateway_config_id();
+		if ( empty( $selected_config_id ) ) {
+			$selected_config_id = get_option( 'pronamic_pay_config_id' );
+		}
+
 		foreach ( $configurations as $key => $label ) {
 			$option = new Element( 'option', [ 'value' => $key ] );
 
 			$option->children[] = $label;
 
-			if ( get_option( 'pronamic_pay_config_id' ) === (string) $key ) {
+			if ( $selected_config_id === (string) $key ) {
 				$option->attributes['selected'] = 'selected';
 			}
 

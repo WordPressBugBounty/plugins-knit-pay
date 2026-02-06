@@ -10,7 +10,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Multi Gateway Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 1.0.0
@@ -45,51 +45,51 @@ class Integration extends AbstractGatewayIntegration {
 		$fields = [];
 		
 		// Gateway Selection Mode.
-		 $fields[] = [
-			 'section'  => 'general',
-			 'filter'   => FILTER_SANITIZE_NUMBER_INT,
-			 'meta_key' => '_pronamic_gateway_multi_gateway_gateway_selection_mode',
-			 'title'    => __( 'Gateway Selection Mode', 'knit-pay-lang' ),
-			 'type'     => 'select',
-			 'options'  => [
-				 Config::SELECTION_MANUAL_MODE => 'Gateway Selected by Customer',
-				 Config::SELECTION_RANDOM_MODE => 'Gateway Randomly Selected',
-			 ],
-			 'default'  => Config::SELECTION_MANUAL_MODE,
-		 ];
+		$fields[] = [
+			'section'  => 'general',
+			'filter'   => FILTER_SANITIZE_NUMBER_INT,
+			'meta_key' => '_pronamic_gateway_multi_gateway_gateway_selection_mode',
+			'title'    => __( 'Gateway Selection Mode', 'knit-pay-lang' ),
+			'type'     => 'select',
+			'options'  => [
+				Config::SELECTION_MANUAL_MODE => 'Gateway Selected by Customer',
+				Config::SELECTION_RANDOM_MODE => 'Gateway Randomly Selected',
+			],
+			'default'  => Config::SELECTION_MANUAL_MODE,
+		];
 
-		 // Enabled Payment Methods.
-		 $fields[] = [
-			 'section'  => 'general',
-			 'title'    => __( 'Enabled Payment Gateways', 'knit-pay-lang' ),
-			 'type'     => 'description',
-			 'callback' => [ $this, 'field_enabled_payment_gateways' ],
-		 ];
+		// Enabled Payment Methods.
+		$fields[] = [
+			'section'  => 'general',
+			'title'    => __( 'Enabled Payment Gateways', 'knit-pay-lang' ),
+			'type'     => 'description',
+			'callback' => [ $this, 'field_enabled_payment_gateways' ],
+		];
 
-		 // Gateway Currency.
-		 $fields[] = [
-			 'section'  => 'advanced',
-			 'meta_key' => '_pronamic_gateway_multi_gateway_gateway_currency',
-			 'title'    => __( 'Gateway Currency', 'knit-pay-lang' ),
-			 'type'     => 'text',
-			 'classes'  => [ 'regular-text', 'code' ],
-			 'tooltip'  => __( '3 Character Currency Code. (eg. USD) ', 'knit-pay-lang' ),
-		 ];
+		// Gateway Currency.
+		$fields[] = [
+			'section'  => 'advanced',
+			'meta_key' => '_pronamic_gateway_multi_gateway_gateway_currency',
+			'title'    => __( 'Gateway Currency', 'knit-pay-lang' ),
+			'type'     => 'text',
+			'classes'  => [ 'regular-text', 'code' ],
+			'tooltip'  => __( '3 Character Currency Code. (eg. USD) ', 'knit-pay-lang' ),
+		];
 
-		 // Exchange Rate.
-		 $fields[] = [
-			 'section'  => 'advanced',
-			 'filter'   => FILTER_VALIDATE_FLOAT,
-			 'meta_key' => '_pronamic_gateway_multi_gateway_exchange_rate',
-			 'title'    => __( 'Exchange Rate', 'knit-pay-lang' ),
-			 'type'     => 'text',
-			 'classes'  => [ 'regular-text', 'code' ],
-			 'tooltip'  => __( 'Exchange Rate of Payment Currency.', 'knit-pay-lang' ),
-			 'default'  => 1.0,
-		 ];
+		// Exchange Rate.
+		$fields[] = [
+			'section'  => 'advanced',
+			'filter'   => FILTER_VALIDATE_FLOAT,
+			'meta_key' => '_pronamic_gateway_multi_gateway_exchange_rate',
+			'title'    => __( 'Exchange Rate', 'knit-pay-lang' ),
+			'type'     => 'text',
+			'classes'  => [ 'regular-text', 'code' ],
+			'tooltip'  => __( 'Exchange Rate of Payment Currency.', 'knit-pay-lang' ),
+			'default'  => 1.0,
+		];
 
-		 // Return fields.
-		 return $fields;
+		// Return fields.
+		return $fields;
 	}
 
 	/**
@@ -178,10 +178,12 @@ class Integration extends AbstractGatewayIntegration {
 	 * @return void
 	 */
 	public function save_post( $post_id ) {
-		$post = filter_input_array( INPUT_POST );
-		if ( empty( $post['_pronamic_gateway_multi_gateway_enabled_payment_gateways'] ) ) {
-			$post['_pronamic_gateway_multi_gateway_enabled_payment_gateways'] = [];
+		$enabled_payment_gateways = [];
+
+		if ( ! empty( $_POST['_pronamic_gateway_multi_gateway_enabled_payment_gateways'] ) ) {
+			$enabled_payment_gateways = array_map( 'absint', (array) $_POST['_pronamic_gateway_multi_gateway_enabled_payment_gateways'] );
 		}
-		update_post_meta( $post_id, '_pronamic_gateway_multi_gateway_enabled_payment_gateways', $post['_pronamic_gateway_multi_gateway_enabled_payment_gateways'] );
+
+		update_post_meta( $post_id, '_pronamic_gateway_multi_gateway_enabled_payment_gateways', $enabled_payment_gateways );
 	}
 }

@@ -104,12 +104,9 @@ function knit_pay_check_payment_status(utr = '') {
 	}, function (msg) {
 		if ('' !== utr && msg.data == 'Open') {
 			Swal.fire({
-				title: 'UTR Submitted!',
-				text: 'We have received your UTR number. Please wait while we confirm the payment.',
-				icon: 'success',
-				showConfirmButton: false,
-				timer: 3000,
-				allowOutsideClick: false
+				'title': 'Transaction Not Found!',
+				'text': 'Please verify that the provided UTR is accurate.',
+				'icon': 'error'
 			}).then((result) => {
 				confirmPayment();
 			});

@@ -6,7 +6,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
 
 /**
  * Title: Razorpay Config
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 1.0.0
@@ -36,6 +36,8 @@ class Config extends GatewayConfig {
 	public $access_token;
 
 	public $refresh_token;
+
+	public $country;
 
 	public $company_name;
 

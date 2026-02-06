@@ -10,7 +10,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: SSLCommerz Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.80.0.0
@@ -84,7 +84,7 @@ class Gateway extends Core_Gateway {
 			$customer_phone = $billing_address->get_phone();
 		}
 
-		$customer_name  = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 40 );
+		$customer_name  = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 40 );
 		$customer_email = $customer->get_email();
 		$return_url     = $payment->get_return_url();
 

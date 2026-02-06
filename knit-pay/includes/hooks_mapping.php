@@ -8,3 +8,7 @@ add_action(
 	0,
 	4
 );
+
+function knit_pay_plugin() {
+	return pronamic_pay_plugin();
+}

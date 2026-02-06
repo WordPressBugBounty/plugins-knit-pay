@@ -111,6 +111,6 @@
 	}
 
 	.im-modal-content {
-	  background: white;
+		background: white;
 	}
 </style>

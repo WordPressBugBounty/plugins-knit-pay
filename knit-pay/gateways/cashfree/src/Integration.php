@@ -8,7 +8,7 @@ use KnitPay\Gateways\IntegrationOAuthClient;
 
 /**
  * Title: Cashfree Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 8.91.0.0
@@ -120,8 +120,6 @@ class Integration extends IntegrationOAuthClient {
 
 		// OAuth.
 		$config->merchant_id           = $this->get_meta( $post_id, 'cashfree_merchant_id' );
-		$config->is_connected          = $this->get_meta( $post_id, 'cashfree_is_connected' );
-		$config->connected_at          = $this->get_meta( $post_id, 'cashfree_connected_at' );
 		$config->expires_at            = $this->get_meta( $post_id, 'cashfree_expires_at' );
 		$config->access_token          = $this->get_meta( $post_id, 'cashfree_access_token' );
 		$config->refresh_token         = $this->get_meta( $post_id, 'cashfree_refresh_token' );
@@ -166,14 +164,6 @@ class Integration extends IntegrationOAuthClient {
 	}
 
 	public function clear_child_config( $config_id ) {
-		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_is_connected' );
-		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_expires_at' );
-		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_connected_at' );
-		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_access_token' );
-		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_refresh_token' );
-		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_merchant_id' );
-		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_connection_fail_count' );
-
 		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_api_id' );
 		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_secret_key' );
 	}

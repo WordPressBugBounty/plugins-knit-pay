@@ -15,7 +15,7 @@ use EM_Multiple_Bookings;
 /**
  * Title: Events Manager Pro Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -56,7 +56,7 @@ class Gateway extends EM_Gateway {
 	 * Outputs some JavaScript during the em_booking_js action, which is run inside a script html tag.
 	 */
 	function em_booking_js() {
-		include dirname( __FILE__ ) . '/assets/js/gateway.knit_pay.js';
+		include __DIR__ . '/assets/js/gateway.knit_pay.js';
 	}
 
 	/*
@@ -226,11 +226,11 @@ class Gateway extends EM_Gateway {
 		?>
 		<table class="form-table">
 		<tbody>
-		  <?php em_options_input_text( esc_html__( 'Success Message', 'knit-pay-lang' ), 'em_' . $this->gateway . '_booking_feedback', esc_html__( 'The message that is shown to a user when a booking is successful whilst being redirected for payment.', 'knit-pay-lang' ), __( 'Please wait whilst you are redirected to proceed with payment.', 'knit-pay-lang' ) ); ?>
-		  <?php em_options_input_text( esc_html__( 'Success Free Message', 'knit-pay-lang' ), 'em_' . $this->gateway . '_booking_feedback_free', esc_html__( 'If some cases if you allow a free ticket (e.g. pay at gate) as well as paid tickets, this message will be shown and the user will not be redirected.', 'knit-pay-lang' ), __( 'Booking successful.', 'events-manager' ) ); ?>
-		  <?php em_options_input_text( esc_html__( 'Thank You Message', 'knit-pay-lang' ), 'em_' . $this->gateway . '_booking_feedback_completed', esc_html__( 'If you choose to return users to the default Events Manager thank you page after a user has paid, you can customize the thank you message here.', 'knit-pay-lang' ), __( 'Thank you for your payment. Your transaction has been completed, and a receipt for your purchase has been emailed to you along with a separate email containing account details to access your booking information on this site.', 'knit-pay-lang' ) ); ?>
-		  <?php em_options_select( esc_html__( 'Configuration', 'knit-pay-lang' ), 'em_' . $this->gateway . '_config_id', Plugin::get_config_select_options( $this->gateway ) ); // TODO default value ?>
-		  <?php em_options_input_text( esc_html__( 'Payment Description', 'knit-pay-lang' ), 'em_' . $this->gateway . '_payment_description', sprintf( __( 'Available tags: %s', 'knit-pay-lang' ), sprintf( '<code>%s</code>', '{booking_id}' ) ), __( 'Events Manager Pro {booking_id}', 'knit-pay-lang' ) ); ?>
+			<?php em_options_input_text( esc_html__( 'Success Message', 'knit-pay-lang' ), 'em_' . $this->gateway . '_booking_feedback', esc_html__( 'The message that is shown to a user when a booking is successful whilst being redirected for payment.', 'knit-pay-lang' ), __( 'Please wait whilst you are redirected to proceed with payment.', 'knit-pay-lang' ) ); ?>
+			<?php em_options_input_text( esc_html__( 'Success Free Message', 'knit-pay-lang' ), 'em_' . $this->gateway . '_booking_feedback_free', esc_html__( 'If some cases if you allow a free ticket (e.g. pay at gate) as well as paid tickets, this message will be shown and the user will not be redirected.', 'knit-pay-lang' ), __( 'Booking successful.', 'knit-pay-lang' ) ); ?>
+			<?php em_options_input_text( esc_html__( 'Thank You Message', 'knit-pay-lang' ), 'em_' . $this->gateway . '_booking_feedback_completed', esc_html__( 'If you choose to return users to the default Events Manager thank you page after a user has paid, you can customize the thank you message here.', 'knit-pay-lang' ), __( 'Thank you for your payment. Your transaction has been completed, and a receipt for your purchase has been emailed to you along with a separate email containing account details to access your booking information on this site.', 'knit-pay-lang' ) ); ?>
+			<?php em_options_select( esc_html__( 'Configuration', 'knit-pay-lang' ), 'em_' . $this->gateway . '_config_id', Plugin::get_config_select_options( $this->gateway ) ); // TODO default value ?>
+			<?php em_options_input_text( esc_html__( 'Payment Description', 'knit-pay-lang' ), 'em_' . $this->gateway . '_payment_description', sprintf( __( 'Available tags: %s', 'knit-pay-lang' ), sprintf( '<code>%s</code>', '{booking_id}' ) ), __( 'Events Manager Pro {booking_id}', 'knit-pay-lang' ) ); ?>
 		</tbody>
 		</table>
 		<?php
@@ -267,5 +267,4 @@ class Gateway extends EM_Gateway {
 		$form .= '</form>';
 		return $form;
 	}
-
 }

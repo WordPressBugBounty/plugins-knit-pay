@@ -5,7 +5,7 @@ namespace KnitPay\Extensions\EngineThemes;
 /**
  * Title: Engine Themes Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -55,7 +55,7 @@ class Gateway {
 					<?php echo $this->get_title(); ?>
 					<span><?php echo $this->setting['description']; ?></span>
 				</span>
-				<a data-toggle="collapse" data-parent="#fre-payment-accordion" href="#fre-payment-<?php echo $this->id; ?>" class="btn collapsed select-payment" data-type="<?php echo $this->id; ?>"><?php _e( 'Select', ET_DOMAIN ); ?></a>
+				<a data-toggle="collapse" data-parent="#fre-payment-accordion" href="#fre-payment-<?php echo $this->id; ?>" class="btn collapsed select-payment" data-type="<?php echo $this->id; ?>"><?php _e( 'Select', 'knit-pay-lang' ); ?></a>
 			</li>
 			<?php
 		endif;

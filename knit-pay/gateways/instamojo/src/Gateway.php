@@ -17,7 +17,7 @@ require_once 'lib/Instamojo.php';
 
 /**
  * Title: Instamojo Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 1.0.0
@@ -26,6 +26,8 @@ require_once 'lib/Instamojo.php';
 class Gateway extends Core_Gateway {
 	// TODO use instead of NAME \get_post_meta( $config_id, '_pronamic_gateway_id', true );
 	const NAME = 'instamojo';
+
+	private $instamojo_api;
 	
 	/**
 	 * Config
@@ -46,27 +48,32 @@ class Gateway extends Core_Gateway {
 		$this->config = $config;
 
 		$this->set_method( self::METHOD_HTML_FORM );
+		$this->default_currency     = 'INR';
+		$this->supported_currencies = [ 'INR' ];
 
 		// Supported features.
 		$this->supports = [
 			'payment_status_request',
 			'refunds',
 		];
-		
+
 		$this->test_mode = 0;
 		if ( self::MODE_TEST === $this->mode ) {
 			$this->test_mode = 1;
 		}
 
-		$this->payment_page_title = 'Payment Page';
+		$this->payment_page_title       = 'Payment Page';
+		$this->payment_page_description = '<p>Please click the "Pay" button below if payment box does not open automatically.</p>';
 
 		$this->register_payment_methods();
 	}
 
 	private function register_payment_methods() {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
-		$this->register_payment_method( new PaymentMethod( PaymentMethods::UPI ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::DEBIT_CARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::CARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::UPI ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::UPI_COLLECT ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::NET_BANKING ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::INSTAMOJO ) );
 	}
@@ -185,7 +192,7 @@ class Gateway extends Core_Gateway {
 		require_once 'views/checkout.php';
 
 		$script = '';
-		if ( ! ( defined( '\PRONAMIC_PAY_DEBUG' ) && \PRONAMIC_PAY_DEBUG ) ) {
+		if ( ! ( defined( '\KNIT_PAY_DEBUG' ) && \KNIT_PAY_DEBUG ) ) {
 			$script .= '<script type="text/javascript">document.getElementById("instamojo-pay-button").click();</script>';
 		}
 
@@ -218,9 +225,13 @@ class Gateway extends Core_Gateway {
 
 		$payment_request = $this->instamojo_api->get_payment_request_by_id( $payment_request_id );
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( empty( $payment_request->payments ) && isset( $_GET['payment_status'] ) && 'Failed' === $_GET['payment_status'] ) {
 			$payment->set_status( PaymentStatus::CANCELLED );
-			$payment->add_note( 'Instamojo Payment Status: Failed.<br>Payment Request ID: ' . $payment_request_id . '<br>Payment ID: ' . $_GET['payment_id'] );
+
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$instamojo_payment_id = isset( $_GET['payment_id'] ) ? sanitize_text_field( $_GET['payment_id'] ) : '';
+			$payment->add_note( 'Instamojo Payment Status: Failed.<br>Payment Request ID: ' . $payment_request_id . '<br>Payment ID: ' . $instamojo_payment_id );
 			return;
 		}
 
@@ -250,6 +261,8 @@ class Gateway extends Core_Gateway {
 			}
 
 			$payment->set_status( Statuses::transform_payment_status( $payment_details->status ) );
+
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
 			$payment->add_note( 'Instamojo Payment Request Status: ' . $payment_request_status . '<br>Instamojo Payment Status: ' . var_export( $payment_details->status, true ) . '<br>Payment Request ID: ' . $payment_request_id . '<br>Payment ID: ' . $payment_id );
 		}
 
@@ -289,7 +302,7 @@ class Gateway extends Core_Gateway {
 
 			$user = get_user_by( 'email', $payment_details->email );
 			if ( false !== $user ) {
-				$payment->user_id = $user->ID;
+				$customer->set_user_id( $user->ID );
 			}
 		}
 
@@ -316,7 +329,9 @@ class Gateway extends Core_Gateway {
 	}
 
 	private function get_payment_id( $payment_details ) {
-		if ( filter_has_var( INPUT_GET, 'payment_id' ) ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_GET['payment_id'] ) ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return \sanitize_text_field( \wp_unslash( $_GET['payment_id'] ) );
 		}
 
@@ -359,25 +374,5 @@ class Gateway extends Core_Gateway {
 			throw new Exception( __( 'Something went wrong.', 'knit-pay-lang' ) );
 		}
 		$refund->psp_id = $instamojo_refund->id;
-	}
-
-	/**
-	 * Redirect via HTML.
-	 *
-	 * @see Core_Gateway::redirect_via_html()
-	 *
-	 * @param Payment $payment The payment to redirect for.
-	 * @return void
-	 */
-	public function redirect_via_html( Payment $payment ) {
-		if ( headers_sent() ) {
-			parent::redirect_via_html( $payment );
-		} else {
-			Core_Util::no_cache();
-
-			include KNITPAY_DIR . '/views/redirect-via-html-for-iframe.php';
-		}
-
-		exit;
 	}
 }

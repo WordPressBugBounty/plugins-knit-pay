@@ -17,7 +17,7 @@ use CampTix_Plugin;
 /**
  * Title: CampTix Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -34,6 +34,7 @@ class Gateway extends CampTix_Payment_Method {
 	 * The following variables are required for every payment method.
 	 */
 	public $id                   = '';
+	public $kp_payment_method    = '';
 	public $name                 = 'Online Payment';
 	public $description          = ' ';
 	public $supported_currencies = [
@@ -156,7 +157,7 @@ class Gateway extends CampTix_Payment_Method {
 		'YER',
 		'ZAR',
 		'ZMW',
-		// Zero decimal currencies (https://stripe.com/docs/currencies#zero-decimal)
+		// Zero decimal currencies (https://stripe.com/docs/currencies#zero-decimal).
 		'BIF',
 		'CLP',
 		'DJF',
@@ -186,10 +187,14 @@ class Gateway extends CampTix_Payment_Method {
 	 */
 	protected $options = [];
 	
-	public function __construct( $id, $name ) {
-		$this->id          = $id;
-		$this->name        = $name;
-		$this->description = __( 'Pay via ', 'knit-pay-lang' ) . $name;
+	public function __construct( $kp_payment_method, $name ) {
+		$this->id = 'knit_pay';
+		if ( 'knit_pay' !== $kp_payment_method ) {
+			$this->id .= '_' . $kp_payment_method;
+		}
+		$this->kp_payment_method = $kp_payment_method;
+		$this->name              = $name;
+		$this->description       = __( 'Pay via ', 'knit-pay-lang' ) . $name;
 		parent::__construct();
 	}
 	
@@ -198,7 +203,7 @@ class Gateway extends CampTix_Payment_Method {
 	 *
 	 * @see CampTix_Addon
 	 */
-	function camptix_init() {
+	public function camptix_init() {
 		$this->options = array_merge(
 			[
 				'title'               => '',
@@ -232,13 +237,17 @@ class Gateway extends CampTix_Payment_Method {
 	 * helper function to add typical settings fields. Don't forget to
 	 * validate them all in validate_options.
 	 */
-	function payment_settings_fields() {
+	public function payment_settings_fields() {
 		// Title.
+		$payment_method_name = PaymentMethods::get_name( $this->kp_payment_method, ucwords( $this->kp_payment_method ) );
+		if ( 'Knit_pay' === $payment_method_name ) {
+			$payment_method_name = 'Default';
+		}
 		$description = sprintf(
 			__( 'It will be displayed on checkout page for payment method %s', 'knit-pay-lang' ),
-			$this->id
+			$this->kp_payment_method
 		);
-		$this->add_settings_field_helper( 'title', __( 'Title - ', 'knit-pay-lang' ) . PaymentMethods::get_name( $this->id ), [ $this, 'input_field' ], $description );
+		$this->add_settings_field_helper( 'title', __( 'Title - ', 'knit-pay-lang' ) . $payment_method_name, [ $this, 'input_field' ], $description );
 
 
 		// Description.
@@ -282,7 +291,7 @@ class Gateway extends CampTix_Payment_Method {
 		
 		if ( isset( $args['description'] ) ) {
 			printf(
-				'<p class="pronamic-pay-description description">%s</p>',
+				'<p class="knit-pay-description description">%s</p>',
                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$args['description']
 			);
@@ -299,7 +308,7 @@ class Gateway extends CampTix_Payment_Method {
 		$args['label_for'] = $args['name'];
 		$args['class']     = 'regular-text';
 		
-		$configurations    = Plugin::get_config_select_options();
+		$configurations    = Plugin::get_config_select_options( $this->kp_payment_method );
 		$configurations[0] = __( '— Default Gateway —', 'knit-pay-lang' );
 		
 		$configuration_options              = [];
@@ -329,7 +338,7 @@ class Gateway extends CampTix_Payment_Method {
 	 *
 	 * @return array
 	 */
-	function validate_options( $input ) {
+	public function validate_options( $input ) {
 		$output = $this->options;
 
 		if ( isset( $input['title'] ) ) {
@@ -358,12 +367,12 @@ class Gateway extends CampTix_Payment_Method {
 	 *
 	 * @return int One of the CampTix_Plugin::PAYMENT_STATUS_{status} constants
 	 */
-	function payment_checkout( $payment_token ) {
+	public function payment_checkout( $payment_token ) {
 		/** @var CampTix_Plugin $camptix */
 		global $camptix;
 		
 		$config_id      = $this->options['config_id'];
-		$payment_method = $this->id;
+		$payment_method = $this->kp_payment_method;
 		
 		// Use default gateway if no configuration has been set.
 		if ( empty( $config_id ) ) {
@@ -397,7 +406,7 @@ class Gateway extends CampTix_Payment_Method {
 		$payment->set_customer( Helper::get_customer_from_attendee_detail( $attendee_detail ) );
 		
 		// Address.
-		$payment->set_billing_address( Helper::get_address_from_attendee_detail( $order ) );
+		$payment->set_billing_address( Helper::get_address_from_attendee_detail( $attendee_detail ) );
 		
 		// Currency.
 		$currency = Currency::get_instance( $this->camptix_options['currency'] );
@@ -418,7 +427,7 @@ class Gateway extends CampTix_Payment_Method {
 			$payment->save();
 			
 			// Execute a redirect.
-			wp_redirect( $payment->get_pay_redirect_url() );
+			wp_safe_redirect( $payment->get_pay_redirect_url() );
 			exit;
 		} catch ( \Exception $e ) {
 			$camptix->error( esc_html( $e->getMessage() ) );
@@ -465,7 +474,7 @@ class Gateway extends CampTix_Payment_Method {
 	 *
 	 * @return array
 	 */
-	function send_refund_request( $payment_token ) {
+	public function send_refund_request( $payment_token ) {
 		$order = $this->get_order( $payment_token );
 		
 		/** @var $camptix CampTix_Plugin */
@@ -497,6 +506,9 @@ class Gateway extends CampTix_Payment_Method {
 		if ( null === $payment ) {
 			return;
 		}
+
+		$currency = Currency::get_instance( $this->camptix_options['currency'] );
+		$payment->get_refunded_amount()->set_currency( $currency );
 
 		try {
 			$refund = new Refund( $payment, $payment->get_total_amount() );

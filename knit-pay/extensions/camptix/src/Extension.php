@@ -11,13 +11,13 @@ use CampTix_Plugin;
 /**
  * Title: CampTix extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
  * @since   8.74.0.0
  */
-// Plugin available at https://github.com/WordPress/wordcamp.org/tree/production/public_html/wp-content/plugins/camptix
+// Plugin available at https://github.com/WordPress/wordcamp.org/tree/production/public_html/wp-content/plugins/camptix.
 class Extension extends AbstractPluginIntegration {
 	/**
 	 * Slug
@@ -60,11 +60,16 @@ class Extension extends AbstractPluginIntegration {
 		add_filter( 'pronamic_payment_redirect_url_' . self::SLUG, [ $this, 'redirect_url' ], 10, 2 );
 		add_action( 'pronamic_payment_status_update_' . self::SLUG, [ $this, 'status_update' ], 10 );
 
+		// Add Custom Fileds in Checkout page of Camptix. Include only if "Camptix Indian Payments" is not installed.
+		if ( ! class_exists( 'Camptix_Indian_Payments' ) ) {
+			CustomCheckoutFields::get_instance()->setup();
+		}
+
 		/** @var CampTix_Plugin $camptix */
 		global $camptix;
 		$camptix->addons_loaded[] = new Gateway( 'knit_pay', 'Default' );
 		foreach ( PaymentMethods::get_active_payment_methods() as $payment_method ) {
-			$camptix->addons_loaded[] = new Gateway( 'knit_pay_' . $payment_method, PaymentMethods::get_name( $payment_method, ucwords( $payment_method ) ) );
+			$camptix->addons_loaded[] = new Gateway( $payment_method, PaymentMethods::get_name( $payment_method, ucwords( $payment_method ) ) );
 		}
 	}
 

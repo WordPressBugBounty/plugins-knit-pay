@@ -25,7 +25,7 @@
 		</table>
 
 		<p class="submit">
-			<input type="submit" value="<?php esc_attr_e( $button_text ); ?>" class="button-primary" name="<?php _e( 'Submit' ); ?>" />
+			<input type="submit" value="<?php esc_attr_e( $button_text, 'knit-pay-lang' ); ?>" class="button-primary" name="<?php _e( 'Submit', 'knit-pay-lang' ); ?>" />
 		</p>
 
 	</form>

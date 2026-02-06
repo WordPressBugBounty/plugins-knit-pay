@@ -10,10 +10,14 @@ class CheckoutForm extends PaymentResource
 {
     private $token;
     private $callbackUrl;
+    private $signature;
+    private $mdStatus;
 
     public static function retrieve(RetrieveCheckoutFormRequest $request, Options $options)
     {
-        $rawResult = parent::httpClient()->post($options->getBaseUrl() . "/payment/iyzipos/checkoutform/auth/ecom/detail", parent::getHttpHeaders($request, $options), $request->toJsonString());
+        $token = $request->getToken();
+        $uri = "/payment/iyzipos/checkoutform/auth/ecom/detail/";
+        $rawResult = parent::httpClient()->post($options->getBaseUrl() . $uri, parent::getHttpHeadersV2($uri, $request, $options), $request->toJsonString());
         return CheckoutFormMapper::create($rawResult)->jsonDecode()->mapCheckoutForm(new CheckoutForm());
     }
 
@@ -35,5 +39,25 @@ class CheckoutForm extends PaymentResource
     public function setCallbackUrl($callbackUrl)
     {
         $this->callbackUrl = $callbackUrl;
+    }
+
+    public function getSignature()
+    {
+        return $this->signature;
+    }
+
+    public function setSignature($signature)
+    {
+        return $this->signature = $signature;
+    }
+
+    public function getmdStatus()
+    {
+        return $this->mdStatus;
+    }
+
+    public function setmdStatus($mdStatus)
+    {
+        return $this->mdStatus = $mdStatus;
     }
 }

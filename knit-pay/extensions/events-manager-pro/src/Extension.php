@@ -10,7 +10,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 /**
  * Title: Events Manager Pro extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -203,5 +203,4 @@ class Extension extends AbstractPluginIntegration {
 	public function source_url( $url, Payment $payment ) {
 		return get_edit_post_link( $payment->source_id );
 	}
-
 }

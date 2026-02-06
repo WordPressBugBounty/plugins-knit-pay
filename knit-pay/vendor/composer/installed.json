@@ -2,42 +2,43 @@
     "packages": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v3.0.9",
-            "version_normalized": "3.0.9.0",
+            "version": "v5.0.15",
+            "version_normalized": "5.0.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "a571038214fc3e142e10f38d1bb97e470fa7b0ec"
+                "reference": "d5263d6ffa91dc0d0d39b1df54de1e9bb2091364"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/a571038214fc3e142e10f38d1bb97e470fa7b0ec",
-                "reference": "a571038214fc3e142e10f38d1bb97e470fa7b0ec",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/d5263d6ffa91dc0d0d39b1df54de1e9bb2091364",
+                "reference": "d5263d6ffa91dc0d0d39b1df54de1e9bb2091364",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.1 || ^2.0",
-                "php": ">=7.0"
+                "composer-plugin-api": "^2.2",
+                "php": ">=7.2"
             },
             "require-dev": {
-                "automattic/jetpack-changelogger": "^4.2.5",
-                "composer/composer": "^1.1 || ^2.0",
-                "yoast/phpunit-polyfills": "1.1.0"
+                "automattic/jetpack-changelogger": "^6.0.12",
+                "automattic/phpunit-select-config": "^1.0.3",
+                "composer/composer": "^2.2",
+                "yoast/phpunit-polyfills": "^4.0.0"
             },
-            "time": "2024-07-10T07:51:07+00:00",
+            "time": "2025-12-15T11:22:11+00:00",
             "type": "composer-plugin",
             "extra": {
-                "autotagger": true,
                 "class": "Automattic\\Jetpack\\Autoloader\\CustomAutoloaderPlugin",
+                "autotagger": true,
                 "mirror-repo": "Automattic/jetpack-autoloader",
+                "branch-alias": {
+                    "dev-trunk": "5.0.x-dev"
+                },
                 "changelogger": {
                     "link-template": "https://github.com/Automattic/jetpack-autoloader/compare/v${old}...v${new}"
                 },
                 "version-constants": {
                     "::VERSION": "src/AutoloadGenerator.php"
-                },
-                "branch-alias": {
-                    "dev-trunk": "3.0.x-dev"
                 }
             },
             "installation-source": "dist",
@@ -63,7 +64,7 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v3.0.9"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.15"
             },
             "install-path": "../automattic/jetpack-autoloader"
         },
@@ -137,33 +138,45 @@
             "install-path": "../clue/stream-filter"
         },
         {
-            "name": "graham-campbell/result-type",
-            "version": "v1.1.3",
-            "version_normalized": "1.1.3.0",
+            "name": "composer/installers",
+            "version": "v2.3.0",
+            "version_normalized": "2.3.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/GrahamCampbell/Result-Type.git",
-                "reference": "3ba905c11371512af9d9bdd27d99b782216b6945"
+                "url": "https://github.com/composer/installers.git",
+                "reference": "12fb2dfe5e16183de69e784a7b84046c43d97e8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GrahamCampbell/Result-Type/zipball/3ba905c11371512af9d9bdd27d99b782216b6945",
-                "reference": "3ba905c11371512af9d9bdd27d99b782216b6945",
+                "url": "https://api.github.com/repos/composer/installers/zipball/12fb2dfe5e16183de69e784a7b84046c43d97e8e",
+                "reference": "12fb2dfe5e16183de69e784a7b84046c43d97e8e",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2.5 || ^8.0",
-                "phpoption/phpoption": "^1.9.3"
+                "composer-plugin-api": "^1.0 || ^2.0",
+                "php": "^7.2 || ^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.5.39 || ^9.6.20 || ^10.5.28"
+                "composer/composer": "^1.10.27 || ^2.7",
+                "composer/semver": "^1.7.2 || ^3.4.0",
+                "phpstan/phpstan": "^1.11",
+                "phpstan/phpstan-phpunit": "^1",
+                "symfony/phpunit-bridge": "^7.1.1",
+                "symfony/process": "^5 || ^6 || ^7"
             },
-            "time": "2024-07-20T21:45:45+00:00",
-            "type": "library",
+            "time": "2024-06-24T20:46:46+00:00",
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Composer\\Installers\\Plugin",
+                "branch-alias": {
+                    "dev-main": "2.x-dev"
+                },
+                "plugin-modifies-install-path": true
+            },
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "GrahamCampbell\\ResultType\\": "src/"
+                    "Composer\\Installers\\": "src/Composer/Installers"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -172,54 +185,126 @@
             ],
             "authors": [
                 {
-                    "name": "Graham Campbell",
-                    "email": "hello@gjcampbell.co.uk",
-                    "homepage": "https://github.com/GrahamCampbell"
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama"
                 }
             ],
-            "description": "An Implementation Of The Result Type",
+            "description": "A multi-framework Composer library installer",
+            "homepage": "https://composer.github.io/installers/",
             "keywords": [
-                "Graham Campbell",
-                "GrahamCampbell",
-                "Result Type",
-                "Result-Type",
-                "result"
+                "Dolibarr",
+                "Eliasis",
+                "Hurad",
+                "ImageCMS",
+                "Kanboard",
+                "Lan Management System",
+                "MODX Evo",
+                "MantisBT",
+                "Mautic",
+                "Maya",
+                "OXID",
+                "Plentymarkets",
+                "Porto",
+                "RadPHP",
+                "SMF",
+                "Starbug",
+                "Thelia",
+                "Whmcs",
+                "WolfCMS",
+                "agl",
+                "annotatecms",
+                "attogram",
+                "bitrix",
+                "cakephp",
+                "chef",
+                "cockpit",
+                "codeigniter",
+                "concrete5",
+                "concreteCMS",
+                "croogo",
+                "dokuwiki",
+                "drupal",
+                "eZ Platform",
+                "elgg",
+                "expressionengine",
+                "fuelphp",
+                "grav",
+                "installer",
+                "itop",
+                "known",
+                "kohana",
+                "laravel",
+                "lavalite",
+                "lithium",
+                "magento",
+                "majima",
+                "mako",
+                "matomo",
+                "mediawiki",
+                "miaoxing",
+                "modulework",
+                "modx",
+                "moodle",
+                "osclass",
+                "pantheon",
+                "phpbb",
+                "piwik",
+                "ppi",
+                "processwire",
+                "puppet",
+                "pxcms",
+                "reindex",
+                "roundcube",
+                "shopware",
+                "silverstripe",
+                "sydes",
+                "sylius",
+                "tastyigniter",
+                "wordpress",
+                "yawik",
+                "zend",
+                "zikula"
             ],
             "support": {
-                "issues": "https://github.com/GrahamCampbell/Result-Type/issues",
-                "source": "https://github.com/GrahamCampbell/Result-Type/tree/v1.1.3"
+                "issues": "https://github.com/composer/installers/issues",
+                "source": "https://github.com/composer/installers/tree/v2.3.0"
             },
             "funding": [
                 {
-                    "url": "https://github.com/GrahamCampbell",
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/composer",
                     "type": "github"
                 },
                 {
-                    "url": "https://tidelift.com/funding/github/packagist/graham-campbell/result-type",
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../graham-campbell/result-type"
+            "install-path": "./installers"
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.9.2",
-            "version_normalized": "7.9.2.0",
+            "version": "7.10.0",
+            "version_normalized": "7.10.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "d281ed313b989f213357e3be1a179f02196ac99b"
+                "reference": "b51ac707cfa420b7bfd4e4d5e510ba8008e822b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/d281ed313b989f213357e3be1a179f02196ac99b",
-                "reference": "d281ed313b989f213357e3be1a179f02196ac99b",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/b51ac707cfa420b7bfd4e4d5e510ba8008e822b4",
+                "reference": "b51ac707cfa420b7bfd4e4d5e510ba8008e822b4",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "guzzlehttp/promises": "^1.5.3 || ^2.0.3",
-                "guzzlehttp/psr7": "^2.7.0",
+                "guzzlehttp/promises": "^2.3",
+                "guzzlehttp/psr7": "^2.8",
                 "php": "^7.2.5 || ^8.0",
                 "psr/http-client": "^1.0",
                 "symfony/deprecation-contracts": "^2.2 || ^3.0"
@@ -240,7 +325,7 @@
                 "ext-intl": "Required for Internationalized Domain Name (IDN) support",
                 "psr/log": "Required for using the Log middleware"
             },
-            "time": "2024-07-24T11:22:20+00:00",
+            "time": "2025-08-23T22:36:01+00:00",
             "type": "library",
             "extra": {
                 "bamarni-bin": {
@@ -312,7 +397,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.9.2"
+                "source": "https://github.com/guzzle/guzzle/tree/7.10.0"
             },
             "funding": [
                 {
@@ -332,17 +417,17 @@
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "2.0.3",
-            "version_normalized": "2.0.3.0",
+            "version": "2.3.0",
+            "version_normalized": "2.3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "6ea8dd08867a2a42619d65c3deb2c0fcbf81c8f8"
+                "reference": "481557b130ef3790cf82b713667b43030dc9c957"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/6ea8dd08867a2a42619d65c3deb2c0fcbf81c8f8",
-                "reference": "6ea8dd08867a2a42619d65c3deb2c0fcbf81c8f8",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/481557b130ef3790cf82b713667b43030dc9c957",
+                "reference": "481557b130ef3790cf82b713667b43030dc9c957",
                 "shasum": ""
             },
             "require": {
@@ -350,9 +435,9 @@
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
-                "phpunit/phpunit": "^8.5.39 || ^9.6.20"
+                "phpunit/phpunit": "^8.5.44 || ^9.6.25"
             },
-            "time": "2024-07-18T10:29:17+00:00",
+            "time": "2025-08-22T14:34:08+00:00",
             "type": "library",
             "extra": {
                 "bamarni-bin": {
@@ -398,7 +483,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/2.0.3"
+                "source": "https://github.com/guzzle/promises/tree/2.3.0"
             },
             "funding": [
                 {
@@ -418,17 +503,17 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.7.0",
-            "version_normalized": "2.7.0.0",
+            "version": "2.8.0",
+            "version_normalized": "2.8.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "a70f5c95fb43bc83f07c9c948baa0dc1829bf201"
+                "reference": "21dc724a0583619cd1652f673303492272778051"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/a70f5c95fb43bc83f07c9c948baa0dc1829bf201",
-                "reference": "a70f5c95fb43bc83f07c9c948baa0dc1829bf201",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/21dc724a0583619cd1652f673303492272778051",
+                "reference": "21dc724a0583619cd1652f673303492272778051",
                 "shasum": ""
             },
             "require": {
@@ -444,12 +529,12 @@
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
                 "http-interop/http-factory-tests": "0.9.0",
-                "phpunit/phpunit": "^8.5.39 || ^9.6.20"
+                "phpunit/phpunit": "^8.5.44 || ^9.6.25"
             },
             "suggest": {
                 "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
             },
-            "time": "2024-07-18T11:15:46+00:00",
+            "time": "2025-08-23T21:21:41+00:00",
             "type": "library",
             "extra": {
                 "bamarni-bin": {
@@ -517,7 +602,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.7.0"
+                "source": "https://github.com/guzzle/psr7/tree/2.8.0"
             },
             "funding": [
                 {
@@ -537,28 +622,28 @@
         },
         {
             "name": "iyzico/iyzipay-php",
-            "version": "v2.0.55",
-            "version_normalized": "2.0.55.0",
+            "version": "v2.0.59",
+            "version_normalized": "2.0.59.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/iyzico/iyzipay-php.git",
-                "reference": "4f6abcd1f4a1ec5db3f6d840e08cd57c910aeff2"
+                "reference": "eccfa97465d78143dbe112886baeaf863619c074"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/iyzico/iyzipay-php/zipball/4f6abcd1f4a1ec5db3f6d840e08cd57c910aeff2",
-                "reference": "4f6abcd1f4a1ec5db3f6d840e08cd57c910aeff2",
+                "url": "https://api.github.com/repos/iyzico/iyzipay-php/zipball/eccfa97465d78143dbe112886baeaf863619c074",
+                "reference": "eccfa97465d78143dbe112886baeaf863619c074",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
-                "php": ">=5.3.0"
+                "php": ">=7.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0",
+                "phpunit/phpunit": "~9.6",
                 "satooshi/php-coveralls": "~0.6.1"
             },
-            "time": "2024-05-28T12:32:40+00:00",
+            "time": "2025-05-05T14:25:39+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -590,48 +675,115 @@
             ],
             "support": {
                 "issues": "https://github.com/iyzico/iyzipay-php/issues",
-                "source": "https://github.com/iyzico/iyzipay-php/tree/v2.0.55"
+                "source": "https://github.com/iyzico/iyzipay-php/tree/v2.0.59"
             },
             "install-path": "../iyzico/iyzipay-php"
         },
         {
-            "name": "moneyphp/money",
-            "version": "v4.4.0",
-            "version_normalized": "4.4.0.0",
+            "name": "knit-pay/omnipay-paypal",
+            "version": "v1.0.3",
+            "version_normalized": "1.0.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/moneyphp/money.git",
-                "reference": "5e60aebf09f709dd4ea16bf85e66d65301c0d172"
+                "url": "https://github.com/knit-pay/omnipay-paypal.git",
+                "reference": "93bdd73854bbac6b73b28c3f766ae05de734c925"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moneyphp/money/zipball/5e60aebf09f709dd4ea16bf85e66d65301c0d172",
-                "reference": "5e60aebf09f709dd4ea16bf85e66d65301c0d172",
+                "url": "https://api.github.com/repos/knit-pay/omnipay-paypal/zipball/93bdd73854bbac6b73b28c3f766ae05de734c925",
+                "reference": "93bdd73854bbac6b73b28c3f766ae05de734c925",
+                "shasum": ""
+            },
+            "require": {
+                "omnipay/common": "^3",
+                "php": "^7.2|^8.0"
+            },
+            "replace": {
+                "omnipay/paypal": "^3.0"
+            },
+            "require-dev": {
+                "omnipay/tests": "^4.1.2",
+                "squizlabs/php_codesniffer": "^3"
+            },
+            "time": "2025-12-09T18:41:49+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Omnipay\\PayPal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Knit Pay",
+                    "homepage": "https://github.com/knit-pay/omnipay-paypal"
+                }
+            ],
+            "description": "PayPal gateway for Omnipay payment processing library",
+            "homepage": "https://github.com/thephpleague/omnipay-paypal",
+            "keywords": [
+                "gateway",
+                "merchant",
+                "omnipay",
+                "pay",
+                "payment",
+                "paypal",
+                "purchase"
+            ],
+            "support": {
+                "source": "https://github.com/knit-pay/omnipay-paypal/tree/v1.0.3"
+            },
+            "install-path": "../knit-pay/omnipay-paypal"
+        },
+        {
+            "name": "moneyphp/money",
+            "version": "v4.8.0",
+            "version_normalized": "4.8.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moneyphp/money.git",
+                "reference": "b358727ea5a5cd2d7475e59c31dfc352440ae7ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moneyphp/money/zipball/b358727ea5a5cd2d7475e59c31dfc352440ae7ec",
+                "reference": "b358727ea5a5cd2d7475e59c31dfc352440ae7ec",
                 "shasum": ""
             },
             "require": {
                 "ext-bcmath": "*",
                 "ext-filter": "*",
                 "ext-json": "*",
-                "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0"
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0"
             },
             "require-dev": {
                 "cache/taggable-cache": "^1.1.0",
-                "doctrine/coding-standard": "^9.0",
-                "doctrine/instantiator": "^1.4.0",
+                "doctrine/coding-standard": "^12.0",
+                "doctrine/instantiator": "^1.5.0 || ^2.0",
                 "ext-gmp": "*",
                 "ext-intl": "*",
-                "florianv/exchanger": "^2.6.3",
+                "florianv/exchanger": "^2.8.1",
                 "florianv/swap": "^4.3.0",
-                "moneyphp/crypto-currencies": "^1.0.0",
-                "moneyphp/iso-currencies": "^3.2.1",
-                "php-http/message": "^1.11.0",
-                "php-http/mock-client": "^1.4.1",
+                "moneyphp/crypto-currencies": "^1.1.0",
+                "moneyphp/iso-currencies": "^3.4",
+                "php-http/message": "^1.16.0",
+                "php-http/mock-client": "^1.6.0",
                 "phpbench/phpbench": "^1.2.5",
-                "phpunit/phpunit": "^9.5.4",
-                "psalm/plugin-phpunit": "^0.18.4",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^2.1.9",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpunit/phpunit": "^10.5.9",
                 "psr/cache": "^1.0.1 || ^2.0 || ^3.0",
-                "vimeo/psalm": "~5.15.0"
+                "ticketswap/phpstan-error-formatter": "^1.1"
             },
             "suggest": {
                 "ext-gmp": "Calculate without integer limits",
@@ -640,7 +792,7 @@
                 "florianv/swap": "Exchange rates library for PHP",
                 "psr/cache-implementation": "Used for Currency caching"
             },
-            "time": "2024-01-24T08:29:16+00:00",
+            "time": "2025-10-23T07:55:09+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -681,49 +833,50 @@
             ],
             "support": {
                 "issues": "https://github.com/moneyphp/money/issues",
-                "source": "https://github.com/moneyphp/money/tree/v4.4.0"
+                "source": "https://github.com/moneyphp/money/tree/v4.8.0"
             },
             "install-path": "../moneyphp/money"
         },
         {
             "name": "omnipay/common",
-            "version": "v3.3.0",
-            "version_normalized": "3.3.0.0",
+            "version": "v3.5.0",
+            "version_normalized": "3.5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-common.git",
-                "reference": "2eca3823e9069e2c36b6007a090577d5584f9518"
+                "reference": "17ce9d4702be5e879d4de5175392a1ffd13afe22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-common/zipball/2eca3823e9069e2c36b6007a090577d5584f9518",
-                "reference": "2eca3823e9069e2c36b6007a090577d5584f9518",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-common/zipball/17ce9d4702be5e879d4de5175392a1ffd13afe22",
+                "reference": "17ce9d4702be5e879d4de5175392a1ffd13afe22",
                 "shasum": ""
             },
             "require": {
                 "moneyphp/money": "^3.1|^4.0.3",
-                "php": "^7.2|^8",
+                "php": "^8",
                 "php-http/client-implementation": "^1",
                 "php-http/discovery": "^1.14",
                 "php-http/message": "^1.5",
-                "php-http/message-factory": "^1.1",
-                "symfony/http-foundation": "^2.1|^3|^4|^5|^6|^7"
+                "psr/http-factory": "^1",
+                "symfony/http-foundation": "^2.1|^3|^4|^5|^6|^7|^8"
             },
             "require-dev": {
                 "http-interop/http-factory-guzzle": "^1.1",
                 "omnipay/tests": "^4.1",
                 "php-http/guzzle7-adapter": "^1",
+                "php-http/message-factory": "^1.1",
                 "php-http/mock-client": "^1.6",
                 "squizlabs/php_codesniffer": "^3.8.1"
             },
             "suggest": {
                 "league/omnipay": "The default Omnipay package provides a default HTTP Adapter."
             },
-            "time": "2024-03-08T11:56:40+00:00",
+            "time": "2026-01-29T11:37:04+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1.x-dev"
+                    "dev-master": "3.5.x-dev"
                 }
             },
             "installation-source": "dist",
@@ -772,7 +925,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/omnipay-common/issues",
-                "source": "https://github.com/thephpleague/omnipay-common/tree/v3.3.0"
+                "source": "https://github.com/thephpleague/omnipay-common/tree/v3.5.0"
             },
             "funding": [
                 {
@@ -784,17 +937,17 @@
         },
         {
             "name": "payrexx/payrexx",
-            "version": "v1.8.8",
-            "version_normalized": "1.8.8.0",
+            "version": "v1.8.11",
+            "version_normalized": "1.8.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/payrexx/payrexx-php.git",
-                "reference": "16b16d280bf5d9b96641312cb45005440ec05e97"
+                "reference": "30bd92fa3d56586a06705477fafdba7b7bf3a0bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/payrexx/payrexx-php/zipball/16b16d280bf5d9b96641312cb45005440ec05e97",
-                "reference": "16b16d280bf5d9b96641312cb45005440ec05e97",
+                "url": "https://api.github.com/repos/payrexx/payrexx-php/zipball/30bd92fa3d56586a06705477fafdba7b7bf3a0bd",
+                "reference": "30bd92fa3d56586a06705477fafdba7b7bf3a0bd",
                 "shasum": ""
             },
             "require": {
@@ -803,7 +956,7 @@
             "require-dev": {
                 "phpstan/phpstan": "^1.9"
             },
-            "time": "2024-06-07T12:39:05+00:00",
+            "time": "2025-04-09T09:44:22+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -829,7 +982,7 @@
             ],
             "support": {
                 "issues": "https://github.com/payrexx/payrexx-php/issues",
-                "source": "https://github.com/payrexx/payrexx-php/tree/v1.8.8"
+                "source": "https://github.com/payrexx/payrexx-php/tree/v1.8.11"
             },
             "install-path": "../payrexx/payrexx"
         },
@@ -888,17 +1041,17 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.19.4",
-            "version_normalized": "1.19.4.0",
+            "version": "1.20.0",
+            "version_normalized": "1.20.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "0700efda8d7526335132360167315fdab3aeb599"
+                "reference": "82fe4c73ef3363caed49ff8dd1539ba06044910d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/0700efda8d7526335132360167315fdab3aeb599",
-                "reference": "0700efda8d7526335132360167315fdab3aeb599",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/82fe4c73ef3363caed49ff8dd1539ba06044910d",
+                "reference": "82fe4c73ef3363caed49ff8dd1539ba06044910d",
                 "shasum": ""
             },
             "require": {
@@ -925,7 +1078,7 @@
                 "sebastian/comparator": "^3.0.5 || ^4.0.8",
                 "symfony/phpunit-bridge": "^6.4.4 || ^7.0.1"
             },
-            "time": "2024-03-29T13:00:05+00:00",
+            "time": "2024-10-02T11:20:13+00:00",
             "type": "composer-plugin",
             "extra": {
                 "class": "Http\\Discovery\\Composer\\Plugin",
@@ -964,28 +1117,28 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/discovery/issues",
-                "source": "https://github.com/php-http/discovery/tree/1.19.4"
+                "source": "https://github.com/php-http/discovery/tree/1.20.0"
             },
             "install-path": "../php-http/discovery"
         },
         {
             "name": "php-http/guzzle7-adapter",
-            "version": "1.0.0",
-            "version_normalized": "1.0.0.0",
+            "version": "1.1.0",
+            "version_normalized": "1.1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/guzzle7-adapter.git",
-                "reference": "fb075a71dbfa4847cf0c2938c4e5a9c478ef8b01"
+                "reference": "03a415fde709c2f25539790fecf4d9a31bc3d0eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/guzzle7-adapter/zipball/fb075a71dbfa4847cf0c2938c4e5a9c478ef8b01",
-                "reference": "fb075a71dbfa4847cf0c2938c4e5a9c478ef8b01",
+                "url": "https://api.github.com/repos/php-http/guzzle7-adapter/zipball/03a415fde709c2f25539790fecf4d9a31bc3d0eb",
+                "reference": "03a415fde709c2f25539790fecf4d9a31bc3d0eb",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^7.0",
-                "php": "^7.2 | ^8.0",
+                "php": "^7.3 | ^8.0",
                 "php-http/httplug": "^2.0",
                 "psr/http-client": "^1.0"
             },
@@ -996,15 +1149,12 @@
             },
             "require-dev": {
                 "php-http/client-integration-tests": "^3.0",
+                "php-http/message-factory": "^1.1",
+                "phpspec/prophecy-phpunit": "^2.0",
                 "phpunit/phpunit": "^8.0|^9.3"
             },
-            "time": "2021-03-09T07:35:15+00:00",
+            "time": "2024-11-26T11:14:36+00:00",
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.2.x-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
@@ -1029,23 +1179,23 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/guzzle7-adapter/issues",
-                "source": "https://github.com/php-http/guzzle7-adapter/tree/1.0.0"
+                "source": "https://github.com/php-http/guzzle7-adapter/tree/1.1.0"
             },
             "install-path": "../php-http/guzzle7-adapter"
         },
         {
             "name": "php-http/httplug",
-            "version": "2.4.0",
-            "version_normalized": "2.4.0.0",
+            "version": "2.4.1",
+            "version_normalized": "2.4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/httplug.git",
-                "reference": "625ad742c360c8ac580fcc647a1541d29e257f67"
+                "reference": "5cad731844891a4c282f3f3e1b582c46839d22f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/httplug/zipball/625ad742c360c8ac580fcc647a1541d29e257f67",
-                "reference": "625ad742c360c8ac580fcc647a1541d29e257f67",
+                "url": "https://api.github.com/repos/php-http/httplug/zipball/5cad731844891a4c282f3f3e1b582c46839d22f4",
+                "reference": "5cad731844891a4c282f3f3e1b582c46839d22f4",
                 "shasum": ""
             },
             "require": {
@@ -1058,7 +1208,7 @@
                 "friends-of-phpspec/phpspec-code-coverage": "^4.1 || ^5.0 || ^6.0",
                 "phpspec/phpspec": "^5.1 || ^6.0 || ^7.0"
             },
-            "time": "2023-04-14T15:10:03+00:00",
+            "time": "2024-09-23T11:39:58+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1089,23 +1239,23 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/httplug/issues",
-                "source": "https://github.com/php-http/httplug/tree/2.4.0"
+                "source": "https://github.com/php-http/httplug/tree/2.4.1"
             },
             "install-path": "../php-http/httplug"
         },
         {
             "name": "php-http/message",
-            "version": "1.16.1",
-            "version_normalized": "1.16.1.0",
+            "version": "1.16.2",
+            "version_normalized": "1.16.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/message.git",
-                "reference": "5997f3289332c699fa2545c427826272498a2088"
+                "reference": "06dd5e8562f84e641bf929bfe699ee0f5ce8080a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/message/zipball/5997f3289332c699fa2545c427826272498a2088",
-                "reference": "5997f3289332c699fa2545c427826272498a2088",
+                "url": "https://api.github.com/repos/php-http/message/zipball/06dd5e8562f84e641bf929bfe699ee0f5ce8080a",
+                "reference": "06dd5e8562f84e641bf929bfe699ee0f5ce8080a",
                 "shasum": ""
             },
             "require": {
@@ -1131,7 +1281,7 @@
                 "laminas/laminas-diactoros": "Used with Diactoros Factories",
                 "slim/slim": "Used with Slim Framework PSR-7 implementation"
             },
-            "time": "2024-03-07T13:22:09+00:00",
+            "time": "2024-10-02T11:34:13+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1161,67 +1311,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/message/issues",
-                "source": "https://github.com/php-http/message/tree/1.16.1"
+                "source": "https://github.com/php-http/message/tree/1.16.2"
             },
             "install-path": "../php-http/message"
-        },
-        {
-            "name": "php-http/message-factory",
-            "version": "1.1.0",
-            "version_normalized": "1.1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-http/message-factory.git",
-                "reference": "4d8778e1c7d405cbb471574821c1ff5b68cc8f57"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-http/message-factory/zipball/4d8778e1c7d405cbb471574821c1ff5b68cc8f57",
-                "reference": "4d8778e1c7d405cbb471574821c1ff5b68cc8f57",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4",
-                "psr/http-message": "^1.0 || ^2.0"
-            },
-            "time": "2023-04-14T14:16:17+00:00",
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.x-dev"
-                }
-            },
-            "installation-source": "dist",
-            "autoload": {
-                "psr-4": {
-                    "Http\\Message\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Márk Sági-Kazár",
-                    "email": "mark.sagikazar@gmail.com"
-                }
-            ],
-            "description": "Factory interfaces for PSR-7 HTTP Message",
-            "homepage": "http://php-http.org",
-            "keywords": [
-                "factory",
-                "http",
-                "message",
-                "stream",
-                "uri"
-            ],
-            "support": {
-                "issues": "https://github.com/php-http/message-factory/issues",
-                "source": "https://github.com/php-http/message-factory/tree/1.1.0"
-            },
-            "abandoned": "psr/http-factory",
-            "install-path": "../php-http/message-factory"
         },
         {
             "name": "php-http/promise",
@@ -1279,96 +1371,198 @@
             "install-path": "../php-http/promise"
         },
         {
-            "name": "phpoption/phpoption",
-            "version": "1.9.3",
-            "version_normalized": "1.9.3.0",
+            "name": "pronamic/ideal-issuers",
+            "version": "v1.1.0",
+            "version_normalized": "1.1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/schmittjoh/php-option.git",
-                "reference": "e3fac8b24f56113f7cb96af14958c0dd16330f54"
+                "url": "https://github.com/pronamic/ideal-issuers.git",
+                "reference": "97308288279d669ea2a6578b5f5be6a65f62b127"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/e3fac8b24f56113f7cb96af14958c0dd16330f54",
-                "reference": "e3fac8b24f56113f7cb96af14958c0dd16330f54",
+                "url": "https://api.github.com/repos/pronamic/ideal-issuers/zipball/97308288279d669ea2a6578b5f5be6a65f62b127",
+                "reference": "97308288279d669ea2a6578b5f5be6a65f62b127",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2.5 || ^8.0"
+                "php": ">=8.1"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.8.2",
-                "phpunit/phpunit": "^8.5.39 || ^9.6.20 || ^10.5.28"
+                "phpstan/phpstan": "^1.11",
+                "pronamic/wp-coding-standards": "^2.2",
+                "pronamic/wp-pay-logos": "dev-main"
             },
-            "time": "2024-07-20T21:41:07+00:00",
+            "suggest": {
+                "pronamic/wp-pay-logos": "Add images to the iDEAL issuers"
+            },
+            "time": "2024-06-07T09:27:23+00:00",
             "type": "library",
-            "extra": {
-                "bamarni-bin": {
-                    "bin-links": true,
-                    "forward-command": false
-                },
-                "branch-alias": {
-                    "dev-master": "1.9-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "PhpOption\\": "src/PhpOption/"
+                    "Pronamic\\IDealIssuers\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache-2.0"
+                "GPL-2.0-or-later"
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
-                    "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh"
-                },
-                {
-                    "name": "Graham Campbell",
-                    "email": "hello@gjcampbell.co.uk",
-                    "homepage": "https://github.com/GrahamCampbell"
+                    "name": "Pronamic",
+                    "email": "info@pronamic.nl"
                 }
-            ],
-            "description": "Option Type for PHP",
-            "keywords": [
-                "language",
-                "option",
-                "php",
-                "type"
             ],
             "support": {
-                "issues": "https://github.com/schmittjoh/php-option/issues",
-                "source": "https://github.com/schmittjoh/php-option/tree/1.9.3"
+                "issues": "https://github.com/pronamic/ideal-issuers/issues",
+                "source": "https://github.com/pronamic/ideal-issuers/tree/v1.1.0"
             },
-            "funding": [
+            "install-path": "../pronamic/ideal-issuers"
+        },
+        {
+            "name": "pronamic/pronamic-pay-admin-reports",
+            "version": "dev-main",
+            "version_normalized": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/knit-pay/knit-pay-admin-reports",
+                "reference": "47de561c2aa160e825dfabc42684e321c4b9b298"
+            },
+            "require": {
+                "automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
+                "php": ">=8.1",
+                "pronamic/wp-money": "^2.4",
+                "woocommerce/action-scheduler": "^3.8",
+                "wp-pay/core": "^4.19"
+            },
+            "require-dev": {
+                "overtrue/phplint": "^9.1",
+                "php-coveralls/php-coveralls": "^2.7",
+                "php-stubs/woocommerce-stubs": "^8.7",
+                "php-stubs/wp-cli-stubs": "^2.10",
+                "phpmd/phpmd": "^2.15",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^1.11",
+                "pronamic/pronamic-cli": "^1.1",
+                "pronamic/wp-coding-standards": "^2.2",
+                "roots/wordpress": "^6.4",
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "vimeo/psalm": "^0.3.14",
+                "wp-cli/wp-cli": "^2.10",
+                "wp-phpunit/wp-phpunit": "^6.4",
+                "yoast/phpunit-polyfills": "^2.0"
+            },
+            "time": "2026-01-26T03:59:48+00:00",
+            "default-branch": true,
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-paths": {
+                    "packages/{$vendor}/{$name}": [
+                        "vendor:pronamic",
+                        "vendor:wp-pay",
+                        "vendor:wp-pay-extensions",
+                        "vendor:wp-pay-gateways",
+                        "woocommerce/action-scheduler"
+                    ]
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-4": {
+                    "Pronamic\\PronamicPayAdminReports\\": "php/classes/"
+                }
+            },
+            "scripts": {
+                "coveralls": [
+                    "vendor/bin/php-coveralls -v"
+                ],
+                "make-i18n-json": [
+                    "wp i18n make-json languages/*.po --no-purge"
+                ],
+                "make-pot": [
+                    "wp pronamic i18n make-pot . languages/pronamic-pay-fundraising.pot --slug='pronamic-pay-fundraising'"
+                ],
+                "update-po": [
+                    "find languages/*.po -type f -exec msgmerge --update --backup=off {} languages/pronamic-pay-fundraising.pot \\;"
+                ],
+                "phpcbf": [
+                    "XDEBUG_MODE=off vendor/bin/phpcbf"
+                ],
+                "phpcs": [
+                    "XDEBUG_MODE=off vendor/bin/phpcs -s -v"
+                ],
+                "phplint": [
+                    "vendor/bin/phplint"
+                ],
+                "phpmd": [
+                    "vendor/bin/phpmd src,tests text phpmd.ruleset.xml --suffixes php"
+                ],
+                "phpstan": [
+                    "XDEBUG_MODE=off vendor/bin/phpstan analyse --memory-limit=-1"
+                ],
+                "phpunit": [
+                    "vendor/bin/phpunit"
+                ],
+                "psalm": [
+                    "vendor/bin/psalm"
+                ],
+                "xmllint-phpcs": [
+                    "xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd phpcs.xml.dist"
+                ],
+                "xmllint": [
+                    "@xmllint-phpcs"
+                ]
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
                 {
-                    "url": "https://github.com/GrahamCampbell",
-                    "type": "github"
+                    "name": "Pronamic",
+                    "email": "info@pronamic.eu",
+                    "homepage": "http://www.pronamic.eu/",
+                    "role": "Company"
                 },
                 {
-                    "url": "https://tidelift.com/funding/github/packagist/phpoption/phpoption",
-                    "type": "tidelift"
+                    "name": "Remco Tolsma",
+                    "email": "info@remcotolsma.nl",
+                    "homepage": "http://www.remcotolsma.nl/",
+                    "role": "Developer"
                 }
             ],
-            "install-path": "../phpoption/phpoption"
+            "description": "This plugin adds simple reporting functionality in the WordPress admin dashboard for the Pronamic Pay plugin.",
+            "homepage": "https://www.pronamicpay.com/",
+            "keywords": [
+                "pay",
+                "pronamic",
+                "report",
+                "reporting",
+                "reports",
+                "wordpress",
+                "wp",
+                "wp-admin"
+            ],
+            "support": {
+                "email": "support@wp-pay.org",
+                "issues": "https://github.com/pronamic/pronamic-pay-admin-reports/issues",
+                "source": "https://github.com/pronamic/pronamic-pay-admin-reports"
+            },
+            "install-path": "../../packages/pronamic/pronamic-pay-admin-reports"
         },
         {
             "name": "pronamic/wp-datetime",
-            "version": "v2.1.7",
-            "version_normalized": "2.1.7.0",
+            "version": "v2.1.8",
+            "version_normalized": "2.1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pronamic/wp-datetime.git",
-                "reference": "2dcc158beff33f27611a7d5ec4bf0fd658a0a42f"
+                "reference": "ffea6a39c8204b958e00f4d1112d2d58ac96f070"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pronamic/wp-datetime/zipball/2dcc158beff33f27611a7d5ec4bf0fd658a0a42f",
-                "reference": "2dcc158beff33f27611a7d5ec4bf0fd658a0a42f",
+                "url": "https://api.github.com/repos/pronamic/wp-datetime/zipball/ffea6a39c8204b958e00f4d1112d2d58ac96f070",
+                "reference": "ffea6a39c8204b958e00f4d1112d2d58ac96f070",
                 "shasum": ""
             },
             "require": {
@@ -1377,11 +1571,11 @@
             "require-dev": {
                 "automattic/wordbless": "^0.4.1",
                 "bamarni/composer-bin-plugin": "^1.4",
-                "koodimonni-language/de_de": "*",
-                "koodimonni-language/en_gb": "*",
-                "koodimonni-language/fr_fr": "*",
-                "koodimonni-language/ja": "*",
-                "koodimonni-language/nl_nl": "*",
+                "koodimonni-language/core-de_de": "*",
+                "koodimonni-language/core-en_gb": "*",
+                "koodimonni-language/core-fr_fr": "*",
+                "koodimonni-language/core-ja": "*",
+                "koodimonni-language/core-nl_nl": "*",
                 "overtrue/phplint": "^9.0",
                 "php-coveralls/php-coveralls": "^2.4",
                 "php-stubs/wordpress-globals": "^0.2.0",
@@ -1391,7 +1585,7 @@
                 "roots/wordpress": "^6.0",
                 "yoast/phpunit-polyfills": "^2.0"
             },
-            "time": "2023-10-30T10:15:01+00:00",
+            "time": "2024-12-17T12:35:00+00:00",
             "type": "wordpress-plugin",
             "installation-source": "dist",
             "autoload": {
@@ -1406,23 +1600,23 @@
             "description": "WordPress DateTime library.",
             "support": {
                 "issues": "https://github.com/pronamic/wp-datetime/issues",
-                "source": "https://github.com/pronamic/wp-datetime/tree/v2.1.7"
+                "source": "https://github.com/pronamic/wp-datetime/tree/v2.1.8"
             },
-            "install-path": "../pronamic/wp-datetime"
+            "install-path": "../../packages/pronamic/wp-datetime"
         },
         {
             "name": "pronamic/wp-gravityforms-nl",
-            "version": "v3.0.9",
-            "version_normalized": "3.0.9.0",
+            "version": "v3.0.10",
+            "version_normalized": "3.0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pronamic/wp-gravityforms-nl.git",
-                "reference": "38617a704499243e9675ab0e15ce60a3d1d255f8"
+                "reference": "12cc7fbf50e0bc987f4f445a686f59f31da5ea52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pronamic/wp-gravityforms-nl/zipball/38617a704499243e9675ab0e15ce60a3d1d255f8",
-                "reference": "38617a704499243e9675ab0e15ce60a3d1d255f8",
+                "url": "https://api.github.com/repos/pronamic/wp-gravityforms-nl/zipball/12cc7fbf50e0bc987f4f445a686f59f31da5ea52",
+                "reference": "12cc7fbf50e0bc987f4f445a686f59f31da5ea52",
                 "shasum": ""
             },
             "require": {
@@ -1430,16 +1624,19 @@
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8",
-                "koodimonni-language/nl_nl": "*",
+                "koodimonni-language/core-nl_nl": "*",
                 "php-coveralls/php-coveralls": "^2.7",
                 "phpmd/phpmd": "^2.15",
+                "phpstan/phpstan": "^1.11",
                 "pronamic/pronamic-cli": "^1.1",
                 "pronamic/wp-coding-standards": "^2.2",
                 "roots/wordpress": "^6.4",
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "vimeo/psalm": "^5.25",
                 "wp-phpunit/wp-phpunit": "^6.4",
                 "yoast/phpunit-polyfills": "^2.0"
             },
-            "time": "2024-03-26T12:38:13+00:00",
+            "time": "2024-12-17T13:16:24+00:00",
             "type": "wordpress-plugin",
             "installation-source": "dist",
             "autoload": {
@@ -1454,27 +1651,27 @@
             "description": "WordPress Gravity Forms (nl) library.",
             "support": {
                 "issues": "https://github.com/pronamic/wp-gravityforms-nl/issues",
-                "source": "https://github.com/pronamic/wp-gravityforms-nl/tree/v3.0.9"
+                "source": "https://github.com/pronamic/wp-gravityforms-nl/tree/v3.0.10"
             },
-            "install-path": "../pronamic/wp-gravityforms-nl"
+            "install-path": "../../packages/pronamic/wp-gravityforms-nl"
         },
         {
             "name": "pronamic/wp-html",
-            "version": "v2.2.1",
-            "version_normalized": "2.2.1.0",
+            "version": "v2.2.2",
+            "version_normalized": "2.2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pronamic/wp-html.git",
-                "reference": "081b0d645522f73ccb67ff68e01ed3febfccb7f1"
+                "reference": "96e82b561334215d54af2d1abf25806bceaa7e2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pronamic/wp-html/zipball/081b0d645522f73ccb67ff68e01ed3febfccb7f1",
-                "reference": "081b0d645522f73ccb67ff68e01ed3febfccb7f1",
+                "url": "https://api.github.com/repos/pronamic/wp-html/zipball/96e82b561334215d54af2d1abf25806bceaa7e2e",
+                "reference": "96e82b561334215d54af2d1abf25806bceaa7e2e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4"
+                "php": ">=8.1"
             },
             "require-dev": {
                 "automattic/wordbless": "^0.4.1",
@@ -1482,12 +1679,15 @@
                 "php-coveralls/php-coveralls": "^2.6",
                 "php-stubs/wordpress-globals": "^0.2.0",
                 "phpmd/phpmd": "^2.14",
+                "phpstan/phpstan": "^1.11",
                 "pronamic/pronamic-cli": "^1.1",
                 "pronamic/wp-coding-standards": "^2.0",
                 "roots/wordpress": "^6.0",
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "vimeo/psalm": "^4.30",
                 "yoast/phpunit-polyfills": "^2.0"
             },
-            "time": "2023-10-30T09:28:01+00:00",
+            "time": "2024-12-17T12:41:40+00:00",
             "type": "wordpress-plugin",
             "installation-source": "dist",
             "autoload": {
@@ -1499,23 +1699,23 @@
             "description": "WordPress HTML library.",
             "support": {
                 "issues": "https://github.com/pronamic/wp-html/issues",
-                "source": "https://github.com/pronamic/wp-html/tree/v2.2.1"
+                "source": "https://github.com/pronamic/wp-html/tree/v2.2.2"
             },
-            "install-path": "../pronamic/wp-html"
+            "install-path": "../../packages/pronamic/wp-html"
         },
         {
             "name": "pronamic/wp-http",
-            "version": "v1.2.3",
-            "version_normalized": "1.2.3.0",
+            "version": "v1.2.4",
+            "version_normalized": "1.2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pronamic/wp-http.git",
-                "reference": "1f080f7ef4f134c3c4bbce023676e17eafa4e840"
+                "reference": "0980eb542383b4abfd3e844dcdf9e1dcebfa2062"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pronamic/wp-http/zipball/1f080f7ef4f134c3c4bbce023676e17eafa4e840",
-                "reference": "1f080f7ef4f134c3c4bbce023676e17eafa4e840",
+                "url": "https://api.github.com/repos/pronamic/wp-http/zipball/0980eb542383b4abfd3e844dcdf9e1dcebfa2062",
+                "reference": "0980eb542383b4abfd3e844dcdf9e1dcebfa2062",
                 "shasum": ""
             },
             "require": {
@@ -1526,12 +1726,15 @@
                 "bamarni/composer-bin-plugin": "^1.4",
                 "php-coveralls/php-coveralls": "^2.4",
                 "phpmd/phpmd": "^2.9",
+                "phpstan/phpstan": "^1.11",
                 "pronamic/pronamic-cli": "^1.1",
                 "pronamic/wp-coding-standards": "^2.2",
                 "roots/wordpress": "^6.0",
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "vimeo/psalm": "^0.3.14",
                 "yoast/phpunit-polyfills": "^1.0"
             },
-            "time": "2024-05-15T13:24:39+00:00",
+            "time": "2024-12-17T12:45:36+00:00",
             "type": "wordpress-plugin",
             "installation-source": "dist",
             "autoload": {
@@ -1543,23 +1746,23 @@
             "description": "WordPress HTTP library.",
             "support": {
                 "issues": "https://github.com/pronamic/wp-http/issues",
-                "source": "https://github.com/pronamic/wp-http/tree/v1.2.3"
+                "source": "https://github.com/pronamic/wp-http/tree/v1.2.4"
             },
-            "install-path": "../pronamic/wp-http"
+            "install-path": "../../packages/pronamic/wp-http"
         },
         {
             "name": "pronamic/wp-money",
-            "version": "v2.4.3",
-            "version_normalized": "2.4.3.0",
+            "version": "v2.4.4",
+            "version_normalized": "2.4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pronamic/wp-money.git",
-                "reference": "31e4a617b803306b6b50a8a006c26192c62318a8"
+                "reference": "f2762d981b1d6ab8739b6f74a9f5ff21bd759efc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pronamic/wp-money/zipball/31e4a617b803306b6b50a8a006c26192c62318a8",
-                "reference": "31e4a617b803306b6b50a8a006c26192c62318a8",
+                "url": "https://api.github.com/repos/pronamic/wp-money/zipball/f2762d981b1d6ab8739b6f74a9f5ff21bd759efc",
+                "reference": "f2762d981b1d6ab8739b6f74a9f5ff21bd759efc",
                 "shasum": ""
             },
             "require": {
@@ -1574,14 +1777,17 @@
                 "overtrue/phplint": "^9.0",
                 "php-coveralls/php-coveralls": "^2.4",
                 "phpmd/phpmd": "^2.4",
+                "phpstan/phpstan": "^1.11",
                 "pronamic/pronamic-cli": "^1.1",
                 "pronamic/wp-coding-standards": "^1.3",
                 "roots/wordpress": "^6.0",
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "vimeo/psalm": "^5.25",
                 "vlucas/phpdotenv": "^2.0",
                 "wp-phpunit/wp-phpunit": "^6.1",
                 "yoast/phpunit-polyfills": "^1.0"
             },
-            "time": "2023-11-06T14:07:57+00:00",
+            "time": "2024-10-02T08:04:48+00:00",
             "type": "wordpress-plugin",
             "installation-source": "dist",
             "autoload": {
@@ -1596,23 +1802,23 @@
             "description": "WordPress Money library.",
             "support": {
                 "issues": "https://github.com/pronamic/wp-money/issues",
-                "source": "https://github.com/pronamic/wp-money/tree/v2.4.3"
+                "source": "https://github.com/pronamic/wp-money/tree/v2.4.4"
             },
-            "install-path": "../pronamic/wp-money"
+            "install-path": "../../packages/pronamic/wp-money"
         },
         {
             "name": "pronamic/wp-number",
-            "version": "v1.3.2",
-            "version_normalized": "1.3.2.0",
+            "version": "v1.4.0",
+            "version_normalized": "1.4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pronamic/wp-number.git",
-                "reference": "82b5af7c20391ca654d2c7ab8d03574088b97e79"
+                "reference": "29f8631a4b63f8f303159a5cf76baf6a0ee5eb22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pronamic/wp-number/zipball/82b5af7c20391ca654d2c7ab8d03574088b97e79",
-                "reference": "82b5af7c20391ca654d2c7ab8d03574088b97e79",
+                "url": "https://api.github.com/repos/pronamic/wp-number/zipball/29f8631a4b63f8f303159a5cf76baf6a0ee5eb22",
+                "reference": "29f8631a4b63f8f303159a5cf76baf6a0ee5eb22",
                 "shasum": ""
             },
             "require": {
@@ -1620,9 +1826,9 @@
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.4",
-                "koodimonni-language/de_de": "*",
-                "koodimonni-language/fr_fr": "*",
-                "koodimonni-language/nl_nl": "*",
+                "koodimonni-language/core-de_de": "*",
+                "koodimonni-language/core-fr_fr": "*",
+                "koodimonni-language/core-nl_nl": "*",
                 "overtrue/phplint": "^4.5",
                 "php-coveralls/php-coveralls": "^2.5",
                 "phpmd/phpmd": "^2.13",
@@ -1631,11 +1837,11 @@
                 "pronamic/wp-coding-standards": "^2.2",
                 "roots/wordpress": "^6.0",
                 "szepeviktor/phpstan-wordpress": "^1.3",
-                "vimeo/psalm": "^5.24",
+                "vimeo/psalm": "*",
                 "wp-phpunit/wp-phpunit": "^6.1",
                 "yoast/phpunit-polyfills": "^1.0"
             },
-            "time": "2024-06-07T11:50:05+00:00",
+            "time": "2025-11-26T12:19:20+00:00",
             "type": "wordpress-plugin",
             "installation-source": "dist",
             "autoload": {
@@ -1673,9 +1879,56 @@
             ],
             "support": {
                 "issues": "https://github.com/pronamic/wp-number/issues",
-                "source": "https://github.com/pronamic/wp-number/tree/v1.3.2"
+                "source": "https://github.com/pronamic/wp-number/tree/v1.4.0"
             },
-            "install-path": "../pronamic/wp-number"
+            "install-path": "../../packages/pronamic/wp-number"
+        },
+        {
+            "name": "pronamic/wp-pay-logos",
+            "version": "v2.3.2",
+            "version_normalized": "2.3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pronamic/wp-pay-logos.git",
+                "reference": "a430833c031a7f88e30ea4f196ae3ad3beb24823"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pronamic/wp-pay-logos/zipball/a430833c031a7f88e30ea4f196ae3ad3beb24823",
+                "reference": "a430833c031a7f88e30ea4f196ae3ad3beb24823",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "symfony/console": "^5.1",
+                "symfony/filesystem": "^5.1",
+                "symfony/finder": "^5.1"
+            },
+            "time": "2025-12-01T15:29:15+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Pronamic\\WpPayLogos\\": "php/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Pronamic",
+                    "email": "info@pronamic.nl"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/pronamic/wp-pay-logos/issues",
+                "source": "https://github.com/pronamic/wp-pay-logos/tree/v2.3.2"
+            },
+            "install-path": "../pronamic/wp-pay-logos"
         },
         {
             "name": "psr/http-client",
@@ -1895,17 +2148,17 @@
         },
         {
             "name": "razorpay/razorpay",
-            "version": "2.9.0",
-            "version_normalized": "2.9.0.0",
+            "version": "2.9.2",
+            "version_normalized": "2.9.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/razorpay/razorpay-php.git",
-                "reference": "a3d7c2bcb416091edd6a76eb5a7600eaf00ac837"
+                "reference": "c5cf59941eb2d888e80371328d932e6e8266d352"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/razorpay/razorpay-php/zipball/a3d7c2bcb416091edd6a76eb5a7600eaf00ac837",
-                "reference": "a3d7c2bcb416091edd6a76eb5a7600eaf00ac837",
+                "url": "https://api.github.com/repos/razorpay/razorpay-php/zipball/c5cf59941eb2d888e80371328d932e6e8266d352",
+                "reference": "c5cf59941eb2d888e80371328d932e6e8266d352",
                 "shasum": ""
             },
             "require": {
@@ -1917,7 +2170,7 @@
                 "phpunit/phpunit": "^9",
                 "raveren/kint": "1.*"
             },
-            "time": "2023-12-18T04:19:46+00:00",
+            "time": "2025-08-05T07:13:20+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -2026,31 +2279,31 @@
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v2.5.3",
-            "version_normalized": "2.5.3.0",
+            "version": "v3.6.0",
+            "version_normalized": "3.6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "80d075412b557d41002320b96a096ca65aa2c98d"
+                "reference": "63afe740e99a13ba87ec199bb07bbdee937a5b62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/80d075412b557d41002320b96a096ca65aa2c98d",
-                "reference": "80d075412b557d41002320b96a096ca65aa2c98d",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/63afe740e99a13ba87ec199bb07bbdee937a5b62",
+                "reference": "63afe740e99a13ba87ec199bb07bbdee937a5b62",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1"
+                "php": ">=8.1"
             },
-            "time": "2023-01-24T14:02:46+00:00",
+            "time": "2024-09-25T14:21:43+00:00",
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "2.5-dev"
-                },
                 "thanks": {
-                    "name": "symfony/contracts",
-                    "url": "https://github.com/symfony/contracts"
+                    "url": "https://github.com/symfony/contracts",
+                    "name": "symfony/contracts"
+                },
+                "branch-alias": {
+                    "dev-main": "3.6-dev"
                 }
             },
             "installation-source": "dist",
@@ -2076,7 +2329,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/deprecation-contracts/tree/v2.5.3"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.6.0"
             },
             "funding": [
                 {
@@ -2096,38 +2349,39 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v5.4.42",
-            "version_normalized": "5.4.42.0",
+            "version": "v6.4.33",
+            "version_normalized": "6.4.33.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "9c375b2abef0b657aa0b7612b763df5c12a465ab"
+                "reference": "f1a490cc9d595ba7ebe684220e625d1e472ad278"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/9c375b2abef0b657aa0b7612b763df5c12a465ab",
-                "reference": "9c375b2abef0b657aa0b7612b763df5c12a465ab",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/f1a490cc9d595ba7ebe684220e625d1e472ad278",
+                "reference": "f1a490cc9d595ba7ebe684220e625d1e472ad278",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
-                "symfony/deprecation-contracts": "^2.1|^3",
+                "php": ">=8.1",
+                "symfony/deprecation-contracts": "^2.5|^3",
                 "symfony/polyfill-mbstring": "~1.1",
-                "symfony/polyfill-php80": "^1.16"
+                "symfony/polyfill-php83": "^1.27"
+            },
+            "conflict": {
+                "symfony/cache": "<6.4.12|>=7.0,<7.1.5"
             },
             "require-dev": {
-                "predis/predis": "^1.0|^2.0",
-                "symfony/cache": "^4.4|^5.0|^6.0",
-                "symfony/dependency-injection": "^5.4|^6.0",
-                "symfony/expression-language": "^4.4|^5.0|^6.0",
-                "symfony/http-kernel": "^5.4.12|^6.0.12|^6.1.4",
-                "symfony/mime": "^4.4|^5.0|^6.0",
-                "symfony/rate-limiter": "^5.2|^6.0"
+                "doctrine/dbal": "^2.13.1|^3|^4",
+                "predis/predis": "^1.1|^2.0",
+                "symfony/cache": "^6.4.12|^7.1.5",
+                "symfony/dependency-injection": "^5.4|^6.0|^7.0",
+                "symfony/expression-language": "^5.4|^6.0|^7.0",
+                "symfony/http-kernel": "^5.4.12|^6.0.12|^6.1.4|^7.0",
+                "symfony/mime": "^5.4|^6.0|^7.0",
+                "symfony/rate-limiter": "^5.4|^6.0|^7.0"
             },
-            "suggest": {
-                "symfony/mime": "To use the file extension guesser"
-            },
-            "time": "2024-07-26T11:59:59+00:00",
+            "time": "2026-01-27T15:04:55+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -2155,7 +2409,7 @@
             "description": "Defines an object-oriented layer for the HTTP specification",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-foundation/tree/v5.4.42"
+                "source": "https://github.com/symfony/http-foundation/tree/v6.4.33"
             },
             "funding": [
                 {
@@ -2164,6 +2418,10 @@
                 },
                 {
                     "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
                     "type": "github"
                 },
                 {
@@ -2174,104 +2432,23 @@
             "install-path": "../symfony/http-foundation"
         },
         {
-            "name": "symfony/polyfill-ctype",
-            "version": "v1.30.0",
-            "version_normalized": "1.30.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "0424dff1c58f028c451efff2045f5d92410bd540"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/0424dff1c58f028c451efff2045f5d92410bd540",
-                "reference": "0424dff1c58f028c451efff2045f5d92410bd540",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1"
-            },
-            "provide": {
-                "ext-ctype": "*"
-            },
-            "suggest": {
-                "ext-ctype": "For best performance"
-            },
-            "time": "2024-05-31T15:07:36+00:00",
-            "type": "library",
-            "extra": {
-                "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
-                }
-            },
-            "installation-source": "dist",
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ],
-                "psr-4": {
-                    "Symfony\\Polyfill\\Ctype\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill for ctype functions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "ctype",
-                "polyfill",
-                "portable"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.30.0"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "install-path": "../symfony/polyfill-ctype"
-        },
-        {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.30.0",
-            "version_normalized": "1.30.0.0",
+            "version": "v1.33.0",
+            "version_normalized": "1.33.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "fd22ab50000ef01661e2a31d850ebaa297f8e03c"
+                "reference": "6d857f4d76bd4b343eac26d6b539585d2bc56493"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/fd22ab50000ef01661e2a31d850ebaa297f8e03c",
-                "reference": "fd22ab50000ef01661e2a31d850ebaa297f8e03c",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/6d857f4d76bd4b343eac26d6b539585d2bc56493",
+                "reference": "6d857f4d76bd4b343eac26d6b539585d2bc56493",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1"
+                "ext-iconv": "*",
+                "php": ">=7.2"
             },
             "provide": {
                 "ext-mbstring": "*"
@@ -2279,12 +2456,12 @@
             "suggest": {
                 "ext-mbstring": "For best performance"
             },
-            "time": "2024-06-19T12:30:46+00:00",
+            "time": "2024-12-23T08:48:59+00:00",
             "type": "library",
             "extra": {
                 "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
                 }
             },
             "installation-source": "dist",
@@ -2320,7 +2497,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.30.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.33.0"
             },
             "funding": [
                 {
@@ -2332,6 +2509,10 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
@@ -2339,29 +2520,29 @@
             "install-path": "../symfony/polyfill-mbstring"
         },
         {
-            "name": "symfony/polyfill-php80",
-            "version": "v1.30.0",
-            "version_normalized": "1.30.0.0",
+            "name": "symfony/polyfill-php83",
+            "version": "v1.33.0",
+            "version_normalized": "1.33.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/polyfill-php80.git",
-                "reference": "77fa7995ac1b21ab60769b7323d600a991a90433"
+                "url": "https://github.com/symfony/polyfill-php83.git",
+                "reference": "17f6f9a6b1735c0f163024d959f700cfbc5155e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/77fa7995ac1b21ab60769b7323d600a991a90433",
-                "reference": "77fa7995ac1b21ab60769b7323d600a991a90433",
+                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/17f6f9a6b1735c0f163024d959f700cfbc5155e5",
+                "reference": "17f6f9a6b1735c0f163024d959f700cfbc5155e5",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1"
+                "php": ">=7.2"
             },
-            "time": "2024-05-31T15:07:36+00:00",
+            "time": "2025-07-08T02:45:35+00:00",
             "type": "library",
             "extra": {
                 "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
                 }
             },
             "installation-source": "dist",
@@ -2370,7 +2551,7 @@
                     "bootstrap.php"
                 ],
                 "psr-4": {
-                    "Symfony\\Polyfill\\Php80\\": ""
+                    "Symfony\\Polyfill\\Php83\\": ""
                 },
                 "classmap": [
                     "Resources/stubs"
@@ -2382,10 +2563,6 @@
             ],
             "authors": [
                 {
-                    "name": "Ion Bazan",
-                    "email": "ion.bazan@gmail.com"
-                },
-                {
                     "name": "Nicolas Grekas",
                     "email": "p@tchwork.com"
                 },
@@ -2394,7 +2571,7 @@
                     "homepage": "https://symfony.com/contributors"
                 }
             ],
-            "description": "Symfony polyfill backporting some PHP 8.0+ features to lower PHP versions",
+            "description": "Symfony polyfill backporting some PHP 8.3+ features to lower PHP versions",
             "homepage": "https://symfony.com",
             "keywords": [
                 "compatibility",
@@ -2403,7 +2580,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php80/tree/v1.30.0"
+                "source": "https://github.com/symfony/polyfill-php83/tree/v1.33.0"
             },
             "funding": [
                 {
@@ -2415,11 +2592,15 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../symfony/polyfill-php80"
+            "install-path": "../symfony/polyfill-php83"
         },
         {
             "name": "viison/address-splitter",
@@ -2468,117 +2649,30 @@
             "install-path": "../viison/address-splitter"
         },
         {
-            "name": "vlucas/phpdotenv",
-            "version": "v5.6.1",
-            "version_normalized": "5.6.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "a59a13791077fe3d44f90e7133eb68e7d22eaff2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/a59a13791077fe3d44f90e7133eb68e7d22eaff2",
-                "reference": "a59a13791077fe3d44f90e7133eb68e7d22eaff2",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pcre": "*",
-                "graham-campbell/result-type": "^1.1.3",
-                "php": "^7.2.5 || ^8.0",
-                "phpoption/phpoption": "^1.9.3",
-                "symfony/polyfill-ctype": "^1.24",
-                "symfony/polyfill-mbstring": "^1.24",
-                "symfony/polyfill-php80": "^1.24"
-            },
-            "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.8.2",
-                "ext-filter": "*",
-                "phpunit/phpunit": "^8.5.34 || ^9.6.13 || ^10.4.2"
-            },
-            "suggest": {
-                "ext-filter": "Required to use the boolean validator."
-            },
-            "time": "2024-07-20T21:52:34+00:00",
-            "type": "library",
-            "extra": {
-                "bamarni-bin": {
-                    "bin-links": true,
-                    "forward-command": false
-                },
-                "branch-alias": {
-                    "dev-master": "5.6-dev"
-                }
-            },
-            "installation-source": "dist",
-            "autoload": {
-                "psr-4": {
-                    "Dotenv\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Graham Campbell",
-                    "email": "hello@gjcampbell.co.uk",
-                    "homepage": "https://github.com/GrahamCampbell"
-                },
-                {
-                    "name": "Vance Lucas",
-                    "email": "vance@vancelucas.com",
-                    "homepage": "https://github.com/vlucas"
-                }
-            ],
-            "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
-            "keywords": [
-                "dotenv",
-                "env",
-                "environment"
-            ],
-            "support": {
-                "issues": "https://github.com/vlucas/phpdotenv/issues",
-                "source": "https://github.com/vlucas/phpdotenv/tree/v5.6.1"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/GrahamCampbell",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/vlucas/phpdotenv",
-                    "type": "tidelift"
-                }
-            ],
-            "install-path": "../vlucas/phpdotenv"
-        },
-        {
             "name": "woocommerce/action-scheduler",
-            "version": "3.8.1",
-            "version_normalized": "3.8.1.0",
+            "version": "3.9.3",
+            "version_normalized": "3.9.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/woocommerce/action-scheduler.git",
-                "reference": "e331b534d7de10402d7545a0de50177b874c0779"
+                "reference": "c58cdbab17651303d406cd3b22cf9d75c71c986c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/e331b534d7de10402d7545a0de50177b874c0779",
-                "reference": "e331b534d7de10402d7545a0de50177b874c0779",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/c58cdbab17651303d406cd3b22cf9d75c71c986c",
+                "reference": "c58cdbab17651303d406cd3b22cf9d75c71c986c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6"
+                "php": ">=7.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.5",
+                "phpunit/phpunit": "^8.5",
                 "woocommerce/woocommerce-sniffs": "0.1.0",
                 "wp-cli/wp-cli": "~2.5.0",
                 "yoast/phpunit-polyfills": "^2.0"
             },
-            "time": "2024-06-20T19:53:06+00:00",
+            "time": "2025-07-15T09:32:30+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "scripts-description": {
@@ -2596,9 +2690,9 @@
             "homepage": "https://actionscheduler.org/",
             "support": {
                 "issues": "https://github.com/woocommerce/action-scheduler/issues",
-                "source": "https://github.com/woocommerce/action-scheduler/tree/3.8.1"
+                "source": "https://github.com/woocommerce/action-scheduler/tree/3.9.3"
             },
-            "install-path": "../woocommerce/action-scheduler"
+            "install-path": "../../packages/woocommerce/action-scheduler"
         },
         {
             "name": "wp-pay-extensions/charitable",
@@ -2607,7 +2701,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/extension-charitable",
-                "reference": "6f13cf921c52f3ffb1aef9ea9a11764eb8193295"
+                "reference": "ad888018746ead87e3f896fbe3f81dbdc694541c"
             },
             "require": {
                 "php": ">=7.4",
@@ -2617,14 +2711,17 @@
                 "bamarni/composer-bin-plugin": "^1.4",
                 "php-coveralls/php-coveralls": "^2.5",
                 "phpmd/phpmd": "^2.9",
+                "phpstan/phpstan": "^1.11",
                 "pronamic/pronamic-cli": "^1.0",
                 "pronamic/wp-coding-standards": "^1.3",
                 "roots/wordpress": "^6.0",
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "vimeo/psalm": "^5.25",
                 "wp-phpunit/wp-phpunit": "^6.1",
                 "wpackagist-plugin/charitable": "^1.7",
                 "yoast/phpunit-polyfills": "^1.0"
             },
-            "time": "2023-11-13T20:23:33+00:00",
+            "time": "2025-12-28T13:11:39+00:00",
             "type": "wordpress-plugin",
             "installation-source": "source",
             "autoload": {
@@ -2696,7 +2793,7 @@
                 "issues": "https://github.com/wp-pay-extensions/charitable/issues",
                 "source": "https://github.com/wp-pay-extensions/charitable"
             },
-            "install-path": "../wp-pay-extensions/charitable"
+            "install-path": "../../packages/wp-pay-extensions/charitable"
         },
         {
             "name": "wp-pay-extensions/easy-digital-downloads",
@@ -2705,25 +2802,28 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/extension-easy-digital-downloads",
-                "reference": "dbe2a8c705d35a927494a91584225cd70f0615fd"
+                "reference": "d75a00694d277c222969454421d49177fc7b9888"
             },
             "require": {
-                "php": ">=7.4",
-                "wp-pay/core": "^4.9"
+                "php": ">=8.0",
+                "wp-pay/core": "^4.16"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.4",
-                "php-coveralls/php-coveralls": "^2.5",
-                "phpmd/phpmd": "^2.7",
-                "pronamic/pronamic-cli": "^1.0",
-                "pronamic/wp-coding-standards": "^1.3",
-                "roots/wordpress": "^6.0",
-                "wp-phpunit/wp-phpunit": "^6.1",
-                "wpackagist-plugin/easy-digital-downloads": "^2.11",
-                "wpackagist-plugin/wordpress-seo": "^19.7",
-                "yoast/phpunit-polyfills": "^1.0"
+                "bamarni/composer-bin-plugin": "^1.8",
+                "php-coveralls/php-coveralls": "^2.7",
+                "phpmd/phpmd": "^2.15",
+                "phpstan/phpstan": "^1.11",
+                "pronamic/pronamic-cli": "^1.1",
+                "pronamic/wp-coding-standards": "^2.2",
+                "roots/wordpress": "^6.4",
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "vimeo/psalm": "^5.25",
+                "wp-phpunit/wp-phpunit": "^6.4",
+                "wpackagist-plugin/easy-digital-downloads": "^3.2",
+                "wpackagist-plugin/wordpress-seo": "^22.3",
+                "yoast/phpunit-polyfills": "^2.0"
             },
-            "time": "2023-11-13T20:25:04+00:00",
+            "time": "2025-12-28T13:17:45+00:00",
             "type": "wordpress-plugin",
             "installation-source": "source",
             "autoload": {
@@ -2798,7 +2898,7 @@
                 "issues": "https://github.com/wp-pay-extensions/easy-digital-downloads/issues",
                 "source": "https://github.com/wp-pay-extensions/easy-digital-downloads"
             },
-            "install-path": "../wp-pay-extensions/easy-digital-downloads"
+            "install-path": "../../packages/wp-pay-extensions/easy-digital-downloads"
         },
         {
             "name": "wp-pay-extensions/formidable-forms",
@@ -2807,7 +2907,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/extension-formidable-forms",
-                "reference": "f5f7c5258c919d21859983a9ac23f0dba7309e88"
+                "reference": "1b260744b1d93080a7b11d1395cedfeb1dd687fc"
             },
             "require": {
                 "php": ">=7.4",
@@ -2817,14 +2917,17 @@
                 "bamarni/composer-bin-plugin": "^1.4",
                 "php-coveralls/php-coveralls": "^2.5",
                 "phpmd/phpmd": "^2.7",
+                "phpstan/phpstan": "^1.11",
                 "pronamic/pronamic-cli": "^1.0",
                 "pronamic/wp-coding-standards": "^1.3",
                 "roots/wordpress": "^6.0",
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "vimeo/psalm": "^5.25",
                 "wp-phpunit/wp-phpunit": "^6.1",
                 "wpackagist-plugin/formidable": "^5.0",
                 "yoast/phpunit-polyfills": "^1.0"
             },
-            "time": "2024-04-26T07:42:57+00:00",
+            "time": "2025-12-28T13:21:32+00:00",
             "default-branch": true,
             "type": "wordpress-plugin",
             "installation-source": "source",
@@ -2898,7 +3001,7 @@
                 "issues": "https://github.com/wp-pay-extensions/formidable-forms/issues",
                 "source": "https://github.com/wp-pay-extensions/formidable-forms"
             },
-            "install-path": "../wp-pay-extensions/formidable-forms"
+            "install-path": "../../packages/wp-pay-extensions/formidable-forms"
         },
         {
             "name": "wp-pay-extensions/give",
@@ -2907,7 +3010,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/extension-give",
-                "reference": "fd5fe10b9fcc07407f09c14f432de8c87cf495ed"
+                "reference": "6e4fffa8f8176b0be18ea5eb11baa2be438c2600"
             },
             "require": {
                 "php": ">=7.4",
@@ -2917,14 +3020,17 @@
                 "bamarni/composer-bin-plugin": "^1.4",
                 "php-coveralls/php-coveralls": "^2.5",
                 "phpmd/phpmd": "^2.7",
+                "phpstan/phpstan": "^1.11",
                 "pronamic/pronamic-cli": "^1.0",
                 "pronamic/wp-coding-standards": "^1.3",
                 "roots/wordpress": "^6.0",
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "vimeo/psalm": "^5.25",
                 "wp-phpunit/wp-phpunit": "^6.1",
                 "wpackagist-plugin/give": "^2.9",
                 "yoast/phpunit-polyfills": "^1.0"
             },
-            "time": "2023-11-13T20:39:02+00:00",
+            "time": "2025-12-28T13:46:06+00:00",
             "type": "wordpress-plugin",
             "installation-source": "source",
             "autoload": {
@@ -2996,7 +3102,7 @@
                 "issues": "https://github.com/wp-pay-extensions/give/issues",
                 "source": "https://github.com/wp-pay-extensions/give"
             },
-            "install-path": "../wp-pay-extensions/give"
+            "install-path": "../../packages/wp-pay-extensions/give"
         },
         {
             "name": "wp-pay-extensions/gravityforms",
@@ -3005,29 +3111,56 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/extension-gravityforms",
-                "reference": "629a51a462e8128436a4e2336f4dd254bda2698b"
+                "reference": "a4890d876eda7976a7bf5f57de51a4dc516f3345"
             },
             "require": {
-                "php": ">=8.0",
+                "automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
+                "composer/installers": "^2.2",
+                "php": ">=8.1",
+                "pronamic/ideal-issuers": "^1.1",
                 "pronamic/wp-datetime": "^2.1",
                 "pronamic/wp-gravityforms-nl": "^3.0",
                 "pronamic/wp-money": "^2.4",
                 "pronamic/wp-number": "^1.3",
-                "wp-pay/core": "^4.16"
+                "pronamic/wp-pay-logos": "^2.2",
+                "woocommerce/action-scheduler": "^3.7",
+                "wp-pay/core": "^4.19"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.8",
                 "php-coveralls/php-coveralls": "^2.7",
                 "phpmd/phpmd": "^2.15",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan": "^1.11",
                 "pronamic/gravityforms": "^2.8",
                 "pronamic/pronamic-cli": "^1.1",
                 "pronamic/wp-coding-standards": "^2.2",
+                "pronamic/wp-documentor": "^1.4",
                 "roots/wordpress": "^6.0",
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "vimeo/psalm": "^5.24",
+                "wp-pay-gateways/mollie": "^4.12",
                 "wp-phpunit/wp-phpunit": "^6.4",
                 "yoast/phpunit-polyfills": "^2.0"
             },
-            "time": "2024-04-26T07:46:32+00:00",
+            "time": "2026-01-26T19:35:14+00:00",
             "type": "wordpress-plugin",
+            "extra": {
+                "installer-paths": {
+                    "packages/{$vendor}/{$name}": [
+                        "pronamic/wp-datetime",
+                        "pronamic/wp-gravityforms-nl",
+                        "pronamic/wp-html",
+                        "pronamic/wp-http",
+                        "pronamic/wp-mollie",
+                        "pronamic/wp-money",
+                        "pronamic/wp-number",
+                        "vendor:wp-pay",
+                        "vendor:wp-pay-extensions",
+                        "vendor:wp-pay-gateways",
+                        "woocommerce/action-scheduler"
+                    ]
+                }
+            },
             "installation-source": "source",
             "autoload": {
                 "psr-4": {
@@ -3055,12 +3188,6 @@
                 ],
                 "phpunit": [
                     "vendor/bin/phpunit"
-                ],
-                "post-install-cmd": [
-                    "echo 'Optionally run: composer bin all install'"
-                ],
-                "post-update-cmd": [
-                    "echo 'Optionally run: composer bin all update'"
                 ],
                 "psalm": [
                     "vendor/bin/psalm"
@@ -3101,7 +3228,7 @@
                 "issues": "https://github.com/wp-pay-extensions/gravityforms/issues",
                 "source": "https://github.com/wp-pay-extensions/gravityforms"
             },
-            "install-path": "../wp-pay-extensions/gravityforms"
+            "install-path": "../../packages/wp-pay-extensions/gravityforms"
         },
         {
             "name": "wp-pay-extensions/memberpress",
@@ -3110,7 +3237,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/extension-memberpress",
-                "reference": "362182d196732ce1ba6e11c611e1e5ba2c9390ac"
+                "reference": "b052495c07c8be5d501cc65e88774af0d79fa4c4"
             },
             "require": {
                 "php": ">=7.4",
@@ -3120,16 +3247,20 @@
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.4",
                 "php-coveralls/php-coveralls": "^2.5",
+                "php-stubs/wp-cli-stubs": "^2.10",
                 "phpmd/phpmd": "^2.7",
+                "phpstan/phpstan": "^1.11",
                 "pronamic/memberpress": "^1.9",
                 "pronamic/pronamic-cli": "^1.0",
                 "pronamic/wp-coding-standards": "^2.0",
                 "roots/wordpress": "^6.0",
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "vimeo/psalm": "^5.25",
                 "wp-cli/wp-cli": "^2.5",
                 "wp-phpunit/wp-phpunit": "^6.1",
                 "yoast/phpunit-polyfills": "^1.0"
             },
-            "time": "2024-04-26T07:48:34+00:00",
+            "time": "2025-12-28T14:02:34+00:00",
             "type": "wordpress-plugin",
             "installation-source": "source",
             "autoload": {
@@ -3138,6 +3269,9 @@
                 }
             },
             "scripts": {
+                "build": [
+                    "vendor/bin/pronamic wp-build"
+                ],
                 "ci": [
                     "@phplint",
                     "@phpcs",
@@ -3176,6 +3310,10 @@
                 ],
                 "psalm": [
                     "vendor/bin/psalm"
+                ],
+                "release": [
+                    "@build",
+                    "vendor/bin/pronamic release-to-github"
                 ]
             },
             "license": [
@@ -3210,7 +3348,7 @@
                 "issues": "https://github.com/wp-pay-extensions/memberpress/issues",
                 "source": "https://github.com/wp-pay-extensions/memberpress"
             },
-            "install-path": "../wp-pay-extensions/memberpress"
+            "install-path": "../../packages/wp-pay-extensions/memberpress"
         },
         {
             "name": "wp-pay-extensions/ninjaforms",
@@ -3219,7 +3357,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/extension-ninjaforms",
-                "reference": "2f1fd2a0e29c9aca4b221a90ca09dce982933cf9"
+                "reference": "eea1d5e48c572d5edb31c16ab254a6737d99449f"
             },
             "require": {
                 "php": ">=8.0",
@@ -3230,14 +3368,17 @@
                 "overtrue/phplint": "^9.1",
                 "php-coveralls/php-coveralls": "^2.7",
                 "phpmd/phpmd": "^2.15",
+                "phpstan/phpstan": "^1.11",
                 "pronamic/pronamic-cli": "^1.1",
                 "pronamic/wp-coding-standards": "^2.2",
                 "roots/wordpress": "^6.4",
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "vimeo/psalm": "^5.25",
                 "wp-phpunit/wp-phpunit": "^6.4",
                 "wpackagist-plugin/ninja-forms": "^3.8",
                 "yoast/phpunit-polyfills": "^2.0"
             },
-            "time": "2024-04-26T07:50:22+00:00",
+            "time": "2025-12-28T14:15:04+00:00",
             "type": "wordpress-plugin",
             "installation-source": "source",
             "autoload": {
@@ -3312,7 +3453,7 @@
                 "issues": "https://github.com/wp-pay-extensions/ninjaforms/issues",
                 "source": "https://github.com/wp-pay-extensions/ninjaforms"
             },
-            "install-path": "../wp-pay-extensions/ninjaforms"
+            "install-path": "../../packages/wp-pay-extensions/ninjaforms"
         },
         {
             "name": "wp-pay-extensions/restrict-content-pro",
@@ -3321,33 +3462,54 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/extension-restrict-content-pro",
-                "reference": "38cb0f4a66f7b8c4fe808f52d2c94f6eced7c533"
+                "reference": "0810c2427feb6dc5552d3bdb28b78289fcbfd5b1"
             },
             "require": {
-                "php": ">=7.4",
+                "automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
+                "php": ">=8.1",
                 "pronamic/wp-money": "^2.2",
-                "wp-pay/core": "^4.6"
+                "woocommerce/action-scheduler": "^3.7",
+                "wp-pay-gateways/mollie": "^4.10",
+                "wp-pay/core": "^4.17"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.4",
                 "php-coveralls/php-coveralls": "^2.5",
                 "phpmd/phpmd": "^2.7",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan": "^1.11",
                 "pronamic/pronamic-cli": "^1.0",
                 "pronamic/wp-coding-standards": "^2.1",
-                "restrictcontentpro/restrict-content": "2.2.3",
                 "roots/wordpress": "^6.0",
-                "wp-phpunit/wp-phpunit": "^6.1",
-                "yoast/phpunit-polyfills": "^1.0"
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "vimeo/psalm": "^5.24",
+                "wp-cli/wp-cli": "^2.10",
+                "wp-phpunit/wp-phpunit": "^6.5",
+                "wpackagist-plugin/restrict-content": "^3.2",
+                "yoast/phpunit-polyfills": "^2.0"
             },
-            "time": "2024-04-26T07:58:48+00:00",
+            "time": "2026-01-23T09:35:05+00:00",
             "type": "wordpress-plugin",
+            "extra": {
+                "installer-paths": {
+                    "packages/{$vendor}/{$name}": [
+                        "vendor:pronamic",
+                        "vendor:wp-pay",
+                        "vendor:wp-pay-extensions",
+                        "vendor:wp-pay-gateways",
+                        "woocommerce/action-scheduler"
+                    ]
+                }
+            },
             "installation-source": "source",
             "autoload": {
                 "psr-4": {
-                    "Pronamic\\WordPress\\Pay\\Extensions\\RestrictContentPro\\": "src/"
+                    "Pronamic\\WordPress\\Pay\\Extensions\\RestrictContent\\": "src/"
                 }
             },
             "scripts": {
+                "build": [
+                    "vendor/bin/pronamic wp-build"
+                ],
                 "coveralls": [
                     "vendor/bin/php-coveralls -v"
                 ],
@@ -3369,14 +3531,12 @@
                 "phpunit": [
                     "vendor/bin/phpunit --colors=always"
                 ],
-                "post-install-cmd": [
-                    "echo 'Optionally run: composer bin all install'"
-                ],
-                "post-update-cmd": [
-                    "echo 'Optionally run: composer bin all update'"
-                ],
                 "psalm": [
                     "vendor/bin/psalm"
+                ],
+                "release": [
+                    "@build",
+                    "vendor/bin/pronamic release-to-github"
                 ]
             },
             "license": [
@@ -3396,7 +3556,7 @@
                     "role": "Developer"
                 }
             ],
-            "description": "Restrict Content Pro driver for the WordPress payment processing library.",
+            "description": "Restrict Content (Pro) driver for the WordPress payment processing library.",
             "homepage": "http://www.wp-pay.org/extensions/restrict-content-pro/",
             "keywords": [
                 "content",
@@ -3413,7 +3573,7 @@
                 "issues": "https://github.com/wp-pay-extensions/restrict-content-pro/issues",
                 "source": "https://github.com/wp-pay-extensions/restrict-content-pro"
             },
-            "install-path": "../wp-pay-extensions/restrict-content-pro"
+            "install-path": "../../packages/wp-pay-extensions/restrict-content-pro"
         },
         {
             "name": "wp-pay-extensions/woocommerce",
@@ -3422,33 +3582,37 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/extension-woocommerce",
-                "reference": "c0e6c38b1a4db78f2dfa30881b7fa885b0408830"
+                "reference": "9bc32c5590d7bb2b60854b14466850f8f8bf75b2"
             },
             "require": {
-                "automattic/jetpack-autoloader": "^3.0",
-                "php": ">=8.0",
+                "automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
+                "php": ">=8.1",
                 "pronamic/wp-html": "^2.2",
                 "woocommerce/action-scheduler": "^3.7",
-                "wp-pay/core": "^4.16"
+                "wp-pay/core": "^4.26"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.8",
                 "overtrue/phplint": "^9.1",
                 "php-coveralls/php-coveralls": "^2.7",
                 "php-stubs/woocommerce-stubs": "^8.7",
                 "php-stubs/wp-cli-stubs": "^2.10",
                 "phpmd/phpmd": "^2.15",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^1.11",
                 "pronamic/pronamic-cli": "^1.1",
                 "pronamic/woocommerce-subscriptions": "^6.0",
                 "pronamic/wp-coding-standards": "^2.2",
                 "roots/wordpress": "^6.4",
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "vimeo/psalm": "^0.3.14",
                 "wp-cli/wp-cli": "^2.10",
+                "wp-pay-gateways/mollie": "^4.15",
                 "wp-phpunit/wp-phpunit": "^6.4",
                 "wpackagist-plugin/woocommerce": "^8.7",
                 "yoast/phpunit-polyfills": "^2.0",
                 "yoast/wordpress-seo": "^22.3"
             },
-            "time": "2024-04-26T08:29:24+00:00",
+            "time": "2026-01-26T14:25:03+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "installer-paths": {
@@ -3475,10 +3639,10 @@
                     "wp i18n make-json languages/*.po --no-purge"
                 ],
                 "make-pot": [
-                    "wp pronamic i18n make-pot . languages/pronamic-pay-fundraising.pot --slug='pronamic-pay-fundraising'"
+                    "wp i18n make-pot . languages/pronamic-pay-woocommerce.pot --slug='pronamic-pay-woocommerce'"
                 ],
                 "update-po": [
-                    "find languages/*.po -type f -exec msgmerge --update --backup=off {} languages/pronamic-pay-fundraising.pot \\;"
+                    "find languages/*.po -type f -exec msgmerge --update --backup=off {} languages/pronamic-pay-woocommerce.pot \\;"
                 ],
                 "phpcbf": [
                     "XDEBUG_MODE=off vendor/bin/phpcbf"
@@ -3497,12 +3661,6 @@
                 ],
                 "phpunit": [
                     "vendor/bin/phpunit"
-                ],
-                "post-install-cmd": [
-                    "echo 'Optionally run: composer bin all install'"
-                ],
-                "post-update-cmd": [
-                    "echo 'Optionally run: composer bin all update'"
                 ],
                 "psalm": [
                     "vendor/bin/psalm"
@@ -3546,18 +3704,19 @@
                 "issues": "https://github.com/wp-pay-extensions/woocommerce/issues",
                 "source": "https://github.com/wp-pay-extensions/woocommerce"
             },
-            "install-path": "../wp-pay-extensions/woocommerce"
+            "install-path": "../../packages/wp-pay-extensions/woocommerce"
         },
         {
             "name": "wp-pay/core",
-            "version": "dev-knitpay-master",
-            "version_normalized": "dev-knitpay-master",
+            "version": "4.26.0.0",
+            "version_normalized": "4.26.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/wp-pay-core",
-                "reference": "9894346a09ef022310f69cf523ccbeb1102ce2cf"
+                "reference": "bb7446362f17a3eda131899ad871e32f75b73f2a"
             },
             "require": {
+                "automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "ext-simplexml": "*",
@@ -3567,25 +3726,31 @@
                 "pronamic/wp-http": "^1.2",
                 "pronamic/wp-money": "^2.3",
                 "pronamic/wp-number": "^1.3",
+                "pronamic/wp-pay-logos": "^2.2",
                 "viison/address-splitter": "^0.3.4",
-                "woocommerce/action-scheduler": "^3.6"
+                "woocommerce/action-scheduler": "^3.8"
             },
             "require-dev": {
-                "automattic/wordbless": "^0.4.2",
-                "bamarni/composer-bin-plugin": "^1.4",
-                "overtrue/phplint": "^9.0",
+                "overtrue/phplint": "^9.4",
                 "php-coveralls/php-coveralls": "^2.4",
                 "php-stubs/wordpress-globals": "^0.2.0",
                 "php-stubs/wp-cli-stubs": "^2.4",
                 "phpmd/phpmd": "^2.9",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan": "^1.11",
                 "pronamic/pronamic-cli": "^1.1",
                 "pronamic/wp-coding-standards": "^2.0",
-                "roots/wordpress": "^6.0",
+                "pronamic/wp-documentor": "^1.4",
+                "rector/rector": "^1.2",
+                "roots/wordpress-no-content": "^6.7",
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "vimeo/psalm": "^5.24",
+                "wordpress/sqlite-database-integration": "^2.1",
                 "wp-cli/wp-cli": "^2.3",
                 "wp-phpunit/wp-phpunit": "^6.1",
-                "yoast/phpunit-polyfills": "^1.0"
+                "yoast/phpunit-polyfills": "^2.0"
             },
-            "time": "2024-06-04T12:34:25+00:00",
+            "time": "2026-01-26T08:18:28+00:00",
             "type": "wordpress-plugin",
             "installation-source": "source",
             "autoload": {
@@ -3597,6 +3762,9 @@
                 ]
             },
             "scripts": {
+                "build": [
+                    "vendor/bin/pronamic wp-build"
+                ],
                 "ci": [
                     "@phplint",
                     "@phpcs",
@@ -3639,6 +3807,10 @@
                 "psalm": [
                     "vendor/bin/psalm"
                 ],
+                "release": [
+                    "@build",
+                    "vendor/bin/pronamic release-to-github"
+                ],
                 "xmllint-phpcs": [
                     "xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd phpcs.xml.dist"
                 ],
@@ -3647,13 +3819,6 @@
                 ],
                 "build-docs": [
                     "XDEBUG_MODE=off vendor/bin/wp-documentor parse src --format=markdown --relative=docs > docs/hooks.md"
-                ],
-                "post-install-cmd": [
-                    "WorDBless\\Composer\\InstallDropin::copy"
-                ],
-                "post-update-cmd": [
-                    "echo 'Optionally run: composer bin all update'",
-                    "WorDBless\\Composer\\InstallDropin::copy"
                 ]
             },
             "license": [
@@ -3688,7 +3853,7 @@
                 "issues": "https://github.com/wp-pay/core/issues",
                 "source": "https://github.com/wp-pay/core"
             },
-            "install-path": "../wp-pay/core"
+            "install-path": "../../packages/wp-pay/core"
         }
     ],
     "dev": false,

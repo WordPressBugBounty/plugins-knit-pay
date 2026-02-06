@@ -4,7 +4,7 @@ namespace KnitPay\Gateways\OrderBox;
 
 use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 use Pronamic\WordPress\Pay\Plugin;
-use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use KnitPay\Gateways\PaymentMethods;
 use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
@@ -13,7 +13,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Orderbox Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 6.65.0.0

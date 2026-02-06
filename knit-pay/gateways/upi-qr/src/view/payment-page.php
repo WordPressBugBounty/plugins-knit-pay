@@ -3,7 +3,7 @@
  * UPI Payment Page
  *
  * @author    Knit Pay
- * @copyright 2020-2025 Knit Pay
+ * @copyright 2020-2026 Knit Pay
  * @license   GPL-3.0-or-later
  */
 
@@ -82,7 +82,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<input type='hidden' id='image_dir_path' value='<?php echo KNIT_PAY_UPI_QR_IMAGE_URL; ?>'>
 		<input type='hidden' name='knit_pay_transaction_id' value='<?php echo $transaction_id; ?>'>
 		<input type='hidden' name='knit_pay_payment_id' value='<?php echo $payment->get_id(); ?>'>
-		
+
 		<form id='formSubmit' action='<?php echo $redirect_url; ?>' method='post' style='display: none;'>
 			<input type='hidden' name='status' value='Success'>
 		</form>

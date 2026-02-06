@@ -5,7 +5,7 @@ use Exception;
 
 /**
  * Title: PayU Client
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 5.4.0
@@ -90,7 +90,7 @@ class Client {
 
 		if ( isset( $result->msg ) ) {
 			$error = trim( $result->msg );
-			if ( pronamic_pay_plugin()->is_debug_mode() ) {
+			if ( knit_pay_plugin()->is_debug_mode() ) {
 				$error = $error . '<pre>' . print_r( $data, true ) . '</pre>';
 			}
 			throw new Exception( $error );

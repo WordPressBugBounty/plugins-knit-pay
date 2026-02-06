@@ -8,7 +8,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
 /**
  * Title: Instamojo Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 1.0.0
@@ -116,7 +116,7 @@ class Integration extends AbstractGatewayIntegration {
 				echo '<p>' . __(
 					'Instamojo is a free Payment Gateway for 12,00,000+ Businesses in India. There is no setup or annual fee. Just pay a transaction fee of 2% + ₹3 for the transactions. Instamojo accepts Debit Cards, Credit Cards, Net Banking, UPI, Wallets, and EMI.',
 					'knit-pay'
-				) . '</p><p><strong>' . __( 'Steps to Integrate Instamojo' ) . '</strong></p>' .
+				) . '</p><p><strong>' . __( 'Steps to Integrate Instamojo', 'knit-pay-lang' ) . '</strong></p>' .
 
 				'<ol><li>Some features may not work with the old Instamojo account! We
                     recommend you create a new account. Sign up process will hardly

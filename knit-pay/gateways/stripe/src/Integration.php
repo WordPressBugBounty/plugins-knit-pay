@@ -8,7 +8,7 @@ use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
 
 /**
  * Title: Stripe Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 8.96.11.0
@@ -16,6 +16,7 @@ use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
  */
 class Integration extends AbstractGatewayIntegration {
 	use IntegrationModeTrait;
+
 	/**
 	 * Construct Stripe integration.
 	 *
@@ -270,10 +271,12 @@ class Integration extends AbstractGatewayIntegration {
 	 * @return void
 	 */
 	public function save_post( $post_id ) {
-		$post = filter_input_array( INPUT_POST );
-		if ( empty( $post['_pronamic_gateway_stripe_enabled_payment_methods'] ) ) {
-			$post['_pronamic_gateway_stripe_enabled_payment_methods'] = [ PaymentMethods::CREDIT_CARD ];
+		$enabled_payment_methods = [ PaymentMethods::CREDIT_CARD ];
+
+		if ( ! empty( $_POST['_pronamic_gateway_stripe_enabled_payment_methods'] ) ) {
+			$enabled_payment_methods = array_map( 'sanitize_text_field', (array) $_POST['_pronamic_gateway_stripe_enabled_payment_methods'] );
 		}
-		update_post_meta( $post_id, '_pronamic_gateway_stripe_enabled_payment_methods', $post['_pronamic_gateway_stripe_enabled_payment_methods'] );
+
+		update_post_meta( $post_id, '_pronamic_gateway_stripe_enabled_payment_methods', $enabled_payment_methods );
 	}
 }

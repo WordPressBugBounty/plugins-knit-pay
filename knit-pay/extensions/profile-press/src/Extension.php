@@ -11,7 +11,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 /**
  * Title: ProfilePress extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -193,5 +193,4 @@ class Extension extends AbstractPluginIntegration {
 		}
 		return $url;
 	}
-
 }

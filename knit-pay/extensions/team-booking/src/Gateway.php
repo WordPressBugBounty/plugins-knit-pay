@@ -19,7 +19,7 @@ use TeamBooking\Functions;
 /**
  * Title: Team Booking Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -70,20 +70,20 @@ class Gateway implements TeamBooking_PaymentGateways_Settings {
 		$panel->addTitleContent( Framework\ElementFrom::content( 'Knit Pay' ) );
 
 		// Use Knit Pay gateway
-		$element = new Framework\PanelSettingYesOrNo( __( 'Use Knit Pay gateway', 'team-booking' ) );
+		$element = new Framework\PanelSettingYesOrNo( __( 'Use Knit Pay gateway', 'knit-pay-lang' ) );
 		$element->addFieldname( 'gateway_settings[' . $this->gateway_id . '][use_gateway]' );
 		$element->setState( $this->use_gateway );
 		$element->appendTo( $panel );
 
 		// Title.
-		$element = new Framework\PanelSettingText( __( 'Title', 'team-booking' ) );
+		$element = new Framework\PanelSettingText( __( 'Title', 'knit-pay-lang' ) );
 		$element->addFieldname( 'gateway_settings[' . $this->gateway_id . '][title]' );
 		$element->addDescription( __( 'This controls the title which the user sees during checkout.', 'knit-pay-lang' ) );
 		$element->addDefaultValue( $this->title );
 		$element->appendTo( $panel );
 
 		// Configuration.
-		$element = new Framework\PanelSettingSelector( __( 'Configuration', 'team-booking' ) );
+		$element = new Framework\PanelSettingSelector( __( 'Configuration', 'knit-pay-lang' ) );
 		$element->addFieldname( 'gateway_settings[' . $this->gateway_id . '][config_id]' );
 		$element->addDescription( 'Configurations can be created in Knit Pay gateway configurations page at "Knit Pay >> Configurations".' );
 		foreach ( Plugin::get_config_select_options( $this->payment_method ) as $key => $payment_config ) {
@@ -93,22 +93,22 @@ class Gateway implements TeamBooking_PaymentGateways_Settings {
 		$element->appendTo( $panel );
 
 		// Payment Description.
-		$element = new Framework\PanelSettingText( __( 'Payment Description', 'team-booking' ) );
+		$element = new Framework\PanelSettingText( __( 'Payment Description', 'knit-pay-lang' ) );
 		$element->addFieldname( 'gateway_settings[' . $this->gateway_id . '][payment_description]' );
-		$element->addDescription( __( sprintf( __( 'Available tags: %s', 'knit-pay-lang' ), sprintf( '%s', '{reservation_id}, {service_name}' ) ) ) );
+		$element->addDescription( __( sprintf( __( 'Available tags: %s', 'knit-pay-lang' ), sprintf( '%s', '{reservation_id}, {service_name}' ) ), 'knit-pay-lang' ) );
 		$element->addDefaultValue( $this->payment_description );
 		$element->appendTo( $panel );
 
 		// Payment Icon.
-		$element = new Framework\PanelSettingInsertMedia( __( 'Payment Icon', 'team-booking' ) );
-		$element->addDescription( __( 'Choose an image that will be shown on the payment page.', 'team-booking' ) );
+		$element = new Framework\PanelSettingInsertMedia( __( 'Payment Icon', 'knit-pay-lang' ) );
+		$element->addDescription( __( 'Choose an image that will be shown on the payment page.', 'knit-pay-lang' ) );
 		$element->addFieldname( 'gateway_settings[' . $this->gateway_id . '][icon_media_id]' );
 		$element->addDefaultMediaId( $this->icon_media_id );
 		$element->appendTo( $panel );
 
 		// Save changes
 		$wildcard = new Framework\PanelSettingWildcard( null );
-		$element  = new Framework\PanelSaveButton( __( 'Save changes', 'team-booking' ), 'tbk_save_payments' );
+		$element  = new Framework\PanelSaveButton( __( 'Save changes', 'knit-pay-lang' ), 'tbk_save_payments' );
 		$wildcard->addContent( $element );
 		$panel->addElement( $wildcard );
 
@@ -130,12 +130,12 @@ class Gateway implements TeamBooking_PaymentGateways_Settings {
 		ob_start();
 		?>
 		<div class="tb-icon tbk-button tbk-pay-button" data-offsite="<?php echo $this->isOffsite(); ?>"
-			 data-gateway="<?php echo $this->gateway_id; ?>" tabindex="0">
+			data-gateway="<?php echo $this->gateway_id; ?>" tabindex="0">
 			
 			<img style="height: 40px;width: 47.2px;" src="<?php echo $icon_url; ?>">
 
 			<div class="tbk-content">
-				<?php echo sprintf( __( 'Pay with %s', 'knit-pay-lang' ), $this->getTitle() ); ?>
+				<?php printf( __( 'Pay with %s', 'knit-pay-lang' ), $this->getTitle() ); ?>
 			</div>
 		</div>
 
@@ -320,7 +320,7 @@ class Gateway implements TeamBooking_PaymentGateways_Settings {
 	 * @param string $email
 	 */
 	public function setPaymentDescription( $payment_description ) {
-		 $this->payment_description = $payment_description;
+		$this->payment_description = $payment_description;
 	}
 
 	/**
@@ -334,21 +334,21 @@ class Gateway implements TeamBooking_PaymentGateways_Settings {
 	 * @param string $email
 	 */
 	public function setConfigID( $config_id ) {
-		 $this->config_id = $config_id;
+		$this->config_id = $config_id;
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getConfigID() {
-		 return $this->config_id;
+		return $this->config_id;
 	}
 
 	/**
 	 * @param $id
 	 */
 	public function setIconMediaId( $id ) {
-		 $this->icon_media_id = $id;
+		$this->icon_media_id = $id;
 	}
 
 	/**

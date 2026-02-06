@@ -6,7 +6,7 @@ use Exception;
 
 /**
  * Title: Get ePay API
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 8.87.0.0
@@ -109,7 +109,6 @@ class Client {
 			$decrypted_response = $this->decrypt( $result->response );
 			return $decrypted_response;
 		}
-		
 	}
 	
 	/**

@@ -6,7 +6,7 @@ use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 
 /**
  * Title: Other Payment Provider Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 8.79.3.0
@@ -30,6 +30,26 @@ class Integration extends AbstractGatewayIntegration {
 		);
 
 		parent::__construct( $args );
+
+		add_action( 'admin_notices', [ $this, 'admin_notice' ] );
+	}
+
+	public function admin_notice() {
+		if ( $error = get_transient( 'knit_pay_post_save_error' ) ) {
+			delete_transient( 'knit_pay_post_save_error' );
+			wp_admin_notice(
+				$error,
+				[
+					'type'        => 'error',
+					'dismissible' => true,
+				]
+			);
+			echo '<script>alert("Error: ' . esc_js( $error ) . '");</script>';
+		}
+	}
+
+	protected function knit_pay_post_save_notice( $message ) {
+		set_transient( 'knit_pay_post_save_error', $message, 60 );
 	}
 
 	/**

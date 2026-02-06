@@ -9,7 +9,7 @@ use Pronamic\WordPress\Pay\Plugin;
 
 /**
  * Title: Fiserv Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 6.64.0.0
@@ -17,6 +17,7 @@ use Pronamic\WordPress\Pay\Plugin;
  */
 class Integration extends AbstractGatewayIntegration {
 	use IntegrationModeTrait;
+
 	/**
 	 * Construct Fiserv integration.
 	 *

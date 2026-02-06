@@ -8,7 +8,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 /**
  * Title: Knit Pay - Payment Link extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -60,7 +60,7 @@ class Extension extends AbstractPluginIntegration {
 			__( 'Create Payment Link', 'knit-pay-lang' ),
 			'edit_payments',
 			'knit_pay_payment_link',
-			function() {
+			function () {
 				include 'views/page-payment-link.php';
 			},
 			2

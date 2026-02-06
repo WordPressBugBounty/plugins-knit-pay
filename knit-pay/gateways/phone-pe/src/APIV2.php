@@ -116,4 +116,3 @@ class APIV2 {
 		$this->access_token = $result->access_token;
 	}
 }
-

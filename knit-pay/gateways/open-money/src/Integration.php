@@ -8,7 +8,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
  * Title: Open Money Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 5.3.0
@@ -16,6 +16,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  */
 class Integration extends AbstractGatewayIntegration {
 	use IntegrationModeTrait;
+
 	/**
 	 * Construct Open Money integration.
 	 *

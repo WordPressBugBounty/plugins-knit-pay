@@ -38,7 +38,7 @@ class KnitPayPro_Setup {
 			$this->setup_page_name,
 			'manage_options',
 			'knit_pay_pro_setup_page',
-			function() {
+			function () {
 				include KNITPAY_DIR . '/views/page-knit-pay-pro-setup.php';
 			}
 		);

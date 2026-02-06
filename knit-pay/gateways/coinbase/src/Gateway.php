@@ -3,7 +3,7 @@ namespace KnitPay\Gateways\Coinbase;
 
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
-use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use KnitPay\Gateways\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Exception;
 use KnitPay\Utils as KnitPayUtils;
@@ -11,7 +11,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Coinbase Commerce Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.77.0.0
@@ -105,7 +105,7 @@ class Gateway extends Core_Gateway {
 		];
 		
 		$customer      = $payment->get_customer();
-		$customer_name = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 45 );
+		$customer_name = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 45 );
 		if ( ! empty( $customer_name ) ) {
 			$notes = [
 				'customer_name' => $customer_name,

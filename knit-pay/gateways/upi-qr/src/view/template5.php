@@ -87,10 +87,12 @@
 				<?php } ?>
 
 				<!-- QR Waiting Indicator -->
-				<div class="qr-waiting-indicator">
-					<div class="spinner-small"></div>
-					<span>Waiting for payment...</span>
-				</div>
+				<?php if ( $this->enable_polling ) { ?>
+					<div class="qr-waiting-indicator">
+						<div class="spinner-small"></div>
+						<span>Waiting for payment...</span>
+					</div>
+				<?php } ?>
 			</div>
 		<?php } ?>
 
@@ -104,22 +106,31 @@
 		<?php } ?>
 
 		<!-- Payment Methods Section, Show this section only on android not working on apple. -->
-		<?php if ( ( ! isset( $customer_upi_id ) || empty( $customer_upi_id ) ) && str_contains( $_SERVER['HTTP_USER_AGENT'], 'Android' ) ) { ?>
+		<?php
+		if ( ! isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			$is_android = false;
+		} else {
+			// phpcs:ignore WordPressVIPMinimum.Variables.RestrictedVariables.cache_constraints___SERVER__HTTP_USER_AGENT__
+			$is_android = false !== strpos( sanitize_text_field( $_SERVER['HTTP_USER_AGENT'] ), 'Android' );
+		}
+
+		if ( ( ! isset( $customer_upi_id ) || empty( $customer_upi_id ) ) && $is_android ) {
+			?>
 			<div class="payment-methods">
 				<div class="section-title">Pay with other methods</div>
 				<div class="method-list">
-					<a href="<?php echo add_query_arg( $paytm_intent_url_params, 'paytmmp://cash_wallet' ); ?>" target="_blank">
+					<a href="<?php echo esc_url( add_query_arg( $paytm_intent_url_params, 'paytmmp://cash_wallet' ), [ 'paytmmp' ] ); ?>" target="_blank">
 						<div class="method-item">
-							<img src="<?php echo $image_path; ?>paytm_icon.svg" class="method-icon no-drag" alt="Paytm">
-							<span class="method-name">Paytm</span>
+							<img src="<?php echo esc_url( $image_path ); ?>paytm_icon.svg" class="method-icon no-drag" alt="Paytm">
+							<span class="method-name"><?php echo esc_html__( 'Paytm', 'knit-pay-lang' ); ?></span>
 						</div>
 					</a>
 
 					<?php if ( $show_download_qr_button ) { ?>
 						<a href="#" class="share-qr-button">
 							<div class="method-item">
-								<img src="<?php echo $image_path; ?>gpay_icon.svg" class="method-icon no-drag" alt="Google Pay">
-								<span class="method-name">Share QR</span>
+								<img src="<?php echo esc_url( $image_path ); ?>gpay_icon.svg" class="method-icon no-drag" alt="Google Pay">
+								<span class="method-name"><?php echo esc_html__( 'Share QR', 'knit-pay-lang' ); ?></span>
 							</div>
 						</a>
 					<?php } ?>

@@ -43,6 +43,14 @@ body {
 	box-sizing: border-box;
 }
 
+.qrCodeBody canvas {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    display: block;
+}
+
 .amount {
 	font-size: 16px;
 	margin: 20px 0;

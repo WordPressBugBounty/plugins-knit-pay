@@ -6,6 +6,7 @@ use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Pronamic\WordPress\Pay\Refunds\Refund;
+use KnitPay\Gateways\PaymentMethods;
 use Exception;
 
 require_once 'lib/API.php';
@@ -13,7 +14,7 @@ require_once 'lib/API.php';
 
 /**
  * Title: Sodexo Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 1.0.0
@@ -90,7 +91,7 @@ class Gateway extends Core_Gateway {
 	 */
 	private function get_payment_data( Payment $payment ) {
 		/*
-		 $sodexo_source_id = get_user_meta( $payment->user_id, 'sodexo_source_id', true );
+		$sodexo_source_id = get_user_meta( $payment->user_id, 'sodexo_source_id', true );
 		if ( ! $sodexo_source_id ) {
 			$sodexo_source_id = null;
 		} */

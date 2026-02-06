@@ -3,12 +3,12 @@ function generateQR(user_input) {
 	jQuery('.qrCodeBody').html('');
 	window.knit_pay_qrcode = new QRCode(document.querySelector('.qrCodeBody'), {
 		text: user_input,
-		width: 270, //default 128
-		height: 270,
+		width: 400, //default 128
+		height: 400,
 		colorDark: '#000000',
 		colorLight: '#ffffff',
 		correctLevel: QRCode.CorrectLevel.H,
-		quietZone: 10,
+		quietZone: 15,
 		//logo: jQuery("#image_dir_path").val() + "upi.svg",
 		//logoHeight: '32',
 	});

@@ -9,7 +9,7 @@ use WC_Subscription;
 
 /**
  * Title: Razorpay Webhook Listner
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 1.0.0
@@ -21,6 +21,7 @@ class Listener {
 			return;
 		}
 
+		// phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsRemoteFile
 		$post_body = file_get_contents( 'php://input' );
 		$data      = json_decode( $post_body, true );
 
@@ -129,11 +130,11 @@ class Listener {
 		$webhook_secret = $config->webhook_secret;
 
 		$api = new Api( $config->key_id, $config->key_secret );
-		if ( filter_has_var( INPUT_SERVER, 'HTTP_X_RAZORPAY_SIGNATURE' ) || isset( $webhook_secret ) ) {
+		if ( isset( $_SERVER['HTTP_X_RAZORPAY_SIGNATURE'] ) || isset( $webhook_secret ) ) {
 			try {
 				$api->utility->verifyWebhookSignature(
 					$post_body,
-					filter_input( INPUT_SERVER, 'HTTP_X_RAZORPAY_SIGNATURE', FILTER_UNSAFE_RAW ),
+					sanitize_text_field( $_SERVER['HTTP_X_RAZORPAY_SIGNATURE'] ),
 					$webhook_secret
 				);
 			} catch ( Errors\SignatureVerificationError $e ) {

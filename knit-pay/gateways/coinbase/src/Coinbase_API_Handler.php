@@ -125,9 +125,15 @@ class Coinbase_API_Handler {
 	 * @param  string $cancel
 	 * @return array
 	 */
-	public static function create_charge( $amount = null, $currency = null, $metadata = null,
-										$redirect = null, $name = null, $desc = null,
-										$cancel = null ) {
+	public static function create_charge(
+		$amount = null,
+		$currency = null,
+		$metadata = null,
+		$redirect = null,
+		$name = null,
+		$desc = null,
+		$cancel = null
+	) {
 		$args                = [
 			'name'        => is_null( $name ) ? get_bloginfo( 'name' ) : $name,
 			'description' => is_null( $desc ) ? get_bloginfo( 'description' ) : $desc,

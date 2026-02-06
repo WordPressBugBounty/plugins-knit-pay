@@ -12,13 +12,14 @@ use AWPCP_Payment_Transaction;
 /**
  * Title: AWP Classifieds Helper
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
  * @since   2.5
  */
 class Helper {
+	private $user_info;
 
 	/**
 	 * Transaction

@@ -6,7 +6,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
 
 /**
  * Title: Fygaro Config
- * Copyright: 2020-2021 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 5.0.0

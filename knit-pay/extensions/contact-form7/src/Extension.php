@@ -10,7 +10,7 @@ use WPCF7_Mail;
 /**
  * Title: Contact Form 7 extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -65,7 +65,7 @@ class Extension extends AbstractPluginIntegration {
 
 		add_filter(
 			'wpcf7r_get_actions_categories',
-			function( $categories ) {
+			function ( $categories ) {
 				array_unshift(
 					$categories,
 					[
@@ -97,7 +97,6 @@ class Extension extends AbstractPluginIntegration {
 		];
 		
 		return $panels;
-		
 	}
 	
 	public function install_dependency_message( $cf7 ) {
@@ -196,13 +195,15 @@ class Extension extends AbstractPluginIntegration {
 
 		// Process file attachments if they exist
 		// TODO Fix attachment.
+
 		/*
 		$template['attachments'] = strtr( $template['attachments'], $all_post_meta );
 		if (isset($all_post_meta['files'])) {
 			foreach ($all_post_meta['files'] as $file) {
 				$file = maybe_unserialize($file);
 			}
-		}*/
+		}
+		*/
 
 		return WPCF7_Mail::send( $template, 'mail' );
 	}
@@ -256,5 +257,4 @@ class Extension extends AbstractPluginIntegration {
 		}
 		return get_edit_post_link( $payment->source_id );
 	}
-
 }

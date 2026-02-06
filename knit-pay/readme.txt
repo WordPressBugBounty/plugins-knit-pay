@@ -1,13 +1,13 @@
 === Knit Pay - Cashfree, Instamojo, Razorpay, Paypal and more ===
 Contributors: knitpay, GautamMKGarg
 Tags: instamojo, razorpay, cashfree, payment, woocommerce
-Requires at least: 6.4
-Tested up to: 6.8
-Requires PHP: 8.0
-Stable tag: 8.96.30.1
+Requires at least: 6.2
+Tested up to: 6.9
+Requires PHP: 8.1
+Stable tag: 9.0.2.0
 License: GPL-3.0-or-later
 
-Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, PayPal, Razorpay, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
+Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, PayPal, Razorpay, and SSLCommerz, with over 100 WordPress plugins.
 
 == Description ==
 One plugin to integrate various Payment Gateways like Cashfree, Instamojo, Razorpay, PayPal, PhonePe, CCAvenue, Easebuzz, etc with WordPress plugins like WooCommerce, Easy Digital Downloads, Paid Memberships Pro, Learn Press, Give, Ninja Forms, Tourmaster, Memberpress, Bookly, etc.
@@ -24,6 +24,7 @@ One plugin to integrate various Payment Gateways like Cashfree, Instamojo, Razor
 * Create a fully branded payment link directly from WordPress Dashboard even if Payment Gateway does not support this feature.
 * Create multiple payment buttons in Gutenberg blocks and Elementor.
 * Supports WordPress Payments Rest APIs.
+* Auto currency conversion feature automatically converts the amount to the supported currency if the provided currency is not supported by the payment provider.
 
 https://www.youtube.com/watch?v=vWxSqhSVCQE
 
@@ -33,10 +34,9 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Cashfree
 * Instamojo
 * Paypal
-* RazorPay
+* RazorPay (India and Import Flow for Non-Indian businesses)
 * SSLCommerz - Bangladesh
 * Stripe Connect (For Indian Businesses) (Use Stripe at just 0.75% additional fee.)
-* GoUrl - Crypto Currency Gateway
 
 = Indian Payment Gateways (Try for free with Knit Pay - Pro and Knit Pay - UPI) =
 * Cashfree Pro (Integration using API Keys)
@@ -48,7 +48,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Paytm
 * PhonePe Payment Gateway
 * Zaakpay/Mobikwik
-* Sodexo/Zeta
+* Sodexo/Zeta/Pluxee
 * EBS
 * HDFC Smart Gateway
 * ICICI Eazypay Payment Gateway
@@ -60,6 +60,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * BharatPe QR
 * HDFC SmartHub Vyapar
 * SabPaisa
+* Zoho Payments
 
 = non-Indian Payment Gateways (Try for free with Knit Pay - Pro) =
 * Elavon Converge
@@ -92,6 +93,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * iPay88
 * eSewa
 * Paddle
+* Revolut
 
 = Indian Payment Gateways (Contact us for this premium addon.) =
 * JioPay
@@ -117,7 +119,6 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Lyra
 * Tyche
 * YONO SBI
-* Zoho Payments
 * and many more...
 
 = non-Indian Payment Gateways (Contact us for this premium addon.) =
@@ -135,7 +136,6 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Khalti
 * accept.blue
 * Authorize.net
-* Revolut
 * Payeezy
 * USAePay
 * Bambora
@@ -180,6 +180,19 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Robokassa
 * CloudPayments
 * Yandex
+* Zibal
+* Aqayepardakht
+* PayPing
+* IDPay
+* IranDargah
+* Mellat
+* NextPay
+* Sadad
+* Omise
+* Nuvei
+* AsiaPay
+* Paymob
+* Dodo Payments
 * and many more...
 
 = Crypto Currencies Payment Gateways (Contact us for this premium addon.) =
@@ -241,6 +254,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Charity Hub (Contact us for this premium addon.)
 
 = LMS & E-Learning Platforms =
+* Tutor LMS
 * LearnPress
 * LearnDash
 * LifterLMS
@@ -248,7 +262,6 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Ultimate Learning Pro (Contact us for this premium addon.)
 * Sensei LMS (Contact us for this premium addon.)
 * Quiz Maker Pro (Contact us for this premium addon.)
-* Tutor LMS (supported with WooCommerce and Easy Digital Download)
 * MasterStudy LMS (supported with WooCommerce)
 
 = Membership and Content Protection =
@@ -260,6 +273,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * ProfileGrid (Contact us for this premium addon.)
 * Paid Member Subscriptions (Contact us for this premium addon.)
 * ARMember (Contact us for this premium addon.)
+* WP User Frontend (Contact us for this premium addon.)
 
 = E-commerce Platforms =
 * Easy Digital Downloads (EDD)
@@ -363,12 +377,12 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Vik Appointments Pro
 
 = Other WordPress Plugins =
+* Uncanny Automator
 * myCRED - buyCRED Addon (Try it for free with **Knit Pay - Pro**)
 * PremiumPress Themes and Plugins (Contact us for this premium addon.)
 * Engine Themes (Contact us for this premium addon.)
 * School Management Pro (Contact us for this premium addon.)
 * Institute Management Pro (Contact us for this premium addon.)
-* Uncanny Automator (Contact us for this premium addon.)
 
 = Other Platforms (Contact us for this premium addon.) =
 * Orderbox/LogicBoxes/ResellerClub (Try it for free with **Knit Pay - Pro**)
@@ -396,6 +410,9 @@ In most of the payment gateways, we don't charge you for any transaction fees. Y
 = I want to use a payment gateway but it is missing in Knit Pay, What should I do? =
 
 We are trying to partner with as many payment gateways as possible and adding support for them. You can contact us on WhatsApp if you need support for any payment gateway which is presently not supported. We will try our best to add that gateway.
+
+= Where do I report security bugs found in this plugin? =
+Please report security bugs found in the source code of the Knit Pay plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/aeaf4b6b-d69b-482e-bf16-79d0eb7ac65a). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
 
 == Support ==
 

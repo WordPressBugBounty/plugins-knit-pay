@@ -112,7 +112,6 @@ class API {
 		}
 		
 		throw new Exception( 'Something went wrong. Please try again later.' );
-		
 	}
 
 	private function get_request_headers() {

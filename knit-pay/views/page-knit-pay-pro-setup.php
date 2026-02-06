@@ -3,7 +3,7 @@
  * Knit Pay Pro - Set Up Page
  *
  * @author    Knit Pay
- * @copyright 2020-2023 Knit Pay
+ * @copyright 2020-2026 Knit Pay
  * @license   GPL-3.0-or-later
  */
 

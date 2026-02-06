@@ -9,7 +9,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Flutterwave Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 4.8.0
@@ -35,6 +35,7 @@ class Gateway extends Core_Gateway {
 
 	private function register_payment_methods() {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::BANK_TRANSFER ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::PAYPAL ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::FLUTTERWAVE ) );
@@ -79,7 +80,7 @@ class Gateway extends Core_Gateway {
 			'customer'        => [
 				'email'       => $customer->get_email(),
 				'phonenumber' => $billing_address->get_phone(),
-				'name'        => KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 45 ),
+				'name'        => KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 45 ),
 			],
 			'meta'            => $this->get_metadata( $payment ),
 		];
@@ -114,16 +115,15 @@ class Gateway extends Core_Gateway {
 			$payment->add_note( $note );
 
 		if ( ! ( $transaction_details->tx_ref === $payment->get_transaction_id()
-				&& floatval( $transaction_details->charged_amount ) === floatval( $payment->get_total_amount()->number_format( null, '.', '' ) ) ) ) {
-			$payment->set_status( PaymentStatus::FAILURE );
-			return;
+			&& floatval( $transaction_details->charged_amount ) === floatval( $payment->get_total_amount()->number_format( null, '.', '' ) ) ) ) {
+				$payment->set_status( PaymentStatus::FAILURE );
+				return;
 		}
 
 		if ( 'successful' === $transaction_details->status ) {
 			$payment->set_status( PaymentStatus::SUCCESS );
 			$payment->set_transaction_id( $transaction_details->flw_ref );
 		}
-
 	}
 
 	private function get_metadata( Payment $payment ) {
@@ -137,7 +137,7 @@ class Gateway extends Core_Gateway {
 		];
 
 		$customer      = $payment->get_customer();
-		$customer_name = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 45 );
+		$customer_name = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 45 );
 		if ( ! empty( $customer_name ) ) {
 			$notes = [
 				'customer_name' => $customer_name,

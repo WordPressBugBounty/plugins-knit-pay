@@ -12,7 +12,7 @@ use Tribe__Notices;
 /**
  * Title: Registrations For The Events Calendar Pro Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -148,13 +148,12 @@ class Gateway extends RTEC_Payment {
 			return;
 		}
 
-		$message   = isset( $rtec_options['payment_success_message'] ) ? $rtec_options['payment_success_message'] : __( 'You have completed your payment. Check your inbox for a receipt.', 'registrations-for-the-events-calendar' );
-		$o_message = rtec_get_text( $message, __( 'You have completed your payment. Check your inbox for a receipt.', 'registrations-for-the-events-calendar' ) );
+		$message   = isset( $rtec_options['payment_success_message'] ) ? $rtec_options['payment_success_message'] : __( 'You have completed your payment. Check your inbox for a receipt.', 'knit-pay-lang' );
+		$o_message = rtec_get_text( $message, __( 'You have completed your payment. Check your inbox for a receipt.', 'knit-pay-lang' ) );
 
 		if ( method_exists( 'Tribe__Notices', 'set_notice' ) ) {
 			Tribe__Notices::set_notice( 'payment_status', $o_message );
 		}
-
 	}
 
 	public function get_form_action_url() {
@@ -181,7 +180,7 @@ class Gateway extends RTEC_Payment {
 		<input type="hidden" name="quantity" value="<?php echo esc_attr( $quantity ); ?>">
 		<input type="hidden" name="entry_id" value="<?php echo esc_attr( $this->payment_data['transaction']['entry_id'] ); ?>">
 		<?php if ( ! $this->is_free() ) : ?>
-			<button type="submit" name="knit_pay_submit" value="<?php esc_attr_e( $checkout_options['button_text'] ); ?>" class="rtec-payment-button"><?php echo esc_html( $checkout_options['button_text'] ); ?></button>
+			<button type="submit" name="knit_pay_submit" value="<?php esc_attr_e( $checkout_options['button_text'], 'knit-pay-lang' ); ?>" class="rtec-payment-button"><?php echo esc_html( $checkout_options['button_text'] ); ?></button>
 		<?php endif; ?>
 		<?php
 	}

@@ -7,7 +7,7 @@ use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
 
 /**
  * Title: PayU Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 5.4.0

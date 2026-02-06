@@ -9,7 +9,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: ICICI Eazypay Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 6.62.0.0
@@ -46,6 +46,7 @@ class Gateway extends Core_Gateway {
 
 	private function register_payment_methods() {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::ICICI_EAZYPAY ) );
 	}
 
@@ -82,7 +83,7 @@ class Gateway extends Core_Gateway {
 			'{phone}'           => $customer_phone,
 			'{customer_phone}'  => $customer_phone,
 			'{customer_email}'  => $customer->get_email(),
-			'{customer_name}'   => KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 20 ),
+			'{customer_name}'   => KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 20 ),
 			'{purpose}'         => $payment->get_description(),
 			'{order_id}'        => $payment->get_order_id(),
 			'{sub_merchant_id}' => $sub_merchant_id,
@@ -91,7 +92,7 @@ class Gateway extends Core_Gateway {
 		$mandatory_fields = strtr( $this->config->mandatory_fields, $replacements );
 		$optional_fields  = strtr( $this->config->optional_fields, $replacements );
 
-		if ( pronamic_pay_plugin()->is_debug_mode() ) {
+		if ( knit_pay_plugin()->is_debug_mode() ) {
 			$this->encrypt = false;
 			$url_param     = [
 				'merchantid'         => $this->config->merchant_id,

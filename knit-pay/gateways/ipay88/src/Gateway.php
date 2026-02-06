@@ -13,7 +13,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: iPay88 Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.96.0.0
@@ -72,7 +72,7 @@ class Gateway extends Core_Gateway {
 		$amount         = $payment->get_total_amount()->number_format( null, '.', '' );
 		$currency       = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 		$prod_desc      = $payment->get_description();
-		$user_name      = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 100 );
+		$user_name      = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 100 );
 		$user_email     = $customer->get_email();
 		$user_contact   = '';
 		$remark         = $payment->get_description();
@@ -136,10 +136,15 @@ class Gateway extends Core_Gateway {
 			$payment->set_failure_reason( $failure_reason );
 		}
 		$payment->set_status( $payment_status );
+
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 		$payment->add_note( '<strong>iPay88 Response:</strong><br><pre>' . print_r( $transaction_details, true ) . '</pre><br>' );
 	}
 
 	private function get_transaction_response( $payment ) {
+		// phpcs:disable WordPress.Security.NonceVerification.Missing
+		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+
 		$post_merchant_code = \sanitize_text_field( \wp_unslash( $_POST['MerchantCode'] ) );
 		$post_ref_no        = \sanitize_text_field( \wp_unslash( $_POST['RefNo'] ) );
 		$post_signature     = \sanitize_text_field( \wp_unslash( $_POST['Signature'] ) );
@@ -151,7 +156,11 @@ class Gateway extends Core_Gateway {
 			\sanitize_text_field( \wp_unslash( $_POST['Currency'] ) ),
 			\sanitize_text_field( \wp_unslash( $_POST['Status'] ) ),
 		];
-		$generated_hash  = $this->api->get_signature( $signature_array, 2 );
+
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		// phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+
+		$generated_hash = $this->api->get_signature( $signature_array, 2 );
 
 		if ( $generated_hash !== $post_signature ) {
 			throw new Exception( 'Signature missmatch' );

@@ -7,7 +7,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Iyzico Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 5.6.0
@@ -117,7 +117,7 @@ class Gateway extends Core_Gateway {
 
 		$billingAddress = new \Iyzipay\Model\Address();
 		if ( null !== $customer->get_name() ) {
-			$buyer_name = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 30 );
+			$buyer_name = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 30 );
 			$billingAddress->setContactName( $buyer_name );
 		}
 		$billingAddress->setCity( $city );

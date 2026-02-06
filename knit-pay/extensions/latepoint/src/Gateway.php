@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Title: LatePoint Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -96,9 +96,9 @@ class Gateway {
 					$booking->add_error( 'send_to_step', $result['message'], 'payment' );
 				}
 			} else {
-				  $result['status']  = LATEPOINT_STATUS_ERROR;
-				  $result['message'] = __( 'Payment ID undefined.', 'knit-pay-lang' );
-				  $booking->add_error( 'payment_error', $result['message'] );
+					$result['status']  = LATEPOINT_STATUS_ERROR;
+					$result['message'] = __( 'Payment ID undefined.', 'knit-pay-lang' );
+					$booking->add_error( 'payment_error', $result['message'] );
 			}
 		}
 		return $result;
@@ -178,7 +178,7 @@ class Gateway {
 				<?php echo OsFormHelper::text_field( 'settings[knit_pay_payment_description]', __( 'Payment Description', 'knit-pay-lang' ), OsSettingsHelper::get_settings_value( 'knit_pay_payment_description', '{service_name}' ) ); ?>
 			</div>
 			<div class="os-col-6">
-				<?php echo sprintf( __( 'Available tags: %s', 'knit-pay-lang' ), sprintf( '<code>%s</code>', '{service_name}, {agent_name}, {generated_form_id}' ) ); ?>
+				<?php printf( __( 'Available tags: %s', 'knit-pay-lang' ), sprintf( '<code>%s</code>', '{service_name}, {agent_name}, {generated_form_id}' ) ); ?>
 			</div>
 		</div>
 	  
@@ -206,6 +206,5 @@ class Gateway {
 		}
 		return $localized_vars;
 	}
-
 }
 

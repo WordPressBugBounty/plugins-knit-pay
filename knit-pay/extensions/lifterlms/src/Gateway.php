@@ -15,7 +15,7 @@ use LLMS_Student;
 /**
  * Title: Lifter LMS Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -52,10 +52,10 @@ class Gateway extends LLMS_Payment_Gateway {
 	public function __construct( /* $args */ ) {
 
 		$this->id                   = 'knit_pay';
-		$this->admin_description    = __( 'This payment method does not use a predefined payment method for the payment. Some payment providers list all activated payment methods for your account to choose from. Use payment method specific gateways (such as "Instamojo") to let customers choose their desired payment method at checkout.', 'lifterlms' );
-		$this->admin_title          = __( 'Knit Pay', 'lifterlms' );
-		$this->title                = __( 'Online Payment', 'lifterlms' );
-		$this->description          = __( '', 'lifterlms' );
+		$this->admin_description    = __( 'This payment method does not use a predefined payment method for the payment. Some payment providers list all activated payment methods for your account to choose from. Use payment method specific gateways (such as "Instamojo") to let customers choose their desired payment method at checkout.', 'knit-pay-lang' );
+		$this->admin_title          = __( 'Knit Pay', 'knit-pay-lang' );
+		$this->title                = __( 'Online Payment', 'knit-pay-lang' );
+		$this->description          = __( '', 'knit-pay-lang' );
 		$this->payment_instructions = 'This payment method does not use a predefined payment method for the payment. Some payment providers list all activated payment methods for your account to choose from. Use payment method specific gateways (such as "Instamojo") to let customers choose their desired payment method at checkout.';
 		// $this->test_mode_title = "Test mode title";
 
@@ -88,8 +88,8 @@ class Gateway extends LLMS_Payment_Gateway {
 		}
 
 		$fields[] = [
-			'title'   => __( 'Configuration', 'lifterlms' ),
-			'desc'    => '<br>' . __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.', 'lifterlms' ),
+			'title'   => __( 'Configuration', 'knit-pay-lang' ),
+			'desc'    => '<br>' . __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.', 'knit-pay-lang' ),
 			'id'      => $this->get_option_name( 'config_id' ),
 			'default' => get_option( 'pronamic_pay_config_id' ),
 			'type'    => 'select',
@@ -97,7 +97,7 @@ class Gateway extends LLMS_Payment_Gateway {
 		];
 
 		$fields[] = [
-			'title'   => __( 'Payment Description', 'lifterlms' ),
+			'title'   => __( 'Payment Description', 'knit-pay-lang' ),
 			'id'      => $this->get_option_name( 'payment_description' ),
 			'default' => __( 'Lifter LMS Order {order_id}', 'knit-pay-lang' ),
 			'type'    => 'text',
@@ -105,7 +105,6 @@ class Gateway extends LLMS_Payment_Gateway {
 		];
 
 		return $fields;
-
 	}
 
 	/**
@@ -135,8 +134,7 @@ class Gateway extends LLMS_Payment_Gateway {
 		$order->set( 'gateway_source_id', '' );
 		$order->set( 'gateway_subscription_id', '' );
 
-		$order->add_note( sprintf( __( 'Payment method switched from "%1$s" to "%2$s"', 'lifterlms' ), $previous_gateway, $this->get_admin_title() ) );
-
+		$order->add_note( sprintf( __( 'Payment method switched from "%1$s" to "%2$s"', 'knit-pay-lang' ), $previous_gateway, $this->get_admin_title() ) );
 	}
 
 	/**
@@ -170,7 +168,7 @@ class Gateway extends LLMS_Payment_Gateway {
 				$order->record_transaction(
 					[
 						'amount'             => floatval( 0 ),
-						'source_description' => __( 'Free', 'lifterlms' ),
+						'source_description' => __( 'Free', 'knit-pay-lang' ),
 						'transaction_id'     => uniqid(),
 						'status'             => 'llms-txn-succeeded',
 						'payment_gateway'    => 'manual',
@@ -247,7 +245,6 @@ class Gateway extends LLMS_Payment_Gateway {
 			$order->set_status( 'llms-failed' );
 			return;
 		}
-
 	}
 
 	/**
@@ -275,7 +272,6 @@ class Gateway extends LLMS_Payment_Gateway {
 			do_action( 'llms_manual_payment_due', $order, $this );
 
 		}
-
 	}
 
 	/**

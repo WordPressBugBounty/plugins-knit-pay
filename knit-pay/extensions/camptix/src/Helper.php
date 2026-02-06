@@ -11,7 +11,7 @@ use Pronamic\WordPress\Pay\CustomerHelper;
 /**
  * Title: CampTix Helper
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -83,7 +83,7 @@ class Helper {
 			[
 				'name'    => self::get_name_from_attendee_detail( $attendee_detail ),
 				'email'   => self::get_value_from_array( $attendee_detail, 'tix_receipt_email' ),
-				// 'phone'   => self::get_value_from_array( $attendee_detail, 'tix_receipt_phone' ),
+				'phone'   => self::get_value_from_array( $attendee_detail, 'tix_phone' ),
 				'user_id' => null,
 			]
 		);
@@ -113,7 +113,7 @@ class Helper {
 			[
 				'name'  => self::get_name_from_attendee_detail( $attendee_detail ),
 				'email' => self::get_value_from_array( $attendee_detail, 'tix_receipt_email' ),
-				// 'phone'        => self::get_value_from_array( $attendee_detail, 'tix_receipt_email' ),
+				'phone' => self::get_value_from_array( $attendee_detail, 'tix_phone' ),
 			]
 		);
 	}

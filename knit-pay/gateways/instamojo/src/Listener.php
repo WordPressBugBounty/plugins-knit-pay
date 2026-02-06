@@ -5,7 +5,7 @@ use Pronamic\WordPress\Pay\Plugin;
 
 /**
  * Title: Instamojo Webhook Listner
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 5.9.1.0
@@ -18,6 +18,7 @@ class Listener {
 			return;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$payment_request_id = array_key_exists( 'payment_request_id', $_POST ) ? \sanitize_text_field( \wp_unslash( $_POST['payment_request_id'] ) ) : null;
 		$payment            = get_pronamic_payment_by_transaction_id( $payment_request_id );
 

@@ -42,9 +42,21 @@ require_once 'includes/Utils.php';
 // Add custom Knit Pay Custom Payment Methods.
 require_once 'includes/custom-payment-methods.php';
 
+// Add custom Knit Pay Custom Settings.
+require_once 'includes/KnitPay_CustomSettings.php';
+
+// Currency Converter.
+require_once 'includes/CurrencyConverter.php';
+
+// Including Knit Pay OmniPay PayPal for better compatibility.
+require_once 'vendor/knit-pay/omnipay-paypal/src/RestGateway.php';
+require_once 'vendor/knit-pay/omnipay-paypal/src/Message/AbstractRestRequest.php';
+
 require_once 'includes/PaymentRestController.php';
 
 require_once 'includes/hooks_mapping.php';
+
+require_once 'includes/temp_code.php';
 
 /*
  * FIXME: This is workaround for fixing
@@ -53,7 +65,7 @@ require_once 'includes/hooks_mapping.php';
  */
 add_filter(
 	'lang_dir_for_domain',
-	function( $dir, $domain ) {
+	function ( $dir, $domain ) {
 		if ( 'knit-pay-lang' === $domain ) {
 			return '';
 		}
@@ -96,39 +108,26 @@ add_action(
 	}
 );
 
-// Show Google Price Hike Notice.
-// require_once 'includes/google-workspace-price-hike-notice.php';
-
 // Show notice to write review.
 // require_once 'includes/review-request-notice.php';
 
 // Global Defines
-define( 'KNITPAY_GLOBAL_GATEWAY_LIST_URL', 'https://wordpress.org/plugins/knit-pay/#tab-description' );
+define( 'KNITPAY_GLOBAL_GATEWAY_LIST_URL', 'https://wordpress.org/plugins/knit-pay/#:~:text=Supported%20payment%20providers' );
 
 if ( ! function_exists( 'ppp' ) ) {
 	function ppp( $a = '' ) {
 		echo '<pre>';
-		print_r( $a );
+		print_r( $a ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 		echo '</pre><br><br>';
-		do_action( 'qm/info', $a );
+		do_action( 'qm/info', $a ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 	}
 }
 
 if ( ! function_exists( 'ddd' ) ) {
 	function ddd( $a = '' ) {
-		echo nl2br( '<pre>' . $a . PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL );
-		debug_print_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS );
+		echo nl2br( '<pre>' . PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL );
+		debug_print_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_print_backtrace
 		echo '</pre>';
 		wp_die();
-	}
-}
-
-if ( ! function_exists( 'knitpay_getDomain' ) ) {
-	function knitpay_getDomain( $host ) {
-		$domain = isset( $host ) ? $host : '';
-		if ( preg_match( '/(?P<domain>[a-z0-9][a-z0-9-]{1,63}.[a-z.]{2,6})$/i', $domain, $regs ) ) {
-			return $regs['domain'];
-		}
-		return false;
 	}
 }

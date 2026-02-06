@@ -9,10 +9,11 @@ use Exception;
 use Pronamic\WordPress\Pay\Payments\FailureReason;
 use Pronamic\WordPress\Pay\Refunds\Refund;
 use KnitPay\Utils as KnitPayUtils;
+use Pronamic\WordPress\Pay\Core\PaymentMethodsCollection;
 
 /**
  * Title: Cashfree Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.91.0.0
@@ -53,8 +54,64 @@ class Gateway extends Core_Gateway {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CASHFREE ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::DEBIT_CARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::NET_BANKING ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::UPI ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::PAYPAL ) );
+	}
+
+	/**
+	 * Get payment methods.
+	 *
+	 * @param array $args Query arguments.
+	 * @return PaymentMethodsCollection
+	 */
+	public function get_payment_methods( array $args = [] ): PaymentMethodsCollection {
+		$cache_key = 'knit_pay_cashfree_payment_methods_' . $this->config->config_id;
+
+		$methods = \get_transient( $cache_key );
+
+		if ( false === $methods ) {
+			// @see https://www.cashfree.com/docs/api-reference/payments/latest/eligibility/get-eligible-payment-methods
+			try {
+				$api_client = new API( $this->config, $this->test_mode );
+				$methods    = $api_client->get_eligible_payment_methods();
+				\set_transient( $cache_key, $methods, \DAY_IN_SECONDS );
+			} catch ( \Exception $e ) {
+				// Handle exception
+				$methods = [];
+			}
+		}
+
+		$this->get_payment_method( PaymentMethods::CASHFREE )->set_status( 'active' );
+
+		foreach ( $methods as  $cashfree_method ) {
+			if ( ! is_object( $cashfree_method ) ) {
+				continue;
+			}
+
+			$method_id = $cashfree_method->entity_value;
+
+			switch ( $method_id ) {
+				case 'netbanking':
+					$method_id = PaymentMethods::NET_BANKING;
+					break;
+				default:
+			}
+
+			$method = $this->get_payment_method( $method_id );
+			if ( null === $method ) {
+				continue;
+			}
+			$method->set_status( $cashfree_method->eligibility ? 'active' : 'inactive' );
+		}
+
+		if ( 'active' === $this->get_payment_method( PaymentMethods::DEBIT_CARD )->get_status() || 'active' === $this->get_payment_method( PaymentMethods::CREDIT_CARD )->get_status() ) {
+			$method = $this->get_payment_method( PaymentMethods::CARD );
+			$method->set_status( 'active' );
+		}
+
+		return parent::get_payment_methods( $args );
 	}
 
 	/**
@@ -105,7 +162,7 @@ class Gateway extends Core_Gateway {
 		$order_amount   = $payment->get_total_amount()->number_format( null, '.', '' );
 		$order_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 		$order_note     = KnitPayUtils::substr_after_trim( $payment->get_description(), 0, 250 );
-		$customer_name  = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 20 );
+		$customer_name  = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 20 );
 		$customer_email = $customer->get_email();
 		$return_url     = add_query_arg( 'order_id', '{order_id}', $payment->get_return_url() );
 		$notify_url     = add_query_arg( 'kp_cashfree_webhook', '', home_url( '/' ) );
@@ -155,7 +212,7 @@ class Gateway extends Core_Gateway {
 		$html .= '<script>';
 		$html .= "const cashfree = new Cashfree('{$payment->get_meta('cashfree_payment_session_id')}');";
 
-		if ( ! ( defined( '\PRONAMIC_PAY_DEBUG' ) && \PRONAMIC_PAY_DEBUG ) ) {
+		if ( ! ( defined( '\KNIT_PAY_DEBUG' ) && \KNIT_PAY_DEBUG ) ) {
 			$html .= 'cashfree.redirect();';
 		}
 
@@ -177,13 +234,15 @@ class Gateway extends Core_Gateway {
 
 		$api_client    = new API( $this->config, $this->test_mode );
 		$order_details = $api_client->get_order_details( $payment->get_transaction_id() );
-		if ( pronamic_pay_plugin()->is_debug_mode() ) {
+		if ( knit_pay_plugin()->is_debug_mode() ) {
+			//phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 			$payment->add_note( '<strong>Cashfree Order Details:</strong><br><pre>' . print_r( $order_details, true ) . '</pre><br>' );
 		}
 		
 		// @see https://docs.cashfree.com/reference/getpaymentsfororder
 		$order_payments = $api_client->get_order_data( $order_details->payments );
-		if ( pronamic_pay_plugin()->is_debug_mode() ) {
+		if ( knit_pay_plugin()->is_debug_mode() ) {
+			//phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 			$payment->add_note( '<strong>Cashfree Order Payments:</strong><br><pre>' . print_r( $order_payments, true ) . '</pre><br>' );
 		}
 		
@@ -199,6 +258,7 @@ class Gateway extends Core_Gateway {
 		}
 		
 		$current_payment = reset( $order_payments );
+		//phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 		$payment->add_note( '<strong>Cashfree Current Payment:</strong><br><pre>' . print_r( $current_payment, true ) . '</pre><br>' );
 
 		if ( isset( $current_payment->error_details ) ) {

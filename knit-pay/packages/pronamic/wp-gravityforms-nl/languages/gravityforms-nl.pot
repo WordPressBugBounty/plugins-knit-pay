@@ -1,0 +1,112 @@
+# Copyright (C) 2024 Pronamic
+# This file is distributed under the GPL.
+msgid ""
+msgstr ""
+"Project-Id-Version: Gravity Forms (nl) 3.0.8\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/gravityforms-nl\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-03-26T12:34:34+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Domain: gravityforms-nl\n"
+
+#. Plugin Name of the plugin
+#: gravityforms-nl.php
+msgid "Gravity Forms (nl)"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: gravityforms-nl.php
+msgid "https://www.pronamic.eu/plugins/gravityforms-nl/"
+msgstr ""
+
+#. Description of the plugin
+#: gravityforms-nl.php
+msgid "Extend the Gravity Forms plugin with Dutch address and Euro sign notation."
+msgstr ""
+
+#. Author of the plugin
+#: gravityforms-nl.php
+msgid "Pronamic"
+msgstr ""
+
+#. Author URI of the plugin
+#: gravityforms-nl.php
+msgid "https://www.pronamic.eu/"
+msgstr ""
+
+#: src/Plugin.php:171
+msgid "Euro"
+msgstr ""
+
+#: src/Plugin.php:205
+msgctxt "Dutch address type"
+msgid "Dutch"
+msgstr ""
+
+#: src/Plugin.php:206
+msgctxt "Dutch address type"
+msgid "Netherlands"
+msgstr ""
+
+#: src/Plugin.php:207
+msgctxt "Dutch address type"
+msgid "Postal Code"
+msgstr ""
+
+#: src/Plugin.php:208
+msgctxt "Dutch address type"
+msgid "Province"
+msgstr ""
+
+#: src/Plugin.php:222
+msgid "Drenthe"
+msgstr ""
+
+#: src/Plugin.php:223
+msgid "Flevoland"
+msgstr ""
+
+#: src/Plugin.php:224
+msgid "Friesland"
+msgstr ""
+
+#: src/Plugin.php:225
+msgid "Gelderland"
+msgstr ""
+
+#: src/Plugin.php:226
+msgid "Groningen"
+msgstr ""
+
+#: src/Plugin.php:227
+msgid "Limburg"
+msgstr ""
+
+#: src/Plugin.php:228
+msgid "Noord-Brabant"
+msgstr ""
+
+#: src/Plugin.php:229
+msgid "Noord-Holland"
+msgstr ""
+
+#: src/Plugin.php:230
+msgid "Overijssel"
+msgstr ""
+
+#: src/Plugin.php:231
+msgid "Utrecht"
+msgstr ""
+
+#: src/Plugin.php:232
+msgid "Zeeland"
+msgstr ""
+
+#: src/Plugin.php:233
+msgid "Zuid-Holland"
+msgstr ""

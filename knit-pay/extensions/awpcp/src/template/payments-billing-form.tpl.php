@@ -18,7 +18,7 @@
 			<input class="textfield required" id="awpcp-billing-email" type="text" size="50" name="email" value="<?php echo $data->user_email; ?>" data-bind="value: email">
 		</div>
 
-		 <div class="awpcp-form-spacer clearfix">
+		<div class="awpcp-form-spacer clearfix">
 			<label for="awpcp-billing-phone"><?php _e( 'Phone', 'knit-pay-lang' ); ?></label>
 			<input class="textfield required" id="awpcp-billing-phone" type="text" size="50" name="phone" value="<?php echo $data->phone; ?>" data-bind="value: phone">
 		</div>

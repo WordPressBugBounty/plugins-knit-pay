@@ -9,7 +9,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: EBS Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 1.0.0
@@ -38,6 +38,7 @@ class Gateway extends Core_Gateway {
 
 	private function register_payment_methods() {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::EBS ) );
 	}
 
@@ -91,7 +92,7 @@ class Gateway extends Core_Gateway {
 		$mode       = strtoupper( $this->config->mode );
 
 		$customer         = $payment->get_customer();
-		$name             = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 100 );
+		$name             = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 100 );
 		$billing_address  = $payment->get_billing_address();
 		$delivery_address = $payment->get_shipping_address();
 
@@ -114,7 +115,7 @@ class Gateway extends Core_Gateway {
 		$data['email']       = $customer->get_email();
 
 		if ( ! empty( $delivery_address ) ) {
-			$data['ship_name']        = KnitPayUtils::substr_after_trim( html_entity_decode( $delivery_address->get_name()->get_full_name(), ENT_QUOTES, 'UTF-8' ), 0, 100 );
+			$data['ship_name']        = KnitPayUtils::substr_after_trim( $delivery_address->get_name()->get_full_name(), 0, 100 );
 			$data['ship_address']     = $delivery_address->get_line_1();
 			$data['ship_city']        = $delivery_address->get_city();
 			$data['ship_state']       = $delivery_address->get_region();

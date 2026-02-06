@@ -11,7 +11,7 @@ use Pronamic\WordPress\Pay\Payments\FailureReason;
 /**
  * Title: Paid Memberships Pro extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -257,7 +257,7 @@ class Extension extends AbstractPluginIntegration {
 			$morder->payment_transaction_id = $txn_id;
 			if ( $recurring ) {
 				// TODO
-				$morder->subscription_transaction_id = $_POST['subscr_id'];
+				$morder->subscription_transaction_id = sanitize_text_field( $_POST['subscr_id'] );
 			} else {
 				$morder->subscription_transaction_id = '';
 			}
@@ -282,7 +282,7 @@ class Extension extends AbstractPluginIntegration {
 			// save first and last name fields
 			// TODO add first and last from from payment to order
 			/*
-			 if ( ! empty( $_POST['first_name'] ) ) {
+			if ( ! empty( $_POST['first_name'] ) ) {
 				$old_firstname = get_user_meta( $morder->user_id, "first_name", true );
 				if ( empty( $old_firstname ) ) {
 					update_user_meta( $morder->user_id, "first_name", $_POST['first_name'] );
@@ -326,7 +326,6 @@ class Extension extends AbstractPluginIntegration {
 		} else {
 			return false;
 		}
-
 	}
 
 	function pmp_log( $s ) {
@@ -350,5 +349,4 @@ class Extension extends AbstractPluginIntegration {
 		}
 		return 'IN';
 	}
-
 }

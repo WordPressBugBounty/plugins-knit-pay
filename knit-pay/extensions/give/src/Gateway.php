@@ -22,7 +22,7 @@ use Give\Donations\Models\DonationNote;
 /**
  * Title: Give Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -46,12 +46,12 @@ class Gateway extends PaymentGateway {
 
 	public function getName(): string {
 		$name = PaymentMethods::get_name( self::id() );
-		return __( 'Knit Pay', 'give' ) . ' - ' . $name;
+		return __( 'Knit Pay', 'knit-pay-lang' ) . ' - ' . $name;
 	}
 
 	public function getPaymentMethodLabel(): string {
 		$name = PaymentMethods::get_name( self::id() );
-		return esc_html__( 'Knit Pay', 'give' ) . ' - ' . esc_html( $name );
+		return esc_html__( 'Knit Pay', 'knit-pay-lang' ) . ' - ' . esc_html( $name );
 	}
 
 	/**
@@ -137,7 +137,7 @@ class Gateway extends PaymentGateway {
 			DonationNote::create(
 				[
 					'donationId' => $donation->id,
-					'content'    => sprintf( esc_html__( 'Donation failed. Reason: %s', 'example-give' ), $errorMessage ),
+					'content'    => sprintf( esc_html__( 'Donation failed. Reason: %s', 'knit-pay-lang' ), $errorMessage ),
 				]
 			);
 
@@ -165,7 +165,7 @@ class Gateway extends PaymentGateway {
 		// Enqueue a minimal/blank script file to ensure the handle exists for wp_add_inline_script.
 		wp_enqueue_script(
 			$handle,
-			plugins_url( 'js/knitpay-gateway-blank.js', dirname( __FILE__ ) ),
+			plugins_url( 'js/knitpay-gateway-blank.js', __DIR__ ),
 			[ 'react', 'wp-element' ],
 			'1.0.0',
 			true

@@ -6,7 +6,7 @@ use Exception;
 
 /**
  * Title: PayPal API Client
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.94.0.0

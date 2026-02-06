@@ -2,20 +2,20 @@
 document.addEventListener('DOMContentLoaded', function () {
 	// Keep Pay Button Disabled for 3 seconds
 	setTimeout(function() {
-			  document.getElementById('payButton').disabled = false;
+				document.getElementById('payButton').disabled = false;
 	}, 3000);
 
 	CollectJS.configure({
 		'paymentType': 'cc',
 		'callback': function (response) {
-							//alert(response.token);
-							var input = document.createElement("input");
-							input.type = "hidden";
-							input.name = "payment_token";
-							input.value = response.token;
-							var form = document.getElementsByTagName("form")[0];
-							form.appendChild(input);
-							form.submit();
+			//alert(response.token);
+			var input = document.createElement("input");
+			input.type = "hidden";
+			input.name = "payment_token";
+			input.value = response.token;
+			var form = document.getElementsByTagName("form")[0];
+			form.appendChild(input);
+			form.submit();
 		}
 	});
 
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	// Redirect if pop up box closed.
 	// Create a proxy object to intercept the function call
 	const closePaymentRequestProxy = new Proxy(CollectJS.closePaymentRequest, {
-	  apply: function(target, thisArg, argumentsList) {
+		apply: function(target, thisArg, argumentsList) {
 		// Call the original function
 		const result = Reflect.apply(target, thisArg, argumentsList);
 
@@ -41,14 +41,14 @@ document.addEventListener('DOMContentLoaded', function () {
 		console.log("Code executed after CollectJS.closePaymentRequest function.");
 
 		setTimeout(function() {
-		  window.location.href = document.getElementById('pronamic_ideal_form').action + '&action=Cancelled';
+			window.location.href = document.getElementById('pronamic_ideal_form').action + '&action=Cancelled';
 		}, 3000);
 
 		//window.location.href = document.getElementById('pronamic_ideal_form').action + '&action=cancelled';
 
 		// Return the result of the original function call
 		return result;
-	  },
+		},
 	});
 	// Assign the proxy function back to the CollectJS object
 	CollectJS.closePaymentRequest = closePaymentRequestProxy;

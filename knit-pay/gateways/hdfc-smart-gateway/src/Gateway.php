@@ -9,7 +9,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: HDFC Smart Gateway Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.93.0.0
@@ -56,7 +56,7 @@ class Gateway extends Core_Gateway {
 	 */
 	public function start( Payment $payment ) {
 		$transaction_id = $payment->key . '_' . $payment->get_source_id();
-		$transaction_id = KnitPayUtils::substr_after_trim( html_entity_decode( $transaction_id, ENT_QUOTES, 'UTF-8' ), -21 );
+		$transaction_id = KnitPayUtils::substr_after_trim( $transaction_id, -21 );
 		$transaction_id = ltrim( $transaction_id, 'pay_' );
 		$payment->set_transaction_id( $transaction_id );
 

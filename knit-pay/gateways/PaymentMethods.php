@@ -19,4 +19,6 @@ class PaymentMethods extends Core_PaymentMethods {
 	const DEBIT_CARD = 'debit_card';
 
 	const NET_BANKING = 'net_banking';
+
+	const SODEXO = 'sodexo';
 }

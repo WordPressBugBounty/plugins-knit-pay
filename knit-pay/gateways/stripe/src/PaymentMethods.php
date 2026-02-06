@@ -2,9 +2,10 @@
 
 namespace KnitPay\Gateways\Stripe;
 
-use Pronamic\WordPress\Pay\Core\PaymentMethods as Core_PaymentMethods;
+use KnitPay\Gateways\PaymentMethods as KP_PaymentMethods;
+use WPForms\Admin\Education\Core;
 
-class PaymentMethods extends Core_PaymentMethods {
+class PaymentMethods extends KP_PaymentMethods {
 	const STRIPE = 'stripe';
 
 	/**
@@ -21,13 +22,14 @@ class PaymentMethods extends Core_PaymentMethods {
 
 		$payment_method_types = [];
 		switch ( $method ) {
-			case Core_PaymentMethods::CREDIT_CARD:
+			case self::CREDIT_CARD:
+			case self::CARD:
 				$payment_method_types = 'card';
 				break;
-			case Core_PaymentMethods::DIRECT_DEBIT:
+			case self::DIRECT_DEBIT:
 				$payment_method_types = 'sepa_debit';
 				break;
-			case Core_PaymentMethods::AFTERPAY_COM:
+			case self::AFTERPAY_COM:
 				$payment_method_types = 'afterpay_clearpay';
 				break;
 			case self::STRIPE:

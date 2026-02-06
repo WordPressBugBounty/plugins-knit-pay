@@ -11,7 +11,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: PhonePe Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.73.0.0
@@ -54,8 +54,9 @@ class Gateway extends Core_Gateway {
 
 	private function register_payment_methods() {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
-		$this->register_payment_method( new PaymentMethod( PaymentMethods::UPI ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::DEBIT_CARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::CARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::UPI ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::NET_BANKING ) );
 	}
 
@@ -99,9 +100,14 @@ class Gateway extends Core_Gateway {
 		$billing_address = $payment->get_billing_address();
 
 		$customer_details = [
-			'customer_name' => KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 50 ),
+			'customer_name' => KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 50 ),
 			'email'         => $customer->get_email(),
 			'phone'         => $billing_address ? $billing_address->get_phone() : '',
+		];
+
+		$payment_details = [
+			'payment_description' => $payment->get_description(),
+			'source_id'           => $payment->get_source_id(),
 		];
 
 		if ( 'v2' === $this->config->api_version ) {
@@ -110,7 +116,8 @@ class Gateway extends Core_Gateway {
 				'merchantOrderId' => $payment->get_transaction_id(),
 				'amount'          => $amount,
 				'metaInfo'        => [
-					'udf1' => json_encode( $customer_details ),
+					'udf1' => wp_json_encode( $customer_details ),
+					'udf2' => wp_json_encode( $payment_details ),
 				],
 				'paymentFlow'     => [
 					'type'         => 'PG_CHECKOUT',

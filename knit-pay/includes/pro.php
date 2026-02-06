@@ -22,8 +22,6 @@ class KnitPayPro {
 	}
 
 	public static function knit_pay_pro_payment_status_update( Payment $payment ) {
-		self::check_knit_pay_pro_setup();
-
 		$invalid_gateways = [ 'instamojo', 'cashfree', 'manual', 'go-url', 'razorpay', 'sslcommerz', 'upi-qr', 'test', 'paypal' ];
 		$invalid_sources  = [ 'woocommerce', 'camptix', 'charitable', 'contact-form-7', 'easydigitaldownloads', 'give', 'gravityformsideal', 'knit-pay-payment-button', 'knit-pay-payment-link', 'learndash', 'learnpress', 'lifterlms', 'ninja-forms', 'paid-memberships-pro', 'profile-press', 'tourmaster', 'wp-travel', 'wp-travel-engine', 'bookingpress', 'test' ];
 
@@ -38,6 +36,10 @@ class KnitPayPro {
 			return;
 		}
 
+		// Before proceeding further check if properly configured or not.
+		self::check_knit_pay_pro_setup();
+
+		// Don't proceed if already charged.
 		if ( ! empty( $payment->get_meta( 'kpp_charge_id' ) ) ) {
 			return;
 		}

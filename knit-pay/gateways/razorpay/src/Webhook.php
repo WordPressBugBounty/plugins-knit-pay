@@ -8,7 +8,7 @@ use WP_Error;
 
 /**
  * Title: Razorpay Webhook
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 4.5.7.0
@@ -40,6 +40,8 @@ class Webhook extends Gateway {
 	}
 
 	/**
+	 * Configure Razorpay Webhook using API.
+	 *
 	 *  @return null
 	 */
 	public function configure_webhook() {

@@ -17,6 +17,7 @@ class PaymentMethods extends KP_PaymentMethods {
 		self::NET_BANKING => 'netbanking',
 		self::DEBIT_CARD  => 'debitcard',
 		self::CREDIT_CARD => 'creditcard',
+		self::CARD        => 'creditcard|debitcard',
 		self::PAYTM       => 'PAYTM', // sub-categorie of cashcard
 	];
 

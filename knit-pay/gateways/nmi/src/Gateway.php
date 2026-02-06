@@ -9,7 +9,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 
 /**
  * Title: NMI Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.83.0.0
@@ -69,7 +69,7 @@ class Gateway extends Core_Gateway {
 	 */
 	public function output_form(
 		Payment $payment
-		) {
+	) {
 		if ( PaymentStatus::SUCCESS === $payment->get_status() ) {
 			wp_safe_redirect( $payment->get_return_redirect_url() );
 			exit;
@@ -117,7 +117,7 @@ class Gateway extends Core_Gateway {
 		$this->api->setBilling( $payment );
 		$this->api->setOrder( $payment );
 
-		$response = $this->api->doSale( $payment, $_POST['payment_token'] );
+		$response = $this->api->doSale( $payment, sanitize_text_field( $_POST['payment_token'] ) );
 
 		if ( $response === Statuses::ERROR ) {
 			$failure_reason = new FailureReason();
@@ -130,15 +130,5 @@ class Gateway extends Core_Gateway {
 
 		$payment->set_status( Statuses::transform( $response ) );
 		$payment->add_note( '<strong>NMI Transaction:</strong><br><pre>' . print_r( $this->api->responses, true ) . '</pre>' );
-	}
-
-	private function format_phone_number( $customer_phone ) {
-		// Remove - or whitespace.
-		$customer_phone = preg_replace( '/[\s\-]+/', '', $customer_phone );
-
-		// Remove 0 from beginning of phone number.
-		$customer_phone = 10 < strlen( $customer_phone ) ? ltrim( $customer_phone, '0' ) : $customer_phone;
-
-		return $customer_phone;
 	}
 }

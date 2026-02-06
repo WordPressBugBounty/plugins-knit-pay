@@ -474,5 +474,3 @@ function _curlCall( $url, $params_array ) {
 
 	return $result;
 }
-
-

@@ -4,11 +4,12 @@ namespace KnitPay\Gateways\Test;
 use KnitPay\Gateways\Easebuzz\Gateway as Easebuzz_Gateway;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
+use Pronamic\WordPress\Pay\Refunds\Refund;
 use Exception;
 
 /**
  * Title: Test Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 1.0.0
@@ -103,7 +104,7 @@ class Gateway extends Easebuzz_Gateway {
 	 */
 	public function output_form(
 		Payment $payment
-		) {
+	) {
 		if ( ! empty( $this->config->checkout_mode ) ) {
 			return parent::output_form( $payment );
 		}
@@ -143,5 +144,20 @@ class Gateway extends Easebuzz_Gateway {
 		);
 
 		echo $html;
+	}
+
+	/**
+	 * Create refund.
+	 *
+	 * @param Refund $refund Refund.
+	 * @return void
+	 * @throws \Exception Throws exception on unknown resource type.
+	 */
+	public function create_refund( Refund $refund ) {
+		if ( ! empty( $this->config->checkout_mode ) ) {
+			return parent::create_refund( $refund );
+		}
+
+		$refund->psp_id = uniqid( 'refund_' );
 	}
 }

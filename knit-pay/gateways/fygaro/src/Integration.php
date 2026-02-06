@@ -6,7 +6,7 @@ use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 
 /**
  * Title: Fygaro Integration
- * Copyright: 2020-2021 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 5.0.0
@@ -72,7 +72,8 @@ class Integration extends AbstractGatewayIntegration {
 		// Wait for 5 seconds so that webhook can update the status.
 		sleep( 3 );
 
-		$payment = get_pronamic_payment_by_transaction_id( $_COOKIE['kp_fygaro_transaction_id'] );
+		// phpcs:ignore WordPressVIPMinimum.Variables.RestrictedVariables.cache_constraints___COOKIE
+		$payment = get_pronamic_payment_by_transaction_id( sanitize_text_field( $_COOKIE['kp_fygaro_transaction_id'] ) );
 
 		if ( ! isset( $payment ) ) {
 			return;

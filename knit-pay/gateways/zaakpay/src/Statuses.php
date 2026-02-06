@@ -6,7 +6,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 
 /**
  * Title: Zaakpay Statuses
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 6.66.0.0

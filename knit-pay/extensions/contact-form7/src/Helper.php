@@ -12,7 +12,7 @@ use WPCF7R_Action_Knit_Pay;
 /**
  * Title: Contact Form 7 Helper
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -62,8 +62,8 @@ class Helper {
 	/**
 	 * Get value from object.
 	 *
-	 * @param object $action WPCF7R_Action_Knit_Pay.
-	 * @param string $tag   Key.
+	 * @param WPCF7R_Action_Knit_Pay $action WPCF7R_Action_Knit_Pay.
+	 * @param string                 $tag    Key.
 	 * @return string|null
 	 */
 	public static function get_value_from_tag( WPCF7R_Action_Knit_Pay $action, $tag ) {

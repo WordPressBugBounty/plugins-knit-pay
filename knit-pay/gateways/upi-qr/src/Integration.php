@@ -2,22 +2,23 @@
 
 namespace KnitPay\Gateways\UpiQR;
 
-use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
+use KnitPay\Gateways\Integration as KnitPayGatewayIntegration;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use WP_Query;
 use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 use Pronamic\WordPress\Pay\Plugin;
+use Exception;
 
 /**
  * Title: UPI QR Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 1.0.0
  * @since   4.1.0
  */
-class Integration extends AbstractGatewayIntegration {
+class Integration extends KnitPayGatewayIntegration {
 	const HIDE_FIELD          = '0';
 	const SHOW_FIELD          = '1';
 	const SHOW_REQUIRED_FIELD = '2';
@@ -40,15 +41,10 @@ class Integration extends AbstractGatewayIntegration {
 
 		parent::__construct( $args );
 
-		// Add Ajax listener.
-		add_action( 'wp_ajax_nopriv_knit_pay_upi_qr_payment_status_check', [ $this, 'ajax_payment_status_check' ] );
-		add_action( 'wp_ajax_knit_pay_upi_qr_payment_status_check', [ $this, 'ajax_payment_status_check' ] );
-
-		// Payment status check events are scheduled after payment is expired. We want to check status once more.
-		add_action( 'knit_pay_upi_payment_status_check', [ $this, 'check_status' ], 10, 2 );
-
 		// Show notice if Knit Pay UPI supported.
 		add_action( 'admin_notices', [ $this, 'knit_pay_upi_supported_notice' ] );
+
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 	}
 
 	/**
@@ -86,8 +82,7 @@ class Integration extends AbstractGatewayIntegration {
 					'orderby'    => 'post_title',
 					'order'      => 'ASC',
 					'fields'     => 'ids',
-					'nopaging'   => true,
-					'meta_query' => [
+					'meta_query' => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 						'relation' => 'AND',
 						[
 							'key'     => '_pronamic_gateway_id',
@@ -96,8 +91,8 @@ class Integration extends AbstractGatewayIntegration {
 						],
 						[
 							'key'     => '_pronamic_gateway_upi_qr_vpa',
-							'value'   => '(?i)^(q.+@ybl|paytmqr.+@[a-z]+|bharatpe.+@[a-z]+|.+@hdfcbank|.+@freecharge)$',
-							'compare' => 'REGEXP',
+							'value'   => '(?i)^(q.+@ybl|paytm.+@[a-z]+|bharatpe.+@[a-z]+|.+@hdfcbank|.+@freecharge)$',
+							'compare' => 'REGEXP', // phpcs:ignore WordPressVIPMinimum.Performance.RegexpCompare.compare_compare
 						],
 					],
 				]
@@ -161,54 +156,6 @@ class Integration extends AbstractGatewayIntegration {
 		return $fields;
 	}
 
-	/**
-	 * Get settings fields.
-	 *
-	 * @return array
-	 */
-	protected function get_pro_about_settings_fields( $fields ) {
-		// Prerequisite.
-		$fields[] = [
-			'section'  => 'general',
-			'type'     => 'custom',
-			'title'    => 'Prerequisite',
-			'callback' => function () {
-				$knit_pay_pro_setup_url = admin_url( 'admin.php?page=knit_pay_pro_setup_page' );
-				$link                   = '<a target="_blank" href="' . $knit_pay_pro_setup_url . '">' . __( 'Knit Pay >> Knit Pay UPI Setup', 'knit-pay-upi' ) . '</a>';
-				$message                = sprintf( __( 'Please visit the %s page to configure "Knit Pay - UPI".', 'knit-pay-upi' ), $link );
-
-				echo '<ol><li>We rely on the third-party service provider RapidAPI for the setup of Knit Pay UPI. RapidAPI will charge you based on your monthly usage.</li>
-                    	<li>Choose a plan that suits your usage. Each plan includes a certain
-                    		number of free transactions. If you exceed the transaction quota,
-                    		additional charges will apply for receiving extra transactions. <br> <a
-                    		target="_blank"
-                    		href="https://rapidapi.com/knitpay/api/knit-pay-upi/pricing">https://rapidapi.com/knitpay/api/knit-pay-upi/pricing</a></li>
-                        <li>' . $message . '</li>
-                    </ol>';
-			},
-		];
-
-		// Terms and Conditions.
-		$fields[] = [
-			'section'  => 'general',
-			'type'     => 'custom',
-			'title'    => 'Terms and Conditions',
-			'callback' => function () {
-				echo '<ol>
-                    <li>We generate QR codes on your behalf using your UPI/VPA ID so that you can accept payments with ease.</li>
-                    <li>Knit Pay UPI is not a payment gateway service, and we are not involved in the payment process in any way. Your Merchant Account will be used for collecting payments.</li>
-                    <li>We do not collect any of your payments in our account. The payment made by the user through the QR code will be received in your merchant account.</li>
-                    <li>We are not liable for any fraudulent activity that takes place with your merchant account.</li>
-                    <li>We might also suspend your RapidAPI subscription if any fraudulent activity gets detected.</li>
-                    <li>We are not responsible for the suspension of your merchant account due to any reason.</li>
-                    <li>Use this plugin at your own risk, we are not liable for any of your losses.</li>
-                 </ol>';
-			},
-		];
-
-		return $fields;
-	}
-
 	public function get_about_settings_fields( $fields ) {
 		$fields[] = [
 			'section'  => 'general',
@@ -226,30 +173,30 @@ class Integration extends AbstractGatewayIntegration {
 			'callback' => function () {
 				$utm_parameter = '?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=help-signup';
 
-				echo '<p>' . __( '<strong>Steps to Integrate UPI QR</strong>' ) . '</p>' .
+				echo '<p><strong>' . __( 'Steps to Integrate UPI QR', 'knit-pay-lang' ) . '</strong></p>' .
 
 				'<ol>
-                <li>Signup at any UPI-enabled App. If you will signup using provided signup URLs and use the referral codes, you might also get a bonus after making few payments.
-                    <ul>
-                        <li>- <a target="_blank" href="' . $this->get_url() . 'bharatpe' . $utm_parameter . '">BharatPe (' . $this->get_url() . 'bharatpe)</a> - Signup using the referral link (on the phone) to get ₹200 bonus.</li>
-                        <li>- <a target="_blank" href="' . $this->get_url() . 'open-money' . $utm_parameter . '">Open Money</a></li>
-                        <li>- <a target="_blank" href="' . $this->get_url() . 'gpay' . $utm_parameter . '">Google Pay</a> Referral Code: Z05o0</li>
-                        <li>- <a target="_blank" href="' . $this->get_url() . 'phonepe' . $utm_parameter . '">PhonePe</a></li>
-                        <li>- <a target="_blank" href="' . $this->get_url() . 'amazon-pay' . $utm_parameter . '">Amazon Pay</a> Referral Code: K1ZESF</li>
-                        <li>- <a target="_blank" href="https://play.google.com/store/search?q=merchant%20business%20upi&c=apps">More UPI Apps</a></li>
-                    </ul>
-                </li>
+					<li>Signup at any UPI-enabled App. If you will signup using provided signup URLs and use the referral codes, you might also get a bonus after making few payments.
+						<ul>
+							<li>- <a target="_blank" href="' . $this->get_url() . 'bharatpe' . $utm_parameter . '">BharatPe (' . $this->get_url() . 'bharatpe)</a> - Signup using the referral link (on the phone) to get ₹200 bonus.</li>
+							<li>- <a target="_blank" href="' . $this->get_url() . 'open-money' . $utm_parameter . '">Open Money</a></li>
+							<li>- <a target="_blank" href="' . $this->get_url() . 'gpay' . $utm_parameter . '">Google Pay</a> Referral Code: Z05o0</li>
+							<li>- <a target="_blank" href="' . $this->get_url() . 'phonepe' . $utm_parameter . '">PhonePe</a></li>
+							<li>- <a target="_blank" href="' . $this->get_url() . 'amazon-pay' . $utm_parameter . '">Amazon Pay</a> Referral Code: K1ZESF</li>
+							<li>- <a target="_blank" href="https://play.google.com/store/search?q=merchant%20business%20upi&c=apps">More UPI Apps</a></li>
+						</ul>
+					</li>
 
-                <li>Link your Bank Account and generate a UPI ID/VPA.</li>
+					<li>Link your Bank Account and generate a UPI ID/VPA.</li>
 
-                <li>Use this VPA/UPI ID on the configuration page below.
-                <br><strong>Kindly use the correct VPA/UPI ID. In case of wrong settings, payments will get credited to the wrong bank account. Knit Pay will not be responsible for any of your lose.</strong></li>
+					<li>Use this VPA/UPI ID on the configuration page below.
+					<br><strong>Kindly use the correct VPA/UPI ID. In case of wrong settings, payments will get credited to the wrong bank account. Knit Pay will not be responsible for any of your lose.</strong></li>
 
-                <li>Save the settings.</li>
+					<li>Save the settings.</li>
 
-                <li>Before going live, make a test payment of ₹1 and check that you are receiving this payment in the correct bank account.</li>
+					<li>Before going live, make a test payment of ₹1 and check that you are receiving this payment in the correct bank account.</li>
 
-                </ol>';
+					</ol>';
 			},
 		];
 
@@ -258,20 +205,20 @@ class Integration extends AbstractGatewayIntegration {
 			'section'  => 'general',
 			'type'     => 'custom',
 			'callback' => function () {
-				echo '<p>' . __( '<strong>How does it work?</strong>' ) . '</p>' .
+				echo '<p><strong>' . __( 'How does it work?', 'knit-pay-lang' ) . '</strong></p>' .
 
 				'<ol>
-                <li>On the payment screen, the customer scans the QR code using any UPI-enabled mobile app and makes the payment.</li>
+						<li>On the payment screen, the customer scans the QR code using any UPI-enabled mobile app and makes the payment.</li>
 
-                <li>The customer enters the transaction ID and submits the payment form.</li>
+						<li>The customer enters the transaction ID and submits the payment form.</li>
 
-                <li>Payment remains on hold. Merchant manually checks the payment and mark it as complete on the "Knit Pay" Payments page.</li>
+						<li>Payment remains on hold. Merchant manually checks the payment and mark it as complete on the "Knit Pay" Payments page.</li>
 
-                <li>Automatic tracking is not available in the UPI QR payment method. You can signup at other supported free payment gateways to get an automatic payment tracking feature.
-                    <br><a target="_blank" href="https://www.knitpay.org/indian-payment-gateways-supported-in-knit-pay/">Indian Payment Gateways Supported in Knit Pay</a>
-                </li>
-
-            </ol>';},
+						<li>Automatic tracking is not available in the UPI QR payment method. You can signup at other supported free payment gateways to get an automatic payment tracking feature.
+							<br><a target="_blank" href="https://www.knitpay.org/indian-payment-gateways-supported-in-knit-pay/">Indian Payment Gateways Supported in Knit Pay</a>
+						</li>
+					</ol>';
+			},
 		];
 
 		// Knit Pay - UPI - News.
@@ -321,7 +268,7 @@ class Integration extends AbstractGatewayIntegration {
 			'title'    => __( 'UPI VPA ID', 'knit-pay-lang' ),
 			'type'     => 'text',
 			'classes'  => [ 'regular-text', 'code' ],
-			'tooltip'  => __( 'UPI/VPA ID which you want to use to receive the payment.', 'knit-pay-lang' ),
+			'tooltip'  => __( 'UPI/VPA ID on which you want to use to receive the payment.', 'knit-pay-lang' ),
 			'required' => true,
 		];
 		
@@ -344,6 +291,7 @@ class Integration extends AbstractGatewayIntegration {
 			'title'       => __( 'Merchant Category Code', 'knit-pay-lang' ),
 			'type'        => 'text',
 			'classes'     => [ 'regular-text', 'code' ],
+			'default'     => '0000',
 			'tooltip'     => __( 'four-digit ISO 18245 merchant category code (MCC) to classify your business.', 'knit-pay-lang' ),
 			'description' => 'You can refer to below links to find out your MCC.<br>' .
 			'<a target="_blank" href="https://www.citibank.com/tts/solutions/commercial-cards/assets/docs/govt/Merchant-Category-Codes.pdf">Citi Bank - Merchant Category Codes</a><br>' .
@@ -464,6 +412,12 @@ class Integration extends AbstractGatewayIntegration {
 		];
 	}
 
+	/**
+	 * Get config.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return Config
+	 */
 	public function get_config( $post_id ) {
 		$config = new Config();
 
@@ -535,21 +489,6 @@ class Integration extends AbstractGatewayIntegration {
 	 * @return void
 	 */
 	public function field_qr_code_scanner( $field ) {
-		// Scan QR Code in Admin Panel.
-		wp_enqueue_script(
-			'knit-pay-nuintun-qrcode',
-			KNITPAY_URL . '/gateways/upi-qr/src/js/qrcode.js',
-			[],
-			'3.3.5',
-		);
-
-		wp_enqueue_script(
-			'knit-pay-upi-qr-admin',
-			KNITPAY_URL . '/gateways/upi-qr/src/js/admin.js',
-			[ 'knit-pay-nuintun-qrcode' ],
-			KNITPAY_VERSION
-		);
-
 		?>
 		<p>
 			<?php
@@ -570,84 +509,31 @@ class Integration extends AbstractGatewayIntegration {
 	}
 
 	/**
-	 * Check status of the specified payment.
+	 * Enqueue a script in the WordPress admin on edit.php.
 	 *
-	 * @param int         $payment_id The payment ID to check.
-	 * @param string|null $gateway_id The gateway ID to check against.
-	 * @return void
+	 * @param string $hook Hook suffix for the current admin page.
 	 */
-	public function check_status( $payment_id = null, $gateway_id = null ) {
-		// Check only if this payment belongs to this gateway.
-		if ( $gateway_id !== $this->get_id() ) {
+	public function admin_enqueue_scripts( $hook ) {
+		$screen = get_current_screen();
+		if ( 'pronamic_gateway' != $screen->id ) {
 			return;
 		}
 
-		$payment = get_pronamic_payment( $payment_id );
-
-		// No payment found, unable to check status.
-		if ( null === $payment ) {
-			return;
-		}
-
-		// Add note.
-		$note = sprintf(
-			/* translators: %s: Knit Pay UPI */
-			__( 'Payment status check at gateway by %s.', 'knit-pay-lang' ),
-			__( 'Knit Pay UPI', 'knit-pay-lang' )
+		// Scan QR Code in Admin Panel.
+		wp_enqueue_script(
+			'knit-pay-nuintun-qrcode',
+			KNITPAY_URL . '/gateways/upi-qr/src/js/qrcode.js',
+			[],
+			'3.3.5',
+			[ 'in_footer' => true ]
 		);
 
-		$payment->add_note( $note );
-
-		// Update payment.
-		Plugin::update_payment( $payment, false );
-	}
-
-	public function ajax_payment_status_check() {
-		$payment_id     = isset( $_POST['knit_pay_payment_id'] ) ? sanitize_text_field( $_POST['knit_pay_payment_id'] ) : '';
-		$transaction_id = isset( $_POST['knit_pay_transaction_id'] ) ? sanitize_text_field( $_POST['knit_pay_transaction_id'] ) : '';
-		$knit_pay_nonce = isset( $_POST['knit_pay_nonce'] ) ? sanitize_text_field( $_POST['knit_pay_nonce'] ) : '';
-
-		$nonce_action = "knit_pay_payment_status_check|{$payment_id}|{$transaction_id}";
-
-		if ( ! wp_verify_nonce( $knit_pay_nonce, $nonce_action ) ) {
-			wp_send_json_error( __( 'Nonce Missmatch!', 'knit-pay-lang' ) );
-		}
-
-		$payment = get_pronamic_payment( $payment_id );
-
-		if ( null === $payment ) {
-			exit;
-		}
-
-		$gateway = $payment->get_gateway();
-		if ( ! $gateway->supports( 'payment_status_request' ) ) {
-			wp_send_json_error( __( 'Gateway does not support automatic payment status check.', 'knit-pay-lang' ) );
-		}
-
-		// Update status.
-		try {
-			$gateway->update_status( $payment );
-
-			// Save New Status.
-			if ( PaymentStatus::OPEN !== $payment->get_status() ) {
-				$payment->save();
-			}
-
-			wp_send_json_success( $payment->get_status() );
-		} catch ( \Exception $error ) {
-			$message = $error->getMessage();
-
-			// Maybe include error code in message.
-			$code = $error->getCode();
-
-			if ( $code > 0 ) {
-				$message = \sprintf( '%s: %s', $code, $message );
-			}
-
-			// Add note.
-			$payment->add_note( $message );
-
-			wp_send_json_error( $message );
-		}
+		wp_enqueue_script(
+			'knit-pay-upi-qr-admin',
+			KNITPAY_URL . '/gateways/upi-qr/src/js/admin.js',
+			[ 'knit-pay-nuintun-qrcode' ],
+			KNITPAY_VERSION,
+			[ 'in_footer' => true ]
+		);
 	}
 }

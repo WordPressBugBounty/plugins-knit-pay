@@ -2,11 +2,11 @@
 /**
  * Plugin Name: Knit Pay
  * Plugin URI: https://www.knitpay.org
- * Description: Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, Razorpay, Paypal, Stripe, UPI QR, GoUrl, and SSLCommerz, with over 100 WordPress plugins.
+ * Description: Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, Razorpay, Paypal, Stripe, UPI QR, and SSLCommerz, with over 100 WordPress plugins.
  *
- * Version: 8.96.30.1
- * Requires at least: 6.4
- * Requires PHP: 8.0
+ * Version: 9.0.2.0
+ * Requires at least: 6.2
+ * Requires PHP: 8.1
  *
  * Author: KnitPay
  * Author URI: https://www.knitpay.org/
@@ -19,7 +19,7 @@
  * @author    KnitPay
  * @license   GPL-3.0-or-later
  * @package   KnitPay
- * @copyright 2020-2025 Knit Pay
+ * @copyright 2020-2026 Knit Pay
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -47,7 +47,7 @@ require KNITPAY_DIR . 'include.php';
 /**
  * Bootstrap.
  */
-$plugin_obj = \Pronamic\WordPress\Pay\Plugin::instance(
+$knit_pay_plugin = \Pronamic\WordPress\Pay\Plugin::instance(
 	[
 		'file'             => __FILE__,
 		'rest_base'        => 'knit-pay',
@@ -55,16 +55,18 @@ $plugin_obj = \Pronamic\WordPress\Pay\Plugin::instance(
 		'options'          => [
 			'about_page_file' => __DIR__ . '/admin/page-about.php',
 		]*/
-		'action_scheduler' => __DIR__ . '/vendor/woocommerce/action-scheduler/action-scheduler.php',
+		'action_scheduler' => __DIR__ . '/packages/woocommerce/action-scheduler/action-scheduler.php',
 	]
 );
-define( 'KNITPAY_VERSION', $plugin_obj->get_version() );
+define( 'KNITPAY_VERSION', $knit_pay_plugin->get_version() );
+
+// Admin reports.
+\Pronamic\PronamicPayAdminReports\Plugin::instance()->setup();
 
 add_filter(
 	'pronamic_pay_modules',
-	function( $modules ) {
+	function ( $modules ) {
 		// $modules[] = 'forms';
-		$modules[] = 'reports';
 
 		if ( defined( 'KNIT_PAY_RAZORPAY_SUBSCRIPTION' ) ) {
 			$modules[] = 'subscriptions';
@@ -76,7 +78,7 @@ add_filter(
 
 add_filter(
 	'pronamic_pay_plugin_integrations',
-	function( $integrations ) {
+	function ( $integrations ) {
 		// BookingPress.
 		$integrations[] = new \KnitPay\Extensions\BookingPress\Extension();
 
@@ -129,6 +131,9 @@ add_filter(
 		// Tourmaster.
 		$integrations[] = new \KnitPay\Extensions\TourMaster\Extension();
 
+		// Tutor LMS.
+		$integrations[] = new \KnitPay\Extensions\TutorLMS\Extension();
+
 		// WP Travel.
 		$integrations[] = new \KnitPay\Extensions\WPTravel\Extension();
 
@@ -142,6 +147,9 @@ add_filter(
 			]
 		);
 
+		// Uncanny Automator.
+		$integrations['uncanny-automator'] = new \KnitPay\Extensions\UncannyAutomator\Extension();
+
 		// Return integrations.
 		return $integrations;
 	}
@@ -149,7 +157,7 @@ add_filter(
 
 add_filter(
 	'pronamic_pay_gateways',
-	function( $gateways ) {
+	function ( $gateways ) {
 		// Cashfree.
 		$gateways[] = new \KnitPay\Gateways\Cashfree\Integration();
 
@@ -168,9 +176,6 @@ add_filter(
 		if ( defined( 'KNIT_PAY_EASEBUZZ' ) ) {
 			$gateways[] = new \KnitPay\Gateways\Easebuzz\Integration();
 		}
-
-		// GoURL.
-		$gateways[] = new \KnitPay\Gateways\GoUrl\Integration();
 
 		// RazorPay.
 		$gateways[] = new \KnitPay\Gateways\Razorpay\Integration();
@@ -231,7 +236,6 @@ function knitpay_filter_plugin_action_links( array $actions ) {
 	);
 }
 $plugin = plugin_basename( __FILE__ );
-add_filter( "network_admin_plugin_action_links_$plugin", 'knitpay_filter_plugin_action_links' );
 add_filter( "plugin_action_links_$plugin", 'knitpay_filter_plugin_action_links' );
 
 
@@ -241,7 +245,7 @@ function knitpay_fix_get_url() {
 		return;
 	}
 
-	$current_url = home_url( $_SERVER['REQUEST_URI'] );
+	$current_url = home_url( esc_url_raw( $_SERVER['REQUEST_URI'] ) );
 
 	// Only process if there are multiple question marks
 	if ( substr_count( $current_url, '?' ) > 1 ) {

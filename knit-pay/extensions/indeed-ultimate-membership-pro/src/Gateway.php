@@ -13,7 +13,7 @@ use Indeed\Ihc\Gateways\PaymentAbstract as IHC_PaymentAbstract;
 /**
  * Title: Indeed Ultimate Membership Pro Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -175,7 +175,6 @@ class Gateway extends IHC_PaymentAbstract {
 	 * @param int
 	 */
 	public function afterRefund( $uid = 0, $lid = 0 ) {
-
 	}
 
 	/**
@@ -183,6 +182,5 @@ class Gateway extends IHC_PaymentAbstract {
 	 * @param int
 	 */
 	public function cancelSubscription( $uid = 0, $lid = 0, $transactionId = '' ) {
-
 	}
 }

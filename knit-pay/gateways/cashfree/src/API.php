@@ -77,6 +77,24 @@ class API {
 		throw new Exception( 'Something went wrong. Please try again later.' );
 	}
 
+	public function get_eligible_payment_methods() {
+		$endpoint = $this->get_endpoint() . 'eligibility/payment_methods';
+
+		$data = [
+			'queries' => [
+				'amount' => 5000,
+			],
+		];
+
+		$result = $this->create_connection( $endpoint, 'POST', $data );
+
+		if ( is_array( $result ) ) {
+			return $result;
+		}
+
+		throw new Exception( 'Something went wrong. Please try again later.' );
+	}
+
 	private function create_connection( $url, $method, $data = [], $allow_retry = true ) {
 		$args = [
 			'method'  => $method,
@@ -84,7 +102,7 @@ class API {
 			'timeout' => self::CONNECTION_TIMEOUT,
 		];
 
-		if ( $method === 'POST' ) {
+		if ( 'POST' === $method ) {
 			$args['body'] = wp_json_encode( $data );
 		}
 

@@ -10,7 +10,7 @@ use Exception;
 
 /**
  * Title: Easebuzz Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 1.0.0
@@ -58,6 +58,7 @@ class Gateway extends Core_Gateway {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::EASEBUZZ ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::DEBIT_CARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::NET_BANKING ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::UPI ) );
 	}
@@ -221,7 +222,6 @@ class Gateway extends Core_Gateway {
 		if ( PaymentStatus::SUCCESS === $payment->get_status() ) {
 			$payment->set_transaction_id( $data['easepayid'] );
 		}
-
 	}
 
 	private function get_transaction_data_array( Payment $payment ) {

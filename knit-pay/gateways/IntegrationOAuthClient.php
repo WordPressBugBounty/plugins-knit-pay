@@ -5,13 +5,13 @@ namespace KnitPay\Gateways;
 use Pronamic\WordPress\DateTime\DateTime;
 use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
-use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use KnitPay\Gateways\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use KnitPay\Utils;
 
 /**
  * Title: Integration for Gateway OAuth Client
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 1.0.0
@@ -23,6 +23,9 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	protected $config;
 	private $can_create_connection;
 	private $gateway_name;
+	protected $snake_case_id;
+	protected $supports_test_mode          = true;
+	protected $schedule_next_refresh_token = true;
 
 	protected $auto_save_on_mode_change = false;
 
@@ -37,7 +40,8 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	public function __construct( $args = [] ) {
 		parent::__construct( $args );
 
-		$this->gateway_name = isset( $args['gateway_name'] ) ? $args['gateway_name'] : $this->get_name();
+		$this->gateway_name  = isset( $args['gateway_name'] ) ? $args['gateway_name'] : $this->get_name();
+		$this->snake_case_id = str_replace( '-', '_', $this->get_id() );
 
 		// create connection if Merchant ID not available.
 		$this->can_create_connection = true;
@@ -67,7 +71,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		}
 
 		// Get new access token if it's about to get expired.
-		add_action( 'knit_pay_' . $this->get_id() . '_refresh_access_token', [ $this, 'refresh_access_token' ], 10, 1 );
+		add_action( 'knit_pay_' . $this->snake_case_id . '_refresh_access_token', [ $this, 'refresh_access_token' ], 10, 1 );
 	}
 
 	public function allowed_redirect_hosts( $hosts ) {
@@ -99,17 +103,19 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			$this->config = $this->get_config( $config_id );
 		}
 
-		// Get mode from Integration mode trait.
-		$mode_options = [
-			'live' => __( 'Live/Production', 'knit-pay-lang' ),
-			'test' => __( 'Test/Development/Sandbox', 'knit-pay-lang' ),
-		];
-		if ( $this->is_oauth_connected( $this->config ) ) {
+		if ( $this->supports_test_mode ) {
+			// Get mode from Integration mode trait.
 			$mode_options = [
-				$this->config->mode => $mode_options[ $this->config->mode ],
+				'live' => __( 'Live/Production', 'knit-pay-lang' ),
+				'test' => __( 'Test/Development/Sandbox', 'knit-pay-lang' ),
 			];
+			if ( $this->is_oauth_connected( $this->config ) ) {
+				$mode_options = [
+					$this->config->mode => $mode_options[ $this->config->mode ],
+				];
+			}
+			$fields[] = $this->get_mode_settings_fields( $mode_options, [ $this, 'mode_settings_field_callback' ] );
 		}
-		$fields[] = $this->get_mode_settings_fields( $mode_options, [ $this, 'mode_settings_field_callback' ] );
 
 		if ( $this->is_auth_basic_enabled() ) {
 			$fields = $this->get_signup_button_field( $fields );
@@ -139,6 +145,9 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	 */
 	public function get_config( $post_id ) {
 		$config = $this->get_child_config( $post_id );
+
+		$config->is_connected = $this->get_meta( $post_id, $this->snake_case_id . '_is_connected' );
+		$config->connected_at = $this->get_meta( $post_id, $this->snake_case_id . '_connected_at' );
 
 		$config->config_id = $post_id;
 
@@ -257,9 +266,21 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	protected function clear_config( $config_id ) {
 		$this->clear_child_config( $config_id );
 
+		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->snake_case_id . '_is_connected' );
+		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->snake_case_id . '_expires_at' );
+		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->snake_case_id . '_connected_at' );
+		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->snake_case_id . '_access_token' );
+		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->snake_case_id . '_refresh_token' );
+		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->snake_case_id . '_merchant_id' );
+		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->snake_case_id . '_account_id' );
+		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->snake_case_id . '_connection_fail_count' );
+
+		// Clear Payment Methods Cache.
+		delete_transient( 'knit_pay_razorpay_payment_methods_' . $config_id );
+
 		// Stop Refresh Token Scheduler.
-		$timestamp_next_schedule = wp_next_scheduled( 'knit_pay_' . $this->get_id() . '_refresh_access_token', [ 'config_id' => $config_id ] );
-		wp_unschedule_event( $timestamp_next_schedule, 'knit_pay_' . $this->get_id() . '_refresh_access_token', [ 'config_id' => $config_id ] );
+		$timestamp_next_schedule = wp_next_scheduled( 'knit_pay_' . $this->snake_case_id . '_refresh_access_token', [ 'config_id' => $config_id ] );
+		wp_unschedule_event( $timestamp_next_schedule, 'knit_pay_' . $this->snake_case_id . '_refresh_access_token', [ 'config_id' => $config_id ] );
 	}
 
 	public function update_connection_status() {
@@ -314,7 +335,6 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		// Update active payment methods.
 		PaymentMethods::update_active_payment_methods();
 
-		// TODO move to razorpay.
 		$this->configure_webhook( $gateway_id );
 
 		self::redirect_to_config( $gateway_id );
@@ -326,10 +346,10 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		}
 		
 		// Don't refresh again if already refreshing.
-		if ( get_transient( 'knit_pay_' . $this->get_id() . '_refreshing_access_token_' . $config_id ) ) {
+		if ( get_transient( 'knit_pay_' . $this->snake_case_id . '_refreshing_access_token_' . $config_id ) ) {
 			return;
 		}
-		set_transient( 'knit_pay_' . $this->get_id() . '_refreshing_access_token_' . $config_id, true, MINUTE_IN_SECONDS );
+		set_transient( 'knit_pay_' . $this->snake_case_id . '_refreshing_access_token_' . $config_id, true, MINUTE_IN_SECONDS );
 		
 		$config = $this->get_config( $config_id );
 
@@ -381,25 +401,25 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		}
 		
 		$token_data = $token_data->data;
-		$expires_id = isset( $token_data->expires_in ) ? $token_data->expires_in : 86400;
+		$expires_in = isset( $token_data->expires_in ) ? $token_data->expires_in : 86400;
 
-		$token_data->expires_at   = time() + $expires_id - 1800;
+		$token_data->expires_at   = time() + $expires_in - 100;
 		$token_data->is_connected = true;
 		
 		if ( $new_connection ) {
 			$token_data->connected_at = time();
 		}
-		
+
 		unset( $token_data->expires_in );
 		unset( $token_data->connection_status );
 		unset( $token_data->token_type );
 		
 		foreach ( $token_data as $key => $value ) {
-			update_post_meta( $gateway_id, '_pronamic_gateway_' . $this->get_id() . '_' . $key, $value );
+			update_post_meta( $gateway_id, '_pronamic_gateway_' . $this->snake_case_id . '_' . $key, $value );
 		}
 
 		// Reset Connection Fail Counter.
-		delete_post_meta( $gateway_id, '_pronamic_gateway_' . $this->get_id() . '_connection_fail_count' );
+		delete_post_meta( $gateway_id, '_pronamic_gateway_' . $this->snake_case_id . '_connection_fail_count' );
 
 		$this->schedule_next_refresh_access_token( $gateway_id, $token_data->expires_at );
 	}
@@ -410,16 +430,16 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	}
 
 	private function schedule_next_refresh_access_token( $config_id, $expires_at ) {
-		if ( empty( $expires_at ) ) {
+		if ( empty( $expires_at ) || ! $this->schedule_next_refresh_token ) {
 			return;
 		}
 		
 		// Don't set next refresh cron if already refreshing.
-		if ( get_transient( 'knit_pay_' . $this->get_id() . '_refreshing_access_token_' . $config_id ) ) {
+		if ( get_transient( 'knit_pay_' . $this->snake_case_id . '_refreshing_access_token_' . $config_id ) ) {
 			return;
 		}
 
-		$next_schedule_time = wp_next_scheduled( 'knit_pay_' . $this->get_id() . '_refresh_access_token', [ 'config_id' => $config_id ] );
+		$next_schedule_time = wp_next_scheduled( 'knit_pay_' . $this->snake_case_id . '_refresh_access_token', [ 'config_id' => $config_id ] );
 		if ( $next_schedule_time && $next_schedule_time < $expires_at ) {
 			return;
 		}
@@ -432,7 +452,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 
 		wp_schedule_single_event(
 			$next_schedule_time,
-			'knit_pay_' . $this->get_id() . '_refresh_access_token',
+			'knit_pay_' . $this->snake_case_id . '_refresh_access_token',
 			[ 'config_id' => $config_id ]
 		);
 	}
@@ -444,7 +464,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	protected function create_basic_connection( $config_id ) {
 		return;
 	}
-	
+
 	/*
 	 * Increse the refresh token fail counter.
 	 */
@@ -458,7 +478,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		}
 		
 		// Count how many times refresh token attempt is failed.
-		update_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_connection_fail_count', $connection_fail_count );
+		update_post_meta( $config_id, '_pronamic_gateway_' . $this->snake_case_id . '_connection_fail_count', $connection_fail_count );
 	}
 	
 	/**
@@ -474,22 +494,28 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			$connected_at = new DateTime();
 			$connected_at->setTimestamp( $config->connected_at );
 		}
-		$access_token_info  = '<dl>';
-		$access_token_info .= isset( $connected_at ) ? sprintf( '<dt><strong>Connected at:</strong></dt><dd>%s</dd>', $connected_at->format_i18n() ) : '';
+
+		$connection_status  = '<dl>';
+		$connection_status .= isset( $connected_at ) ? sprintf( '<dt><strong>Connected at:</strong></dt><dd>%s</dd>', $connected_at->format_i18n() ) : '';
 
 		if ( isset( $config->expires_at ) ) {
-			$expire_date = new DateTime();
-			$expire_date->setTimestamp( $config->expires_at );
-			$access_token_info .= sprintf( '<dt><strong>Access Token Expiry Date:</strong></dt><dd>%s</dd>', $expire_date->format_i18n() );
+			if ( knit_pay_plugin()->is_debug_mode() ) {
+				$expire_date = new DateTime();
+				$expire_date->setTimestamp( $config->expires_at );
+				$connection_status .= sprintf( '<dt><strong>Access Token Expiry Date:</strong></dt><dd>%s</dd>', $expire_date->format_i18n() );
+			}
 
-			$renew_schedule_time = new DateTime();
-			$renew_schedule_time->setTimestamp( wp_next_scheduled( 'knit_pay_' . $this->get_id() . '_refresh_access_token', [ 'config_id' => $config->config_id ] ) );
-			$access_token_info .= sprintf( '<dt><strong>Next Automatic Renewal Scheduled at:</strong></dt><dd>%s</dd>', $renew_schedule_time->format_i18n() );
+			$renew_schedule_time     = new DateTime();
+			$timestamp_next_schedule = wp_next_scheduled( 'knit_pay_' . $this->snake_case_id . '_refresh_access_token', [ 'config_id' => $config->config_id ] );
+
+			if ( $timestamp_next_schedule ) {
+				$renew_schedule_time->setTimestamp( $timestamp_next_schedule );
+				$connection_status .= sprintf( '<dt><strong>Access Token Automatic Renewal Scheduled at:</strong></dt><dd>%s</dd>', $renew_schedule_time->format_i18n() );
+			}
 		}
+		$connection_status .= '</dl>';
 
-		$access_token_info .= '</dl>';
-
-		$disconnect_button = '<a id="knit-pay-oauth-disconnect-button" class="button button-primary button-large"
+		$disconnect_button = '<a id="knit-pay-oauth-disconnect-button" class="button button button-large"
 		role="button">Disconnect</strong></a>
 		<script>
 			document.getElementById("knit-pay-oauth-disconnect-button").addEventListener("click", function(event){
@@ -500,7 +526,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			});
 		</script>';
 
-		echo $access_token_info . $disconnect_button;
+		echo $connection_status . $disconnect_button;
 	}
 
 	protected function is_auth_basic_enabled() {
@@ -516,13 +542,13 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	}
 
 	private function get_signup_button_field( $fields ) {
-		 // SignUp.
+		// SignUp.
 		$fields[] = [
 			'section'  => 'general',
 			'type'     => 'custom',
 			'title'    => 'Sign Up Now',
 			'callback' => function () {
-				echo sprintf(
+				printf(
 					__( 'Before proceeding, kindly create an account at %1$s if you don\'t have one already.%2$s', 'knit-pay-lang' ),
 					$this->gateway_name,
 					'<br><br><a class="button button-primary button-large" target="_blank" href="' . $this->get_url() . 'help-signup"
@@ -541,9 +567,9 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			'type'     => 'custom',
 			'title'    => $this->gateway_name . ' Connect',
 			'callback' => function () {
-				echo '<p><h1>' . __( 'How it works?' ) . '</h1></p>' .
-				'<p>' . __( 'To provide a seamless integration experience, Knit Pay has introduced ' . $this->gateway_name . ' Platform Connect. Now you can integrate ' . $this->gateway_name . ' in Knit Pay with just a few clicks.' ) . '</p>' .
-				'<p>' . __( 'Click on "<strong>Connect with ' . $this->gateway_name . '</strong>" below to initiate the connection.' ) . '</p>';
+				echo '<p><h1>' . __( 'How it works?', 'knit-pay-lang' ) . '</h1></p>' .
+				'<p>' . __( 'To provide a seamless integration experience, Knit Pay has introduced ' . $this->gateway_name . ' Platform Connect. Now you can integrate ' . $this->gateway_name . ' in Knit Pay with just a few clicks.', 'knit-pay-lang' ) . '</p>' .
+				'<p>' . __( 'Click on "<strong>Connect with ' . $this->gateway_name . '</strong>" below to initiate the connection.', 'knit-pay-lang' ) . '</p>';
 			},
 		];
 		

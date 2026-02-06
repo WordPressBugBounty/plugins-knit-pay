@@ -10,7 +10,7 @@ use Pronamic\WordPress\Pay\Core\PaymentMethods;
 /**
  * Title: Tour Master extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -258,5 +258,4 @@ class Extension extends AbstractPluginIntegration {
 			get_admin_url( null, 'admin.php' )
 		);
 	}
-
 }

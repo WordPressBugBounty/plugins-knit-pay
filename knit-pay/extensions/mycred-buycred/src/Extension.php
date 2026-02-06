@@ -9,7 +9,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 /**
  * Title: myCRED buyCRED extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -148,11 +148,11 @@ class Extension extends AbstractPluginIntegration {
 
 		switch ( $payment->get_status() ) {
 			case Core_Statuses::CANCELLED:
-				$new_call[] = __( 'Payment Cancelled.' );
+				$new_call[] = __( 'Payment Cancelled.', 'knit-pay-lang' );
 				break;
 			case Core_Statuses::EXPIRED:
 			case Core_Statuses::FAILURE:
-				$new_call[] = __( 'Payment Failed.' );
+				$new_call[] = __( 'Payment Failed.', 'knit-pay-lang' );
 				break;
 			case Core_Statuses::SUCCESS:
 				\buycred_complete_pending_payment( $source_id );
@@ -230,5 +230,4 @@ class Extension extends AbstractPluginIntegration {
 		}
 		return get_edit_post_link( $payment_id );
 	}
-
 }

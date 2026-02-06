@@ -4,7 +4,7 @@ namespace KnitPay\Gateways\MultiGateway;
 use KnitPay\Gateways\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Plugin;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
-use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use KnitPay\Gateways\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Pronamic\WordPress\Pay\Payments\StatusChecker;
@@ -14,7 +14,7 @@ use Pronamic\WordPress\Money\Money;
 
 /**
  * Title: Multi Gateway Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 1.0.0
@@ -106,7 +106,7 @@ class Gateway extends Core_Gateway {
 	 *            Payment.
 	 */
 	public function start( Payment $payment ) {
-		$this->change_currency( $payment );
+		$this->change_currency( $payment, $this->config->gateway_currency, $this->config->exchange_rate );
 
 		$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
 		$payment->set_action_url( $payment->get_return_url() );
@@ -124,7 +124,7 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 
-		$child_config_id = $_POST['child-config-id'];
+		$child_config_id = absint( $_POST['child-config-id'] );
 		return $this->start_payment( $payment, $child_config_id );
 	}
 	
@@ -143,7 +143,7 @@ class Gateway extends Core_Gateway {
 		$payment->set_mode( $gateway->get_mode() );
 
 		// Start payment at the gateway.
-		// @see start_payment of /wp-pay/core/src/Plugin.php
+		// @see start_payment of "/wp-pay/core/src/Plugin.php".
 		try {
 			$gateway->start( $payment );
 
@@ -188,7 +188,8 @@ class Gateway extends Core_Gateway {
 	public function redirect_via_html( Payment $payment ) {
 		if ( Config::SELECTION_RANDOM_MODE == $this->config->gateway_selection_mode && ! empty( $this->config->enabled_payment_gateways ) ) {
 			$config_id = array_rand( array_flip( $this->config->enabled_payment_gateways ), 1 );
-			return $this->start_payment( $payment, $config_id );
+			$this->start_payment( $payment, $config_id );
+			return;
 		}
 		
 		parent::redirect_via_html( $payment );
@@ -203,7 +204,7 @@ class Gateway extends Core_Gateway {
 	 */
 	public function output_form(
 		Payment $payment
-		) {
+	) {
 		$form_inner = '<hr>';
 
 		foreach ( $this->config->enabled_payment_gateways as $config_id ) {
@@ -217,50 +218,10 @@ class Gateway extends Core_Gateway {
 			throw new \Exception( 'Action URL is empty, can not get form HTML.' );
 		}
 
-		echo sprintf(
+		printf(
 			'<form id="pronamic_ideal_form" name="pronamic_ideal_form" method="post" action="%s">%s</form>',
 			esc_attr( $action_url ),
 			$form_inner
 		);
-
-	}
-
-	private function change_currency( Payment $payment ) {
-		$gateway_currency = $this->config->gateway_currency;
-		$exchange_rate    = $this->config->exchange_rate;
-
-		$payment_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
-
-		if ( empty( $gateway_currency ) ) {
-			return;
-		} elseif ( $gateway_currency === $payment_currency && 1.0 === floatval( $exchange_rate ) ) {
-			return;
-		}
-
-		$exchange_rate = new Number( $exchange_rate );
-		$total_amount  = $payment->get_total_amount();
-		$total_amount->set_currency( $gateway_currency );
-		$total_amount = $total_amount->multiply( $exchange_rate );
-		$payment->set_total_amount( $total_amount );
-
-		if ( ! is_null( $payment->get_lines() ) ) {
-			$line_iterator = $payment->get_lines()->getIterator();
-			foreach ( $line_iterator as $key => $payment_line ) {
-				if ( ! is_null( $payment_line->get_total_amount() ) ) {
-					$payment_line->get_total_amount()->set_currency( $gateway_currency );
-					$payment_line->set_total_amount( $payment_line->get_total_amount()->multiply( $exchange_rate ) );
-				}
-
-				if ( ! is_null( $payment_line->get_discount_amount() ) ) {
-					$payment_line->get_discount_amount()->set_currency( $gateway_currency );
-					$payment_line->set_discount_amount( $payment_line->get_discount_amount()->multiply( $exchange_rate ) );
-				}
-
-				if ( ! is_null( $payment_line->get_unit_price() ) ) {
-					$payment_line->get_unit_price()->set_currency( $gateway_currency );
-					$payment_line->set_unit_price( $payment_line->get_unit_price()->multiply( $exchange_rate ) );
-				}
-			}
-		}
 	}
 }

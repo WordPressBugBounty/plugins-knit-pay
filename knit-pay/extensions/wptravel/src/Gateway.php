@@ -11,7 +11,7 @@ use WP_Session;
 /**
  * Title: WP Travel extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -166,6 +166,5 @@ class Gateway {
 			wp_safe_redirect( get_permalink( $wt_settings['checkout_page_id'] ) );
 			exit;
 		}
-
 	}
 }

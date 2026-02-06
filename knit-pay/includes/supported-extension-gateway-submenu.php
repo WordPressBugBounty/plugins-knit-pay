@@ -8,7 +8,7 @@ add_action( 'admin_footer', 'knit_pay_admin_menu_script' );
 function knit_pay_admin_menu() {
 	global $submenu;
 
-	$submenu['pronamic_ideal'][] = [ '<div id="kp-menu-supported-ext">Supported Extensions</div>', 'manage_options', 'https://wordpress.org/plugins/knit-pay/#tab-description' ];
+	$submenu['pronamic_ideal'][] = [ '<div id="kp-menu-supported-ext">Supported Extensions</div>', 'manage_options', 'https://wordpress.org/plugins/knit-pay/#:~:text=Supported%20WordPress%20plugins' ];
 	$submenu['pronamic_ideal'][] = [ '<div id="kp-menu-supported-gateway">Supported Gateways</div>', 'manage_options', KNITPAY_GLOBAL_GATEWAY_LIST_URL ];
 	$submenu['pronamic_ideal'][] = [ '<div id="kp-menu-support">Support</div>', 'manage_options', 'https://www.knitpay.org/contact-us/?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=admin-menu' ];
 	$submenu['pronamic_ideal'][] = [ '<div id="kp-menu-support"><strong>Refer and Earn</strong></div>', 'manage_options', 'https://www.knitpay.org/contact-us/?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=admin-menu' ];

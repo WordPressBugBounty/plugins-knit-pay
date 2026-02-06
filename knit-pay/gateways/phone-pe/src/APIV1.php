@@ -94,4 +94,3 @@ class APIV1 {
 		return $hashedString;
 	}
 }
-

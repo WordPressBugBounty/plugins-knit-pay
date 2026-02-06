@@ -23,7 +23,3 @@ class AES128 {
 		return $plaintext;
 	}
 }
-
-
-
-

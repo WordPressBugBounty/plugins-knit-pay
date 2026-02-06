@@ -8,7 +8,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
  * Title: NMI Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 8.83.0.0

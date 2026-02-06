@@ -6,7 +6,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
 
 /**
  * Title: Cashfree Config
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 8.91.0.0
@@ -23,7 +23,9 @@ class Config extends GatewayConfig {
 
 	public $config_id;
 
-	// OAuth.
+	/**
+	 * OAuth.
+	 */
 	public $merchant_id;
 
 	public $access_token;

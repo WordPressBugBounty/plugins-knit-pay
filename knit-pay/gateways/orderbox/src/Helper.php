@@ -14,7 +14,7 @@ use Pronamic\WordPress\Money\TaxedMoney;
 
 /**
  * Title: Orderbox Helper
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 6.65.0.0
@@ -23,7 +23,14 @@ use Pronamic\WordPress\Money\TaxedMoney;
 class Helper {
 
 	private static function get_phone( $payment_data ) {
-		return '+' . self::get_value_from_array( $payment_data, 'telNoCc' ) . self::get_value_from_array( $payment_data, 'telNo' );
+		$country_code = self::get_value_from_array( $payment_data, 'telNoCc' );
+		$tel_num      = self::get_value_from_array( $payment_data, 'telNo' );
+
+		if ( empty( $country_code ) ) {
+			return $tel_num;
+		} else {
+			return '+' . $country_code . $tel_num;
+		}
 	}
 
 	/**

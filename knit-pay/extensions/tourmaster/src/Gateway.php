@@ -2,7 +2,7 @@
 /**
  * Title: Tour Master extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author knitpay
@@ -145,7 +145,7 @@ class Gateway {
 		$ret .= 'data-method="ajax" data-action="tourmaster_payment_selected" data-ajax="' . esc_url( TOURMASTER_AJAX_URL ) . '"  />';
 
 		/*
-		 $ret .= '<div class="tourmaster-payment-credit-card-type" >';
+		$ret .= '<div class="tourmaster-payment-credit-card-type" >';
 		$ret .= '<img src="' . esc_attr( TOURMASTER_URL ) . '/images/' . 'visa' . '.png" alt="visa" />';
 		$ret .= '<img src="' . esc_attr( TOURMASTER_URL ) . '/images/' . 'master-card' . '.png" alt="master-card" />';
 		$ret .= '</div>'; */
@@ -252,10 +252,10 @@ class Gateway {
 					id="<?php echo $this->id; ?>_url" name="<?php echo $this->id; ?>_url">
 				<div><?php esc_html_e( 'Please wait while we redirect you to payment page.', 'knit-pay-lang' ); ?></div>
 				<script type="text/javascript">
-					   (function($){
+						(function($){
 						document.location = $("#<?php echo $this->id; ?>_url").val();
 					})(jQuery);
-				   </script>
+					</script>
 
 				<?php
 			} else {

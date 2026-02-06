@@ -9,7 +9,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
  * Title: PayTR Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 8.86.0.0
@@ -147,7 +147,7 @@ class Integration extends AbstractGatewayIntegration {
 				home_url( '/' ) 
 			),
 			'readonly'    => true,
-			'description' => sprintf( __( 'You must add the following notification url to your <a href="https://www.paytr.com/magaza/ayarlar" target="_blank">Notification URL Settings.</a>' ) ),
+			'description' => sprintf( __( 'You must add the following notification url to your <a href="https://www.paytr.com/magaza/ayarlar" target="_blank">Notification URL Settings.</a>', 'knit-pay-lang' ) ),
 		];
 
 		// Return fields.

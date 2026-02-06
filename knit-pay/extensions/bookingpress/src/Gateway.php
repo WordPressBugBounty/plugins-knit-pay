@@ -10,7 +10,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 /**
  * Title: BookingPress Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -107,7 +107,7 @@ class Gateway {
 		// Address.
 		$payment->set_billing_address( Helper::get_address_from_customer_details( $customer_details ) );
 			
-		// Currency.	
+		// Currency.
 		$currency = Currency::get_instance( $currency_code );
 	
 		// Set amount

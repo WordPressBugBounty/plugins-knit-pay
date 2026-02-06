@@ -22,7 +22,7 @@ use WP_User;
 /**
  * Title: Learn Dash LMS extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -74,7 +74,7 @@ class Gateway extends Learndash_Payment_Gateway {
 			) {
 				wp_send_json_error(
 					[
-						'message' => esc_html__( 'Cheating?', 'learndash' ),
+						'message' => esc_html__( 'Cheating?', 'knit-pay-lang' ),
 					]
 				);
 		}
@@ -84,7 +84,7 @@ class Gateway extends Learndash_Payment_Gateway {
 		if ( ! $product ) {
 			wp_send_json_error(
 				[
-					'message' => esc_html__( 'Cheating?', 'learndash' ),
+					'message' => esc_html__( 'Cheating?', 'knit-pay-lang' ),
 				]
 			);
 		}
@@ -203,7 +203,7 @@ class Gateway extends Learndash_Payment_Gateway {
 	}
 
 	public function enqueue_scripts(): void {
-		wp_enqueue_script( 'knit-pay-learndash-front', plugins_url( 'js/knit-pay-learndash-front.js', dirname( __FILE__ ) ), [ 'jquery' ], KNITPAY_VERSION, true );
+		wp_enqueue_script( 'knit-pay-learndash-front', plugins_url( 'js/knit-pay-learndash-front.js', __DIR__ ), [ 'jquery' ], KNITPAY_VERSION, true );
 
 		wp_enqueue_script( 'knit-pay-learndash-front' );
 	}

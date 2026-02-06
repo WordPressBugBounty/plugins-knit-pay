@@ -13,7 +13,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: CCAvenue Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 1.0.0
@@ -113,7 +113,7 @@ class Gateway extends Core_Gateway {
 		$data['payment_option'] = PaymentMethods::transform( $payment->get_payment_method() );
 		// $data['integration_type'] = 'iframe_normal'; // Parameter to activate iframe layout.
 
-		$data['billing_name']  = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 50 );
+		$data['billing_name']  = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 50 );
 		$data['billing_email'] = $customer->get_email();
 
 		if ( isset( $billing_address ) ) {
@@ -126,7 +126,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		if ( isset( $delivery_address ) ) {
-			$data['delivery_name']    = KnitPayUtils::substr_after_trim( html_entity_decode( $delivery_address->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 50 );
+			$data['delivery_name']    = KnitPayUtils::substr_after_trim( $delivery_address->get_name(), 0, 50 );
 			$data['delivery_address'] = $delivery_address->get_line_1();
 			$data['delivery_city']    = $this->get_clean_string( '/[^a-zA-Z\s]/', $delivery_address->get_city() );
 			$data['delivery_state']   = $this->get_clean_string( '/[^a-zA-Z\s]/', $delivery_address->get_region() );
@@ -183,12 +183,13 @@ class Gateway extends Core_Gateway {
 	private function get_order_response( $payment ) {
 		$post_order_no     = \sanitize_text_field( \wp_unslash( $_POST['orderNo'] ) );
 		$post_enc_response = \sanitize_text_field( \wp_unslash( $_POST['encResp'] ) );
-		$post_access_code  = \sanitize_text_field( \wp_unslash( $_POST['accessCode'] ) );
+		$post_access_code  = isset( $_POST['accessCode'] ) ? \sanitize_text_field( \wp_unslash( $_POST['accessCode'] ) ) : null;
 		$response_array    = [];
 
 		if ( $this->get_order_id( $payment ) !== $post_order_no ) {
 			throw new Exception( 'Order ID missmatch' );
-		} elseif ( $post_access_code !== $this->config->access_code ) {
+		} elseif ( isset( $post_access_code ) && $post_access_code !== $this->config->access_code ) {
+			// Check if Access code is correct if available in post request.
 			throw new Exception( 'Access Code missmatch' );
 		}
 
@@ -196,7 +197,7 @@ class Gateway extends Core_Gateway {
 		parse_str( $decrypted_response, $response_array );
 
 		if ( $response_array['order_id'] !== $post_order_no ) {
-			throw new Exception( 'Access Code missmatch' );
+			throw new Exception( 'Order ID missmatch in the decrypted response.' );
 		}
 
 		$response_array['reference_no']        = $response_array['tracking_id'];
@@ -224,7 +225,7 @@ class Gateway extends Core_Gateway {
 
 		$ccavenue_order_id = strtr( $this->config->order_id_format, $replacements );
 		$ccavenue_order_id = str_replace( ' ', '_', $ccavenue_order_id );
-		$ccavenue_order_id = KnitPayUtils::substr_after_trim( html_entity_decode( $ccavenue_order_id, ENT_QUOTES, 'UTF-8' ), 0, 29 );
+		$ccavenue_order_id = KnitPayUtils::substr_after_trim( $ccavenue_order_id, 0, 29 );
 
 		return $ccavenue_order_id;
 	}

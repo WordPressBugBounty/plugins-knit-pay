@@ -10,6 +10,8 @@ class API {
 
 	private $secret_key;
 
+	private $api_endpoint;
+
 	public function __construct( $secret_key ) {
 		$this->secret_key = $secret_key;
 

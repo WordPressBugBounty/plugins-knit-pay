@@ -3,22 +3,24 @@
 namespace KnitPay;
 
 use Pronamic\WordPress\Pay\Country;
+use Pronamic\WordPress\Pay\Region;
 use Pronamic\WordPress\Pay\ContactNameHelper;
+use Exception;
 
 /**
  * Title: Knit Pay Utils
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  */
-class Utils {    
+class Utils {
 	public static function get_country_name( ?Country $country ) {
 		if ( ! isset( $country ) ) {
 			return '';
 		}
 
 		if ( ! empty( $country->get_name() ) ) {
-			$country->get_name();
+			return $country->get_name();
 		}
 		
 		$iso_codes_to_names = [
@@ -270,11 +272,32 @@ class Utils {
 			'ZW' => 'Zimbabwe',
 		];
 				
-		// Check if the ISO code exists in the array, if not return an empty string
+		// Check if the ISO code exists in the array, if not return an empty string.
 		if ( array_key_exists( $country->get_code(), $iso_codes_to_names ) ) {
 			return $iso_codes_to_names[ $country->get_code() ];
 		} else {
 			return '';
+		}
+	}
+
+	public static function get_state_name( ?Region $region, ?Country $country ) {
+		if ( null === $region ) {
+			return '';
+		} elseif ( ! function_exists( 'WC' ) ) {
+			return $region->get_code();
+		} elseif ( null === $country ) {
+			return $region->get_code();
+		}
+		$country_code = $country->get_code();
+		$state_code   = empty( $region->get_code() ) ? $region->get_value() : $region->get_code();
+
+		$countries      = WC()->countries; // Get an instance of the WC_Countries Object
+		$country_states = $countries->get_states( $country_code ); // Get the states array for the specific country
+
+		if ( isset( $country_states[ $state_code ] ) ) {
+			return $country_states[ $state_code ]; // Return the full state name
+		} else {
+			return $state_code; // Return the code itself if the full name is not found (e.g., if the user typed it manually)
 		}
 	}
 	
@@ -296,23 +319,27 @@ class Utils {
 	public static function get_server_public_ip() {
 		$ipinfo_url = 'https://ipinfo.io/ip';
 		$ipify_url  = 'https://api.ipify.org';
+		$ip         = '';
 
-		// Try ipinfo first
+		// Try ipinfo first.
 		$ip_response = wp_remote_get( $ipinfo_url );
 
 		if ( ! is_wp_error( $ip_response ) && wp_remote_retrieve_response_code( $ip_response ) === 200 ) {
 			$ip = wp_remote_retrieve_body( $ip_response );
 		} else {
-			// ipinfo failed, try ipify
+			// ipinfo failed, try ipify.
 			$ip_response = wp_remote_get( $ipify_url );
 
 			if ( ! is_wp_error( $ip_response ) && wp_remote_retrieve_response_code( $ip_response ) === 200 ) {
 				$ip = wp_remote_retrieve_body( $ip_response );
 			} else {
-				// Both requests failed, return empty string or handle error accordingly
-				$ip = $_SERVER['SERVER_ADDR'];
+				// Both requests failed, return SERVER_ADDR.
+				$ip = isset( $_SERVER['SERVER_ADDR'] ) ? sanitize_text_field( $_SERVER['SERVER_ADDR'] ) : '';
 			}
 		}
+
+		// Check for the last time if the IP we received is an actual IP or not.
+		$ip = filter_var( $ip, FILTER_VALIDATE_IP ) ? $ip : '';
 
 		return trim( $ip );
 	}
@@ -340,22 +367,150 @@ class Utils {
 		$config_id = get_the_ID();
 		
 		// try to get Config ID from Referer URL.
-		if ( empty( $config_id ) ) {
+		if ( empty( $config_id ) && wp_get_referer() ) {
 			$referer_parameter = [];
 			$referer_url       = wp_parse_url( wp_get_referer() );
 			parse_str( $referer_url['query'], $referer_parameter );
 			$config_id = isset( $referer_parameter['post'] ) ? $referer_parameter['post'] : 0;
 		}
 
-		// Try to get from request url, eg "wp-json/knit-pay/v1/gateways/8808/admin"
+		// Try to get from request url, eg "wp-json/knit-pay/v1/gateways/8808/admin".
 		if ( empty( $config_id ) ) {
 			global $wp;
 			$request_url_params = explode( '/', $wp->request );
-			
-			// Get the second-to-last element (index -2)
+
+			if ( count( $request_url_params ) < 2 ) {
+				return $config_id;
+			}
+
+			// Get the second-to-last element (index -2).
 			$config_id = $request_url_params[ count( $request_url_params ) - 2 ];
 		}
 
 		return $config_id;
+	}
+
+	/**
+	 * Convert cookies to WordPress WP_Http_Cookie array
+	 * Automatically detects and converts from Netscape file format or semicolon-separated format
+	 *
+	 * Supported formats:
+	 * 1. Netscape cookie file format (tab-separated):
+	 *    domain  flag  path  secure  expiration  name  value
+	 *    Example: .example.com TRUE    /   FALSE   1800627982.987  name    value
+	 *
+	 * 2. Semicolon-separated format:
+	 *    Example: name1=value1; name2=value2
+	 *
+	 * @param string $cookie_data Cookie data in either format
+	 * @param string $default_domain Default domain for semicolon-separated format
+	 * @return array Array of WP_Http_Cookie objects
+	 */
+	public static function convert_cookie_string_to_wp_cookies( $cookie_data, $default_domain = '' ) {
+		$wp_cookies = [];
+
+		if ( empty( $cookie_data ) ) {
+			return $wp_cookies;
+		}
+
+		// Trim the input
+		$cookie_data = trim( $cookie_data );
+
+		// Check if it's in Netscape cookie file format by looking for tab characters
+		if ( strpos( $cookie_data, "\t" ) !== false ) {
+			// Parse Netscape cookie file format
+			$lines = explode( "\n", $cookie_data );
+
+			foreach ( $lines as $line ) {
+				$line = trim( $line );
+
+				// Skip empty lines and comments (lines starting with #)
+				if ( empty( $line ) || $line[0] === '#' ) {
+					continue;
+				}
+
+				// Split by tab character
+				$parts = preg_split( '/\t+/', $line );
+
+				// Cookie file format should have 7 fields:
+				// domain, flag, path, secure, expiration, name, value
+				if ( count( $parts ) >= 7 ) {
+					$domain     = $parts[0];
+					$flag       = $parts[1]; // TRUE/FALSE for domain flag
+					$path       = $parts[2];
+					$secure     = ( strtoupper( $parts[3] ) === 'TRUE' );
+					$expiration = (int) floatval( $parts[4] ); // Convert float timestamp to int
+					$name       = $parts[5];
+					$value      = $parts[6];
+
+					// Create WP_Http_Cookie object
+					$wp_cookies[] = new \WP_Http_Cookie(
+						[
+							'name'    => $name,
+							'value'   => $value,
+							'domain'  => $domain,
+							'path'    => $path,
+							'expires' => $expiration,
+						]
+					);
+				}
+			}
+		} else {
+			// Parse semicolon-separated format
+			$cookie_pairs = explode( ';', $cookie_data );
+
+			foreach ( $cookie_pairs as $cookie_pair ) {
+				$cookie_pair = trim( $cookie_pair );
+
+				if ( empty( $cookie_pair ) ) {
+					continue;
+				}
+
+				// Split name=value
+				$parts = explode( '=', $cookie_pair, 2 );
+
+				if ( count( $parts ) === 2 ) {
+					$name  = trim( $parts[0] );
+					$value = trim( $parts[1] );
+
+					// Create WP_Http_Cookie object
+					$wp_cookies[] = new \WP_Http_Cookie(
+						[
+							'name'   => $name,
+							'value'  => $value,
+							'domain' => $default_domain,
+						]
+					);
+				}
+			}
+		}
+
+		return $wp_cookies;
+	}
+
+	/**
+	 * Convert relative path to absolute URL.
+	 * Maintains backward compatibility with existing absolute URLs and base64 strings.
+	 *
+	 * @param string $path path (relative or absolute).
+	 * @return string The absolute URL.
+	 */
+	public static function convert_relative_path_to_url( $path ) {
+		if ( empty( $path ) ) {
+			return $path;
+		}
+
+		// Return as is if it's already an absolute URL (http:// or https://)
+		if ( preg_match( '/^https?:\/\//', $path ) ) {
+			return $path;
+		}
+
+		// Return as is if it's a base64 encoded string
+		if ( strpos( $path, 'data:' ) === 0 ) {
+			return $path;
+		}
+
+		// Convert relative path to absolute URL
+		return home_url( $path );
 	}
 }

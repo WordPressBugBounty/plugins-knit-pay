@@ -5,13 +5,14 @@ namespace KnitPay\Gateways\Razorpay;
 use Pronamic\WordPress\DateTime\DateTime;
 use KnitPay\Gateways\IntegrationOAuthClient;
 use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
-use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use WP_Query;
+use KnitPay\Utils;
+
 /**
  * Title: Razorpay Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 1.0.0
@@ -52,6 +53,78 @@ class Integration extends IntegrationOAuthClient {
 		if ( ! has_action( 'wp_loaded', $function ) ) {
 			add_action( 'wp_loaded', $function );
 		}
+
+		// Enqueue media uploader scripts for admin.
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_media_uploader_scripts' ] );
+	}
+
+	/**
+	 * Enqueue media uploader scripts.
+	 */
+	public function enqueue_media_uploader_scripts( $hook ) {
+		// Only load on post edit screen for pronamic_gateway post type.
+		if ( ! in_array( $hook, [ 'post.php', 'post-new.php' ] ) ) {
+			return;
+		}
+
+		$screen = get_current_screen();
+		if ( ! $screen || 'pronamic_gateway' !== $screen->post_type ) {
+			return;
+		}
+
+		// Enqueue WordPress media scripts.
+		wp_enqueue_media();
+
+		// Get plugin URL for Razorpay gateway directory
+		$plugin_url = plugins_url( '', __FILE__ );
+
+		// Enqueue custom JavaScript for media uploader.
+		wp_enqueue_script(
+			'razorpay-media-uploader',
+			$plugin_url . '/js/media-uploader.js',
+			[ 'jquery', 'media-upload', 'media-views' ],
+			KNITPAY_VERSION,
+			true
+		);
+
+		// Add custom CSS for the media uploader buttons.
+		wp_add_inline_style(
+			'buttons',
+			'
+			.razorpay-media-buttons {
+				display: inline-block;
+				margin-left: 10px;
+				vertical-align: middle;
+			}
+			.razorpay-media-buttons .button {
+				margin-right: 5px;
+			}
+			#razorpay_checkout_image_preview {
+				display: block;
+				margin-top: 10px;
+			}
+			#razorpay_checkout_image_preview img {
+				display: block;
+			}
+			'
+		);
+	}
+
+	/**
+	 * Render checkout image field with media uploader button.
+	 */
+	public function render_checkout_image_field() {
+		?>
+		<div class="razorpay-media-buttons">
+			<button type="button" class="button button-primary" id="razorpay_checkout_image_upload_button">
+				<?php esc_html_e( 'Upload/Select Image', 'knit-pay-lang' ); ?>
+			</button>
+			<button type="button" class="button button-secondary" id="razorpay_checkout_image_remove_button">
+				<?php esc_html_e( 'Remove Image', 'knit-pay-lang' ); ?>
+			</button>
+		</div>
+		<div id="razorpay_checkout_image_preview"></div>
+		<?php
 	}
 
 	public function allowed_redirect_hosts( $hosts ) {
@@ -135,6 +208,20 @@ class Integration extends IntegrationOAuthClient {
 		}
 		// TODO: Add support for payment link.
 
+		// Country.
+		$fields[] = [
+			'section'     => 'advanced',
+			'meta_key'    => '_pronamic_gateway_razorpay_country',
+			'title'       => __( 'Country', 'knit-pay-lang' ),
+			'type'        => 'select',
+			'options'     => [
+				'in'             => 'India',
+				'in-import-flow' => 'Non-Indian (Import flow)',
+			],
+			'default'     => 'in',
+			'description' => __( 'Import Flow is a payment solution designed for International (non-Indian) businesses to accept payments from Indian customers without any additional paperwork or registration.', 'knit-pay-lang' ),
+		];
+
 		// Merchant/Company Name.
 		$fields[] = [
 			'section'  => 'general',
@@ -151,7 +238,8 @@ class Integration extends IntegrationOAuthClient {
 			'meta_key' => '_pronamic_gateway_razorpay_checkout_image',
 			'title'    => __( 'Checkout Image', 'knit-pay-lang' ),
 			'type'     => 'text',
-			'classes'  => [ 'large-text', 'code' ],
+			'classes'  => [ 'regular-text', 'code' ],
+			'callback' => [ $this, 'render_checkout_image_field' ],
 			'tooltip'  => __( 'Link to an image (usually your business logo) shown in the Checkout form. Can also be a base64 string, if loading the image from a network is not desirable. Keep it blank to use default image.', 'knit-pay-lang' ),
 		];
 
@@ -260,13 +348,12 @@ class Integration extends IntegrationOAuthClient {
 		$config->key_secret                  = $this->get_meta( $post_id, 'razorpay_key_secret' );
 		$config->webhook_id                  = $this->get_meta( $post_id, 'razorpay_webhook_id' );
 		$config->webhook_secret              = $this->get_meta( $post_id, 'razorpay_webhook_secret' );
-		$config->is_connected                = $this->get_meta( $post_id, 'razorpay_is_connected' );
-		$config->connected_at                = $this->get_meta( $post_id, 'razorpay_connected_at' );
 		$config->expires_at                  = $this->get_meta( $post_id, 'razorpay_expires_at' );
 		$config->access_token                = $this->get_meta( $post_id, 'razorpay_access_token' );
 		$config->refresh_token               = $this->get_meta( $post_id, 'razorpay_refresh_token' );
+		$config->country                     = $this->get_meta( $post_id, 'razorpay_country' );
 		$config->company_name                = $this->get_meta( $post_id, 'razorpay_company_name' );
-		$config->checkout_image              = $this->get_meta( $post_id, 'razorpay_checkout_image' );
+		$config->checkout_image              = Utils::convert_relative_path_to_url( $this->get_meta( $post_id, 'razorpay_checkout_image' ) );
 		$config->checkout_mode               = $this->get_meta( $post_id, 'razorpay_checkout_mode' );
 		$config->transaction_fees_percentage = $this->get_meta( $post_id, 'razorpay_transaction_fees_percentage' );
 		$config->transaction_fees_fix        = $this->get_meta( $post_id, 'razorpay_transaction_fees_fix' );
@@ -279,6 +366,10 @@ class Integration extends IntegrationOAuthClient {
 			$config->checkout_mode = Config::CHECKOUT_STANDARD_MODE;
 		}
 		$config->checkout_mode = (int) $config->checkout_mode;
+
+		if ( empty( $config->country ) ) {
+			$config->country = 'in';
+		}
 
 		if ( empty( $config->transaction_fees_percentage ) ) {
 			$config->transaction_fees_percentage = 0;
@@ -302,6 +393,7 @@ class Integration extends IntegrationOAuthClient {
 	 * @return Gateway
 	 */
 	public function get_gateway( $config_id ) {
+		/** @var Config $config */
 		$config = $this->get_config( $config_id );
 
 		$gateway = new Gateway();
@@ -326,19 +418,14 @@ class Integration extends IntegrationOAuthClient {
 		delete_post_meta( $config_id, '_pronamic_gateway_razorpay_key_id' );
 		delete_post_meta( $config_id, '_pronamic_gateway_razorpay_key_secret' );
 		delete_post_meta( $config_id, '_pronamic_gateway_razorpay_webhook_id' );
-		delete_post_meta( $config_id, '_pronamic_gateway_razorpay_is_connected' );
-		delete_post_meta( $config_id, '_pronamic_gateway_razorpay_expires_at' );
-		delete_post_meta( $config_id, '_pronamic_gateway_razorpay_access_token' );
-		delete_post_meta( $config_id, '_pronamic_gateway_razorpay_refresh_token' );
-		delete_post_meta( $config_id, '_pronamic_gateway_razorpay_merchant_id' );
-		delete_post_meta( $config_id, '_pronamic_gateway_razorpay_connection_fail_count' );
 	}
 
 	public function update_connection_status() {
-		if ( ! ( filter_has_var( INPUT_GET, 'gateway_id' ) ) ) {
+		if ( ! isset( $_GET['gateway_id'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
+		//phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$gateway_id = sanitize_text_field( $_GET['gateway_id'] );
 
 		// Don't interfere if rzp-wppcommerce attempting to connect.
@@ -350,7 +437,10 @@ class Integration extends IntegrationOAuthClient {
 	}
 
 	protected function configure_webhook( $config_id ) {
-		$webhook = new Webhook( $config_id, $this->get_config( $config_id ) );
+		/** @var Config $config */
+		$config = $this->get_config( $config_id );
+
+		$webhook = new Webhook( $config_id, $config );
 		$webhook->configure_webhook();
 	}
 

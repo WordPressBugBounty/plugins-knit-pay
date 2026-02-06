@@ -8,7 +8,7 @@ use Exception;
 
 /**
  * Title: SBIePay Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 5.7.0
@@ -92,7 +92,7 @@ class Gateway extends Core_Gateway {
 		$request_parameter   = "$merchant_id|DOM|IN|INR|$amount|$other_details|$redirect_url|$redirect_url|SBIEPAY|$transaction_id|$cust_id|NB|ONLINE|ONLINE";
 		$encrypted_parameter = AES128::encrypt( $request_parameter, $encryption_key );
 
-		if ( pronamic_pay_plugin()->is_debug_mode() ) {
+		if ( knit_pay_plugin()->is_debug_mode() ) {
 			$payment->add_note( 'Request Parameters: ' . $request_parameter );
 			$payment->add_note( 'Encrypted Parameters: ' . $encrypted_parameter );
 		}

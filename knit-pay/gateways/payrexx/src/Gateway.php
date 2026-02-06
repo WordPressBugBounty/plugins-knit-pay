@@ -7,7 +7,7 @@ use Exception;
 
 /**
  * Title: Payrexx Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.82.0.0
@@ -164,7 +164,7 @@ class Gateway extends Core_Gateway {
 		// $gateway->addField('terms', '');
 		// $gateway->addField('privacy_policy', '');
 		/*
-		 $gateway->addField('custom_field_1', '123456789', array(
+		$gateway->addField('custom_field_1', '123456789', array(
 					1 => 'Benutzerdefiniertes Feld (DE)',
 					2 => 'Benutzerdefiniertes Feld (EN)',
 					3 => 'Benutzerdefiniertes Feld (FR)',

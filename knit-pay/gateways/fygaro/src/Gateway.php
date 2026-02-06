@@ -6,7 +6,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
  * Title: Fygaro Gateway
- * Copyright: 2020-2021 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 5.0.0
@@ -44,6 +44,7 @@ class Gateway extends Core_Gateway {
 		$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
 		
 		// Used to retrive payment id after successful payment redirection.
+		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.cookies_setcookie
 		setcookie( 'kp_fygaro_transaction_id', $payment->get_transaction_id(), time() + 1800, '/' );
 
 		$payload = [

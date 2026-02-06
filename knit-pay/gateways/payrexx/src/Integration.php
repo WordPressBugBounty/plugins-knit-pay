@@ -9,7 +9,7 @@ use Pronamic\WordPress\Pay\Plugin;
 
 /**
  * Title: Payrexx Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 8.82.0.0
@@ -79,7 +79,7 @@ class Integration extends AbstractGatewayIntegration {
 			'title'       => __( 'Instance Name', 'knit-pay-lang' ),
 			'type'        => 'text',
 			'classes'     => [ 'regular-text', 'code' ],
-			'description' => __( 'The instance name is your Payrexx account name. You find it in the URL when logged in INSTANCENAME.payrexx.com.', 'wc-payrexx-gateway' ),
+			'description' => __( 'The instance name is your Payrexx account name. You find it in the URL when logged in INSTANCENAME.payrexx.com.', 'knit-pay-lang' ),
 			'required'    => true,
 		];
 
@@ -90,7 +90,7 @@ class Integration extends AbstractGatewayIntegration {
 			'title'       => __( 'API Key', 'knit-pay-lang' ),
 			'type'        => 'text',
 			'classes'     => [ 'regular-text', 'code' ],
-			'description' => __( 'Paste the API key from the integrations page of your Payrexx merchant backend here', 'wc-payrexx-gateway' ),
+			'description' => __( 'Paste the API key from the integrations page of your Payrexx merchant backend here', 'knit-pay-lang' ),
 			'required'    => true,
 		];
 

@@ -403,6 +403,4 @@ class Easebuzz {
 
 		return json_encode( $result );
 	}
-
 }
-

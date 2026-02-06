@@ -5,7 +5,7 @@
  * This file contains function to handle Knit Pay config logic in wp-admin
  * and config form.
  *
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -44,9 +44,9 @@ function adext_knit_pay_page_options() {
 		if ( $valid ) {
 
 			update_option( 'adext_' . $module . '_config', $form->get_values() );
-			$flash->add_info( __( 'Settings updated.', 'adverts' ) );
+			$flash->add_info( __( 'Settings updated.', 'knit-pay-lang' ) );
 		} else {
-			$flash->add_error( __( 'There are errors in your form.', 'adverts' ) );
+			$flash->add_error( __( 'There are errors in your form.', 'knit-pay-lang' ) );
 		}
 	}
 
@@ -99,6 +99,3 @@ Adverts::instance()->set(
 		],
 	]
 );
-
-
-

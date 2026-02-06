@@ -8,7 +8,7 @@ use Exception;
 
 /**
  * Title: Mercado Pago Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.88.0.0
@@ -119,7 +119,7 @@ class Gateway extends Core_Gateway {
 		}
 		$payment->set_status( $payment_status );
 		
-		if ( pronamic_pay_plugin()->is_debug_mode() ) {
+		if ( knit_pay_plugin()->is_debug_mode() ) {
 			$payment->add_note( '<strong>MP Response:</strong><br><pre>' . print_r( $mp_payment, true ) . '</pre><br>' );
 		}
 	}

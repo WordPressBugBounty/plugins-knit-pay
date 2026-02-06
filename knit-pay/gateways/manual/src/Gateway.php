@@ -8,7 +8,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
 /**
  * Title: Manual Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 1.0.0
@@ -82,12 +82,11 @@ class Gateway extends Core_Gateway {
 			__( 'Cancel', 'knit-pay-lang' )
 		);
 
-		echo sprintf(
+		printf(
 			'<form id="pronamic_ideal_form" name="pronamic_ideal_form" method="post" action="%s">%s</form>',
 			esc_attr( $payment->get_return_url() ),
 			$form_inner
 		);
-
 	}
 
 	/**

@@ -14,7 +14,7 @@ use Exception;
 
 /**
  * Title: PayU Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 5.4.0
@@ -55,9 +55,10 @@ class Gateway extends Core_Gateway {
 
 	private function register_payment_methods() {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::DEBIT_CARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::PAY_U ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::UPI ) );
-		$this->register_payment_method( new PaymentMethod( PaymentMethods::DEBIT_CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::NET_BANKING ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::PAYTM ) );
 	}

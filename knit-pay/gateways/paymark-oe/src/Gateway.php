@@ -10,7 +10,7 @@ require_once 'lib/API.php';
 
 /**
  * Title: Paymark OE Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 5.2.0
@@ -147,7 +147,7 @@ class Gateway extends Core_Gateway {
 	 */
 	public function output_form(
 		Payment $payment
-		) {
+	) {
 		if ( PaymentStatus::SUCCESS === $payment->get_status() ) {
 			wp_safe_redirect( $payment->get_return_redirect_url() );
 		}

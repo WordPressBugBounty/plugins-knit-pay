@@ -23,7 +23,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Razorpay Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 1.0.0
@@ -53,6 +53,11 @@ class Gateway extends Core_Gateway {
 			'refunds',
 		];
 
+		if ( 'in-import-flow' === $this->config->country ) {
+			$this->default_currency     = 'INR';
+			$this->supported_currencies = [ 'INR' ];
+		}
+
 		if ( defined( 'KNIT_PAY_RAZORPAY_SUBSCRIPTION' ) ) {
 			$this->supports = wp_parse_args(
 				$this->supports,
@@ -69,6 +74,7 @@ class Gateway extends Core_Gateway {
 
 	private function register_payment_methods() {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::AMERICAN_EXPRESS ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::DEBIT_CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::NET_BANKING ) );
 
@@ -92,12 +98,47 @@ class Gateway extends Core_Gateway {
 	 * @param array $args Query arguments.
 	 * @return PaymentMethodsCollection
 	 */
-	public function get_payment_methods( array $args = [] ) : PaymentMethodsCollection {
-		// TODO referr mollie.
+	public function get_payment_methods( array $args = [] ): PaymentMethodsCollection {
+		$cache_key = 'knit_pay_razorpay_payment_methods_' . $this->config->config_id;
 
-		// TODO get actual payment methods from API https://razorpay.com/docs/payments/subscriptions/supported-banks-apps/#fetch-supported-methods
+		$methods = \get_transient( $cache_key );
 
-		// $this->get_payment_method( PaymentMethods::RAZORPAY )->set_status( 'active' );
+		if ( false === $methods ) {
+			// Call the methods API endpoint (which doesn't exist as a direct entity in Razorpay SDK)
+			// @see https://razorpay.com/docs/payments/subscriptions/supported-banks-apps/#fetch-supported-methods
+			try {
+				$api_client = new Api( $this->config->key_id, null );
+				$methods    = $this->call_api( 'methods', 'all', [], $api_client );
+				\set_transient( $cache_key, $methods, \DAY_IN_SECONDS );
+			} catch ( \Exception $e ) {
+				// Handle exception
+				$methods = [];
+			}
+		}
+
+		$this->get_payment_method( PaymentMethods::RAZORPAY )->set_status( 'active' );
+
+		foreach ( $methods as $method_id => $method_status ) {
+			if ( ! is_string( $method_id ) ) {
+				continue;
+			}
+
+			switch ( $method_id ) {
+				case 'amex':
+					$method_id = PaymentMethods::AMERICAN_EXPRESS;
+					break;
+				case 'netbanking':
+					$method_id = PaymentMethods::NET_BANKING;
+					break;
+				default:
+			}
+
+			$method = $this->get_payment_method( $method_id );
+			if ( null === $method ) {
+				continue;
+			}
+			$method->set_status( $method_status ? 'active' : 'inactive' );
+		}
 
 		return parent::get_payment_methods( $args );
 	}
@@ -154,6 +195,8 @@ class Gateway extends Core_Gateway {
 		if ( empty( $razorpay_order_id ) ) {
 			if ( ! empty( $razorpay_subscription_id ) ) {
 				$razorpay_subscription = $this->call_api( 'subscription', 'fetch', $razorpay_subscription_id );
+
+				//phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 				$payment->add_note( '<strong>Razorpay Subscription Response:</strong><br><pre>' . print_r( $razorpay_subscription, true ) . '</pre><br>' );
 				$payment->set_status( Statuses::transform_subscription_status( $razorpay_subscription->status ) );
 			} else {
@@ -168,9 +211,10 @@ class Gateway extends Core_Gateway {
 
 		// No further execution if payment is not attemped yet.
 		if ( empty( $razorpay_payments->count ) ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$action = array_key_exists( 'action', $_GET ) ? \sanitize_text_field( \wp_unslash( $_GET['action'] ) ) : null;
 			if ( isset( $action ) && Statuses::CANCELLED === $action ) {
-				$payment->set_status( Statuses::transform( $action ) );
+				$payment->set_status( Statuses::transform( Statuses::CANCELLED ) );
 				return;
 			}
 
@@ -245,6 +289,42 @@ class Gateway extends Core_Gateway {
 			'notes'           => $this->get_notes( $payment ),
 			'payment_capture' => 1, // TODO: 1 for auto capture. give admin option to set auto capture. do re-search to see if razorpay has deprecate it or not.
 		];
+
+		if ( 'in-import-flow' === $this->config->country ) {
+			$customer_address = ( null === $payment->get_shipping_address() ) ? $payment->get_billing_address() : $payment->get_shipping_address();
+
+			if ( null === $customer_address ) {
+				throw new \Exception( 'Customer address is required for Razorpay Singapore.' );
+			}
+
+			$razorpay_customer = $this->call_api(
+				'customer',
+				'create',
+				[
+					'name'          => KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 45 ),
+					'email'         => $customer->get_email(),
+					'contact'       => $payment->get_billing_address()->get_phone(),
+					'fail_existing' => false,
+				]
+			);
+
+			$payment->set_meta( 'razorpay_customer_id', $razorpay_customer->id );
+			$razorpay_order_data['customer_id'] = $razorpay_customer->id;
+
+			$razorpay_order_data['customer_details'] = [
+				'name'             => KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 45 ),
+				'contact'          => $payment->get_billing_address()->get_phone(),
+				'email'            => $customer->get_email(),
+				'shipping_address' => [
+					'line1'   => $customer_address->get_line_1(),
+					'line2'   => $customer_address->get_line_2(),
+					'city'    => $customer_address->get_city(),
+					'country' => 'IN' === $customer_address->get_country_code() ? 'IND' : '',
+					'state'   => KnitPayUtils::get_state_name( $customer_address->get_region(), $customer_address->get_country() ),
+					'zipcode' => (string) $customer_address->get_postal_code(),
+				],
+			];
+		}
 
 		$razorpay_order    = $this->call_api( 'order', 'create', $razorpay_order_data );
 		$razorpay_order_id = $razorpay_order['id'];
@@ -405,7 +485,7 @@ class Gateway extends Core_Gateway {
 		
 		$auto_submit = true;
 		
-		if ( defined( '\PRONAMIC_PAY_DEBUG' ) && \PRONAMIC_PAY_DEBUG ) {
+		if ( defined( '\KNIT_PAY_DEBUG' ) && \KNIT_PAY_DEBUG ) {
 			$auto_submit = false;
 		}
 
@@ -446,7 +526,7 @@ class Gateway extends Core_Gateway {
 
 		switch ( $this->config->checkout_mode ) {
 			/*
-			 Standard hosted checkout not working with subscription.
+			 * Standard hosted checkout not working with subscription.
 			case Config::CHECKOUT_STANDARD_MODE:
 				$fields = [
 					'checkout' => $data,
@@ -459,7 +539,8 @@ class Gateway extends Core_Gateway {
 				unset($fields['checkout']['callback_url']);
 				unset($fields['checkout']['cancel_url']);
 
-				break;*/
+				break;
+			 */
 
 			case Config::CHECKOUT_HOSTED_MODE:
 				$fields           = $data;
@@ -477,6 +558,7 @@ class Gateway extends Core_Gateway {
 	public function get_output_fields_base( Payment $payment ) {
 		$razorpay_order_id        = $payment->get_meta( 'razorpay_order_id' );
 		$razorpay_subscription_id = $payment->get_meta( 'razorpay_subscription_id' );
+		$razorpay_customer_id     = $payment->get_meta( 'razorpay_customer_id' );
 
 		$customer        = $payment->get_customer();
 		$billing_address = $payment->get_billing_address();
@@ -496,18 +578,17 @@ class Gateway extends Core_Gateway {
 			'name'         => $box_title,
 			'description'  => $payment->get_description(),
 			'prefill'      => [
-				'name'   => KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 45 ),
+				'name'   => KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 45 ),
 				'email'  => $customer->get_email(),
-				'method' => PaymentMethods::transform( $payment->get_payment_method() ),
+				'method' => PaymentMethods::prefill_method( $payment->get_payment_method() ),
 			],
-			// TODO: add option to add custom color.
 			'theme'        => [
-				// 'color' => '#F37254',
+				// 'color' => '#F37254', // TODO: add option to add custom color.
 				'backdrop_color' => 'rgba(0, 0, 0, 0.8)',
 			],
 			'callback_url' => $payment->get_return_url(),
 			'cancel_url'   => add_query_arg( 'action', 'cancelled', $payment->get_return_url() ),
-			'timeout'      => 900,
+			'timeout'      => 900, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
 			'config'       => [
 				'display' => [
 					'language' => $customer->get_language(),
@@ -517,8 +598,24 @@ class Gateway extends Core_Gateway {
 				'integration'         => 'knit-pay',
 				'integration_version' => KNITPAY_VERSION,
 			],
-			// TODO: payment methods customization. https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/configure-payment-methods
+			'method'       => PaymentMethods::get_methods( $payment->get_payment_method() ),
+			// TODO: Add card saving feature if possible.
 		];
+
+		if ( 'in-import-flow' === $this->config->country ) {
+			if ( ! empty( $razorpay_customer_id ) ) {
+				$data['customer_id'] = $razorpay_customer_id;
+			}
+
+			$data['notes'] = [
+				'invoice_number' => $razorpay_order_id, // Razorpay suggests to pass order id in invoice number on meet.
+			];
+
+			// These methods are not supported in Import flow, still visible in checkout.
+			$data['method']['wallet']   = false;
+			$data['method']['paylater'] = false;
+			$data['method']['emi']      = false;
+		}
 
 		if ( ! empty( $razorpay_subscription_id ) ) {
 			$data['subscription_id'] = $razorpay_subscription_id;
@@ -558,10 +655,21 @@ class Gateway extends Core_Gateway {
 		return $api;
 	}
 
-	private function call_api( $entity, $method, $args, $allow_retry = true ) {
+	private function call_api( $entity, $method = '', $args = [], $api_client = null, $allow_retry = true ) {
 		try {
-			$api      = $this->get_razorpay_api();
-			$response = $api->$entity->$method( $args );
+			if ( null === $api_client ) {
+				$api_client = $this->get_razorpay_api();
+			}
+
+			$className = 'Razorpay\\Api\\' . ucwords( $entity );
+			if ( class_exists( $className ) ) {
+				$entity   = new $className();
+				$response = $entity->$method( $args );
+			} else {
+				// For custom endpoints not available in SDK, use Request class directly
+				$request  = new \Razorpay\Api\Request();
+				$response = $request->request( 'GET', $entity, $args );
+			}
 
 			return $response;
 		} catch ( Error $e ) {
@@ -572,7 +680,7 @@ class Gateway extends Core_Gateway {
 				$this->config = $integration->get_config( $this->config->config_id );
 
 				// Retry request.
-				return $this->call_api( $entity, $method, $args, false );
+				return $this->call_api( $entity, $method, $args, null, false );
 			}
 
 			throw $e;
@@ -596,7 +704,7 @@ class Gateway extends Core_Gateway {
 		];
 
 		$customer      = $payment->get_customer();
-		$customer_name = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 45 );
+		$customer_name = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 45 );
 		if ( ! empty( $customer_name ) ) {
 			$notes = [
 				'customer_name' => $customer_name,
@@ -653,7 +761,7 @@ class Gateway extends Core_Gateway {
 
 			$user = get_user_by( 'email', $razorpay_payment->email );
 			if ( false !== $user ) {
-				$payment->user_id = $user->ID;
+				$customer->set_user_id( $user->ID );
 			}
 		}
 
@@ -668,30 +776,9 @@ class Gateway extends Core_Gateway {
 
 	public function get_balance() {
 		try {
-			if ( ! empty( $this->config->access_token ) ) {
-				$auth_header = 'Bearer ' . $this->config->access_token;
-			} else {
-				$auth_header = 'Basic ' . base64_encode( $this->config->key_id . ':' . $this->config->key_secret );
-			}
-
-			$response = wp_remote_get(
-				Api::getFullUrl( 'balance' ),
-				[
-					'headers' => [
-						'Authorization' => $auth_header,
-					],
-				]
-			);
-
-			$result = wp_remote_retrieve_body( $response );
-
-			return json_decode( $result, true );
-		} catch ( BadRequestError $e ) {
-			$this->error = new WP_Error( 'razorpay_error', $e->getMessage() );
-		} catch ( Requests_Exception $e ) {
-			$this->error = new WP_Error( 'razorpay_error', $e->getMessage() );
-		} catch ( ServerError $e ) {
-			$this->error = new WP_Error( 'razorpay_error', $e->getMessage() );
+			return $this->call_api( 'balance' );
+		} catch ( \Exception $e ) {
+			return [];
 		}
 	}
 

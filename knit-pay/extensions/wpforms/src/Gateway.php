@@ -10,7 +10,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 /**
  * Title: WPForms Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -214,7 +214,7 @@ class Gateway extends WPForms_Payment {
 
 		// Check total charge amount.
 		$amount = wpforms_get_total_payment( $fields );
-		if ( empty( $amount ) || $amount === wpforms_sanitize_amount( 0 ) ) {
+		if ( empty( $amount ) || wpforms_sanitize_amount( 0 ) === $amount ) {
 			$error_title = esc_html__( 'Payment stopped, invalid/empty amount', 'knit-pay-lang' );
 			$errors[]    = $error_title;
 			return;
@@ -270,11 +270,20 @@ class Gateway extends WPForms_Payment {
 			$payment = Plugin::start_payment( $payment );
 			
 			// Build the return URL with hash.
-			$query_args  = 'form_id=' . $form_data['id'] . '&entry_id=' . $entry_id . '&hash=' . wp_hash( $form_data['id'] . ',' . $entry_id );
-			$return_url  = is_ssl() ? 'https://' : 'http://';
-			$return_url .= $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+			$query_args = 'form_id=' . $form_data['id'] . '&entry_id=' . $entry_id . '&hash=' . wp_hash( $form_data['id'] . ',' . $entry_id );
+			$return_url = is_ssl() ? 'https://' : 'http://';
+
+			$server_name = isset( $_SERVER['SERVER_NAME'] ) ?
+				sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) :
+				'';
+			$request_uri = isset( $_SERVER['REQUEST_URI'] ) ?
+				esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) :
+				'';
+
+			$return_url .= $server_name . $request_uri;
+
 			if ( ! empty( $form_data['settings']['ajax_submit'] ) && ! empty( $_SERVER['HTTP_REFERER'] ) ) {
-				$return_url = $_SERVER['HTTP_REFERER'];
+				$return_url = esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) );
 			}
 			
 			$return_url = esc_url_raw(

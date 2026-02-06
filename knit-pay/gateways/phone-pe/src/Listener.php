@@ -5,7 +5,7 @@ use Pronamic\WordPress\Pay\Plugin;
 
 /**
  * Title: PhonePe Webhook Listner
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.96.3.0

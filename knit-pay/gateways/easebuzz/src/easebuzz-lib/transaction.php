@@ -111,7 +111,7 @@ function _transaction( $params, $merchant_key, $salt, $env ) {
 		$postedArray['amount'] = $diff_amount_string;
 
 	} elseif ( strlen( $temp[1] ) == 1 || strlen( $temp[1] ) == 2 ) {
-		   $diff_amount_string = $temp[0] . '.' . $temp[1];
+			$diff_amount_string = $temp[0] . '.' . $temp[1];
 
 	} else {
 		return [
@@ -315,7 +315,7 @@ function _typeValidation( $params, $salt, $env ) {
 }
 
 
-   /*
+	/*
 	* _email_validation method check email format validation
 	*
 	* param string $email - holds the email address.
@@ -620,5 +620,3 @@ function _getReverseHashKey( $response_obj, $s_key ) {
 	// generate reverse hash key using hash function(predefine) and return
 	return strtolower( hash( 'sha512', $reverse_hash ) );
 }
-
-

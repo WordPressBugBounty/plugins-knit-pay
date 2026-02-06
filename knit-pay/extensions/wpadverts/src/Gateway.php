@@ -13,7 +13,7 @@ use Adverts_Html;
 /**
  * Title: WP Adverts Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -78,7 +78,7 @@ class Gateway {
 			}
 
 			$group['modules']['knit_pay'] = [
-				'title'        => __( 'Knit Pay', 'wpadverts' ),
+				'title'        => __( 'Knit Pay', 'knit-pay-lang' ),
 				'text'         => __( "This payment method does not use a predefined payment method for the payment. Some payment providers list all activated payment methods for your account to choose from. Use payment method specific gateways (such as 'Instamojo') to let customers choose their desired payment method at checkout.", 'knit-pay-lang' ),
 				'type'         => '',
 				'plugin'       => $plugin,
@@ -278,7 +278,7 @@ class Gateway {
 		if ( adverts_config( $id . '.custom_title' ) ) {
 			$title = adverts_config( $id . '.custom_title' );
 		} else {
-			$title = __( 'Knit Pay', 'wpadverts' );
+			$title = __( 'Knit Pay', 'knit-pay-lang' );
 		}
 
 		adext_payment_gateway_add(
@@ -301,7 +301,7 @@ class Gateway {
 								'name'        => 'adverts_person',
 								'type'        => 'adverts_field_text',
 								'order'       => 10,
-								'label'       => __( 'Contact Person', 'wpadverts' ),
+								'label'       => __( 'Contact Person', 'knit-pay-lang' ),
 								'is_required' => true,
 								'validator'   => [
 									[ 'name' => 'is_required' ],
@@ -311,7 +311,7 @@ class Gateway {
 								'name'        => 'adverts_email',
 								'type'        => 'adverts_field_text',
 								'order'       => 10,
-								'label'       => __( 'Email', 'wpadverts' ),
+								'label'       => __( 'Email', 'knit-pay-lang' ),
 								'is_required' => true,
 								'validator'   => [
 									[ 'name' => 'is_required' ],
@@ -322,7 +322,7 @@ class Gateway {
 								'name'      => 'adverts_phone',
 								'type'      => 'adverts_field_text',
 								'order'     => 10,
-								'label'     => __( 'Phone Number', 'wpadverts' ),
+								'label'     => __( 'Phone Number', 'knit-pay-lang' ),
 								'validator' => [
 									[
 										'name'   => 'string_length',

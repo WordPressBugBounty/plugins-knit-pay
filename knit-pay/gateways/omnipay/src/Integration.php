@@ -10,7 +10,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Omnipay Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 8.72.0.0
@@ -197,11 +197,15 @@ class Integration extends AbstractGatewayIntegration {
 	}
 	
 	private function get_omnipay_params() {
-		$params             = isset( $this->args['default_parameters'] ) ? $this->args['default_parameters'] : [];
-		$params             = wp_parse_args(
-			$this->omnipay_gateway->getParameters(),
-			$params
-		);
+		$params = isset( $this->args['default_parameters'] ) ? $this->args['default_parameters'] : [];
+
+		if ( ! isset( $this->args['merge_default_parameters'] ) || $this->args['merge_default_parameters'] ) {
+			$params = wp_parse_args(
+				$this->omnipay_gateway->getParameters(),
+				$params
+			);
+		}
+
 		$params['testMode'] = false;
 		return $params;
 	}

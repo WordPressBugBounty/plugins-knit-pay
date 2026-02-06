@@ -77,7 +77,6 @@ class LayerApi {
 				'error' => $e->getMessage(),
 			];
 		}
-
 	}
 
 	public function get_payment_details_by_token( $payment_token_id ) {
@@ -103,7 +102,6 @@ class LayerApi {
 				'error' => $e->getMessage(),
 			];
 		}
-
 	}
 
 	public function get_payment_details( $payment_id ) {
@@ -129,7 +127,6 @@ class LayerApi {
 				'error' => $e->getMessage(),
 			];
 		}
-
 	}
 
 
@@ -139,7 +136,6 @@ class LayerApi {
 			'Content-Type: application/json',
 			'Authorization: Bearer ' . $this->access_key . ':' . $this->secret_key,
 		];
-
 	}
 
 
@@ -195,7 +191,6 @@ class LayerApi {
 				'error_data' => $e->getMessage(),
 			];
 		}
-
 	}
 
 	function http_get( $route ) {

@@ -12,7 +12,7 @@ use Tickera\TC_Gateway_API;
 /**
  * Title: Tickera Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -163,7 +163,7 @@ class Gateway extends TC_Gateway_API {
 		?>
 
 		<div id="<?php echo esc_attr( $this->plugin_name ); ?>"
-			 class="postbox" <?php echo( ! $visible ? 'style="display:none;"' : '' ); ?>>
+			class="postbox" <?php echo( ! $visible ? 'style="display:none;"' : '' ); ?>>
 			<h3><span><?php printf( __( '%s Settings', 'knit-pay-lang' ), $this->admin_name ); ?></span>
 			</h3>
 			<div class="inside">

@@ -9,7 +9,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 /**
  * Title: MotoPress Hotel Booking extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -147,7 +147,6 @@ class Extension extends AbstractPluginIntegration {
 		if ( ! $is_updated ) {
 			$payment->add_note( 'Failed to update status in Hotel Booking Platform' );
 		}
-
 	}
 
 	/**
@@ -196,5 +195,4 @@ class Extension extends AbstractPluginIntegration {
 	public function source_url( $url, Payment $payment ) {
 		return get_edit_post_link( $payment->get_source_id() );
 	}
-
 }

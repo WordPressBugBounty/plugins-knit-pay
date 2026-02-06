@@ -1,7 +1,7 @@
 <?php
 namespace KnitPay\Gateways\Paypal;
 
-use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
+use KnitPay\Gateways\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use KnitPay\Gateways\PaymentMethods;
@@ -13,7 +13,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: PayPal Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.94.0.0
@@ -27,6 +27,8 @@ class Gateway extends Core_Gateway {
 	 */
 	private $api;
 
+	private $config;
+
 	/**
 	 * Constructs and initializes an PayPal gateway
 	 *
@@ -35,6 +37,8 @@ class Gateway extends Core_Gateway {
 	 */
 	public function init( Config $config ) {
 		$this->set_method( self::METHOD_HTTP_REDIRECT );
+		$this->default_currency     = 'USD';
+		$this->supported_currencies = [ 'AUD', 'BRL', 'CAD', 'CNY', 'CZK', 'DKK', 'EUR', 'HKD', 'HUF', 'ILS', 'JPY', 'MYR', 'MXN', 'NZD', 'NOK', 'PHP', 'PLN', 'GBP', 'SGD', 'SEK', 'CHF', 'THB', 'TWD', 'USD' ];
 
 		// Supported features.
 		$this->supports = [
@@ -43,13 +47,15 @@ class Gateway extends Core_Gateway {
 		];
 
 		// Client.
-		$this->api = new API( $config );
+		$this->config = $config;
+		$this->api    = new API( $config );
 
 		$this->register_payment_methods();
 	}
 
 	private function register_payment_methods() {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::PAYPAL ) );
 	}
 
@@ -91,7 +97,7 @@ class Gateway extends Core_Gateway {
 				[
 					'description' => $payment->get_description(),
 					'custom_id'   => $payment->get_id(),
-					'invoice_id'  => $payment->get_source_id(),
+					'invoice_id'  => $this->config->invoice_prefix . $payment->get_source_id(),
 					'amount'      => [
 						'currency_code' => $total_amount->get_currency()->get_alphabetic_code(),
 						'value'         => $total_amount->number_format( null, '.', '' ),
@@ -114,9 +120,14 @@ class Gateway extends Core_Gateway {
 		];
 
 		if ( isset( $shipping_address ) && null !== $shipping_address->get_country_code() ) {
+			$shipping_address_name = '';
+			if ( null !== $shipping_address->get_name() ) {
+				$shipping_address_name = KnitPayUtils::substr_after_trim( $shipping_address->get_name(), 0, 50 );
+			}
+
 			$data['purchase_units'][0]['shipping'] = [
 				'name'          => [
-					'full_name' => KnitPayUtils::substr_after_trim( html_entity_decode( $shipping_address->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 50 ),
+					'full_name' => $shipping_address_name,
 				],
 				'email_address' => $shipping_address->get_email(),
 				'address'       => [
@@ -153,6 +164,12 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 
+		// Don't check payment status again if already checking.
+		if ( get_transient( 'knit_pay_checking_status_' . $payment->get_id() ) ) {
+			return;
+		}
+		set_transient( 'knit_pay_checking_status_' . $payment->get_id(), true, 15 );
+
 		$order_details = $this->api->get_order_details( $payment->get_transaction_id() );
 
 		$note = '<strong>PayPal Order Details:</strong><br><pre>' . print_r( $order_details, true ) . '</pre><br>';
@@ -170,7 +187,11 @@ class Gateway extends Core_Gateway {
 		$payment->add_note( $note );
 
 		if ( isset( $capture_status->details ) ) {
-			return $this->mark_payment_failed( $payment, $capture_status->details[0]->description, $capture_status->details[0]->issue );
+			if ( 'ORDER_ALREADY_CAPTURED' === $capture_status->details[0]->issue ) {
+				$capture_status = $this->api->get_order_details( $payment->get_transaction_id() );
+			} else {
+				return $this->mark_payment_failed( $payment, $capture_status->details[0]->description, $capture_status->details[0]->issue );
+			}
 		} elseif ( isset( $capture_status->message ) ) {
 			return $this->mark_payment_failed( $payment, $capture_status->message, $capture_status->name );
 		}

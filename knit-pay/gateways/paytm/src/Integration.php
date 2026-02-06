@@ -7,7 +7,7 @@ use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
 
 /**
  * Title: Paytm Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 4.9.0
@@ -15,6 +15,7 @@ use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
  */
 class Integration extends AbstractGatewayIntegration {
 	use IntegrationModeTrait;
+
 	/**
 	 * Construct Paytm integration.
 	 *

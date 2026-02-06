@@ -70,7 +70,7 @@ class PaymentRestController extends WP_REST_Controller {
 		if ( ! current_user_can( $post_type->cap->edit_posts ) ) {
 			return new WP_Error(
 				'rest_cannot_read',
-				__( 'Sorry, you are not allowed to read payments as this user.' ),
+				__( 'Sorry, you are not allowed to read payments as this user.', 'knit-pay-lang' ),
 				[ 'status' => rest_authorization_required_code() ]
 			);
 		}
@@ -93,7 +93,7 @@ class PaymentRestController extends WP_REST_Controller {
 				'rest_payment_not_found',
 				\sprintf(
 					/* translators: %s: payment ID */
-					\__( 'Could not find payment with ID `%s`.', 'pronamic_ideal' ),
+					\__( 'Could not find payment with ID `%s`.', 'knit-pay-lang' ),
 					$payment_id
 				),
 				$payment_id
@@ -113,14 +113,32 @@ class PaymentRestController extends WP_REST_Controller {
 		if ( ! empty( $request['id'] ) ) {
 			return new WP_Error(
 				'rest_payment_exists',
-				__( 'Cannot create existing payment.' ),
+				__( 'Cannot create existing payment.', 'knit-pay-lang' ),
 				[ 'status' => 400 ]
 			);
 		}
-		
+
 		try {
 			$json_param = $request->get_params();
 			$req_object = json_decode( wp_json_encode( $json_param ) );
+
+			$config_id = null;
+			if ( property_exists( $req_object, 'config_id' ) ) {
+				$config_id = $req_object->config_id;
+
+				$gateway = Plugin::get_gateway( $config_id );
+				if ( ! $gateway ) {
+					return new WP_Error(
+						'rest_cannot_create',
+						\sprintf(
+							/* translators: %d: Gateway configuration ID */
+							\__( 'Payment failed because gateway configuration with ID `%d` does not exist.', 'knit-pay-lang' ),
+							$config_id
+						),
+						[ 'status' => 500 ]
+					);
+				}
+			}
 			
 			$payment = new Payment();
 			
@@ -132,7 +150,7 @@ class PaymentRestController extends WP_REST_Controller {
 			$payment->set_total_amount( MoneyJsonTransformer::from_json( $req_object->total_amount ) );
 			
 			// Configuration.
-			$payment->config_id = property_exists( $req_object, 'config_id' ) ? $req_object->config_id : null;
+			$payment->config_id = $config_id;
 		
 			$payment = Plugin::start_payment( $payment );
 
@@ -300,10 +318,17 @@ class PaymentRestController extends WP_REST_Controller {
 	 * @return WP_Error|bool
 	 */
 	public function create_item_permissions_check( $request ) {
+		// Check for internal API call nonce
+		$internal_nonce = $request->get_header( 'X-KnitPay-Internal-Nonce' );
+		if ( $internal_nonce && wp_verify_nonce( $internal_nonce, 'knit_pay_internal_api' ) ) {
+			return true;
+		}
+
+		// Existing permission check for other cases
 		if ( ! empty( $request['id'] ) ) {
 			return new WP_Error(
 				'rest_payment_exists',
-				__( 'Cannot create existing payment.' ),
+				__( 'Cannot create existing payment.', 'knit-pay-lang' ),
 				[ 'status' => 400 ]
 			);
 		}
@@ -313,7 +338,7 @@ class PaymentRestController extends WP_REST_Controller {
 		if ( ! current_user_can( $post_type->cap->edit_posts ) ) {
 			return new WP_Error(
 				'rest_cannot_create',
-				__( 'Sorry, you are not allowed to create payments as this user.' ),
+				__( 'Sorry, you are not allowed to create payments as this user.', 'knit-pay-lang' ),
 				[ 'status' => rest_authorization_required_code() ]
 			);
 		}
@@ -328,7 +353,14 @@ add_filter(
 	function ( $url, $payment ) {
 		// Set Redirect URL if defined in REST API.
 		if ( $payment->get_meta( 'rest_redirect_url' ) ) {
-			return $payment->get_meta( 'rest_redirect_url' );
+			$redirect_url = add_query_arg(
+				[
+					'kp_payment_id' => $payment->get_id(),
+				],
+				$payment->get_meta( 'rest_redirect_url' )
+			);
+
+			return $redirect_url;
 		}
 
 		return $url;
@@ -343,10 +375,13 @@ add_action(
 		// Trigger webhook.
 		if ( $payment->get_meta( 'rest_notify_url' ) ) {
 			$notify_url = $payment->get_meta( 'rest_notify_url' );
-			$response   = Http::post(
+
+			$payment_object = $payment->get_json();
+			unset( $payment_object->status );
+			$response = Http::post(
 				$notify_url,
 				[
-					'body' => wp_json_encode( $payment->get_json() ),
+					'body' => wp_json_encode( $payment_object ),
 				]
 			);
 		}

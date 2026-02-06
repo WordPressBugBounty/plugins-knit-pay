@@ -10,7 +10,7 @@ use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Stripe Gateway
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
  * @version 8.96.11.0
@@ -45,6 +45,7 @@ class Gateway extends Core_Gateway {
 		// ref: https://docs.stripe.com/api/payment_methods/object
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::ALIPAY ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CREDIT_CARD ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::IDEAL ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::BANCONTACT ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::BLIK ) );
@@ -221,7 +222,7 @@ class Gateway extends Core_Gateway {
 		];
 
 		$customer      = $payment->get_customer();
-		$customer_name = KnitPayUtils::substr_after_trim( html_entity_decode( $customer->get_name(), ENT_QUOTES, 'UTF-8' ), 0, 45 );
+		$customer_name = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 45 );
 		if ( ! empty( $customer_name ) ) {
 			$notes = [
 				'customer_name' => $customer_name,

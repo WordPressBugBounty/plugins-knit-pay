@@ -17,7 +17,7 @@ if ( ! defined( 'myCRED_VERSION' ) ) {
 /**
  * Title: myCRED buyCRED Gateway
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -135,7 +135,6 @@ class Gateway extends myCRED_Payment_Gateway {
 				'result' => 'fail',
 			];
 		}
-
 	}
 
 	/**
@@ -172,7 +171,6 @@ class Gateway extends myCRED_Payment_Gateway {
 		echo $this->checkout_cancel();
 
 		echo $this->checkout_footer();
-
 	}
 
 	/**
@@ -187,7 +185,7 @@ class Gateway extends myCRED_Payment_Gateway {
 		?>
 <div class="row">
 	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-		<h3><?php _e( 'Details', 'mycred' ); ?></h3>
+		<h3><?php _e( 'Details', 'knit-pay-lang' ); ?></h3>
 		<div class="form-group">
 			<label for="<?php echo $this->field_id( 'title' ); ?>"><?php _e( 'Title', 'knit-pay-lang' ); ?></label>
 			<input type="text" name="<?php echo $this->field_name( 'title' ); ?>" id="<?php echo $this->field_id( 'title' ); ?>" value="<?php echo esc_attr( $prefs['title'] ); ?>" class="form-control" />
@@ -195,7 +193,7 @@ class Gateway extends myCRED_Payment_Gateway {
 		<div class="form-group">
 			<label for="<?php echo $this->field_id( 'payment_description' ); ?>"><?php _e( 'Payment Description', 'knit-pay-lang' ); ?></label>
 			<input type="text" name="<?php echo $this->field_name( 'payment_description' ); ?>" id="<?php echo $this->field_id( 'payment_description' ); ?>" value="<?php echo esc_attr( $prefs['payment_description'] ); ?>" class="form-control" />
-			<small><?php echo sprintf( __( 'Available tags: %s', 'knit-pay-lang' ), sprintf( '<code>%s</code>', '{transaction_id}, {point_count}' ) ); ?></small>
+			<small><?php printf( __( 'Available tags: %s', 'knit-pay-lang' ), sprintf( '<code>%s</code>', '{transaction_id}, {point_count}' ) ); ?></small>
 		</div>
 		<div class="form-group">
 			<label for="<?php echo $this->field_id( 'config_id' ); ?>"><?php _e( 'Configuration', 'knit-pay-lang' ); ?></label>
@@ -204,20 +202,20 @@ class Gateway extends myCRED_Payment_Gateway {
 
 		</div>
 		<div class="form-group">
-			<label for="<?php echo $this->field_id( 'logo_url' ); ?>"><?php _e( 'Logo URL', 'mycred' ); ?></label>
+			<label for="<?php echo $this->field_id( 'logo_url' ); ?>"><?php _e( 'Logo URL', 'knit-pay-lang' ); ?></label>
 			<input type="text" name="<?php echo $this->field_name( 'logo_url' ); ?>" id="<?php echo $this->field_id( 'logo_url' ); ?>" value="<?php echo esc_attr( $prefs['logo_url'] ); ?>" class="form-control" />
 		</div>
 	</div>
 	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-		<h3><?php _e( 'Setup', 'mycred' ); ?></h3>
+		<h3><?php _e( 'Setup', 'knit-pay-lang' ); ?></h3>
 		<div class="form-group">
-			<label for="<?php echo $this->field_id( 'currency' ); ?>"><?php _e( 'Currency', 'mycred' ); ?></label>
+			<label for="<?php echo $this->field_id( 'currency' ); ?>"><?php _e( 'Currency', 'knit-pay-lang' ); ?></label>
 
 			<?php $this->currencies_dropdown( 'currency', 'mycred-gateway-knit_pay-currency' ); ?>
 
 		</div>
 		<div class="form-group">
-			<label><?php _e( 'Exchange Rates', 'mycred' ); ?></label>
+			<label><?php _e( 'Exchange Rates', 'knit-pay-lang' ); ?></label>
 
 			<?php $this->exchange_rate_setup(); ?>
 
@@ -260,7 +258,6 @@ class Gateway extends myCRED_Payment_Gateway {
 		$new_data['exchange'] = $data['exchange'];
 
 		return $new_data;
-
 	}
 
 	/**
@@ -274,7 +271,7 @@ class Gateway extends myCRED_Payment_Gateway {
 		$configurations = Plugin::get_config_select_options( $this->id );
 
 		echo '<select name="' . $this->field_name( $name ) . '" id="' . $this->field_id( $name ) . '" >';
-		echo '<option value="">' . __( 'Select', 'mycred' ) . '</option>';
+		echo '<option value="">' . __( 'Select', 'knit-pay-lang' ) . '</option>';
 		foreach ( $configurations as $key => $name ) {
 			echo '<option value="' . $key . '"';
 			if ( isset( $this->prefs[ $name ] ) && $this->prefs[ $name ] == $key ) {
@@ -284,6 +281,4 @@ class Gateway extends myCRED_Payment_Gateway {
 		}
 		echo '</select>';
 	}
-
-
 }

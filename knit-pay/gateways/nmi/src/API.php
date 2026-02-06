@@ -14,30 +14,30 @@ class API {
 	}
 
 	function setOrder( Payment $payment ) {
-			$this->order['orderid']          = $payment->get_transaction_id();
-			$this->order['orderdescription'] = $payment->get_description();
-			$this->order['tax']              = 0;
-			$this->order['shipping']         = 0;
-			$this->order['ponumber']         = $payment->get_order_id();
-			$this->order['ipaddress']        = $payment->get_customer()->get_ip_address();
+		$this->order['orderid']          = $payment->get_transaction_id();
+		$this->order['orderdescription'] = $payment->get_description();
+		$this->order['tax']              = 0;
+		$this->order['shipping']         = 0;
+		$this->order['ponumber']         = $payment->get_order_id();
+		$this->order['ipaddress']        = $payment->get_customer()->get_ip_address();
 	}
 
 	function setBilling( Payment $payment ) {
-			$billing_address = $payment->get_billing_address();
+		$billing_address = $payment->get_billing_address();
 
-			$this->billing['firstname'] = $payment->get_customer()->get_name()->get_first_name();
-			$this->billing['lastname']  = $payment->get_customer()->get_name()->get_last_name();
-			$this->billing['company']   = $billing_address->get_company_name();
-			$this->billing['address1']  = $billing_address->get_line_1();
-			$this->billing['address2']  = $billing_address->get_line_2();
-			$this->billing['city']      = $billing_address->get_city();
-			$this->billing['state']     = $billing_address->get_region();
-			$this->billing['zip']       = $billing_address->get_postal_code();
-			$this->billing['country']   = $billing_address->get_country_code();
-			$this->billing['phone']     = $billing_address->get_phone();
-			// $this->billing['fax']       = $fax;
-			$this->billing['email']   = $payment->get_email();
-			$this->billing['website'] = home_url( '/' );
+		$this->billing['firstname'] = $payment->get_customer()->get_name()->get_first_name();
+		$this->billing['lastname']  = $payment->get_customer()->get_name()->get_last_name();
+		$this->billing['company']   = $billing_address->get_company_name();
+		$this->billing['address1']  = $billing_address->get_line_1();
+		$this->billing['address2']  = $billing_address->get_line_2();
+		$this->billing['city']      = $billing_address->get_city();
+		$this->billing['state']     = $billing_address->get_region();
+		$this->billing['zip']       = $billing_address->get_postal_code();
+		$this->billing['country']   = $billing_address->get_country_code();
+		$this->billing['phone']     = $billing_address->get_phone();
+		// $this->billing['fax']       = $fax;
+		$this->billing['email']   = $payment->get_email();
+		$this->billing['website'] = home_url( '/' );
 	}
 
 	// Transaction Functions

@@ -110,7 +110,6 @@ class Instamojo {
 		if ( $errors ) {
 			throw new ValidationException( 'Validation Error Occured with following Errors : ', $errors, $result );
 		}
-
 	}
 
 	public function create_payment_request( $data ) {
@@ -168,7 +167,6 @@ class Instamojo {
 		}
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 		throw new Exception( "Unable to Fetch Payment Request id:'$id' Server Responds " . print_R( $result, true ) );
-
 	}
 
 	public function get_payment_request_by_id( $id ) {
@@ -187,7 +185,6 @@ class Instamojo {
 		}
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 		throw new Exception( "Unable to Fetch Payment Request id:'$id' Server Responds " . print_R( $result, true ) );
-
 	}
 
 	public function get_payment_by_id( $id ) {
@@ -207,7 +204,6 @@ class Instamojo {
 		}
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 		throw new Exception( "Unable to Fetch Payment id:'$id' Server Responds " . print_R( $result, true ) );
-
 	}
 
 	public function get_payment_status( $payment_id, $payments ) {

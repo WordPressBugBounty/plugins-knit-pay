@@ -7,7 +7,7 @@ use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
 
 /**
  * Title: SBIePay Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 5.7.0
@@ -22,6 +22,7 @@ class Integration extends AbstractGatewayIntegration {
 	const REST_ROUTE_NAMESPACE = 'knit-pay/sbiepay/v1';
 
 	use IntegrationModeTrait;
+
 	/**
 	 * Construct SBIePay integration.
 	 *

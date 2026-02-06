@@ -6,6 +6,10 @@ use Pronamic\WordPress\Pay\Core\PaymentMethod;
 add_filter(
 	'knit_pay_add_payment_methods',
 	function ( PaymentMethodsCollection $payment_methods ) {
+		if ( ! get_option( 'pronamic_pay_active_payment_methods' ) ) {
+			return $payment_methods;
+		}
+
 		$active_payment_methods = PaymentMethods::get_active_payment_methods();
 		foreach ( $active_payment_methods as $payment_method_id ) {
 		

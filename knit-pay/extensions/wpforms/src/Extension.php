@@ -9,7 +9,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 /**
  * Title: WPForms extension
  * Description:
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  * Company: Knit Pay
  *
  * @author  knitpay
@@ -167,7 +167,7 @@ class Extension extends AbstractPluginIntegration {
 	 * Referred from: wpforms-paypal-standard/src/Plugin.php method:process_ipn
 	 * Send email notification for the completed payment.
 	 *
-	 * @param int                                $entry_id    Entry ID.
+	 * @param int $entry_id    Entry ID.
 	 * @param $wpf_payment WPForms Payment object.
 	 * @return void
 	 */
@@ -176,7 +176,7 @@ class Extension extends AbstractPluginIntegration {
 		$form_data    = wpforms()->obj( 'form' )->get( $wpf_payment->form_id, [ 'content_only' => true ] );
 
 		if ( empty( $form_data['settings']['notifications'] ) ) {
-			return $form_data;
+			return;
 		}
 
 		foreach ( $form_data['settings']['notifications'] as $id => $notification ) {
@@ -250,5 +250,4 @@ class Extension extends AbstractPluginIntegration {
 			admin_url( 'admin.php' ) 
 		);
 	}
-
 }

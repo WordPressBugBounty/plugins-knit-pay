@@ -3,12 +3,12 @@
 namespace KnitPay\Gateways\Stripe\Connect;
 
 use KnitPay\Gateways\Stripe\Integration as Stripe_Integration;
-use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use KnitPay\Gateways\PaymentMethods;
 use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Stripe Connect Integration
- * Copyright: 2020-2025 Knit Pay
+ * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
  * @version 8.96.11.0
@@ -16,7 +16,7 @@ use KnitPay\Utils as KnitPayUtils;
  */
 class Integration extends Stripe_Integration {
 	const KNIT_PAY_STRIPE_CONNECT_PLATFORM_URL       = 'https://www.knitpay.org/stripe-connect-server/';
-	const STRIPE_CONNECT_APPLICATION_FEES_PERCENTAGE = 0.75;
+	const STRIPE_CONNECT_APPLICATION_FEES_PERCENTAGE = 0.35;
 
 	private $config;
 
@@ -85,9 +85,9 @@ class Integration extends Stripe_Integration {
 				'type'     => 'custom',
 				'title'    => 'Stripe Connect',
 				'callback' => function () {
-					echo '<p><h1>' . __( 'How it works?' ) . '</h1></p>' .
-					'<p>' . __( 'Stripe Connect - Knit Pay integration enables Indian merchants to accept payments using their Stripe account without purchasing the "Knit Pay - Stripe" Premium addon.' ) . '</p>' .
-					'<p>' . __( '<strong>The free Stripe Connect integration includes an additional ' . self::STRIPE_CONNECT_APPLICATION_FEES_PERCENTAGE . '% fee above the Stripe pricing for processing payment.</strong>' ) . '</p>';
+					echo '<p><h1>' . __( 'How it works?', 'knit-pay-lang' ) . '</h1></p>' .
+					'<p>' . __( 'Stripe Connect - Knit Pay integration enables Indian merchants to accept payments using their Stripe account without purchasing the "Knit Pay - Stripe" Premium addon.', 'knit-pay-lang' ) . '</p>' .
+					'<p>' . __( '<strong>The free Stripe Connect integration includes an additional ' . self::STRIPE_CONNECT_APPLICATION_FEES_PERCENTAGE . '% fee above the Stripe pricing for processing payment.</strong>', 'knit-pay-lang' ) . '</p>';
 				},
 			];
 		}
