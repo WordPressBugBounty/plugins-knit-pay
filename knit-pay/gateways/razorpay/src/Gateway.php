@@ -282,28 +282,33 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 
+		// @see: https://razorpay.com/docs/api/orders/create
 		$razorpay_order_data = [
-			'receipt'         => $payment->key . '_' . $payment->get_id(),
 			'amount'          => $amount->get_minor_units()->format( 0, '.', '' ),
 			'currency'        => $payment_currency,
+			'receipt'         => $payment->key . '_' . $payment->get_id(),
 			'notes'           => $this->get_notes( $payment ),
 			'payment_capture' => 1, // TODO: 1 for auto capture. give admin option to set auto capture. do re-search to see if razorpay has deprecate it or not.
 		];
 
 		if ( 'in-import-flow' === $this->config->country ) {
 			$customer_address = ( null === $payment->get_shipping_address() ) ? $payment->get_billing_address() : $payment->get_shipping_address();
+			$customer_name    = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 45 );
+			$customer_email   = $customer->get_email();
+			$customer_phone   = $customer_address->get_phone();
 
 			if ( null === $customer_address ) {
 				throw new \Exception( 'Customer address is required for Razorpay Singapore.' );
 			}
 
+			// Create Customer.
 			$razorpay_customer = $this->call_api(
 				'customer',
 				'create',
 				[
-					'name'          => KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 45 ),
-					'email'         => $customer->get_email(),
-					'contact'       => $payment->get_billing_address()->get_phone(),
+					'name'          => $customer_name,
+					'email'         => $customer_email,
+					'contact'       => $customer_phone,
 					'fail_existing' => false,
 				]
 			);
@@ -312,9 +317,9 @@ class Gateway extends Core_Gateway {
 			$razorpay_order_data['customer_id'] = $razorpay_customer->id;
 
 			$razorpay_order_data['customer_details'] = [
-				'name'             => KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 45 ),
-				'contact'          => $payment->get_billing_address()->get_phone(),
-				'email'            => $customer->get_email(),
+				'name'             => $customer_name,
+				'email'            => $customer_email,
+				'contact'          => $customer_phone,
 				'shipping_address' => [
 					'line1'   => $customer_address->get_line_1(),
 					'line2'   => $customer_address->get_line_2(),
@@ -663,10 +668,10 @@ class Gateway extends Core_Gateway {
 
 			$className = 'Razorpay\\Api\\' . ucwords( $entity );
 			if ( class_exists( $className ) ) {
-				$entity   = new $className();
-				$response = $entity->$method( $args );
+				$entity_obj = new $className();
+				$response   = $entity_obj->$method( $args );
 			} else {
-				// For custom endpoints not available in SDK, use Request class directly
+				// For custom endpoints not available in SDK, use Request class directly.
 				$request  = new \Razorpay\Api\Request();
 				$response = $request->request( 'GET', $entity, $args );
 			}

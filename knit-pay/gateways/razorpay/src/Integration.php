@@ -75,7 +75,7 @@ class Integration extends IntegrationOAuthClient {
 		// Enqueue WordPress media scripts.
 		wp_enqueue_media();
 
-		// Get plugin URL for Razorpay gateway directory
+		// Get plugin URL for Razorpay gateway directory.
 		$plugin_url = plugins_url( '', __FILE__ );
 
 		// Enqueue custom JavaScript for media uploader.
@@ -208,20 +208,6 @@ class Integration extends IntegrationOAuthClient {
 		}
 		// TODO: Add support for payment link.
 
-		// Country.
-		$fields[] = [
-			'section'     => 'advanced',
-			'meta_key'    => '_pronamic_gateway_razorpay_country',
-			'title'       => __( 'Country', 'knit-pay-lang' ),
-			'type'        => 'select',
-			'options'     => [
-				'in'             => 'India',
-				'in-import-flow' => 'Non-Indian (Import flow)',
-			],
-			'default'     => 'in',
-			'description' => __( 'Import Flow is a payment solution designed for International (non-Indian) businesses to accept payments from Indian customers without any additional paperwork or registration.', 'knit-pay-lang' ),
-		];
-
 		// Merchant/Company Name.
 		$fields[] = [
 			'section'  => 'general',
@@ -244,14 +230,30 @@ class Integration extends IntegrationOAuthClient {
 		];
 
 		// Checkout Mode.
+		if ( count( $checkout_modes_options ) > 1 ) {
+			$fields[] = [
+				'section'  => 'general',
+				'filter'   => FILTER_SANITIZE_NUMBER_INT,
+				'meta_key' => '_pronamic_gateway_razorpay_checkout_mode',
+				'title'    => __( 'Checkout Mode', 'knit-pay-lang' ),
+				'type'     => 'select',
+				'options'  => $checkout_modes_options,
+				'default'  => Config::CHECKOUT_STANDARD_MODE,
+			];
+		}
+
+		// Country.
 		$fields[] = [
-			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_NUMBER_INT,
-			'meta_key' => '_pronamic_gateway_razorpay_checkout_mode',
-			'title'    => __( 'Checkout Mode', 'knit-pay-lang' ),
-			'type'     => 'select',
-			'options'  => $checkout_modes_options,
-			'default'  => Config::CHECKOUT_STANDARD_MODE,
+			'section'     => 'general',
+			'meta_key'    => '_pronamic_gateway_razorpay_country',
+			'title'       => __( 'Country', 'knit-pay-lang' ),
+			'type'        => 'select',
+			'options'     => [
+				'in'             => 'India',
+				'in-import-flow' => 'Non-Indian (Import flow)',
+			],
+			'default'     => 'in',
+			'description' => __( 'Import Flow is a payment solution designed for International (non-Indian) businesses to accept payments from Indian customers without any additional paperwork or registration.', 'knit-pay-lang' ),
 		];
 
 		// Transaction Fees Percentage.
@@ -308,7 +310,7 @@ class Integration extends IntegrationOAuthClient {
 				/* translators: %s: Razorpay */
 				__(
 					'Copy the Webhook URL to the %s dashboard to receive automatic transaction status updates.',
-					'knit-pay'
+					'knit-pay-lang'
 				),
 				__( 'Razorpay', 'knit-pay-lang' )
 			),
@@ -323,7 +325,7 @@ class Integration extends IntegrationOAuthClient {
 			'tooltip'  =>
 			__(
 				'Create a new webhook secret. This can be a random string, and you don\'t have to remember it. Do not use your password or Key Secret here.',
-				'knit-pay'
+				'knit-pay-lang'
 			),
 		];
 
