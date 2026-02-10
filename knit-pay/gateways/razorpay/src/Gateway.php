@@ -77,6 +77,7 @@ class Gateway extends Core_Gateway {
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::DEBIT_CARD ) );
 		$this->register_payment_method( new PaymentMethod( PaymentMethods::NET_BANKING ) );
+		$this->register_payment_method( new PaymentMethod( PaymentMethods::FPX ) );
 
 		// Register Recurring Payment Methods.
 		$payment_method_credit_card = new PaymentMethod( PaymentMethods::CREDIT_CARD );

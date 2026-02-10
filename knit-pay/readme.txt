@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.2
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 9.0.2.1
+Stable tag: 9.0.2.2
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, PayPal, Razorpay, and SSLCommerz, with over 100 WordPress plugins.
@@ -54,7 +54,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * ICICI Eazypay Payment Gateway
 * SBIePay/SBI Bank Payment Gateway
 * Get ePay
-* Razorpay Pro (Integration using API Keys)
+* Razorpay Pro | Curlec (Integration using API Keys)
 * PhonePe Business QR
 * Paytm for Business QR
 * BharatPe QR

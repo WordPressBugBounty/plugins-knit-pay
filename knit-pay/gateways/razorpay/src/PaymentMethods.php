@@ -29,6 +29,8 @@ class PaymentMethods extends KP_PaymentMethods {
 			case self::CARD:
 			case self::AMERICAN_EXPRESS:
 				return 'card';
+			case self::FPX:
+				return 'fpx';
 			default:
 				return '';
 		}
@@ -43,7 +45,7 @@ class PaymentMethods extends KP_PaymentMethods {
 	 */
 	public static function get_methods( $payment_method ) {
 		if ( ! is_scalar( $payment_method ) ) {
-			return '[]';
+			return [];
 		}
 
 		// @see: https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/integration-steps/#2-test-integration
@@ -57,6 +59,7 @@ class PaymentMethods extends KP_PaymentMethods {
 			'bank_transfer' => false,
 			'emandate'      => false,
 			'paylater'      => false,
+			'fpx'           => false,
 		];
 
 		switch ( $payment_method ) {
@@ -81,6 +84,9 @@ class PaymentMethods extends KP_PaymentMethods {
 			case self::AMERICAN_EXPRESS:
 				$methods['card'] = true;
 				$methods['emi']  = true;
+				break;
+			case self::FPX:
+				$methods['fpx'] = true;
 				break;
 			default:
 				$methods = [];

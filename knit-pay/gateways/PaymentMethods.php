@@ -21,4 +21,6 @@ class PaymentMethods extends Core_PaymentMethods {
 	const NET_BANKING = 'net_banking';
 
 	const SODEXO = 'sodexo';
+
+	const FPX = 'fpx';
 }
