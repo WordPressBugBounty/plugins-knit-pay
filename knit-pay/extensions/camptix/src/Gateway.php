@@ -492,7 +492,7 @@ class Gateway extends CampTix_Payment_Method {
 		
 		$transaction_id = $camptix->get_post_meta_from_payment_token( $payment_token, 'tix_transaction_id' );
 		$reason         = filter_input( INPUT_POST, 'tix_refund_request_reason', FILTER_SANITIZE_STRING );
-		
+
 		$result = [
 			'status'                     => CampTix_Plugin::PAYMENT_STATUS_REFUND_FAILED,
 			'transaction_id'             => $transaction_id,

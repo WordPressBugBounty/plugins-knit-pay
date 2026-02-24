@@ -2,9 +2,9 @@
 Contributors: knitpay, GautamMKGarg
 Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.2
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 9.0.2.2
+Stable tag: 9.2.1.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, PayPal, Razorpay, and SSLCommerz, with over 100 WordPress plugins.
@@ -94,6 +94,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * eSewa
 * Paddle
 * Revolut
+* Pesapal
 
 = Indian Payment Gateways (Contact us for this premium addon.) =
 * JioPay
@@ -157,7 +158,6 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Afterpay
 * Billplz
 * Fawry
-* Pesapal
 * JazzCash
 * PayHere
 * OnePay
@@ -193,6 +193,13 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * AsiaPay
 * Paymob
 * Dodo Payments
+* Kashier
+* PayTabs
+* PayLetter
+* PaymentWall
+* Toss
+* 2c2p
+* esPay
 * and many more...
 
 = Crypto Currencies Payment Gateways (Contact us for this premium addon.) =
@@ -208,6 +215,10 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * TripleA
 * Crypto.com Pay
 * MyCryptoCheckout
+* CryptoCloud
+* Lyzi
+* BTCPay Server
+* DePay
 * and many more...
 
 = Other Gateways (Contact us for this premium addon.) =
@@ -236,7 +247,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Gravity Forms
 * WPForms Pro(Try it for free with **Knit Pay - Pro**)
 * Formidable Forms (Try it for free with **Knit Pay - Pro**)
-* Fluent Forms Pro (Try it for free with **Knit Pay - Pro**)
+* Fluent Forms (Try it for free with **Knit Pay - Pro**)
 * WS Form (Contact us for this premium addon.)
 * Everest Forms (Contact us for this premium addon.)
 * Caldera Forms (Contact us for this premium addon.)
@@ -285,10 +296,10 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * WP Travel Engine 
 * Travel Tour Booking by GoodLayers | TourMaster
 * WP Travel
+* BA Book Everything (Try it for free with **Knit Pay - Pro**)
 * Hotel Booking Lite By MotoPress (Try it for free with **Knit Pay - Pro**)
 * WP Hotel Booking (Contact us for this premium addon.)
 * WP Hotelier (Contact us for this premium addon.)
-* BA Book Everything (Contact us for this premium addon.)
 * Chauffeur Taxi Booking System (Contact us for this premium addon.)
 * WP Booking System (Contact us for this premium addon.)
 * WP Rentals (Contact us for this premium addon.)

@@ -51,7 +51,6 @@ class Config extends GatewayConfig {
 
 			if ( $reflection_destination->hasProperty( $property_name ) ) {
 				$destination_property = $reflection_destination->getProperty( $property_name );
-				$destination_property->setAccessible( true );
 
 				$source_property = $property->getValue( $source );
 				$destination_property->setValue( $this, $source_property );

@@ -206,6 +206,7 @@ class Integration extends AbstractGatewayIntegration {
 			);
 		}
 
+		unset($params['testMode']);
 		$params['testMode'] = false;
 		return $params;
 	}

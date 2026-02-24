@@ -199,6 +199,8 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		if ( $this->is_auth_basic_enabled() ) {
 			$this->create_basic_connection( $config_id );
 
+			$this->save_child_config( $config_id );
+
 			$this->configure_webhook( $config_id );
 			return;
 		}
@@ -214,6 +216,8 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			self::clear_config( $config_id );
 			return;
 		}
+
+		$this->save_child_config( $config_id );
 
 		$this->configure_webhook( $config_id );
 	}
@@ -334,6 +338,8 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 
 		// Update active payment methods.
 		PaymentMethods::update_active_payment_methods();
+
+		$this->save_child_config( $gateway_id );
 
 		$this->configure_webhook( $gateway_id );
 
@@ -462,6 +468,10 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	}
 
 	protected function create_basic_connection( $config_id ) {
+		return;
+	}
+
+	protected function save_child_config( $config_id ) {
 		return;
 	}
 

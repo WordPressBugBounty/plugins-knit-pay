@@ -14,12 +14,14 @@ use Exception;
  * @author Knit Pay
  */
 class Utils {
-	public static function get_country_name( ?Country $country ) {
-		if ( ! isset( $country ) ) {
+	public static function get_country_name( $country ) {
+		if ( empty( $country ) ) {
 			return '';
-		}
-
-		if ( ! empty( $country->get_name() ) ) {
+		} elseif ( is_string( $country ) && strlen( $country ) == 2 ) {
+			$country_obj = new Country();
+			$country_obj->set_code( $country );
+			$country = $country_obj;
+		} elseif ( ! empty( $country->get_name() ) ) {
 			return $country->get_name();
 		}
 		
@@ -280,16 +282,31 @@ class Utils {
 		}
 	}
 
-	public static function get_state_name( ?Region $region, ?Country $country ) {
-		if ( null === $region ) {
+	/**
+	 * Get the state name from the state code and country code.
+	 */
+	public static function get_state_name( $region, $country ) {
+		if ( empty( $region ) ) {
 			return '';
-		} elseif ( ! function_exists( 'WC' ) ) {
-			return $region->get_code();
-		} elseif ( null === $country ) {
-			return $region->get_code();
+		} elseif ( $region instanceof Region ) {
+			$state_code = empty( $region->get_code() ) ? $region->get_value() : $region->get_code();
+		} elseif ( is_string( $region ) ) {
+			$state_code = $region;
+		} else {
+			return '';
 		}
-		$country_code = $country->get_code();
-		$state_code   = empty( $region->get_code() ) ? $region->get_value() : $region->get_code();
+
+		if ( empty( $country ) ) {
+			return $state_code;
+		} elseif ( $country instanceof Country ) {
+			$country_code = $country->get_code();
+		} elseif ( is_string( $country ) ) {
+			$country_code = $country;
+		}
+
+		if ( ! function_exists( 'WC' ) ) {
+			return $state_code;
+		}
 
 		$countries      = WC()->countries; // Get an instance of the WC_Countries Object
 		$country_states = $countries->get_states( $country_code ); // Get the states array for the specific country
@@ -370,8 +387,10 @@ class Utils {
 		if ( empty( $config_id ) && wp_get_referer() ) {
 			$referer_parameter = [];
 			$referer_url       = wp_parse_url( wp_get_referer() );
-			parse_str( $referer_url['query'], $referer_parameter );
-			$config_id = isset( $referer_parameter['post'] ) ? $referer_parameter['post'] : 0;
+			if ( isset( $referer_url['query'] ) ) {
+				parse_str( $referer_url['query'], $referer_parameter );
+				$config_id = isset( $referer_parameter['post'] ) ? $referer_parameter['post'] : 0;
+			}
 		}
 
 		// Try to get from request url, eg "wp-json/knit-pay/v1/gateways/8808/admin".

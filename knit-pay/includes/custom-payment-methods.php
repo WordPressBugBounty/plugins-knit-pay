@@ -31,7 +31,7 @@ add_filter(
 		$payment_methods['paytm']       = 'Paytm';
 		$payment_methods['debit_card']  = 'Debit Card';
 		$payment_methods['net_banking'] = 'NetBanking';
-		$payment_methods['fpx'] = 'FPX';
+		$payment_methods['fpx']         = 'FPX';
 	
 		$payment_methods['ebs']           = 'EBS';
 		$payment_methods['flutterwave']   = 'Flutter Wave';

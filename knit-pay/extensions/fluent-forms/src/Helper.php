@@ -2,12 +2,12 @@
 
 namespace KnitPay\Extensions\FluentForms;
 
+use FluentForm\App\Modules\Payments\PaymentHelper;
+use KnitPay\Utils;
 use Pronamic\WordPress\Pay\Address;
 use Pronamic\WordPress\Pay\AddressHelper;
 use Pronamic\WordPress\Pay\ContactName;
 use Pronamic\WordPress\Pay\CustomerHelper;
-use KnitPay\Utils;
-use FluentFormPro\Payments\PaymentHelper;
 
 /**
  * Title: Fluent Forms Helper

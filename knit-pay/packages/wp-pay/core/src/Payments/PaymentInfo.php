@@ -367,7 +367,7 @@ abstract class PaymentInfo {
 	 * @param PaymentLines|null $lines Payment lines.
 	 * @return void
 	 */
-	public function set_lines( PaymentLines $lines = null ) {
+	public function set_lines( ?PaymentLines $lines = null ) {
 		$this->lines = $lines;
 	}
 
@@ -395,7 +395,7 @@ abstract class PaymentInfo {
 	 * @param Money|null $shipping_amount Money object.
 	 * @return void
 	 */
-	public function set_shipping_amount( Money $shipping_amount = null ) {
+	public function set_shipping_amount( ?Money $shipping_amount = null ) {
 		$this->shipping_amount = $shipping_amount;
 	}
 

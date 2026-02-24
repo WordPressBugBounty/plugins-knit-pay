@@ -21,6 +21,6 @@ class LearnPressDependency extends Dependency {
 	 * @return bool True if dependency is met, false otherwise.
 	 */
 	public function is_met() {
-		return \class_exists( '\LearnPress' ) && ( version_compare( LEARNPRESS_VERSION, '4.2' ) >= 0 );
+		return defined( 'LEARNPRESS_VERSION' ) && ( version_compare( LEARNPRESS_VERSION, '4.2' ) >= 0 );
 	}
 }

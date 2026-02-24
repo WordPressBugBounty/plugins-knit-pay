@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v5.0.15",
-            "version_normalized": "5.0.15.0",
+            "version": "v5.0.16",
+            "version_normalized": "5.0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "d5263d6ffa91dc0d0d39b1df54de1e9bb2091364"
+                "reference": "d8ae822a35e7431137e860ee60eceedaa745e4d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/d5263d6ffa91dc0d0d39b1df54de1e9bb2091364",
-                "reference": "d5263d6ffa91dc0d0d39b1df54de1e9bb2091364",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/d8ae822a35e7431137e860ee60eceedaa745e4d1",
+                "reference": "d8ae822a35e7431137e860ee60eceedaa745e4d1",
                 "shasum": ""
             },
             "require": {
@@ -20,12 +20,12 @@
                 "php": ">=7.2"
             },
             "require-dev": {
-                "automattic/jetpack-changelogger": "^6.0.12",
+                "automattic/jetpack-changelogger": "^6.0.14",
                 "automattic/phpunit-select-config": "^1.0.3",
                 "composer/composer": "^2.2",
                 "yoast/phpunit-polyfills": "^4.0.0"
             },
-            "time": "2025-12-15T11:22:11+00:00",
+            "time": "2026-02-16T10:33:15+00:00",
             "type": "composer-plugin",
             "extra": {
                 "class": "Automattic\\Jetpack\\Autoloader\\CustomAutoloaderPlugin",
@@ -64,7 +64,7 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.15"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.16"
             },
             "install-path": "../automattic/jetpack-autoloader"
         },
@@ -622,17 +622,17 @@
         },
         {
             "name": "iyzico/iyzipay-php",
-            "version": "v2.0.59",
-            "version_normalized": "2.0.59.0",
+            "version": "v2.0.60",
+            "version_normalized": "2.0.60.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/iyzico/iyzipay-php.git",
-                "reference": "eccfa97465d78143dbe112886baeaf863619c074"
+                "reference": "fda153102f4dc9ffdebc72a6ab47c83123e8333e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/iyzico/iyzipay-php/zipball/eccfa97465d78143dbe112886baeaf863619c074",
-                "reference": "eccfa97465d78143dbe112886baeaf863619c074",
+                "url": "https://api.github.com/repos/iyzico/iyzipay-php/zipball/fda153102f4dc9ffdebc72a6ab47c83123e8333e",
+                "reference": "fda153102f4dc9ffdebc72a6ab47c83123e8333e",
                 "shasum": ""
             },
             "require": {
@@ -643,7 +643,7 @@
                 "phpunit/phpunit": "~9.6",
                 "satooshi/php-coveralls": "~0.6.1"
             },
-            "time": "2025-05-05T14:25:39+00:00",
+            "time": "2026-02-11T10:44:12+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -675,7 +675,7 @@
             ],
             "support": {
                 "issues": "https://github.com/iyzico/iyzipay-php/issues",
-                "source": "https://github.com/iyzico/iyzipay-php/tree/v2.0.59"
+                "source": "https://github.com/iyzico/iyzipay-php/tree/v2.0.60"
             },
             "install-path": "../iyzico/iyzipay-php"
         },
@@ -743,6 +743,257 @@
                 "source": "https://github.com/knit-pay/omnipay-paypal/tree/v1.0.3"
             },
             "install-path": "../knit-pay/omnipay-paypal"
+        },
+        {
+            "name": "konekt/pdf-invoice",
+            "version": "1.14.0",
+            "version_normalized": "1.14.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/artkonekt/pdf-invoice.git",
+                "reference": "61ba27dfca576a24ebe1d46ab24a819f1b22c88e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/artkonekt/pdf-invoice/zipball/61ba27dfca576a24ebe1d46ab24a819f1b22c88e",
+                "reference": "61ba27dfca576a24ebe1d46ab24a819f1b22c88e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-iconv": "*",
+                "ext-mbstring": "*",
+                "php": "^7.3|^8.0",
+                "setasign/fpdf": "~1.8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "8 - 9"
+            },
+            "time": "2023-11-28T16:07:33+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Konekt\\PdfInvoice\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Attila Fulop",
+                    "homepage": "https://github.com/fulopattila122"
+                }
+            ],
+            "description": "Library to generate PDF invoices",
+            "keywords": [
+                "artkonekt",
+                "invoice",
+                "konekt",
+                "pdf"
+            ],
+            "support": {
+                "source": "https://github.com/artkonekt/pdf-invoice"
+            },
+            "install-path": "../konekt/pdf-invoice"
+        },
+        {
+            "name": "league/flysystem",
+            "version": "3.31.0",
+            "version_normalized": "3.31.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem.git",
+                "reference": "1717e0b3642b0df65ecb0cc89cdd99fa840672ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/1717e0b3642b0df65ecb0cc89cdd99fa840672ff",
+                "reference": "1717e0b3642b0df65ecb0cc89cdd99fa840672ff",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem-local": "^3.0.0",
+                "league/mime-type-detection": "^1.0.0",
+                "php": "^8.0.2"
+            },
+            "conflict": {
+                "async-aws/core": "<1.19.0",
+                "async-aws/s3": "<1.14.0",
+                "aws/aws-sdk-php": "3.209.31 || 3.210.0",
+                "guzzlehttp/guzzle": "<7.0",
+                "guzzlehttp/ringphp": "<1.1.1",
+                "phpseclib/phpseclib": "3.0.15",
+                "symfony/http-client": "<5.2"
+            },
+            "require-dev": {
+                "async-aws/s3": "^1.5 || ^2.0",
+                "async-aws/simple-s3": "^1.1 || ^2.0",
+                "aws/aws-sdk-php": "^3.295.10",
+                "composer/semver": "^3.0",
+                "ext-fileinfo": "*",
+                "ext-ftp": "*",
+                "ext-mongodb": "^1.3|^2",
+                "ext-zip": "*",
+                "friendsofphp/php-cs-fixer": "^3.5",
+                "google/cloud-storage": "^1.23",
+                "guzzlehttp/psr7": "^2.6",
+                "microsoft/azure-storage-blob": "^1.1",
+                "mongodb/mongodb": "^1.2|^2",
+                "phpseclib/phpseclib": "^3.0.36",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^9.5.11|^10.0",
+                "sabre/dav": "^4.6.0"
+            },
+            "time": "2026-01-23T15:38:47+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
+                }
+            ],
+            "description": "File storage abstraction for PHP",
+            "keywords": [
+                "WebDAV",
+                "aws",
+                "cloud",
+                "file",
+                "files",
+                "filesystem",
+                "filesystems",
+                "ftp",
+                "s3",
+                "sftp",
+                "storage"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/flysystem/issues",
+                "source": "https://github.com/thephpleague/flysystem/tree/3.31.0"
+            },
+            "install-path": "../league/flysystem"
+        },
+        {
+            "name": "league/flysystem-sftp-v3",
+            "version": "3.31.0",
+            "version_normalized": "3.31.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem-sftp-v3.git",
+                "reference": "f01dd8d66e98b20608846963cc790c2b698e8b03"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-sftp-v3/zipball/f01dd8d66e98b20608846963cc790c2b698e8b03",
+                "reference": "f01dd8d66e98b20608846963cc790c2b698e8b03",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem": "^3.0.14",
+                "league/mime-type-detection": "^1.0.0",
+                "php": "^8.0.2",
+                "phpseclib/phpseclib": "^3.0"
+            },
+            "time": "2026-01-23T15:30:45+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\PhpseclibV3\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
+                }
+            ],
+            "description": "SFTP filesystem adapter for Flysystem.",
+            "keywords": [
+                "Flysystem",
+                "file",
+                "files",
+                "filesystem",
+                "sftp"
+            ],
+            "support": {
+                "source": "https://github.com/thephpleague/flysystem-sftp-v3/tree/3.31.0"
+            },
+            "install-path": "../league/flysystem-sftp-v3"
+        },
+        {
+            "name": "league/mime-type-detection",
+            "version": "1.16.0",
+            "version_normalized": "1.16.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/mime-type-detection.git",
+                "reference": "2d6702ff215bf922936ccc1ad31007edc76451b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/2d6702ff215bf922936ccc1ad31007edc76451b9",
+                "reference": "2d6702ff215bf922936ccc1ad31007edc76451b9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.2",
+                "phpstan/phpstan": "^0.12.68",
+                "phpunit/phpunit": "^8.5.8 || ^9.3 || ^10.0"
+            },
+            "time": "2024-09-21T08:32:55+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "League\\MimeTypeDetection\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
+                }
+            ],
+            "description": "Mime-type detection for Flysystem",
+            "support": {
+                "issues": "https://github.com/thephpleague/mime-type-detection/issues",
+                "source": "https://github.com/thephpleague/mime-type-detection/tree/1.16.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/frankdejonge",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/league/flysystem",
+                    "type": "tidelift"
+                }
+            ],
+            "install-path": "../league/mime-type-detection"
         },
         {
             "name": "moneyphp/money",
@@ -839,17 +1090,17 @@
         },
         {
             "name": "omnipay/common",
-            "version": "v3.5.0",
-            "version_normalized": "3.5.0.0",
+            "version": "v3.5.1",
+            "version_normalized": "3.5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-common.git",
-                "reference": "17ce9d4702be5e879d4de5175392a1ffd13afe22"
+                "reference": "cd58a4e7b359b0c5b9748542d422b5cc0d4a692f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-common/zipball/17ce9d4702be5e879d4de5175392a1ffd13afe22",
-                "reference": "17ce9d4702be5e879d4de5175392a1ffd13afe22",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-common/zipball/cd58a4e7b359b0c5b9748542d422b5cc0d4a692f",
+                "reference": "cd58a4e7b359b0c5b9748542d422b5cc0d4a692f",
                 "shasum": ""
             },
             "require": {
@@ -872,7 +1123,7 @@
             "suggest": {
                 "league/omnipay": "The default Omnipay package provides a default HTTP Adapter."
             },
-            "time": "2026-01-29T11:37:04+00:00",
+            "time": "2026-02-13T11:51:03+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -925,7 +1176,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/omnipay-common/issues",
-                "source": "https://github.com/thephpleague/omnipay-common/tree/v3.5.0"
+                "source": "https://github.com/thephpleague/omnipay-common/tree/v3.5.1"
             },
             "funding": [
                 {
@@ -2213,6 +2464,51 @@
                 "source": "https://github.com/Razorpay/razorpay-php"
             },
             "install-path": "../razorpay/razorpay"
+        },
+        {
+            "name": "setasign/fpdf",
+            "version": "1.8.2",
+            "version_normalized": "1.8.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Setasign/FPDF.git",
+                "reference": "d77904018090c17dc9f3ab6e944679a7a47e710a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Setasign/FPDF/zipball/d77904018090c17dc9f3ab6e944679a7a47e710a",
+                "reference": "d77904018090c17dc9f3ab6e944679a7a47e710a",
+                "shasum": ""
+            },
+            "time": "2019-12-08T10:32:10+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "classmap": [
+                    "fpdf.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Olivier Plathey",
+                    "email": "oliver@fpdf.org",
+                    "homepage": "http://fpdf.org/"
+                }
+            ],
+            "description": "FPDF is a PHP class which allows to generate PDF files with pure PHP. F from FPDF stands for Free: you may use it for any kind of usage and modify it to suit your needs.",
+            "homepage": "http://www.fpdf.org",
+            "keywords": [
+                "fpdf",
+                "pdf"
+            ],
+            "support": {
+                "source": "https://github.com/Setasign/FPDF/tree/1.8.2"
+            },
+            "install-path": "../setasign/fpdf"
         },
         {
             "name": "stripe/stripe-php",
@@ -3582,7 +3878,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/extension-woocommerce",
-                "reference": "9bc32c5590d7bb2b60854b14466850f8f8bf75b2"
+                "reference": "1aa24b40118c3afb3e1cee30a0ecf87dc5f45457"
             },
             "require": {
                 "automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
@@ -3612,7 +3908,7 @@
                 "yoast/phpunit-polyfills": "^2.0",
                 "yoast/wordpress-seo": "^22.3"
             },
-            "time": "2026-01-26T14:25:03+00:00",
+            "time": "2026-02-24T06:33:19+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "installer-paths": {
@@ -3708,12 +4004,12 @@
         },
         {
             "name": "wp-pay/core",
-            "version": "4.26.0.0",
-            "version_normalized": "4.26.0.0",
+            "version": "4.26.0.1",
+            "version_normalized": "4.26.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/wp-pay-core",
-                "reference": "bb7446362f17a3eda131899ad871e32f75b73f2a"
+                "reference": "d97e90531761a87baa09b64f9b651eaf5fc9b9c5"
             },
             "require": {
                 "automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
@@ -3750,7 +4046,7 @@
                 "wp-phpunit/wp-phpunit": "^6.1",
                 "yoast/phpunit-polyfills": "^2.0"
             },
-            "time": "2026-01-26T08:18:28+00:00",
+            "time": "2026-02-23T20:00:35+00:00",
             "type": "wordpress-plugin",
             "installation-source": "source",
             "autoload": {

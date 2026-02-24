@@ -56,6 +56,8 @@
 	"require" : {
 		"php": ">=8.1",
 		"ext-json": "*",
+		"konekt/pdf-invoice": "^1.14",
+		"league/flysystem-sftp-v3": "^3.31",
 		"automattic/jetpack-autoloader": "^5.0",
 		"composer/installers": "^2.3",
 		"iyzico/iyzipay-php": "^2.0",
@@ -83,7 +85,7 @@
 		"wp-pay-extensions/ninjaforms": "dev-knitpay-master as 3.3.4",
 		"wp-pay-extensions/restrict-content-pro": "dev-knitpay-master as 4.6.3",
 		"wp-pay-extensions/woocommerce": "dev-knitpay-master as 4.12.1",
-		"wp-pay/core": "4.26.0.0 as 4.26.0"
+		"wp-pay/core": "4.26.0.1 as 4.26.0"
 	},
 	"require-dev": {
 		"automattic/wordbless": "^0.3 || ^0.4",
@@ -103,7 +105,9 @@
 	"replace" : {
 		"rmccue/requests" : "*",
 		"roots/wordpress-no-content" : "*",
-		"wp-pay-gateways/mollie": "*"
+		"wp-pay-gateways/mollie": "*",
+		"phpseclib/phpseclib": "^3.0.16",
+		"league/flysystem-local": "*"
 	},
 	"extra": {
 		"installer-paths": {

@@ -2,6 +2,7 @@
 namespace KnitPay\Gateways\Razorpay;
 
 use KnitPay\Gateways\Gateway as Core_Gateway;
+use KnitPay\Utils as KnitPayUtils;
 use Pronamic\WordPress\Money\Money;
 use Pronamic\WordPress\Number\Number;
 use Pronamic\WordPress\Pay\Address;
@@ -14,12 +15,7 @@ use Pronamic\WordPress\Pay\Refunds\Refund;
 use Pronamic\WordPress\Pay\Subscriptions\Subscription;
 use Pronamic\WordPress\Pay\Subscriptions\SubscriptionStatus;
 use Razorpay\Api\Api;
-use Razorpay\Api\Errors\BadRequestError;
-use Razorpay\Api\Errors\ServerError;
-use Requests_Exception;
-use WP_Error;
 use Razorpay\Api\Errors\Error;
-use KnitPay\Utils as KnitPayUtils;
 
 /**
  * Title: Razorpay Gateway
@@ -30,7 +26,7 @@ use KnitPay\Utils as KnitPayUtils;
  * @since   1.7.0
  */
 class Gateway extends Core_Gateway {
-	protected $config;
+	public $config;
 
 	const NAME                  = 'razorpay';
 	const STANDARD_CHECKOUT_URL = 'https://api.razorpay.com/v1/checkout/hosted';
@@ -184,6 +180,8 @@ class Gateway extends Core_Gateway {
 	 */
 	public function update_status( Payment $payment ) {
 		if ( PaymentStatus::SUCCESS === $payment->get_status() ) {
+			// Schedule invoice upload at Razorpay SFTP Server.
+			( InvoiceUploader::get_instance() )->upload_invoice_scheduler( $payment );
 			return;
 		}
 
@@ -266,6 +264,9 @@ class Gateway extends Core_Gateway {
 		if ( PaymentStatus::SUCCESS === $payment->get_status() ) {
 			$this->update_missing_payment_details( $payment, $razorpay_payment );
 			$payment->set_transaction_id( $razorpay_payment->id );
+
+			// Schedule invoice upload at Razorpay SFTP Server.
+			( InvoiceUploader::get_instance() )->upload_invoice_scheduler( $payment );
 		}
 	}
 
@@ -299,7 +300,7 @@ class Gateway extends Core_Gateway {
 			$customer_phone   = $customer_address->get_phone();
 
 			if ( null === $customer_address ) {
-				throw new \Exception( 'Customer address is required for Razorpay Singapore.' );
+				throw new \Exception( 'Customer address is required.' );
 			}
 
 			// Create Customer.

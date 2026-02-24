@@ -56,4 +56,9 @@ class Config extends GatewayConfig {
 	public $expire_old_payments;
 
 	public $config_id;
+
+	// SFTP Configurations.
+	public $sftp_private_key;
+	public $sftp_public_key;
+	public $sftp_username;
 }

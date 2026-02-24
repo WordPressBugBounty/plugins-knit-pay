@@ -6,12 +6,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use FluentForm\App\Modules\Payments\PaymentMethods\BaseProcessor;
+use KnitPay\Extensions\FluentForms\Helper as PaymentHelper;
 use Pronamic\WordPress\Money\Currency;
 use Pronamic\WordPress\Money\Money;
-use Pronamic\WordPress\Pay\Plugin;
 use Pronamic\WordPress\Pay\Payments\Payment;
-use FluentFormPro\Payments\PaymentMethods\BaseProcessor;
-use KnitPay\Extensions\FluentForms\Helper as PaymentHelper;
+use Pronamic\WordPress\Pay\Plugin;
 
 /**
  * Title: Fluent Forms Gateway Processor

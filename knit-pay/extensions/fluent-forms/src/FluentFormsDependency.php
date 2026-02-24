@@ -21,6 +21,6 @@ class FluentFormsDependency extends Dependency {
 	 * @return bool True if dependency is met, false otherwise.
 	 */
 	public function is_met() {
-		return \defined( 'FLUENTFORMPRO' );
+		return \defined( 'FLUENTFORM' ) && class_exists('\FluentForm\App\Modules\Payments\PaymentMethods\BasePaymentMethod');
 	}
 }

@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use FluentForm\Framework\Helpers\ArrayHelper;
-use FluentFormPro\Payments\PaymentMethods\BasePaymentMethod;
+use FluentForm\App\Modules\Payments\PaymentMethods\BasePaymentMethod;
 use Pronamic\WordPress\Pay\Plugin;
 
 /**

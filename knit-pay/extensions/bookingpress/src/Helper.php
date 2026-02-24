@@ -64,9 +64,9 @@ class Helper {
 	}
 
 	/**
-	 * Get value from object.
+	 * Get value from array.
 	 *
-	 * @param object $object Object.
+	 * @param array  $array Array.
 	 * @param string $key   Key.
 	 * @return string|null
 	 */

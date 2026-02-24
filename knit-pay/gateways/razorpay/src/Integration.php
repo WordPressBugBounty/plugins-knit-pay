@@ -2,13 +2,11 @@
 
 namespace KnitPay\Gateways\Razorpay;
 
-use Pronamic\WordPress\DateTime\DateTime;
 use KnitPay\Gateways\IntegrationOAuthClient;
 use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
 use Pronamic\WordPress\Pay\Payments\Payment;
-use Pronamic\WordPress\Pay\Payments\PaymentStatus;
-use WP_Query;
-use KnitPay\Utils;
+use KnitPay\Utils as KnitPayUtils;
+
 
 /**
  * Title: Razorpay Integration
@@ -53,6 +51,9 @@ class Integration extends IntegrationOAuthClient {
 		if ( ! has_action( 'wp_loaded', $function ) ) {
 			add_action( 'wp_loaded', $function );
 		}
+
+		// Uploads the invoices to Razorpay for Import Flow.
+		InvoiceUploader::get_instance();
 
 		// Enqueue media uploader scripts for admin.
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_media_uploader_scripts' ] );
@@ -169,7 +170,12 @@ class Integration extends IntegrationOAuthClient {
 			return $url;
 		}
 
-		return \sprintf( 'https://dashboard.razorpay.com/app/orders/%s', $payment->get_meta( 'razorpay_order_id' ) );
+		$config              = $this->get_config( $payment->get_config_id() );
+		$dashboard_order_url = 'https://dashboard.razorpay.com/app/orders/%s';
+		if ( 'my' === $config->country ) {
+			$dashboard_order_url = 'https://dashboard.curlec.com/app/orders/%s';
+		}
+		return \sprintf( $dashboard_order_url, $payment->get_meta( 'razorpay_order_id' ) );
 	}
 
 	protected function get_basic_auth_fields( $fields ) {
@@ -243,15 +249,21 @@ class Integration extends IntegrationOAuthClient {
 		}
 
 		// Country.
+		$supported_countries = [
+			'in'             => 'India',
+			'in-import-flow' => 'Non-Indian (Import flow)',
+		];
+		if ( $this->is_auth_basic_enabled() ) {
+			$supported_countries['my'] = 'Malaysia (Curlec)';
+			$supported_countries['sg'] = 'Singapore';
+			$supported_countries['us'] = 'United States of America';
+		}
 		$fields[] = [
 			'section'     => 'general',
 			'meta_key'    => '_pronamic_gateway_razorpay_country',
 			'title'       => __( 'Country', 'knit-pay-lang' ),
 			'type'        => 'select',
-			'options'     => [
-				'in'             => 'India',
-				'in-import-flow' => 'Non-Indian (Import flow)',
-			],
+			'options'     => $supported_countries,
 			'default'     => 'in',
 			'description' => __( 'Import Flow is a payment solution designed for International (non-Indian) businesses to accept payments from Indian customers without any additional paperwork or registration.', 'knit-pay-lang' ),
 		];
@@ -287,6 +299,68 @@ class Integration extends IntegrationOAuthClient {
 			'label'       => __( 'Mark old pending Payments as expired in Knit Pay.', 'knit-pay-lang' ),
 			'default'     => true,
 		];
+
+		if ( 'in-import-flow' === $config->country ) {
+			$fields[] = [
+				'section' => 'advanced',
+				'type'    => 'blank',
+			];
+			$fields[] = [
+				'section' => 'advanced',
+				'type'    => 'description',
+				'title'   => __( 'SFTP Invoice Uploading', 'knit-pay-lang' ),
+			];
+
+			if ( InvoiceUploader::phpseclib_exists() ) {
+				// Server Public IP.
+				$fields[] = [
+					'section'     => 'advanced',
+					'title'       => __( 'Server Public IP', 'knit-pay-lang' ),
+					'type'        => 'description',
+					'description' => KnitPayUtils::get_server_public_ip(),
+				];
+
+				// Transaction Fees Percentage.
+				$fields[] = [
+					'section'     => 'advanced',
+					'meta_key'    => '_pronamic_gateway_razorpay_sftp_username',
+					'title'       => __( 'SFTP Username', 'knit-pay-lang' ),
+					'type'        => 'text',
+					'classes'     => [ 'regular-text', 'code' ],
+					'description' => __( 'SFTP Server username shared by Razorpay.', 'knit-pay-lang' ),
+				];
+
+				// Transaction Fees Percentage.
+				$fields[] = [
+					'section'     => 'advanced',
+					'meta_key'    => '_pronamic_gateway_razorpay_sftp_public_key',
+					'title'       => __( 'SFTP Public Key', 'knit-pay-lang' ),
+					'type'        => 'textarea',
+					'classes'     => [ 'regular-text', 'code' ],
+					'readonly'    => true,
+					'description' => __( 'Public key of the SFTP server.', 'knit-pay-lang' ),
+				];
+			} else {
+				$fields[] = [
+					'section'  => 'advanced',
+					'title'    => __( 'Missing Dependency', 'knit-pay-lang' ),
+					'type'     => 'description',
+					'callback' => function () {
+						$message = "Knit Pay requires the phpseclib3 library to automatically upload invoices to Razorpay's SFTP server. Kindly install any plugin that contains the phpseclib3 library. A List of some of the plugins is given below. Even if you keep any of these plugins inactive, Knit Pay will work.
+						<ol>
+						<li><a target='_blank' href='" . admin_url( 'plugin-install.php?s=terrafrost&tab=search&type=author' ) . "'>SSH SFTP Updater Support</a></li>
+						<li><a target='_blank' href='" . admin_url( 'plugin-install.php?s=databasebackup&tab=search&type=author' ) . "'>WP Database Backup</a></li>
+						<li><a target='_blank' href='" . admin_url( 'plugin-install.php?s=BackWPup&tab=search&type=author' ) . "'>BackWPup</a></li>
+						<li><a target='_blank' href='" . admin_url( 'plugin-install.php?s=Total%2520Upkeep%2520boldgrid&tab=search&type=term' ) . "'>Total Upkeep</a></li>
+						<li><a target='_blank' href='" . admin_url( 'plugin-install.php?s=InstaWP%2520Connect%2520WP%2520Staging%2520Migration&tab=search&type=term' ) . "'>InstaWP Connect</a></li>
+						<li><a target='_blank' href='" . admin_url( 'plugin-install.php?s=Wp%2520Social%2520Login%2520and%2520Register%2520Social%2520Counter%2520roxnor&tab=search&type=term' ) . "'>Wp Social</a></li>
+						</ol>";
+
+						echo $message;
+					},
+				];
+			}
+		}
 
 		// TODO: Add affordibility widget support.
 
@@ -355,7 +429,7 @@ class Integration extends IntegrationOAuthClient {
 		$config->refresh_token               = $this->get_meta( $post_id, 'razorpay_refresh_token' );
 		$config->country                     = $this->get_meta( $post_id, 'razorpay_country' );
 		$config->company_name                = $this->get_meta( $post_id, 'razorpay_company_name' );
-		$config->checkout_image              = Utils::convert_relative_path_to_url( $this->get_meta( $post_id, 'razorpay_checkout_image' ) );
+		$config->checkout_image              = KnitPayUtils::convert_relative_path_to_url( $this->get_meta( $post_id, 'razorpay_checkout_image' ) );
 		$config->checkout_mode               = $this->get_meta( $post_id, 'razorpay_checkout_mode' );
 		$config->transaction_fees_percentage = $this->get_meta( $post_id, 'razorpay_transaction_fees_percentage' );
 		$config->transaction_fees_fix        = $this->get_meta( $post_id, 'razorpay_transaction_fees_fix' );
@@ -363,6 +437,13 @@ class Integration extends IntegrationOAuthClient {
 		$config->connection_fail_count       = $this->get_meta( $post_id, 'razorpay_connection_fail_count' );
 		$config->expire_old_payments         = $this->get_meta( $post_id, 'razorpay_expire_old_payments' );
 		$config->mode                        = $this->get_meta( $post_id, 'mode' );
+
+		if ( 'in-import-flow' === $config->country ) {
+			// SFTP Configurations.
+			$config->sftp_private_key = $this->get_meta( $post_id, 'razorpay_sftp_private_key' );
+			$config->sftp_public_key  = $this->get_meta( $post_id, 'razorpay_sftp_public_key' );
+			$config->sftp_username    = $this->get_meta( $post_id, 'razorpay_sftp_username' );
+		}
 
 		if ( empty( $config->checkout_mode ) ) {
 			$config->checkout_mode = Config::CHECKOUT_STANDARD_MODE;
@@ -408,7 +489,7 @@ class Integration extends IntegrationOAuthClient {
 		$this->set_mode( $mode );
 		$gateway->set_mode( $mode );
 		$gateway->init( $config );
-		
+
 		return $gateway;
 	}
 
@@ -444,6 +525,43 @@ class Integration extends IntegrationOAuthClient {
 
 		$webhook = new Webhook( $config_id, $config );
 		$webhook->configure_webhook();
+	}
+
+	protected function save_child_config( $config_id ) {
+		/** @var Config $config */
+		$config = $this->get_config( $config_id );
+
+		if ( 'in-import-flow' === $config->country && empty( $config->sftp_private_key ) ) {
+			$this->generate_ssh_key_pair( $config_id );
+		}
+	}
+
+	private function generate_ssh_key_pair( $config_id ) {
+		// Don't generate keys if phpseclib is not available.
+		if ( ! InvoiceUploader::phpseclib_exists() ) {
+			return;
+		}
+
+		// Generate SSH key pair for SFTP connection using phpseclib.
+		try {
+			// Generate RSA 2048-bit key pair (optimal balance of compatibility, security, and speed).
+			// RSA 2048-bit is universally supported across all SFTP servers and sufficient for SFTP authentication.
+			$private = \phpseclib3\Crypt\RSA::createKey( 2048 );
+
+			// Export private key in OpenSSH format for modern compatibility.
+			$sftp_private_key = $private->toString( 'OpenSSH' );
+
+			// Export public key in OpenSSH format (standard format: ssh-rsa AAAAB3NzaC1yc2EA...).
+			$sftp_public_key = $private->getPublicKey()->toString( 'OpenSSH' );
+
+			// Store generated keys.
+			update_post_meta( $config_id, '_pronamic_gateway_' . $this->snake_case_id . '_sftp_private_key', $sftp_private_key );
+			update_post_meta( $config_id, '_pronamic_gateway_' . $this->snake_case_id . '_sftp_public_key', $sftp_public_key );
+		} catch ( \Exception $e ) {
+			// Log error but don't fail the entire save operation.
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			error_log( 'Knit Pay - Failed to generate SFTP SSH keys for config ' . $config_id . ': ' . $e->getMessage() );
+		}
 	}
 
 	protected function create_basic_connection( $config_id ) {

@@ -9,12 +9,11 @@ function knit_pay_dependency_autoload( $class ) {
 			$extension_dir = KNITPAY_DIR . strtolower( str_replace( '\\', DIRECTORY_SEPARATOR, preg_replace( '/([a-z])([A-Z])/', '$1$2', $match[1] ) ) );
 		}
 
-		$file = $extension_dir
-		. 'src' . DIRECTORY_SEPARATOR
-		. $match[2]
-		. '.php';
+		$file = $extension_dir . 'src' . DIRECTORY_SEPARATOR . $match[2] . '.php';
 		if ( is_readable( $file ) ) {
 			require_once $file;
+		} elseif ( is_readable( KNITPAY_DIR . 'includes' . DIRECTORY_SEPARATOR . $match[2] . '.php' ) ) {
+			require_once KNITPAY_DIR . 'includes' . DIRECTORY_SEPARATOR . $match[2] . '.php';
 		}
 	}
 }
@@ -42,7 +41,7 @@ require_once 'includes/Utils.php';
 // Add custom Knit Pay Custom Payment Methods.
 require_once 'includes/custom-payment-methods.php';
 
-// Add custom Knit Pay Custom Settings.
+// Add custom Knit Pay Custom Settings on the Settings page of Knit Pay.
 require_once 'includes/KnitPay_CustomSettings.php';
 
 // Currency Converter.
@@ -129,5 +128,24 @@ if ( ! function_exists( 'ddd' ) ) {
 		debug_print_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_print_backtrace
 		echo '</pre>';
 		wp_die();
+	}
+}
+
+if ( ! function_exists( 'ttt' ) ) {
+	function ttt( $operation = '', $name = 'kp_speed' ) {
+		switch ( $operation ) {
+			case 's': // start
+				$operation = 'qm/start';
+				break;
+			case 'e': // end
+				$operation = 'qm/stop';
+				break;
+			case 'l':
+			default:
+				$operation = 'qm/lap';
+				break;
+		}
+
+		do_action( $operation, $name );
 	}
 }

@@ -9,6 +9,7 @@ use Pronamic\WordPress\Money\Money;
 use Pronamic\WordPress\Pay\Plugin;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use KnitPay\Utils;
+use KnitPay\CustomSettingFields;
 
 /**
  * Title: Knit Pay - Payment Link Gateway
@@ -62,7 +63,7 @@ class Gateway {
 		add_settings_field(
 			'knit_pay_payment_link_currency',
 			__( 'Currency', 'knit-pay-lang' ),
-			[ $this, 'select_currency' ],
+			[ 'KnitPay\\CustomSettingFields', 'select_currency' ],
 			'knit_pay_payment_link',
 			'knit_pay_create_payment_link',
 			[
@@ -76,7 +77,7 @@ class Gateway {
 		add_settings_field(
 			'knit_pay_payment_link_amount',
 			__( 'Amount *', 'knit-pay-lang' ),
-			[ $this, 'input_field' ],
+			[ 'KnitPay\\CustomSettingFields', 'input_field' ],
 			'knit_pay_payment_link',
 			'knit_pay_create_payment_link',
 			[
@@ -93,7 +94,7 @@ class Gateway {
 		add_settings_field(
 			'knit_pay_payment_link_payment_description',
 			__( 'Payment For', 'knit-pay-lang' ),
-			[ $this, 'input_field' ],
+			[ 'KnitPay\\CustomSettingFields', 'input_field' ],
 			'knit_pay_payment_link',
 			'knit_pay_create_payment_link',
 			[
@@ -108,7 +109,7 @@ class Gateway {
 		add_settings_field(
 			'knit_pay_payment_link_payment_ref_id',
 			__( 'Reference Id', 'knit-pay-lang' ),
-			[ $this, 'input_field' ],
+			[ 'KnitPay\\CustomSettingFields', 'input_field' ],
 			'knit_pay_payment_link',
 			'knit_pay_create_payment_link',
 			[
@@ -122,7 +123,7 @@ class Gateway {
 		add_settings_field(
 			'knit_pay_payment_link_customer_name',
 			__( 'Customer Name', 'knit-pay-lang' ),
-			[ $this, 'input_field' ],
+			[ 'KnitPay\\CustomSettingFields', 'input_field' ],
 			'knit_pay_payment_link',
 			'knit_pay_create_payment_link',
 			[
@@ -137,7 +138,7 @@ class Gateway {
 		add_settings_field(
 			'knit_pay_payment_link_customer_email',
 			__( 'Customer Email', 'knit-pay-lang' ),
-			[ $this, 'input_field' ],
+			[ 'KnitPay\\CustomSettingFields', 'input_field' ],
 			'knit_pay_payment_link',
 			'knit_pay_create_payment_link',
 			[
@@ -152,7 +153,7 @@ class Gateway {
 		add_settings_field(
 			'knit_pay_payment_link_customer_phone',
 			__( 'Customer Phone', 'knit-pay-lang' ),
-			[ $this, 'input_field' ],
+			[ 'KnitPay\\CustomSettingFields', 'input_field' ],
 			'knit_pay_payment_link',
 			'knit_pay_create_payment_link',
 			[
@@ -167,7 +168,7 @@ class Gateway {
 		add_settings_field(
 			'knit_pay_payment_link_config_id',
 			__( 'Payment Gateway Configuration', 'knit-pay-lang' ),
-			[ $this, 'select_configuration' ],
+			[ 'KnitPay\\CustomSettingFields', 'select_configuration' ],
 			'knit_pay_payment_link',
 			'knit_pay_create_payment_link',
 			[
@@ -176,117 +177,6 @@ class Gateway {
 				'class'       => 'regular-text',
 			]
 		);
-	}
-
-	/**
-	 * Input Field.
-	 *
-	 * @param array $args Arguments.
-	 * @return void
-	 */
-	public function input_field( $args ) {
-		$args['id']   = $args['label_for'];
-		$args['name'] = $args['label_for'];
-
-		$element = new Element( 'input', $args );
-		$element->output();
-
-		self::print_description( $args );
-	}
-
-	/**
-	 * Input page.
-	 *
-	 * @param array $args Arguments.
-	 * @return void
-	 */
-	public function select_configuration( $args ) {
-		$args['id']   = $args['label_for'];
-		$args['name'] = $args['label_for'];
-
-		$configurations    = Plugin::get_config_select_options();
-		$configurations[0] = __( '— Default Gateway —', 'knit-pay-lang' );
-
-		$element = new Element( 'select', $args );
-
-		$selected_config_id = Utils::get_gateway_config_id();
-		if ( empty( $selected_config_id ) ) {
-			$selected_config_id = get_option( 'pronamic_pay_config_id' );
-		}
-
-		foreach ( $configurations as $key => $label ) {
-			$option = new Element( 'option', [ 'value' => $key ] );
-
-			$option->children[] = $label;
-
-			if ( $selected_config_id === (string) $key ) {
-				$option->attributes['selected'] = 'selected';
-			}
-
-			$element->children[] = $option;
-		}
-
-		$element->output();
-
-		self::print_description( $args );
-	}
-
-	/**
-	 * Input page.
-	 *
-	 * @param array $args Arguments.
-	 * @return void
-	 */
-	public function select_currency( $args ) {
-		$currency_default = Currency::get_instance( 'INR' );
-
-		$args['id']   = $args['label_for'];
-		$args['name'] = $args['label_for'];
-
-		$element = new Element( 'select', $args );
-
-		foreach ( Currencies::get_currencies() as $currency ) {
-			$option = new Element( 'option', [ 'value' => $currency->get_alphabetic_code() ] );
-
-			$label = $currency->get_alphabetic_code();
-
-			$symbol = $currency->get_symbol();
-
-			if ( null !== $symbol ) {
-				$label = sprintf( '%s (%s)', $label, $symbol );
-			}
-
-			$option->children[] = $label;
-
-			if ( $currency_default->get_alphabetic_code() === $currency->get_alphabetic_code() ) {
-				$option->attributes['selected'] = 'selected';
-			}
-
-			$element->children[] = $option;
-		}
-
-		$element->output();
-
-		self::print_description( $args );
-	}
-
-	public static function print_description( $args ) {
-		if ( isset( $args['description'] ) ) {
-			printf(
-				'<p class="pronamic-pay-description description">%s</p>',
-				\wp_kses(
-					$args['description'],
-					[
-						'a'    => [
-							'href'   => true,
-							'target' => true,
-						],
-						'br'   => [],
-						'code' => [],
-					]
-				)
-			);
-		}
 	}
 
 	public function ajax_create_payment_link() {
