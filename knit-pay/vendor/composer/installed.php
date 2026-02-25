@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '51a43a0df2ef5cd2f99dad355a031987e160ece7',
+        'reference' => 'c031e81365bac4eae09d472371b48f4b86538148',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '51a43a0df2ef5cd2f99dad355a031987e160ece7',
+            'reference' => 'c031e81365bac4eae09d472371b48f4b86538148',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -167,12 +167,14 @@
             'dev_requirement' => false,
         ),
         'paytm/paytmchecksum' => array(
-            'pretty_version' => 'v1.1.0',
-            'version' => '1.1.0.0',
-            'reference' => 'a032d3cbeb3846720c2c606b9f3c8057c355042e',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '8d8808ee9387d4106ecf26bf1b42e39bbbdcb23a',
             'type' => 'library',
             'install_path' => __DIR__ . '/../paytm/paytmchecksum',
-            'aliases' => array(),
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
             'dev_requirement' => false,
         ),
         'php-http/async-client-implementation' => array(
@@ -586,9 +588,9 @@
             ),
         ),
         'wp-pay/core' => array(
-            'pretty_version' => '4.26.0.1',
-            'version' => '4.26.0.1',
-            'reference' => 'd97e90531761a87baa09b64f9b651eaf5fc9b9c5',
+            'pretty_version' => '4.26.0.2',
+            'version' => '4.26.0.2',
+            'reference' => '8f4b9efae67c272acefefd2855022e149809935c',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../packages/wp-pay/core',
             'aliases' => array(

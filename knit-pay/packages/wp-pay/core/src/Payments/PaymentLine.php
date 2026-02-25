@@ -262,7 +262,7 @@ class PaymentLine {
 	 * @return void
 	 */
 	public function set_unit_price( ?Money $price = null ) {
-		$this->unit_price = ( $price ?? null );
+		$this->unit_price = $price;
 	}
 
 	/**

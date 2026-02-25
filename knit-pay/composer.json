@@ -64,7 +64,7 @@
 		"knit-pay/omnipay-paypal": "^1.0",
 		"omnipay/common": "^3.5",
 		"payrexx/payrexx": "^1.8",
-		"paytm/paytmchecksum": "^1.1",
+		"paytm/paytmchecksum": "dev-master",
 		"php-http/guzzle7-adapter": "^1.0",
 		"pronamic/pronamic-pay-admin-reports": "dev-main",
 		"pronamic/wp-datetime": "^2.1",
@@ -85,7 +85,7 @@
 		"wp-pay-extensions/ninjaforms": "dev-knitpay-master as 3.3.4",
 		"wp-pay-extensions/restrict-content-pro": "dev-knitpay-master as 4.6.3",
 		"wp-pay-extensions/woocommerce": "dev-knitpay-master as 4.12.1",
-		"wp-pay/core": "4.26.0.1 as 4.26.0"
+		"wp-pay/core": "4.26.0.2 as 4.26.0"
 	},
 	"require-dev": {
 		"automattic/wordbless": "^0.3 || ^0.4",

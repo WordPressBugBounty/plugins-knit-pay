@@ -1896,7 +1896,6 @@ class ComposerStaticInit5d7cde4b7c38def89b5663dc40158db7
         'Symfony\\Polyfill\\Php83\\Php83' => __DIR__ . '/..' . '/symfony/polyfill-php83/Php83.php',
         'VIISON\\AddressSplitter\\AddressSplitter' => __DIR__ . '/..' . '/viison/address-splitter/src/AddressSplitter.php',
         'VIISON\\AddressSplitter\\Exceptions\\SplittingException' => __DIR__ . '/..' . '/viison/address-splitter/src/Exceptions/SplittingException.php',
-        'paytm\\paytmchecksum\\PaytmChecksum' => __DIR__ . '/..' . '/paytm/paytmchecksum/paytmchecksum/PaytmChecksum.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

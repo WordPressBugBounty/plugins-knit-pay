@@ -505,21 +505,10 @@ class PMProGateway_knit_pay extends PMProGateway {
 			$style .= '.pmpro_form_field.pmpro_form_field-bstate,';
 			$style .= '.pmpro_form_field.pmpro_form_field-bzipcode,';
 			$style .= '.pmpro_form_field.pmpro_form_field-bcountry,';
-
-			// TODO remove deprecated classes which were getting used in pmpro 2 after Jan 2026.
-			$style .= '.pmpro_checkout-field-baddress1,';
-			$style .= '.pmpro_checkout-field-baddress2,';
-			$style .= '.pmpro_checkout-field-bcity,';
-			$style .= '.pmpro_checkout-field-bstate,';
-			$style .= '.pmpro_checkout-field-bzipcode,';
-			$style .= '.pmpro_checkout-field-bcountry,';
 		}
 
 		if ( self::pmpro_getOption( 'knit_pay_hide_phone' ) ) {
 			$style .= '.pmpro_form_field.pmpro_form_field-bphone,';
-
-			// TODO remove deprecated classes which were getting used in pmpro 2 after Jan 2026.
-			$style .= '.pmpro_checkout-field-bphone,';
 		}
 
 		$style = rtrim( $style, ',' );

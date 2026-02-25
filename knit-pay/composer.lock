@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "594e0506b75e1d4379187dc5eaa985d3",
+    "content-hash": "8967456ef229f705b6f828f1286f4e36",
     "packages": [
         {
             "name": "automattic/jetpack-autoloader",
@@ -1200,21 +1200,22 @@
         },
         {
             "name": "paytm/paytmchecksum",
-            "version": "v1.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paytm/Paytm_PHP_Checksum.git",
-                "reference": "a032d3cbeb3846720c2c606b9f3c8057c355042e"
+                "reference": "8d8808ee9387d4106ecf26bf1b42e39bbbdcb23a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paytm/Paytm_PHP_Checksum/zipball/a032d3cbeb3846720c2c606b9f3c8057c355042e",
-                "reference": "a032d3cbeb3846720c2c606b9f3c8057c355042e",
+                "url": "https://api.github.com/repos/paytm/Paytm_PHP_Checksum/zipball/8d8808ee9387d4106ecf26bf1b42e39bbbdcb23a",
+                "reference": "8d8808ee9387d4106ecf26bf1b42e39bbbdcb23a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1244,9 +1245,9 @@
             ],
             "support": {
                 "issues": "https://github.com/paytm/Paytm_PHP_Checksum/issues",
-                "source": "https://github.com/paytm/Paytm_PHP_Checksum/tree/v1.1.0"
+                "source": "https://github.com/paytm/Paytm_PHP_Checksum/tree/master"
             },
-            "time": "2020-11-11T13:42:29+00:00"
+            "time": "2024-10-14T06:18:21+00:00"
         },
         {
             "name": "php-http/discovery",
@@ -3854,11 +3855,11 @@
         },
         {
             "name": "wp-pay/core",
-            "version": "4.26.0.1",
+            "version": "4.26.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/wp-pay-core",
-                "reference": "d97e90531761a87baa09b64f9b651eaf5fc9b9c5"
+                "reference": "8f4b9efae67c272acefefd2855022e149809935c"
             },
             "require": {
                 "automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
@@ -3996,7 +3997,7 @@
                 "issues": "https://github.com/wp-pay/core/issues",
                 "source": "https://github.com/wp-pay/core"
             },
-            "time": "2026-02-23T20:00:35+00:00"
+            "time": "2026-02-25T08:18:37+00:00"
         }
     ],
     "packages-dev": [
@@ -13349,13 +13350,14 @@
         },
         {
             "package": "wp-pay/core",
-            "version": "4.26.0.1",
+            "version": "4.26.0.2",
             "alias": "4.26.0",
             "alias_normalized": "4.26.0.0"
         }
     ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "paytm/paytmchecksum": 20,
         "pronamic/changelog-md-to-wordpress-plugin-readme-txt": 20,
         "pronamic/pronamic-pay-admin-reports": 20,
         "wp-pay-extensions/charitable": 20,

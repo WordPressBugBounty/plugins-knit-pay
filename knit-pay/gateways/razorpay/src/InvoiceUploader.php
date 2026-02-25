@@ -118,7 +118,12 @@ class InvoiceUploader extends InvoicePrinter {
 		$gateway      = $payment->get_gateway();
 		$this->config = $gateway->config;
 
-		if ( empty( $this->config->sftp_username ) || $payment->get_meta( 'razorpay_invoice_uploaded' ) ) {
+		if ( empty( $this->config->sftp_username ) ) {
+			return;
+		} elseif ( $payment->get_meta( 'razorpay_invoice_uploaded' ) ) {
+			if ( filter_has_var( INPUT_GET, 'pronamic_pay_check_status' ) ) {
+				return $this->create_invoice( $payment, 'D' );
+			}
 			return;
 		}
 
@@ -157,7 +162,7 @@ class InvoiceUploader extends InvoicePrinter {
 	 * @param Payment $payment Payment.
 	 * @return String
 	 */
-	private function create_invoice( Payment $payment ) {
+	private function create_invoice( Payment $payment, $destination = 'S' ) {
 		$customer         = $payment->get_customer();
 		$customer_address = ( null === $payment->get_shipping_address() ) ? $payment->get_billing_address() : $payment->get_shipping_address();
 		$currency_code    = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
@@ -252,7 +257,7 @@ class InvoiceUploader extends InvoicePrinter {
 
 		/* Render */
 		try {
-			return $invoice->render( $invoice_number . '.pdf', 'S' ); /* I => Display on browser, D => Force Download, F => local path save, S => return document path */
+			return $invoice->render( $invoice_number . '.pdf', $destination ); /* I => Display on browser, D => Force Download, F => local path save, S => return document path */
 		} catch ( Exception $e ) {
 			throw new Exception( 'Error: ' . $e->getMessage() );
 		}
@@ -289,6 +294,10 @@ class InvoiceUploader extends InvoicePrinter {
 
 		// Create Invoice
 		$invoice_string = $this->create_invoice( $payment );
+
+		if ( empty( $invoice_string ) ) {
+			throw new Exception( 'Error: Could not create invoice.' );
+		}
 
 		$sftp_connection_provider = new SftpConnectionProvider(
 			self::RAZORPAY_SFTP_HOST, // host (required)
