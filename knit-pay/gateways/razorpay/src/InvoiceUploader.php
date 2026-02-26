@@ -170,15 +170,27 @@ class InvoiceUploader extends InvoicePrinter {
 		$invoice_number   = $payment->get_meta( 'razorpay_order_id' );
 		$total_amount     = $payment->get_total_amount()->get_value();
 
-		$invoice                      = new InvoicePrinter( InvoicePrinter::INVOICE_SIZE_A4, $currency_code, $lang );
+		$total_tax = 0;
+		if ( method_exists( $payment->get_total_amount(), 'get_tax_amount' ) ) {
+			$total_tax = $payment->get_total_amount()->get_tax_amount()->get_value();
+		}
+
+		$invoice = new InvoicePrinter( InvoicePrinter::INVOICE_SIZE_A4, $currency_code, $lang );
+
+		// Language Update.
+		$invoice->changeLanguageTerm( 'number', 'Invoice Number' );
+		$invoice->changeLanguageTerm( 'vat', 'Tax' );
+
+		// Currency formater.
+		$invoice->setNumberFormat( self::NUMBER_SEPARATOR_DOT, self::NUMBER_SEPARATOR_COMMA, self::NUMBER_ALIGNMENT_LEFT, true, false );
+
+		/* Header Settings */
 		$this->config->checkout_image = get_post_meta( $this->config->config_id, '_pronamic_gateway_razorpay_checkout_image', true );
 		if ( ! empty( $this->config->checkout_image ) ) {
 			$this->config->checkout_image = ABSPATH . ltrim( $this->config->checkout_image, '/' );
-		}
-
-		/* Header Settings */
-		if ( ! empty( $this->config->checkout_image ) && is_readable( $this->config->checkout_image ) ) {
-			$invoice->setLogo( $this->config->checkout_image );
+			if ( is_readable( $this->config->checkout_image ) ) {
+				$invoice->setLogo( $this->config->checkout_image );
+			}
 		}
 
 		$invoice->setColor( '#007fff' );
@@ -232,7 +244,8 @@ class InvoiceUploader extends InvoicePrinter {
 		if ( isset( $lines ) ) {
 			foreach ( $lines as $line ) {
 				$description = is_null( $line->get_description() ) ? '' : $line->get_description();
-				$invoice->addItem( $line->get_name(), $description, $line->get_quantity(), false, $line->get_unit_price()->get_value(), false, $line->get_total_amount()->get_value() );
+				$tax         = $line->get_tax_amount() ?: false;
+				$invoice->addItem( $line->get_name(), $description, $line->get_quantity(), $tax, $line->get_unit_price()->get_value(), false, $line->get_total_amount()->get_value() );
 			}
 		} else {
 			$invoice->addItem( $payment->get_description(), '', 1, false, $total_amount, false, $total_amount );
@@ -242,6 +255,10 @@ class InvoiceUploader extends InvoicePrinter {
 		Set totals alignment */
 		// $invoice->setTotalsAlignment( 'horizontal' );
 		/* Add totals */
+		$invoice->addTotal( '', '' ); // Adding blank row to separate tax and total.
+		if ( ! empty( $total_tax ) ) {
+			$invoice->addTotal( 'Tax', $payment->get_total_amount()->get_tax_amount()->get_value() );
+		}
 		$invoice->addTotal( 'Total', $total_amount, true );
 
 		/* Set badge */
