@@ -870,6 +870,7 @@ return array(
     'Payrexx\\Models\\Response\\Transaction' => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Response/Transaction.php',
     'Payrexx\\Payrexx' => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Payrexx.php',
     'Payrexx\\PayrexxException' => $vendorDir . '/payrexx/payrexx/lib/Payrexx/PayrexxException.php',
+    'PaytmChecksum' => $vendorDir . '/paytm/paytmchecksum/PaytmChecksum.php',
     'Pronamic\\IDealIssuers\\IDealIssuer' => $vendorDir . '/pronamic/ideal-issuers/src/IDealIssuer.php',
     'Pronamic\\IDealIssuers\\IDealIssuerCode' => $vendorDir . '/pronamic/ideal-issuers/src/IDealIssuerCode.php',
     'Pronamic\\IDealIssuers\\IDealIssuerService' => $vendorDir . '/pronamic/ideal-issuers/src/IDealIssuerService.php',

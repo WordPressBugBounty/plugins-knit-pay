@@ -3,7 +3,7 @@
 namespace KnitPay\Gateways\Paytm;
 
 use Exception;
-use paytm\paytmchecksum\PaytmChecksum;
+use PaytmChecksum;
 
 class API {
 

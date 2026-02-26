@@ -231,10 +231,6 @@ class InvoiceUploader extends InvoicePrinter {
 		$lines = $payment->get_lines();
 		if ( isset( $lines ) ) {
 			foreach ( $lines as $line ) {
-				if ( ! ( empty( $line->get_type() ) || 'physical' === $line->get_type() ) ) {
-					continue;
-				}
-
 				$description = is_null( $line->get_description() ) ? '' : $line->get_description();
 				$invoice->addItem( $line->get_name(), $description, $line->get_quantity(), false, $line->get_unit_price()->get_value(), false, $line->get_total_amount()->get_value() );
 			}

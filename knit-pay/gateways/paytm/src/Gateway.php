@@ -5,7 +5,7 @@ use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Exception;
-use paytm\paytmchecksum\PaytmChecksum;
+use PaytmChecksum;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use KnitPay\Utils as KnitPayUtils;
 use KnitPay\Gateways\PaymentMethods;

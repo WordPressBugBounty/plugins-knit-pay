@@ -1182,6 +1182,7 @@ class ComposerStaticInit5d7cde4b7c38def89b5663dc40158db7
         'Payrexx\\Models\\Response\\Transaction' => __DIR__ . '/..' . '/payrexx/payrexx/lib/Payrexx/Models/Response/Transaction.php',
         'Payrexx\\Payrexx' => __DIR__ . '/..' . '/payrexx/payrexx/lib/Payrexx/Payrexx.php',
         'Payrexx\\PayrexxException' => __DIR__ . '/..' . '/payrexx/payrexx/lib/Payrexx/PayrexxException.php',
+        'PaytmChecksum' => __DIR__ . '/..' . '/paytm/paytmchecksum/PaytmChecksum.php',
         'Pronamic\\IDealIssuers\\IDealIssuer' => __DIR__ . '/..' . '/pronamic/ideal-issuers/src/IDealIssuer.php',
         'Pronamic\\IDealIssuers\\IDealIssuerCode' => __DIR__ . '/..' . '/pronamic/ideal-issuers/src/IDealIssuerCode.php',
         'Pronamic\\IDealIssuers\\IDealIssuerService' => __DIR__ . '/..' . '/pronamic/ideal-issuers/src/IDealIssuerService.php',

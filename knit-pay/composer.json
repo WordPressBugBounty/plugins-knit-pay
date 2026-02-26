@@ -109,6 +109,11 @@
 		"phpseclib/phpseclib": "^3.0.16",
 		"league/flysystem-local": "*"
 	},
+	"autoload": {
+		"classmap": [
+			"vendor/paytm/paytmchecksum/PaytmChecksum.php"
+		]
+	},
 	"extra": {
 		"installer-paths": {
 			"packages/{$vendor}/{$name}": [
