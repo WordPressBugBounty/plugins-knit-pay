@@ -35,6 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$transaction_id  = $payment->get_transaction_id();
 		$order_id        = $payment->get_source_id();
 		$customer_upi_id = $payment->get_meta( 'customer_upi_id' );
+		$payment_method  = $payment->get_payment_method();
 		
 		$amount                  = $payment->get_total_amount()->format_i18n( '%1$s%2$s' );
 		$redirect_url            = $payment->get_return_url();

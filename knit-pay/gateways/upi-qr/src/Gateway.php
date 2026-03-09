@@ -405,6 +405,24 @@ class Gateway extends Core_Gateway {
 		return $masked_username . '@' . $domain;
 	}
 
+	private function mask_phone_number( $phone ) {
+		if ( empty( $phone ) ) {
+			return '';
+		}
+
+		// Remove any non-numeric characters
+		$phone_digits = preg_replace( '/[^0-9]/', '', $phone );
+
+		if ( strlen( $phone_digits ) < 4 ) {
+			return str_repeat( '*', strlen( $phone_digits ) );
+		}
+
+		// Show first 2 and last 2 digits, mask the middle
+		$masked = substr( $phone_digits, 0, 2 ) . str_repeat( '*', strlen( $phone_digits ) - 4 ) . substr( $phone_digits, -2 );
+
+		return $masked;
+	}
+
 	public function enqueue_scripts() {
 		\wp_register_script(
 			'knit-pay-easy-qrcode',

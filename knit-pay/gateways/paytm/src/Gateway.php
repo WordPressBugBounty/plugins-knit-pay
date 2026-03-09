@@ -1,14 +1,14 @@
 <?php
 namespace KnitPay\Gateways\Paytm;
 
+use Exception;
+use KnitPay\Gateways\PaymentMethods;
+use KnitPay\Utils as KnitPayUtils;
+use PaytmChecksum;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
+use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
-use Exception;
-use PaytmChecksum;
-use Pronamic\WordPress\Pay\Core\PaymentMethod;
-use KnitPay\Utils as KnitPayUtils;
-use KnitPay\Gateways\PaymentMethods;
 
 /**
  * Title: Paytm Gateway
@@ -109,7 +109,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Create an array having all required parameters for creating checksum.
-		// @see https://developer.paytm.com/docs/api/initiate-transaction-api/
+		// @see https://www.paytmpayments.com/docs/api/initiate-transaction-api
 		$paytmParams = [];
 
 		$paytmParams['body'] = [

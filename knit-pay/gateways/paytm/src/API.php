@@ -20,9 +20,9 @@ class API {
 
 	public function get_endpoint() {
 		if ( $this->test_mode ) {
-			return 'https://securegw-stage.paytm.in/';
+			return 'https://securestage.paytmpayments.com/';
 		}
-		return 'https://securegw.paytm.in/';
+		return 'https://secure.paytmpayments.com/';
 	}
 
 	public function initiate_transaction( $data ) {

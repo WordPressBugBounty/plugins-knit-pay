@@ -111,7 +111,7 @@
 	},
 	"autoload": {
 		"classmap": [
-			"vendor/paytm/paytmchecksum/PaytmChecksum.php"
+			"vendor/paytm/paytmchecksum/paytmchecksum/PaytmChecksum.php"
 		]
 	},
 	"extra": {

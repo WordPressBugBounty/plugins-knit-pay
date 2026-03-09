@@ -11,6 +11,8 @@ class PaymentMethods extends Core_PaymentMethods {
 
 	const UPI_COLLECT = 'upi_collect';
 
+	const SMS_PAYMENT_LINK = 'sms_payment_link';
+
 	/**
 	 * Debit Card
 	 *

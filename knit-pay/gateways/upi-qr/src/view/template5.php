@@ -25,10 +25,42 @@
 			<span id="countdown-timer" class="expires-span"></span>
 		</div>
 
-		<!-- Conditional Section: UPI Instructions OR QR Code -->
-		<?php if ( isset( $customer_upi_id ) && ! empty( $customer_upi_id ) ) { ?>
+		<!-- Conditional Section: UPI Collect Instructions OR SMS Payment Link OR QR Code -->
+		<?php if ( 'sms_payment_link' === $payment_method ) { ?>
+			<!-- SMS Payment Link Instructions Section -->
+			<div class="payment-instructions">
+				<div class="instruction-icon dashicons dashicons-testimonial"></div>
+
+				<h3 class="instruction-title">Payment Link Sent!</h3>
+
+				<div class="instruction-steps">
+					<div class="instruction-step">
+						<div class="step-number">1</div>
+						<div class="step-text">Check your phone for the SMS</div>
+					</div>
+					<div class="instruction-step">
+						<div class="step-number">2</div>
+						<div class="step-text">Open the payment link received</div>
+					</div>
+					<div class="instruction-step">
+						<div class="step-number">3</div>
+						<div class="step-text">Complete the payment securely</div>
+					</div>
+				</div>
+
+				<div class="upi-id-display">
+					<div class="upi-id-label">SMS sent to:</div>
+					<div class="upi-id-value"><?php echo $this->mask_phone_number( $payment->get_billing_address()->get_phone() ); ?></div>
+				</div>
+
+				<div class="waiting-indicator">
+					<div class="spinner"></div>
+					<span>Waiting for payment confirmation...</span>
+				</div>
+			</div>
+		<?php } elseif ( isset( $customer_upi_id ) && ! empty( $customer_upi_id ) ) { ?>
 			<!-- UPI ID Instructions Section -->
-			<div class="upi-instructions">
+			<div class="payment-instructions">
 				<div class="instruction-icon dashicons dashicons-smartphone"></div>
 
 				<h3 class="instruction-title">Payment Request Sent!</h3>
@@ -114,7 +146,7 @@
 			$is_android = false !== strpos( sanitize_text_field( $_SERVER['HTTP_USER_AGENT'] ), 'Android' );
 		}
 
-		if ( ( ! isset( $customer_upi_id ) || empty( $customer_upi_id ) ) && $is_android ) {
+		if ( ( ! isset( $customer_upi_id ) || empty( $customer_upi_id ) ) && 'sms_payment_link' !== $payment_method && $is_android ) {
 			?>
 			<div class="payment-methods">
 				<div class="section-title">Pay with other methods</div>
