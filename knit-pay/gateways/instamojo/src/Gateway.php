@@ -85,6 +85,13 @@ class Gateway extends Core_Gateway {
 		/*
 		 * New transaction request.
 		 */
+		if ( $use_phone ) {
+			if ( empty( $payment->get_billing_address() ) || empty( $payment->get_billing_address()->get_phone() ) ) {
+				return $this->createRequest( $payment, false );
+			}
+			$api_data['phone']    = $payment->get_billing_address()->get_phone();
+			$api_data['send_sms'] = $this->config->send_sms;
+		}
 		if ( ! empty( $payment->get_description() ) ) {
 			$api_data['purpose'] = $payment->get_description();
 		} elseif ( ! empty( get_bloginfo() ) ) {
@@ -100,16 +107,9 @@ class Gateway extends Core_Gateway {
 		if ( ! empty( $api_data['email'] ) ) {
 			$api_data['send_email'] = $this->config->send_email;
 		}
-		if ( $use_phone ) {
-			if ( empty( $payment->get_billing_address() ) ) {
-				return $this->createRequest( $payment, false );
-			}
-			$api_data['phone']    = $payment->get_billing_address()->get_phone();
-			$api_data['send_sms'] = $this->config->send_sms;
-		}
 		$api_data['amount']       = $payment->get_total_amount()->number_format( null, '.', '' );
 		$api_data['redirect_url'] = $payment->get_return_url();
-		if ( ! ( strpos( $api_data['redirect_url'], 'localhost' ) || strpos( $api_data['redirect_url'], '127.0.0.1' ) ) ) {
+		if ( ! ( str_contains( $api_data['redirect_url'], 'localhost' ) || str_contains( $api_data['redirect_url'], '127.0.0.1' ) ) ) {
 			$api_data['webhook'] = add_query_arg( 'kp_instamojo_webhook', '', home_url( '/' ) );
 		}
 		$api_data['allow_repeated_payments'] = false;
@@ -219,6 +219,13 @@ class Gateway extends Core_Gateway {
 		$payment_request_id = $payment->get_meta( 'instamojo_payment_request_id' );
 		if ( empty( $payment_request_id ) ) {
 			$payment_request_id = $payment->get_transaction_id();
+		}
+
+		// Don't proceed if payment request id is empty.
+		if ( empty( $payment_request_id ) ) {
+			$payment->add_note( 'Payment Request ID not found.' );
+			$payment->set_status( PaymentStatus::FAILURE );
+			return;
 		}
 
 		$this->instamojo_api = new Instamojo( $this->config->client_id, $this->config->client_secret, $this->test_mode );

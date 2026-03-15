@@ -493,10 +493,6 @@ class Integration extends IntegrationOAuthClient {
 		return $gateway;
 	}
 
-	protected function is_mode_changed( $config ) {
-		return ! strpos( $config->key_id, $config->mode );
-	}
-
 	public function clear_child_config( $config_id ) {
 		delete_post_meta( $config_id, '_pronamic_gateway_razorpay_key_id' );
 		delete_post_meta( $config_id, '_pronamic_gateway_razorpay_key_secret' );

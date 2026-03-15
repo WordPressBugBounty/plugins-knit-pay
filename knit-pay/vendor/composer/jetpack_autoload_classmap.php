@@ -38,9 +38,53 @@ return array(
 		'version' => '5.0.16',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/ManifestGenerator.php'
 	),
+	'BooklyKnitPay\\Backend\\Modules\\Appearance\\ProxyProviders\\Shared' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/bookly-pro/src/gateway/backend/modules/appearance/proxy_providers/Shared.php'
+	),
+	'BooklyKnitPay\\Backend\\Modules\\Settings\\ProxyProviders\\Shared' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/bookly-pro/src/gateway/backend/modules/settings/proxy_providers/Shared.php'
+	),
+	'BooklyKnitPay\\Frontend\\Modules\\Booking\\ProxyProviders\\Shared' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/bookly-pro/src/gateway/frontend/modules/booking/proxy_providers/Shared.php'
+	),
+	'BooklyKnitPay\\Lib\\Payment\\KnitPayGateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/bookly-pro/src/gateway/lib/payment/KnitPayGateway.php'
+	),
+	'BooklyKnitPay\\Lib\\Payment\\ProxyProviders\\Shared' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/bookly-pro/src/gateway/lib/payment/proxy_providers/Shared.php'
+	),
+	'BooklyKnitPay\\Lib\\Plugin' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/bookly-pro/src/gateway/lib/Plugin.php'
+	),
+	'BooklyKnitPay\\Lib\\ProxyProviders\\Shared' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/bookly-pro/src/gateway/lib/proxy_providers/Shared.php'
+	),
 	'Clue\\StreamFilter\\CallbackFilter' => array(
 		'version' => '1.7.0.0',
 		'path'    => $vendorDir . '/clue/stream-filter/src/CallbackFilter.php'
+	),
+	'ComposerAutoloaderInitdd39ce50e566e66948164187ab74642b' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/vendor/composer/autoload_real.php'
+	),
+	'Composer\\Autoload\\ClassLoader' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/vendor/composer/ClassLoader.php'
+	),
+	'Composer\\Autoload\\ComposerStaticInitdd39ce50e566e66948164187ab74642b' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/vendor/composer/autoload_static.php'
+	),
+	'Composer\\InstalledVersions' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/vendor/composer/InstalledVersions.php'
 	),
 	'Composer\\Installers\\AglInstaller' => array(
 		'version' => '2.3.0.0',
@@ -482,405 +526,61 @@ return array(
 		'version' => '1.8.2.0',
 		'path'    => $vendorDir . '/setasign/fpdf/fpdf.php'
 	),
-	'GuzzleHttp\\BodySummarizer' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/BodySummarizer.php'
-	),
-	'GuzzleHttp\\BodySummarizerInterface' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/BodySummarizerInterface.php'
-	),
-	'GuzzleHttp\\Client' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Client.php'
-	),
-	'GuzzleHttp\\ClientInterface' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/ClientInterface.php'
-	),
-	'GuzzleHttp\\ClientTrait' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/ClientTrait.php'
-	),
-	'GuzzleHttp\\Cookie\\CookieJar' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Cookie/CookieJar.php'
-	),
-	'GuzzleHttp\\Cookie\\CookieJarInterface' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Cookie/CookieJarInterface.php'
-	),
-	'GuzzleHttp\\Cookie\\FileCookieJar' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Cookie/FileCookieJar.php'
-	),
-	'GuzzleHttp\\Cookie\\SessionCookieJar' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Cookie/SessionCookieJar.php'
-	),
-	'GuzzleHttp\\Cookie\\SetCookie' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Cookie/SetCookie.php'
-	),
-	'GuzzleHttp\\Exception\\BadResponseException' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Exception/BadResponseException.php'
-	),
-	'GuzzleHttp\\Exception\\ClientException' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Exception/ClientException.php'
-	),
-	'GuzzleHttp\\Exception\\ConnectException' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Exception/ConnectException.php'
-	),
-	'GuzzleHttp\\Exception\\GuzzleException' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Exception/GuzzleException.php'
-	),
-	'GuzzleHttp\\Exception\\InvalidArgumentException' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Exception/InvalidArgumentException.php'
-	),
-	'GuzzleHttp\\Exception\\RequestException' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Exception/RequestException.php'
-	),
-	'GuzzleHttp\\Exception\\ServerException' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Exception/ServerException.php'
-	),
-	'GuzzleHttp\\Exception\\TooManyRedirectsException' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Exception/TooManyRedirectsException.php'
-	),
-	'GuzzleHttp\\Exception\\TransferException' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Exception/TransferException.php'
-	),
-	'GuzzleHttp\\HandlerStack' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/HandlerStack.php'
-	),
-	'GuzzleHttp\\Handler\\CurlFactory' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Handler/CurlFactory.php'
-	),
-	'GuzzleHttp\\Handler\\CurlFactoryInterface' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Handler/CurlFactoryInterface.php'
-	),
-	'GuzzleHttp\\Handler\\CurlHandler' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Handler/CurlHandler.php'
-	),
-	'GuzzleHttp\\Handler\\CurlMultiHandler' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Handler/CurlMultiHandler.php'
-	),
-	'GuzzleHttp\\Handler\\EasyHandle' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Handler/EasyHandle.php'
-	),
-	'GuzzleHttp\\Handler\\HeaderProcessor' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Handler/HeaderProcessor.php'
-	),
-	'GuzzleHttp\\Handler\\MockHandler' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Handler/MockHandler.php'
-	),
-	'GuzzleHttp\\Handler\\Proxy' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Handler/Proxy.php'
-	),
-	'GuzzleHttp\\Handler\\StreamHandler' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Handler/StreamHandler.php'
-	),
-	'GuzzleHttp\\MessageFormatter' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/MessageFormatter.php'
-	),
-	'GuzzleHttp\\MessageFormatterInterface' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/MessageFormatterInterface.php'
-	),
-	'GuzzleHttp\\Middleware' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Middleware.php'
-	),
-	'GuzzleHttp\\Pool' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Pool.php'
-	),
-	'GuzzleHttp\\PrepareBodyMiddleware' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/PrepareBodyMiddleware.php'
-	),
-	'GuzzleHttp\\Promise\\AggregateException' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/AggregateException.php'
-	),
-	'GuzzleHttp\\Promise\\CancellationException' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/CancellationException.php'
-	),
-	'GuzzleHttp\\Promise\\Coroutine' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/Coroutine.php'
-	),
-	'GuzzleHttp\\Promise\\Create' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/Create.php'
-	),
-	'GuzzleHttp\\Promise\\Each' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/Each.php'
-	),
-	'GuzzleHttp\\Promise\\EachPromise' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/EachPromise.php'
-	),
-	'GuzzleHttp\\Promise\\FulfilledPromise' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/FulfilledPromise.php'
-	),
-	'GuzzleHttp\\Promise\\Is' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/Is.php'
-	),
-	'GuzzleHttp\\Promise\\Promise' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/Promise.php'
-	),
-	'GuzzleHttp\\Promise\\PromiseInterface' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/PromiseInterface.php'
-	),
-	'GuzzleHttp\\Promise\\PromisorInterface' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/PromisorInterface.php'
-	),
-	'GuzzleHttp\\Promise\\RejectedPromise' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/RejectedPromise.php'
-	),
-	'GuzzleHttp\\Promise\\RejectionException' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/RejectionException.php'
-	),
-	'GuzzleHttp\\Promise\\TaskQueue' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/TaskQueue.php'
-	),
-	'GuzzleHttp\\Promise\\TaskQueueInterface' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/TaskQueueInterface.php'
-	),
-	'GuzzleHttp\\Promise\\Utils' => array(
-		'version' => '2.3.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/promises/src/Utils.php'
-	),
-	'GuzzleHttp\\Psr7\\AppendStream' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/AppendStream.php'
-	),
-	'GuzzleHttp\\Psr7\\BufferStream' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/BufferStream.php'
-	),
-	'GuzzleHttp\\Psr7\\CachingStream' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/CachingStream.php'
-	),
-	'GuzzleHttp\\Psr7\\DroppingStream' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/DroppingStream.php'
-	),
-	'GuzzleHttp\\Psr7\\Exception\\MalformedUriException' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/Exception/MalformedUriException.php'
-	),
-	'GuzzleHttp\\Psr7\\FnStream' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/FnStream.php'
-	),
-	'GuzzleHttp\\Psr7\\Header' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/Header.php'
-	),
-	'GuzzleHttp\\Psr7\\HttpFactory' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/HttpFactory.php'
-	),
-	'GuzzleHttp\\Psr7\\InflateStream' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/InflateStream.php'
-	),
-	'GuzzleHttp\\Psr7\\LazyOpenStream' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/LazyOpenStream.php'
-	),
-	'GuzzleHttp\\Psr7\\LimitStream' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/LimitStream.php'
-	),
-	'GuzzleHttp\\Psr7\\Message' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/Message.php'
-	),
-	'GuzzleHttp\\Psr7\\MessageTrait' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/MessageTrait.php'
-	),
-	'GuzzleHttp\\Psr7\\MimeType' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/MimeType.php'
-	),
-	'GuzzleHttp\\Psr7\\MultipartStream' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/MultipartStream.php'
-	),
-	'GuzzleHttp\\Psr7\\NoSeekStream' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/NoSeekStream.php'
-	),
-	'GuzzleHttp\\Psr7\\PumpStream' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/PumpStream.php'
-	),
-	'GuzzleHttp\\Psr7\\Query' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/Query.php'
-	),
-	'GuzzleHttp\\Psr7\\Request' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/Request.php'
-	),
-	'GuzzleHttp\\Psr7\\Response' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/Response.php'
-	),
-	'GuzzleHttp\\Psr7\\Rfc7230' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/Rfc7230.php'
-	),
-	'GuzzleHttp\\Psr7\\ServerRequest' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/ServerRequest.php'
-	),
-	'GuzzleHttp\\Psr7\\Stream' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/Stream.php'
-	),
-	'GuzzleHttp\\Psr7\\StreamDecoratorTrait' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/StreamDecoratorTrait.php'
-	),
-	'GuzzleHttp\\Psr7\\StreamWrapper' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/StreamWrapper.php'
-	),
-	'GuzzleHttp\\Psr7\\UploadedFile' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/UploadedFile.php'
-	),
-	'GuzzleHttp\\Psr7\\Uri' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/Uri.php'
-	),
-	'GuzzleHttp\\Psr7\\UriComparator' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/UriComparator.php'
-	),
-	'GuzzleHttp\\Psr7\\UriNormalizer' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/UriNormalizer.php'
-	),
-	'GuzzleHttp\\Psr7\\UriResolver' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/UriResolver.php'
-	),
-	'GuzzleHttp\\Psr7\\Utils' => array(
-		'version' => '2.8.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/psr7/src/Utils.php'
-	),
-	'GuzzleHttp\\RedirectMiddleware' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/RedirectMiddleware.php'
-	),
-	'GuzzleHttp\\RequestOptions' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/RequestOptions.php'
-	),
-	'GuzzleHttp\\RetryMiddleware' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/RetryMiddleware.php'
-	),
-	'GuzzleHttp\\TransferStats' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/TransferStats.php'
-	),
-	'GuzzleHttp\\Utils' => array(
-		'version' => '7.10.0.0',
-		'path'    => $vendorDir . '/guzzlehttp/guzzle/src/Utils.php'
+	'Firebase\\JWT\\BeforeValidException' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/BeforeValidException.php'
+	),
+	'Firebase\\JWT\\CachedKeySet' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/CachedKeySet.php'
+	),
+	'Firebase\\JWT\\ExpiredException' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/ExpiredException.php'
+	),
+	'Firebase\\JWT\\JWK' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/JWK.php'
+	),
+	'Firebase\\JWT\\JWT' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/JWT.php'
+	),
+	'Firebase\\JWT\\JWTExceptionWithPayloadInterface' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/JWTExceptionWithPayloadInterface.php'
+	),
+	'Firebase\\JWT\\Key' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/Key.php'
+	),
+	'Firebase\\JWT\\SignatureInvalidException' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/SignatureInvalidException.php'
+	),
+	'Flatted' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/knit-pay-payment-button/src/node_modules/flatted/php/flatted.php'
+	),
+	'FlattedString' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/knit-pay-payment-button/src/node_modules/flatted/php/flatted.php'
+	),
+	'GautamMKGarg\\PsrForWordPress\\Http\\Exception\\NetworkException' => array(
+		'version' => 'dev-main',
+		'path'    => $vendorDir . '/gautammkgarg/psr-for-wordpress/src/Http/Exception/NetworkException.php'
+	),
+	'GautamMKGarg\\PsrForWordPress\\Http\\Exception\\RequestException' => array(
+		'version' => 'dev-main',
+		'path'    => $vendorDir . '/gautammkgarg/psr-for-wordpress/src/Http/Exception/RequestException.php'
+	),
+	'GautamMKGarg\\PsrForWordPress\\Http\\Psr18Client' => array(
+		'version' => 'dev-main',
+		'path'    => $vendorDir . '/gautammkgarg/psr-for-wordpress/src/Http/Psr18Client.php'
 	),
 	'Hook_Manager' => array(
 		'version' => '5.0.16',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-hook-manager.php'
-	),
-	'Http\\Adapter\\Guzzle7\\Client' => array(
-		'version' => '1.1.0.0',
-		'path'    => $vendorDir . '/php-http/guzzle7-adapter/src/Client.php'
-	),
-	'Http\\Adapter\\Guzzle7\\Exception\\UnexpectedValueException' => array(
-		'version' => '1.1.0.0',
-		'path'    => $vendorDir . '/php-http/guzzle7-adapter/src/Exception/UnexpectedValueException.php'
-	),
-	'Http\\Adapter\\Guzzle7\\Promise' => array(
-		'version' => '1.1.0.0',
-		'path'    => $vendorDir . '/php-http/guzzle7-adapter/src/Promise.php'
-	),
-	'Http\\Client\\Exception' => array(
-		'version' => '2.4.1.0',
-		'path'    => $vendorDir . '/php-http/httplug/src/Exception.php'
-	),
-	'Http\\Client\\Exception\\HttpException' => array(
-		'version' => '2.4.1.0',
-		'path'    => $vendorDir . '/php-http/httplug/src/Exception/HttpException.php'
-	),
-	'Http\\Client\\Exception\\NetworkException' => array(
-		'version' => '2.4.1.0',
-		'path'    => $vendorDir . '/php-http/httplug/src/Exception/NetworkException.php'
-	),
-	'Http\\Client\\Exception\\RequestAwareTrait' => array(
-		'version' => '2.4.1.0',
-		'path'    => $vendorDir . '/php-http/httplug/src/Exception/RequestAwareTrait.php'
-	),
-	'Http\\Client\\Exception\\RequestException' => array(
-		'version' => '2.4.1.0',
-		'path'    => $vendorDir . '/php-http/httplug/src/Exception/RequestException.php'
-	),
-	'Http\\Client\\Exception\\TransferException' => array(
-		'version' => '2.4.1.0',
-		'path'    => $vendorDir . '/php-http/httplug/src/Exception/TransferException.php'
-	),
-	'Http\\Client\\HttpAsyncClient' => array(
-		'version' => '2.4.1.0',
-		'path'    => $vendorDir . '/php-http/httplug/src/HttpAsyncClient.php'
-	),
-	'Http\\Client\\HttpClient' => array(
-		'version' => '2.4.1.0',
-		'path'    => $vendorDir . '/php-http/httplug/src/HttpClient.php'
-	),
-	'Http\\Client\\Promise\\HttpFulfilledPromise' => array(
-		'version' => '2.4.1.0',
-		'path'    => $vendorDir . '/php-http/httplug/src/Promise/HttpFulfilledPromise.php'
-	),
-	'Http\\Client\\Promise\\HttpRejectedPromise' => array(
-		'version' => '2.4.1.0',
-		'path'    => $vendorDir . '/php-http/httplug/src/Promise/HttpRejectedPromise.php'
 	),
 	'Http\\Discovery\\ClassDiscovery' => array(
 		'version' => '1.20.0.0',
@@ -961,6 +661,10 @@ return array(
 	'Http\\Discovery\\Strategy\\DiscoveryStrategy' => array(
 		'version' => '1.20.0.0',
 		'path'    => $vendorDir . '/php-http/discovery/src/Strategy/DiscoveryStrategy.php'
+	),
+	'Http\\Discovery\\Strategy\\GeneratedDiscoveryStrategy' => array(
+		'version' => 'dev-master',
+		'path'    => $vendorDir . '/composer/GeneratedDiscoveryStrategy.php'
 	),
 	'Http\\Discovery\\Strategy\\MockClientStrategy' => array(
 		'version' => '1.20.0.0',
@@ -1169,18 +873,6 @@ return array(
 	'Http\\Message\\UriFactory\\SlimUriFactory' => array(
 		'version' => '1.16.2.0',
 		'path'    => $vendorDir . '/php-http/message/src/UriFactory/SlimUriFactory.php'
-	),
-	'Http\\Promise\\FulfilledPromise' => array(
-		'version' => '1.3.1.0',
-		'path'    => $vendorDir . '/php-http/promise/src/FulfilledPromise.php'
-	),
-	'Http\\Promise\\Promise' => array(
-		'version' => '1.3.1.0',
-		'path'    => $vendorDir . '/php-http/promise/src/Promise.php'
-	),
-	'Http\\Promise\\RejectedPromise' => array(
-		'version' => '1.3.1.0',
-		'path'    => $vendorDir . '/php-http/promise/src/RejectedPromise.php'
 	),
 	'Iyzipay\\ApiResource' => array(
 		'version' => '2.0.60.0',
@@ -2494,6 +2186,1634 @@ return array(
 		'version' => '2.0.60.0',
 		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/VerifyC2CSubMerchantRequest.php'
 	),
+	'KnitPayPro' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/pro.php'
+	),
+	'KnitPayPro_Setup' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/knit-pay-pro-setup.php'
+	),
+	'KnitPaySIGateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/sprout-invoices/src/KnitPaySIGateway.php'
+	),
+	'KnitPay\\CurrencyConverter' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/CurrencyConverter.php'
+	),
+	'KnitPay\\CustomSettingFields' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/CustomSettingFields.php'
+	),
+	'KnitPay\\Extensions\\AWPCP\\AWPCPDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/awpcp/src/AWPCPDependency.php'
+	),
+	'KnitPay\\Extensions\\AWPCP\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/awpcp/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\AWPCP\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/awpcp/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\AWPCP\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/awpcp/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\BaBookEverything\\BaBookEverythingDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/ba-book-everything/src/BaBookEverythingDependency.php'
+	),
+	'KnitPay\\Extensions\\BaBookEverything\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/ba-book-everything/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\BaBookEverything\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/ba-book-everything/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\BaBookEverything\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/ba-book-everything/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\BookingPress\\BookingpressDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/bookingpress/src/BookingpressDependency.php'
+	),
+	'KnitPay\\Extensions\\BookingPress\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/bookingpress/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\BookingPress\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/bookingpress/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\BookingPress\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/bookingpress/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\BooklyPro\\BooklyProDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/bookly-pro/src/BooklyProDependency.php'
+	),
+	'KnitPay\\Extensions\\BooklyPro\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/bookly-pro/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\BooklyPro\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/bookly-pro/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\Camptix\\CamptixDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/camptix/src/CamptixDependency.php'
+	),
+	'KnitPay\\Extensions\\Camptix\\CustomCheckoutFields' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/camptix/src/CustomCheckoutFields.php'
+	),
+	'KnitPay\\Extensions\\Camptix\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/camptix/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\Camptix\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/camptix/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\Camptix\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/camptix/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\Charitable\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/charitable/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\ContactForm7\\ContactForm7Dependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/contact-form7/src/ContactForm7Dependency.php'
+	),
+	'KnitPay\\Extensions\\ContactForm7\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/contact-form7/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\ContactForm7\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/contact-form7/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\EngineThemes\\EngineThemesDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/enginethemes/src/EngineThemesDependency.php'
+	),
+	'KnitPay\\Extensions\\EngineThemes\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/enginethemes/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\EngineThemes\\FreelanceEngine\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/enginethemes/freelanceengine/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\EngineThemes\\FreelanceEngine\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/enginethemes/freelanceengine/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\EngineThemes\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/enginethemes/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\EngineThemes\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/enginethemes/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\EngineThemes\\KnitPayVisitor' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/enginethemes/src/KnitPayVisitor.php'
+	),
+	'KnitPay\\Extensions\\EngineThemes\\MicroJobEngine\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/enginethemes/microjobengine/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\EngineThemes\\MicroJobEngine\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/enginethemes/microjobengine/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\EventsManagerPro\\EventsManagerProDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/events-manager-pro/src/EventsManagerProDependency.php'
+	),
+	'KnitPay\\Extensions\\EventsManagerPro\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/events-manager-pro/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\EventsManagerPro\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/events-manager-pro/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\EventsManagerPro\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/events-manager-pro/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\FluentForms\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/fluent-forms/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\FluentForms\\FluentFormsDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/fluent-forms/src/FluentFormsDependency.php'
+	),
+	'KnitPay\\Extensions\\FluentForms\\GatewayProcessor' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/fluent-forms/src/GatewayProcessor.php'
+	),
+	'KnitPay\\Extensions\\FluentForms\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/fluent-forms/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\FluentForms\\KnitPayPaymentMethod' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/fluent-forms/src/KnitPayPaymentMethod.php'
+	),
+	'KnitPay\\Extensions\\Give\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/give/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\Give\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/give/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\IndeedUltimateMembershipPro\\Dependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/indeed-ultimate-membership-pro/src/Dependency.php'
+	),
+	'KnitPay\\Extensions\\IndeedUltimateMembershipPro\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/indeed-ultimate-membership-pro/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\IndeedUltimateMembershipPro\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/indeed-ultimate-membership-pro/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\IndeedUltimateMembershipPro\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/indeed-ultimate-membership-pro/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\KnitPayPaymentButton\\ElementorPaymentButtonWidget' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/knit-pay-payment-button/src/ElementorPaymentButtonWidget.php'
+	),
+	'KnitPay\\Extensions\\KnitPayPaymentButton\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/knit-pay-payment-button/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\KnitPayPaymentButton\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/knit-pay-payment-button/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\KnitPayPaymentButton\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/knit-pay-payment-button/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\KnitPayPaymentButton\\PaymentButtonBlock' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/knit-pay-payment-button/src/PaymentButtonBlock.php'
+	),
+	'KnitPay\\Extensions\\KnitPayPaymentLink\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/knit-pay-payment-link/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\KnitPayPaymentLink\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/knit-pay-payment-link/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\KnitPayPaymentLink\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/knit-pay-payment-link/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\LatePoint\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/latepoint/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\LatePoint\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/latepoint/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\LatePoint\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/latepoint/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\LatePoint\\LatePointDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/latepoint/src/LatePointDependency.php'
+	),
+	'KnitPay\\Extensions\\LearnDash\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/learndash/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\LearnDash\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/learndash/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\LearnDash\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/learndash/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\LearnDash\\KnitPaySettingsSection' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/learndash/src/KnitPaySettingsSection.php'
+	),
+	'KnitPay\\Extensions\\LearnDash\\LearnDashDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/learndash/src/LearnDashDependency.php'
+	),
+	'KnitPay\\Extensions\\LearnPress\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/learnpress/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\LearnPress\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/learnpress/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\LearnPress\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/learnpress/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\LearnPress\\LearnPressDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/learnpress/src/LearnPressDependency.php'
+	),
+	'KnitPay\\Extensions\\LifterLMS\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/lifterlms/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\LifterLMS\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/lifterlms/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\LifterLMS\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/lifterlms/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\LifterLMS\\LifterLMSDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/lifterlms/src/LifterLMSDependency.php'
+	),
+	'KnitPay\\Extensions\\MotopressHotelBooking\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/motopress-hotel-booking/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\MotopressHotelBooking\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/motopress-hotel-booking/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\MotopressHotelBooking\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/motopress-hotel-booking/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\MotopressHotelBooking\\MotoPressHotelBookingDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/motopress-hotel-booking/src/MotoPressHotelBookingDependency.php'
+	),
+	'KnitPay\\Extensions\\MycredBuycred\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/mycred-buycred/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\MycredBuycred\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/mycred-buycred/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\MycredBuycred\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/mycred-buycred/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\MycredBuycred\\MyCredDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/mycred-buycred/src/MyCredDependency.php'
+	),
+	'KnitPay\\Extensions\\PaidMembershipsPro\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/paid-memberships-pro/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\PaidMembershipsPro\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/paid-memberships-pro/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\PaidMembershipsPro\\PaidMembershipsProDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/paid-memberships-pro/src/PaidMembershipsProDependency.php'
+	),
+	'KnitPay\\Extensions\\ProfilePress\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/profile-press/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\ProfilePress\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/profile-press/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\ProfilePress\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/profile-press/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\ProfilePress\\ProfilePressDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/profile-press/src/ProfilePressDependency.php'
+	),
+	'KnitPay\\Extensions\\RegistrationsForTheEventsCalendarPro\\Dependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/registrations-for-the-events-calendar-pro/src/Dependency.php'
+	),
+	'KnitPay\\Extensions\\RegistrationsForTheEventsCalendarPro\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/registrations-for-the-events-calendar-pro/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\RegistrationsForTheEventsCalendarPro\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/registrations-for-the-events-calendar-pro/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\RegistrationsForTheEventsCalendarPro\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/registrations-for-the-events-calendar-pro/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\RestroPress\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/restropress/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\RestroPress\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/restropress/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\RestroPress\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/restropress/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\RestroPress\\RestroPressDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/restropress/src/RestroPressDependency.php'
+	),
+	'KnitPay\\Extensions\\SproutInvoices\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/sprout-invoices/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\SproutInvoices\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/sprout-invoices/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\SproutInvoices\\SproutInvoicesDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/sprout-invoices/src/SproutInvoicesDependency.php'
+	),
+	'KnitPay\\Extensions\\TeamBooking\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/team-booking/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\TeamBooking\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/team-booking/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\TeamBooking\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/team-booking/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\TeamBooking\\TeamBookingDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/team-booking/src/TeamBookingDependency.php'
+	),
+	'KnitPay\\Extensions\\Tickera\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/tickera/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\Tickera\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/tickera/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\Tickera\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/tickera/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\Tickera\\TickeraDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/tickera/src/TickeraDependency.php'
+	),
+	'KnitPay\\Extensions\\TourMaster\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/tourmaster/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\TourMaster\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/tourmaster/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\TourMaster\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/tourmaster/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\TourMaster\\TourMasterDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/tourmaster/src/TourMasterDependency.php'
+	),
+	'KnitPay\\Extensions\\TutorLMS\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/tutor-lms/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\TutorLMS\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/tutor-lms/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\TutorLMS\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/tutor-lms/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\TutorLMS\\TutorConfig' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/tutor-lms/src/TutorConfig.php'
+	),
+	'KnitPay\\Extensions\\TutorLMS\\TutorLMSDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/tutor-lms/src/TutorLMSDependency.php'
+	),
+	'KnitPay\\Extensions\\TutorLMS\\TutorPayment' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/tutor-lms/src/TutorPayment.php'
+	),
+	'KnitPay\\Extensions\\UncannyAutomator\\Actions\\CreatePaymentAction' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/uncanny-automator/src/actions/CreatePaymentAction.php'
+	),
+	'KnitPay\\Extensions\\UncannyAutomator\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/uncanny-automator/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\UncannyAutomator\\KnitPayIntegration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/uncanny-automator/src/KnitPayIntegration.php'
+	),
+	'KnitPay\\Extensions\\UncannyAutomator\\KnitPayTokens' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/uncanny-automator/src/KnitPayTokens.php'
+	),
+	'KnitPay\\Extensions\\UncannyAutomator\\Triggers\\PaymentStatusUpdateTrigger' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/uncanny-automator/src/triggers/PaymentStatusUpdateTrigger.php'
+	),
+	'KnitPay\\Extensions\\UncannyAutomator\\UncannyAutomatorDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/uncanny-automator/src/UncannyAutomatorDependency.php'
+	),
+	'KnitPay\\Extensions\\VikWP\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/vik-wp/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\VikWP\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/vik-wp/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\VikWP\\KnitPayGateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/vik-wp/src/KnitPayGateway.php'
+	),
+	'KnitPay\\Extensions\\VikWP\\VikWPDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/vik-wp/src/VikWPDependency.php'
+	),
+	'KnitPay\\Extensions\\WPAdverts\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wpadverts/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\WPAdverts\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wpadverts/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\WPAdverts\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wpadverts/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\WPAdverts\\WPAdvertsDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wpadverts/src/WPAdvertsDependency.php'
+	),
+	'KnitPay\\Extensions\\WPForms\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wpforms/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\WPForms\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wpforms/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\WPForms\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wpforms/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\WPForms\\WPFormsDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wpforms/src/WPFormsDependency.php'
+	),
+	'KnitPay\\Extensions\\WPTravelEngine\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wptravel-engine/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\WPTravelEngine\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wptravel-engine/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\WPTravelEngine\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wptravel-engine/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\WPTravelEngine\\WPTravelEngineDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wptravel-engine/src/WPTravelEngineDependency.php'
+	),
+	'KnitPay\\Extensions\\WPTravel\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wptravel/src/Extension.php'
+	),
+	'KnitPay\\Extensions\\WPTravel\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wptravel/src/Gateway.php'
+	),
+	'KnitPay\\Extensions\\WPTravel\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wptravel/src/Helper.php'
+	),
+	'KnitPay\\Extensions\\WPTravel\\WPTravelDependency' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/wptravel/src/WPTravelDependency.php'
+	),
+	'KnitPay\\Gateways\\CBK\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cbk/src/API.php'
+	),
+	'KnitPay\\Gateways\\CBK\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cbk/src/Config.php'
+	),
+	'KnitPay\\Gateways\\CBK\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cbk/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\CBK\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cbk/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\CBK\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cbk/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\CCAvenue\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ccavenue/src/API.php'
+	),
+	'KnitPay\\Gateways\\CCAvenue\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ccavenue/src/Config.php'
+	),
+	'KnitPay\\Gateways\\CCAvenue\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ccavenue/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\CCAvenue\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ccavenue/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\CCAvenue\\PaymentMethods' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ccavenue/src/PaymentMethods.php'
+	),
+	'KnitPay\\Gateways\\CCAvenue\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ccavenue/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\CMI\\Client' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cmi/src/Client.php'
+	),
+	'KnitPay\\Gateways\\CMI\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cmi/src/Config.php'
+	),
+	'KnitPay\\Gateways\\CMI\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cmi/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\CMI\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cmi/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\CMI\\Listener' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cmi/src/Listener.php'
+	),
+	'KnitPay\\Gateways\\CMI\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cmi/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Cashfree\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cashfree/src/API.php'
+	),
+	'KnitPay\\Gateways\\Cashfree\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cashfree/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Cashfree\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cashfree/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Cashfree\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cashfree/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Cashfree\\Listener' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cashfree/src/Listener.php'
+	),
+	'KnitPay\\Gateways\\Cashfree\\PaymentMethods' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cashfree/src/PaymentMethods.php'
+	),
+	'KnitPay\\Gateways\\Cashfree\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/cashfree/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Coinbase\\Coinbase_API_Handler' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/coinbase/src/Coinbase_API_Handler.php'
+	),
+	'KnitPay\\Gateways\\Coinbase\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/coinbase/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Coinbase\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/coinbase/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Coinbase\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/coinbase/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Coinbase\\Listener' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/coinbase/src/Listener.php'
+	),
+	'KnitPay\\Gateways\\Coinbase\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/coinbase/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\EBS\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ebs/src/Config.php'
+	),
+	'KnitPay\\Gateways\\EBS\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ebs/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\EBS\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ebs/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\EBS\\PaymentMethods' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ebs/src/PaymentMethods.php'
+	),
+	'KnitPay\\Gateways\\EBS\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ebs/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Easebuzz\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/easebuzz/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Easebuzz\\Easebuzz' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/easebuzz/src/easebuzz-lib/easebuzz_payment_gateway.php'
+	),
+	'KnitPay\\Gateways\\Easebuzz\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/easebuzz/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Easebuzz\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/easebuzz/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Easebuzz\\Listener' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/easebuzz/src/Listener.php'
+	),
+	'KnitPay\\Gateways\\Easebuzz\\PaymentMethods' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/easebuzz/src/PaymentMethods.php'
+	),
+	'KnitPay\\Gateways\\Easebuzz\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/easebuzz/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\ElavonConverge\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/elavon-converge/src/lib/API.php'
+	),
+	'KnitPay\\Gateways\\ElavonConverge\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/elavon-converge/src/Config.php'
+	),
+	'KnitPay\\Gateways\\ElavonConverge\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/elavon-converge/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\ElavonConverge\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/elavon-converge/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\ElavonConverge\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/elavon-converge/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Fiserv\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fiserv/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Fiserv\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fiserv/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Fiserv\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fiserv/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Fiserv\\Lib\\Utility' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fiserv/src/lib/Utility.php'
+	),
+	'KnitPay\\Gateways\\Fiserv\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fiserv/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Flutterwave\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/flutterwave/src/API.php'
+	),
+	'KnitPay\\Gateways\\Flutterwave\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/flutterwave/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Flutterwave\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/flutterwave/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Flutterwave\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/flutterwave/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Flutterwave\\PaymentMethods' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/flutterwave/src/PaymentMethods.php'
+	),
+	'KnitPay\\Gateways\\Fygaro\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Fygaro\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Fygaro\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Fygaro\\Listener' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/fygaro/src/Listener.php'
+	),
+	'KnitPay\\Gateways\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/Gateway.php'
+	),
+	'KnitPay\\Gateways\\GetEpay\\Client' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/get-epay/src/Client.php'
+	),
+	'KnitPay\\Gateways\\GetEpay\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/get-epay/src/Config.php'
+	),
+	'KnitPay\\Gateways\\GetEpay\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/get-epay/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\GetEpay\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/get-epay/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\GetEpay\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/get-epay/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\HdfcSmartGateway\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/hdfc-smart-gateway/src/API.php'
+	),
+	'KnitPay\\Gateways\\HdfcSmartGateway\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/hdfc-smart-gateway/src/Config.php'
+	),
+	'KnitPay\\Gateways\\HdfcSmartGateway\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/hdfc-smart-gateway/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\HdfcSmartGateway\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/hdfc-smart-gateway/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\HdfcSmartGateway\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/hdfc-smart-gateway/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\IPay88\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ipay88/src/API.php'
+	),
+	'KnitPay\\Gateways\\IPay88\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ipay88/src/Config.php'
+	),
+	'KnitPay\\Gateways\\IPay88\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ipay88/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\IPay88\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ipay88/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\IPay88\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/ipay88/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\IciciEazypay\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/icici-eazypay/src/Config.php'
+	),
+	'KnitPay\\Gateways\\IciciEazypay\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/icici-eazypay/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\IciciEazypay\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/icici-eazypay/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\IciciEazypay\\PaymentMethods' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/icici-eazypay/src/PaymentMethods.php'
+	),
+	'KnitPay\\Gateways\\IciciEazypay\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/icici-eazypay/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Instamojo\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/instamojo/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Instamojo\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/instamojo/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Instamojo\\Instamojo' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/instamojo/src/lib/Instamojo.php'
+	),
+	'KnitPay\\Gateways\\Instamojo\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/instamojo/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Instamojo\\Listener' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/instamojo/src/Listener.php'
+	),
+	'KnitPay\\Gateways\\Instamojo\\PaymentMethods' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/instamojo/src/PaymentMethods.php'
+	),
+	'KnitPay\\Gateways\\Instamojo\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/instamojo/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Instamojo\\ValidationException' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/instamojo/src/lib/ValidationException.php'
+	),
+	'KnitPay\\Gateways\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/Integration.php'
+	),
+	'KnitPay\\Gateways\\IntegrationOAuthClient' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/IntegrationOAuthClient.php'
+	),
+	'KnitPay\\Gateways\\Iyzico\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/iyzico/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Iyzico\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/iyzico/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Iyzico\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/iyzico/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Iyzico\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/iyzico/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\MPGS\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/mpgs/src/API.php'
+	),
+	'KnitPay\\Gateways\\MPGS\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/mpgs/src/Config.php'
+	),
+	'KnitPay\\Gateways\\MPGS\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/mpgs/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\MPGS\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/mpgs/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\MPGS\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/mpgs/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Manual\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/manual/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Manual\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/manual/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Manual\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/manual/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\MercadoPago\\Client' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/mercado-pago/src/Client.php'
+	),
+	'KnitPay\\Gateways\\MercadoPago\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/mercado-pago/src/Config.php'
+	),
+	'KnitPay\\Gateways\\MercadoPago\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/mercado-pago/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\MercadoPago\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/mercado-pago/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\MercadoPago\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/mercado-pago/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\MultiGateway\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/multi-gateway/src/Config.php'
+	),
+	'KnitPay\\Gateways\\MultiGateway\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/multi-gateway/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\MultiGateway\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/multi-gateway/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\MyFatoorah\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/my-fatoorah/src/lib/API.php'
+	),
+	'KnitPay\\Gateways\\MyFatoorah\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/my-fatoorah/src/Config.php'
+	),
+	'KnitPay\\Gateways\\MyFatoorah\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/my-fatoorah/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\MyFatoorah\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/my-fatoorah/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\MyFatoorah\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/my-fatoorah/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\NMI\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/nmi/src/API.php'
+	),
+	'KnitPay\\Gateways\\NMI\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/nmi/src/Config.php'
+	),
+	'KnitPay\\Gateways\\NMI\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/nmi/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\NMI\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/nmi/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\NMI\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/nmi/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Omnipay\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/omnipay/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Omnipay\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/omnipay/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Omnipay\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/omnipay/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Omnipay\\RestController' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/omnipay/src/RestController.php'
+	),
+	'KnitPay\\Gateways\\OpenMoney\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/open-money/src/Config.php'
+	),
+	'KnitPay\\Gateways\\OpenMoney\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/open-money/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\OpenMoney\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/open-money/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\OpenMoney\\LayerApi' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/open-money/src/lib/layer_api.php'
+	),
+	'KnitPay\\Gateways\\OpenMoney\\PaymentMethods' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/open-money/src/PaymentMethods.php'
+	),
+	'KnitPay\\Gateways\\OpenMoney\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/open-money/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\OrderBox\\Checksum' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/orderbox/src/Checksum.php'
+	),
+	'KnitPay\\Gateways\\OrderBox\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/orderbox/src/Config.php'
+	),
+	'KnitPay\\Gateways\\OrderBox\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/orderbox/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\OrderBox\\Helper' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/orderbox/src/Helper.php'
+	),
+	'KnitPay\\Gateways\\OrderBox\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/orderbox/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\PayU\\Client' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/pay-u/src/Client.php'
+	),
+	'KnitPay\\Gateways\\PayU\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/pay-u/src/Config.php'
+	),
+	'KnitPay\\Gateways\\PayU\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/pay-u/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\PayU\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/pay-u/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\PayU\\Listener' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/pay-u/src/Listener.php'
+	),
+	'KnitPay\\Gateways\\PayU\\PaymentMethods' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/pay-u/src/PaymentMethods.php'
+	),
+	'KnitPay\\Gateways\\PayU\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/pay-u/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\PaymarkOE\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paymark-oe/src/lib/API.php'
+	),
+	'KnitPay\\Gateways\\PaymarkOE\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paymark-oe/src/Config.php'
+	),
+	'KnitPay\\Gateways\\PaymarkOE\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paymark-oe/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\PaymarkOE\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paymark-oe/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\PaymarkOE\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paymark-oe/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\PaymentMethods' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/PaymentMethods.php'
+	),
+	'KnitPay\\Gateways\\Paypal\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paypal/src/API.php'
+	),
+	'KnitPay\\Gateways\\Paypal\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paypal/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Paypal\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paypal/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Paypal\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paypal/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Paypal\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paypal/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Paypal\\Webhook' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paypal/src/Webhook.php'
+	),
+	'KnitPay\\Gateways\\Payrexx\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/payrexx/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Payrexx\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/payrexx/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Payrexx\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/payrexx/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Payrexx\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/payrexx/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Paytm\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paytm/src/API.php'
+	),
+	'KnitPay\\Gateways\\Paytm\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paytm/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Paytm\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paytm/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Paytm\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paytm/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Paytm\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paytm/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Paytr\\Client' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paytr/src/Client.php'
+	),
+	'KnitPay\\Gateways\\Paytr\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paytr/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Paytr\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paytr/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Paytr\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paytr/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Paytr\\Listener' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/paytr/src/Listener.php'
+	),
+	'KnitPay\\Gateways\\Pesapal\\Client' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/pesapal/src/Client.php'
+	),
+	'KnitPay\\Gateways\\Pesapal\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/pesapal/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Pesapal\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/pesapal/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Pesapal\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/pesapal/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Pesapal\\Listener' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/pesapal/src/Listener.php'
+	),
+	'KnitPay\\Gateways\\Pesapal\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/pesapal/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\PhonePe\\APIV1' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/phone-pe/src/APIV1.php'
+	),
+	'KnitPay\\Gateways\\PhonePe\\APIV2' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/phone-pe/src/APIV2.php'
+	),
+	'KnitPay\\Gateways\\PhonePe\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/phone-pe/src/Config.php'
+	),
+	'KnitPay\\Gateways\\PhonePe\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/phone-pe/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\PhonePe\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/phone-pe/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\PhonePe\\Listener' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/phone-pe/src/Listener.php'
+	),
+	'KnitPay\\Gateways\\PhonePe\\PaymentMethods' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/phone-pe/src/PaymentMethods.php'
+	),
+	'KnitPay\\Gateways\\PhonePe\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/phone-pe/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Razorpay\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/razorpay/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Razorpay\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/razorpay/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Razorpay\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/razorpay/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Razorpay\\InvoiceUploader' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/razorpay/src/InvoiceUploader.php'
+	),
+	'KnitPay\\Gateways\\Razorpay\\Listener' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/razorpay/src/Listener.php'
+	),
+	'KnitPay\\Gateways\\Razorpay\\PaymentMethods' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/razorpay/src/PaymentMethods.php'
+	),
+	'KnitPay\\Gateways\\Razorpay\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/razorpay/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Razorpay\\Webhook' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/razorpay/src/Webhook.php'
+	),
+	'KnitPay\\Gateways\\Revolut\\Client' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/revolut/src/Client.php'
+	),
+	'KnitPay\\Gateways\\Revolut\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/revolut/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Revolut\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/revolut/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Revolut\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/revolut/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Revolut\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/revolut/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\SBIePay\\AES128' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sbiepay/src/AES128.php'
+	),
+	'KnitPay\\Gateways\\SBIePay\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sbiepay/src/Config.php'
+	),
+	'KnitPay\\Gateways\\SBIePay\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sbiepay/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\SBIePay\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sbiepay/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\SBIePay\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sbiepay/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\SBIePay\\WebhookController' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sbiepay/src/WebhookController.php'
+	),
+	'KnitPay\\Gateways\\SSLCommerz\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sslcommerz/src/API.php'
+	),
+	'KnitPay\\Gateways\\SSLCommerz\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sslcommerz/src/Config.php'
+	),
+	'KnitPay\\Gateways\\SSLCommerz\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sslcommerz/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\SSLCommerz\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sslcommerz/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\SSLCommerz\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sslcommerz/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\SabPaisa\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sab-paisa/src/API.php'
+	),
+	'KnitPay\\Gateways\\SabPaisa\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sab-paisa/src/Config.php'
+	),
+	'KnitPay\\Gateways\\SabPaisa\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sab-paisa/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\SabPaisa\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sab-paisa/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\SabPaisa\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sab-paisa/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Slydepay\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/slydepay/src/API.php'
+	),
+	'KnitPay\\Gateways\\Slydepay\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/slydepay/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Slydepay\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/slydepay/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Slydepay\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/slydepay/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Slydepay\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/slydepay/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Sodexo\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sodexo/src/lib/API.php'
+	),
+	'KnitPay\\Gateways\\Sodexo\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sodexo/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Sodexo\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sodexo/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Sodexo\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sodexo/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Sodexo\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sodexo/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Stripe\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/stripe/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Stripe\\Connect\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/stripe/connect/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Stripe\\Connect\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/stripe/connect/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Stripe\\Connect\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/stripe/connect/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Stripe\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/stripe/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Stripe\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/stripe/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Stripe\\PaymentMethods' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/stripe/src/PaymentMethods.php'
+	),
+	'KnitPay\\Gateways\\Stripe\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/stripe/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Stripe\\Webhook' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/stripe/src/Webhook.php'
+	),
+	'KnitPay\\Gateways\\SumUp\\Client' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sum-up/src/Client.php'
+	),
+	'KnitPay\\Gateways\\SumUp\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sum-up/src/Config.php'
+	),
+	'KnitPay\\Gateways\\SumUp\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sum-up/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\SumUp\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sum-up/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\SumUp\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/sum-up/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Test\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/test/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Test\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/test/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Test\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/test/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Thawani\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/thawani/src/API.php'
+	),
+	'KnitPay\\Gateways\\Thawani\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/thawani/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Thawani\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/thawani/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Thawani\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/thawani/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Thawani\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/thawani/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\UpiQR\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/upi-qr/src/Config.php'
+	),
+	'KnitPay\\Gateways\\UpiQR\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/upi-qr/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\UpiQR\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/upi-qr/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Zaakpay\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/zaakpay/src/Config.php'
+	),
+	'KnitPay\\Gateways\\Zaakpay\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/zaakpay/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\Zaakpay\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/zaakpay/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\Zaakpay\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/zaakpay/src/Statuses.php'
+	),
+	'KnitPay\\Gateways\\ZohoPay\\API' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/zoho-pay/src/API.php'
+	),
+	'KnitPay\\Gateways\\ZohoPay\\Config' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/zoho-pay/src/Config.php'
+	),
+	'KnitPay\\Gateways\\ZohoPay\\Gateway' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/zoho-pay/src/Gateway.php'
+	),
+	'KnitPay\\Gateways\\ZohoPay\\Integration' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/zoho-pay/src/Integration.php'
+	),
+	'KnitPay\\Gateways\\ZohoPay\\Statuses' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/zoho-pay/src/Statuses.php'
+	),
+	'KnitPay\\Utils' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/Utils.php'
+	),
+	'KnitPay_CustomSettings' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/KnitPay_CustomSettings.php'
+	),
 	'Konekt\\PdfInvoice\\InvoicePrinter' => array(
 		'version' => '1.14.0.0',
 		'path'    => $vendorDir . '/konekt/pdf-invoice/src/InvoicePrinter.php'
@@ -2990,6 +4310,50 @@ return array(
 		'version' => '4.8.0.0',
 		'path'    => $vendorDir . '/moneyphp/money/src/TellerFactory.php'
 	),
+	'Nyholm\\Psr7\\Factory\\HttplugFactory' => array(
+		'version' => '1.8.2.0',
+		'path'    => $vendorDir . '/nyholm/psr7/src/Factory/HttplugFactory.php'
+	),
+	'Nyholm\\Psr7\\Factory\\Psr17Factory' => array(
+		'version' => '1.8.2.0',
+		'path'    => $vendorDir . '/nyholm/psr7/src/Factory/Psr17Factory.php'
+	),
+	'Nyholm\\Psr7\\MessageTrait' => array(
+		'version' => '1.8.2.0',
+		'path'    => $vendorDir . '/nyholm/psr7/src/MessageTrait.php'
+	),
+	'Nyholm\\Psr7\\Request' => array(
+		'version' => '1.8.2.0',
+		'path'    => $vendorDir . '/nyholm/psr7/src/Request.php'
+	),
+	'Nyholm\\Psr7\\RequestTrait' => array(
+		'version' => '1.8.2.0',
+		'path'    => $vendorDir . '/nyholm/psr7/src/RequestTrait.php'
+	),
+	'Nyholm\\Psr7\\Response' => array(
+		'version' => '1.8.2.0',
+		'path'    => $vendorDir . '/nyholm/psr7/src/Response.php'
+	),
+	'Nyholm\\Psr7\\ServerRequest' => array(
+		'version' => '1.8.2.0',
+		'path'    => $vendorDir . '/nyholm/psr7/src/ServerRequest.php'
+	),
+	'Nyholm\\Psr7\\Stream' => array(
+		'version' => '1.8.2.0',
+		'path'    => $vendorDir . '/nyholm/psr7/src/Stream.php'
+	),
+	'Nyholm\\Psr7\\StreamTrait' => array(
+		'version' => '1.8.2.0',
+		'path'    => $vendorDir . '/nyholm/psr7/src/StreamTrait.php'
+	),
+	'Nyholm\\Psr7\\UploadedFile' => array(
+		'version' => '1.8.2.0',
+		'path'    => $vendorDir . '/nyholm/psr7/src/UploadedFile.php'
+	),
+	'Nyholm\\Psr7\\Uri' => array(
+		'version' => '1.8.2.0',
+		'path'    => $vendorDir . '/nyholm/psr7/src/Uri.php'
+	),
 	'OAuthTokenClientTest' => array(
 		'version' => '2.9.2.0',
 		'path'    => $vendorDir . '/razorpay/razorpay/tests/OAuthTokenClientTest.php'
@@ -3362,6 +4726,10 @@ return array(
 		'version' => '1.0.3.0',
 		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Support/InstantUpdateApi/ShippingOption.php'
 	),
+	'OsPaymentsKnitPayController' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/latepoint/src/OsPaymentsKnitPayController.php'
+	),
 	'Override' => array(
 		'version' => '1.33.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/Override.php'
@@ -3369,6 +4737,10 @@ return array(
 	'PHP_Autoloader' => array(
 		'version' => '5.0.16',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-php-autoloader.php'
+	),
+	'PMProGateway_knit_pay' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/paid-memberships-pro/src/PMProGateway_knit_pay.php'
 	),
 	'Path_Processor' => array(
 		'version' => '5.0.16',
@@ -3749,6 +5121,10 @@ return array(
 	'Pronamic\\WordPress\\Pay\\Core\\IdTrait' => array(
 		'version' => '4.26.0.2',
 		'path'    => $baseDir . '/packages/wp-pay/core/src/Core/IdTrait.php'
+	),
+	'Pronamic\\WordPress\\Pay\\Core\\IntegrationModeTrait' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/gateways/IntegrationModeTrait.php'
 	),
 	'Pronamic\\WordPress\\Pay\\Core\\ModeTrait' => array(
 		'version' => '4.26.0.2',
@@ -4162,6 +5538,10 @@ return array(
 		'version' => 'dev-knitpay-master',
 		'path'    => $baseDir . '/packages/wp-pay-extensions/ninjaforms/src/SubmissionMetaboxReact.php'
 	),
+	'Pronamic\\WordPress\\Pay\\Extensions\\RestrictContentPro\\Extension' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/temp_code.php'
+	),
 	'Pronamic\\WordPress\\Pay\\Extensions\\RestrictContent\\Extension' => array(
 		'version' => 'dev-knitpay-master',
 		'path'    => $baseDir . '/packages/wp-pay-extensions/restrict-content-pro/src/Extension.php'
@@ -4429,6 +5809,10 @@ return array(
 	'Pronamic\\WordPress\\Pay\\Payments\\PaymentPostType' => array(
 		'version' => '4.26.0.2',
 		'path'    => $baseDir . '/packages/wp-pay/core/src/Payments/PaymentPostType.php'
+	),
+	'Pronamic\\WordPress\\Pay\\Payments\\PaymentRestController' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/includes/PaymentRestController.php'
 	),
 	'Pronamic\\WordPress\\Pay\\Payments\\PaymentStatus' => array(
 		'version' => '4.26.0.2',
@@ -6381,5 +7765,9 @@ return array(
 	'Version_Selector' => array(
 		'version' => '5.0.16',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-version-selector.php'
+	),
+	'WPCF7R_Action_Knit_Pay' => array(
+		'version' => 'dev-master',
+		'path'    => $baseDir . '/extensions/contact-form7/src/WPCF7R_Action_Knit_Pay.php'
 	),
 );

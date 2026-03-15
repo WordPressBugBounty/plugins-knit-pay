@@ -143,7 +143,7 @@
 			$is_android = false;
 		} else {
 			// phpcs:ignore WordPressVIPMinimum.Variables.RestrictedVariables.cache_constraints___SERVER__HTTP_USER_AGENT__
-			$is_android = false !== strpos( sanitize_text_field( $_SERVER['HTTP_USER_AGENT'] ), 'Android' );
+			$is_android = str_contains( sanitize_text_field( $_SERVER['HTTP_USER_AGENT'] ), 'Android' );
 		}
 
 		if ( ( ! isset( $customer_upi_id ) || empty( $customer_upi_id ) ) && 'sms_payment_link' !== $payment_method && $is_android ) {

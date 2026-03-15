@@ -10,7 +10,7 @@
  * @since   8.90.0.0
  */
 
-namespace KnitPay\Extensions\Bookingpress;
+namespace KnitPay\Extensions\BookingPress;
 
 use Pronamic\WordPress\Pay\Dependencies\Dependency;
 

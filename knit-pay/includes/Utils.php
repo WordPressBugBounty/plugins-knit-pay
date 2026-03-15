@@ -361,15 +361,57 @@ class Utils {
 		return trim( $ip );
 	}
 	
-	public static function get_contact_name_from_string( $name ) {
-		$last_name  = ( strpos( $name, ' ' ) === false ) ? '' : preg_replace( '#.*\s([\w-]*)$#', '$1', $name );
-		$first_name = trim( preg_replace( '#' . preg_quote( $last_name, '#' ) . '#', '', $name ) );
-
-		if ( empty( $first_name ) ) {
-			$first_name = ' ';
+	/**
+	 * Extract first name and last name from a full name string.
+	 *
+	 * The function splits the name at the last space:
+	 * - Everything before the last space becomes the first name
+	 * - Everything after the last space becomes the last name
+	 *
+	 * Examples:
+	 * - "John Doe" -> First: "John", Last: "Doe"
+	 * - "John Paul Smith" -> First: "John Paul", Last: "Smith"
+	 * - "John" -> First: "John", Last: " "
+	 * - "   John   Doe   " -> First: "John", Last: "Doe"
+	 *
+	 * @param string|null $name Full name string to parse
+	 * @return object ContactNameHelper object with first_name and last_name properties
+	 */
+	public static function get_contact_name_from_string( ?string $name ) {
+		// Handle null or empty input
+		if ( empty( $name ) ) {
+			return ContactNameHelper::from_array(
+				[
+					'first_name' => __( 'Guest', 'knit-pay-lang' ),
+					'last_name'  => ' ',
+				]
+			);
 		}
-		if ( empty( $last_name ) ) {
-			$last_name = ' ';
+
+		// Normalize whitespace: trim and collapse multiple spaces into single spaces
+		$name = preg_replace( '/\s+/', ' ', trim( $name ) );
+
+		// Check again after normalization (in case name was only whitespace)
+		if ( empty( $name ) ) {
+			return ContactNameHelper::from_array(
+				[
+					'first_name' => __( 'Guest', 'knit-pay-lang' ),
+					'last_name'  => ' ',
+				]
+			);
+		}
+
+		// Find the position of the last space in the name
+		$last_space_pos = strrpos( $name, ' ' );
+		
+		if ( $last_space_pos === false ) {
+			// No space found, entire name is first name
+			$first_name = $name;
+			$last_name  = ' ';
+		} else {
+			// Split at the last space position
+			$first_name = substr( $name, 0, $last_space_pos );
+			$last_name  = substr( $name, $last_space_pos + 1 );
 		}
 
 		return ContactNameHelper::from_array(

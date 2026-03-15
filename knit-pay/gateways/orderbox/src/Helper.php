@@ -11,6 +11,7 @@ use Pronamic\WordPress\Pay\ContactNameHelper;
 use Pronamic\WordPress\Pay\CustomerHelper;
 use Pronamic\WordPress\Money\Currency;
 use Pronamic\WordPress\Money\TaxedMoney;
+use KnitPay\Utils;
 
 /**
  * Title: Orderbox Helper
@@ -68,24 +69,7 @@ class Helper {
 	 * @return ContactName|null
 	 */
 	public static function get_name( $payment_data ) {
-		$name = self::get_value_from_array( $payment_data, 'name' );
-		
-		$last_name  = ( strpos( $name, ' ' ) === false ) ? '' : preg_replace( '#.*\s([\w-]*)$#', '$1', $name );
-		$first_name = trim( preg_replace( '#' . preg_quote( $last_name, '#' ) . '#', '', $name ) );
-		
-		if ( empty( $first_name ) ) {
-			$first_name = ' ';
-		}
-		if ( empty( $last_name ) ) {
-			$last_name = ' ';
-		}
-		
-		return ContactNameHelper::from_array(
-			[
-				'first_name' => $first_name,
-				'last_name'  => $last_name,
-			]
-		);
+		return Utils::get_contact_name_from_string( self::get_value_from_array( $payment_data, 'name' ) );
 	}
 
 	/**

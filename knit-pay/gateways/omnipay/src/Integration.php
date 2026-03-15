@@ -26,7 +26,7 @@ class Integration extends AbstractGatewayIntegration {
 	 */
 	private $omnipay_gateway;
 
-	private $args;
+	private array $args;
 
 	/**
 	 * Construct Omnitpay integration.
@@ -206,7 +206,7 @@ class Integration extends AbstractGatewayIntegration {
 			);
 		}
 
-		unset($params['testMode']);
+		unset( $params['testMode'] );
 		$params['testMode'] = false;
 		return $params;
 	}

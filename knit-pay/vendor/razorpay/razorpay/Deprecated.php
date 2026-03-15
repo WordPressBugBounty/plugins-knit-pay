@@ -13,8 +13,11 @@
  */
 define("REQUESTS_SILENCE_PSR0_DEPRECATIONS",true);
 
+// Commented by Knit Pay. No need to Load Requests again in WordPress.
+/*
 if (class_exists('WpOrg\Requests\Autoload') === false) {
 	require_once __DIR__. 'libs/Requests-2.0.4/src/Autoload.php';
 }
 
 WpOrg\Requests\Autoload::register();
+*/

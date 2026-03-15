@@ -22,12 +22,12 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
  * @version 9.1.0.0
  * @since   9.1.0.0
  */
-class InvoiceUploader extends InvoicePrinter {
+class InvoiceUploader {
 	const RAZORPAY_SFTP_HOST = 'sftp.razorpay.com';
 	const RAZORPAY_SFTP_PATH = '/invoiceUpload/automated/';
 	const RAZORPAY_SFTP_PORT = 22;
 
-	private $config;
+	private Config $config;
 
 	private static $instance;
 
@@ -182,7 +182,7 @@ class InvoiceUploader extends InvoicePrinter {
 		$invoice->changeLanguageTerm( 'vat', 'Tax' );
 
 		// Currency formater.
-		$invoice->setNumberFormat( self::NUMBER_SEPARATOR_DOT, self::NUMBER_SEPARATOR_COMMA, self::NUMBER_ALIGNMENT_LEFT, true, false );
+		$invoice->setNumberFormat( $invoice::NUMBER_SEPARATOR_DOT, $invoice::NUMBER_SEPARATOR_COMMA, $invoice::NUMBER_ALIGNMENT_LEFT, true, false );
 
 		/* Header Settings */
 		$this->config->checkout_image = get_post_meta( $this->config->config_id, '_pronamic_gateway_razorpay_checkout_image', true );

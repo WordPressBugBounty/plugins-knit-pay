@@ -8,6 +8,7 @@ use Pronamic\WordPress\Pay\AddressHelper;
 use Pronamic\WordPress\Pay\ContactName;
 use Pronamic\WordPress\Pay\ContactNameHelper;
 use Pronamic\WordPress\Pay\CustomerHelper;
+use KnitPay\Utils;
 
 /**
  * Title: Sprout Invoices Helper
@@ -140,23 +141,7 @@ class Helper {
 			);
 		}
 
-		$name       = $client->get_title();
-		$last_name  = ( strpos( $name, ' ' ) === false ) ? '' : preg_replace( '#.*\s([\w-]*)$#', '$1', $name );
-		$first_name = trim( preg_replace( '#' . preg_quote( $last_name, '#' ) . '#', '', $name ) );
-
-		if ( empty( $first_name ) ) {
-			$first_name = ' ';
-		}
-		if ( empty( $last_name ) ) {
-			$last_name = ' ';
-		}
-
-		return ContactNameHelper::from_array(
-			[
-				'first_name' => $first_name,
-				'last_name'  => $last_name,
-			]
-		);
+		return Utils::get_contact_name_from_string( $client->get_title() );
 	}
 
 	/**

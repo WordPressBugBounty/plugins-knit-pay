@@ -1,6 +1,6 @@
 <?php
 
-namespace KnitPay\Extensions\Bookingpress;
+namespace KnitPay\Extensions\BookingPress;
 
 use Pronamic\WordPress\Pay\AbstractPluginIntegration;
 use Pronamic\WordPress\Pay\Payments\Payment;

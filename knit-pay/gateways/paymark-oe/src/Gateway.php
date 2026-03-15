@@ -62,7 +62,7 @@ class Gateway extends Core_Gateway {
 			throw new \Exception( $currency_error );
 		}
 
-		if ( strpos( home_url( '/' ), 'https' ) !== 0 ) {
+		if ( ! str_starts_with( home_url( '/' ), 'https' ) ) {
 			$ssl_error = 'SSL is mandatory on the website.';
 			throw new \Exception( $ssl_error );
 		}

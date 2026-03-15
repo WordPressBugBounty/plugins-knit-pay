@@ -36,6 +36,9 @@
 		}, {
 			"type" : "git",
 			"url" : "https://github.com/knit-pay/knit-pay-admin-reports"
+		}, {
+			"type" : "git",
+			"url" : "https://github.com/GautamMKGarg/psr-for-wordpress"
 		}
 	],
 	"config" : {
@@ -45,27 +48,27 @@
 		"platform-check" : false,
 		"sort-packages" : true,
 		"allow-plugins" : {
-			"dealerdirect/phpcodesniffer-composer-installer": true,
-			"roots/wordpress-core-installer": true,
+			"automattic/jetpack-autoloader": true,
 			"bamarni/composer-bin-plugin": true,
 			"composer/installers": true,
-			"automattic/jetpack-autoloader": true,
-			"php-http/discovery" : true
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"php-http/discovery": true,
+			"roots/wordpress-core-installer": true
 		}
 	},
 	"require" : {
 		"php": ">=8.1",
 		"ext-json": "*",
-		"konekt/pdf-invoice": "^1.14",
-		"league/flysystem-sftp-v3": "^3.31",
+		"gautammkgarg/psr-for-wordpress": "dev-main",
 		"automattic/jetpack-autoloader": "^5.0",
 		"composer/installers": "^2.3",
 		"iyzico/iyzipay-php": "^2.0",
 		"knit-pay/omnipay-paypal": "^1.0",
+		"konekt/pdf-invoice": "^1.14",
+		"league/flysystem-sftp-v3": "^3.31",
 		"omnipay/common": "^3.5",
 		"payrexx/payrexx": "^1.8",
 		"paytm/paytmchecksum": "dev-master",
-		"php-http/guzzle7-adapter": "^1.0",
 		"pronamic/pronamic-pay-admin-reports": "dev-main",
 		"pronamic/wp-datetime": "^2.1",
 		"pronamic/wp-html": "^2.2",
@@ -107,14 +110,26 @@
 		"roots/wordpress-no-content" : "*",
 		"wp-pay-gateways/mollie": "*",
 		"phpseclib/phpseclib": "^3.0.16",
-		"league/flysystem-local": "*"
+		"league/flysystem-local": "*",
+		"guzzlehttp/guzzle": "^7.5"
 	},
 	"autoload": {
 		"classmap": [
+			"extensions/",
+			"gateways/",
+			"includes/",
 			"vendor/paytm/paytmchecksum/paytmchecksum/PaytmChecksum.php"
+		],
+		"exclude-from-classmap": [
+			"extensions/*/src/node_modules/",
+			"gateways/*/src/vendor/"
 		]
 	},
 	"extra": {
+		"discovery": {
+			"php-http/client-implementation": "",
+			"psr/http-client-implementation": "GautamMKGarg\\PsrForWordPress\\Http\\Psr18Client"
+		},
 		"installer-paths": {
 			"packages/{$vendor}/{$name}": [
 				"vendor:pronamic",

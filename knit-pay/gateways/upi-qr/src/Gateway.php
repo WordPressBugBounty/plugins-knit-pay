@@ -65,6 +65,14 @@ class Gateway extends Core_Gateway {
 	 *            Payment.
 	 */
 	public function start( Payment $payment ) {
+		$this->validate_payment( $payment );
+
+		$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
+
+		$payment->set_action_url( $payment->get_pay_redirect_url() );
+	}
+
+	protected function validate_payment( Payment $payment ) {
 		$payment_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 		if ( isset( $payment_currency ) && 'INR' !== $payment_currency ) {
 			$currency_error = 'UPI only accepts payments in Indian Rupees. If you are a store owner, kindly activate INR currency for ' . $payment->get_source() . ' plugin.';
@@ -80,10 +88,6 @@ class Gateway extends Core_Gateway {
 			$mobile_error = "QR code and Payment Button can't be hidden at the same time. Kindly show at least one of them from the configuration page.";
 			throw new Exception( $mobile_error );
 		}
-
-		$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
-
-		$payment->set_action_url( $payment->get_pay_redirect_url() );
 	}
 
 	/**
