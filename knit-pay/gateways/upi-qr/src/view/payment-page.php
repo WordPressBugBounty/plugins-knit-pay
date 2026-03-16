@@ -47,16 +47,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$hide_pay_button = true;
 		}
 
-		$intent_url_parameters   = $this->get_intent_url_parameters( $payment );
-		$paytm_intent_url_params = array_merge(
-			$intent_url_parameters,
-			[
-				'sign'        => 'MEUCIHldtBS8sv53BbdI9jtTN4vRokbPT91Fm6wlPQCN/sVkAiEAs4p9TPwTvLvPsceQLjSOBL1lAKhrsHdHMnfiDFyu1Aw=',
-				'featuretype' => 'money_transfer',
-			]
-		);
-		$upi_qr_text             = $this->get_upi_qr_text( $payment );
-		$payee_name              = rawurldecode( $intent_url_parameters['pn'] );
+		$intent_url_parameters     = $this->get_intent_url_parameters( $payment );
+		$paytm_intent_url_params   = $this->get_paytm_intent_parameter( $payment );
+		$phonepe_intent_url_params = $this->get_phonepe_intent_parameter( $payment );
+		$upi_qr_text               = $this->get_upi_qr_text( $payment );
+		$payee_name                = rawurldecode( $intent_url_parameters['pn'] );
 		
 		$nonce_action = 'knit_pay_payment_status_check|' . $payment->get_id() . "|$transaction_id";
 		echo wp_nonce_field( $nonce_action, 'knit_pay_nonce', true, true );

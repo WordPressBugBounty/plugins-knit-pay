@@ -363,7 +363,6 @@ class Gateway extends Core_Gateway {
 			Core_Util::no_cache();
 
 			include 'view/payment-page.php';
-			// include "view/template{$this->config->payment_template}.php";
 		}
 
 		exit;
@@ -380,6 +379,56 @@ class Gateway extends Core_Gateway {
 			exit;
 		}
 		return $this->intent_url_parameters;
+	}
+
+	private function get_paytm_intent_parameter( $payment ) {
+		return array_merge(
+			$this->get_intent_url_parameters( $payment ),
+			[
+				'sign'        => 'MEUCIHldtBS8sv53BbdI9jtTN4vRokbPT91Fm6wlPQCN/sVkAiEAs4p9TPwTvLvPsceQLjSOBL1lAKhrsHdHMnfiDFyu1Aw=',
+				'featuretype' => 'money_transfer',
+			]
+		);
+	}
+
+	private function get_phonepe_intent_parameter( Payment $payment ) {
+		$intent_url_parameters = $this->get_intent_url_parameters( $payment );
+		$amount                = (float) $payment->get_total_amount()->get_minor_units()->get_value();
+
+		$disable_notes_edit = true;
+		if ( 'gpay-biz' === $this->config->gateway_id || 'hdfc-smart-hub-vyapar' === $this->config->gateway_id ) {
+			$disable_notes_edit = false;
+		}
+
+		$phonepe_intent_params = [
+			'contact'                  => [
+				'cbsName'  => '',
+				'nickName' => '',
+				'vpa'      => strtolower( $intent_url_parameters['pa'] ),
+				'type'     => 'VPA',
+			],
+			'p2pPaymentCheckoutParams' => [
+				'note'                           => $intent_url_parameters['tn'],
+				'isByDefaultKnownContact'        => true,
+				'enableSpeechToText'             => false,
+				'allowAmountEdit'                => false,
+				'showQrCodeOption'               => false,
+				'disableViewHistory'             => true,
+				'shouldShowUnsavedContactBanner' => false,
+				'isRecurring'                    => false,
+				'checkoutType'                   => 'DEFAULT',
+				'transactionContext'             => 'p2p',
+				'initialAmount'                  => $amount,
+				'disableNotesEdit'               => $disable_notes_edit,
+				'showKeyboard'                   => true,
+				'currency'                       => 'INR',
+				'shouldShowMaskedNumber'         => true,
+			],
+		];
+		return [
+			'data' => base64_encode( json_encode( $phonepe_intent_params ) ),
+			'id'   => 'p2ppayment',
+		];
 	}
 
 	protected function get_upi_qr_text( $payment ) {

@@ -1,3 +1,7 @@
+<?php
+use KnitPay\Gateways\PaymentMethods;
+?>
+
 <div class="container-wrapper">
 	<div class="container no-drag">
 		<!-- Header Section -->
@@ -157,6 +161,15 @@
 							<span class="method-name"><?php echo esc_html__( 'Paytm', 'knit-pay-lang' ); ?></span>
 						</div>
 					</a>
+
+					<?php if ( $this->get_payment_method( PaymentMethods::UPI_INTENT_PHONEPE ) ) { ?>
+						<a href="<?php echo esc_url( add_query_arg( $phonepe_intent_url_params, 'phonepe://native' ), [ 'phonepe' ] ); ?>" target="_blank">
+							<div class="method-item">
+								<img src="<?php echo esc_url( $image_path ); ?>phonepe.svg" class="method-icon no-drag" alt="PhonePe">
+								<span class="method-name"><?php echo esc_html__( 'PhonePe', 'knit-pay-lang' ); ?></span>
+							</div>
+						</a>
+					<?php } ?>
 
 					<?php if ( $show_download_qr_button ) { ?>
 						<a href="#" class="share-qr-button">

@@ -26,12 +26,15 @@ add_filter(
 add_filter(
 	'knit_pay_add_payment_methods_titles',
 	function ( $payment_methods ) {
-		$payment_methods['upi']         = 'UPI';
-		$payment_methods['upi_collect'] = 'UPI Collect';
-		$payment_methods['paytm']       = 'Paytm';
-		$payment_methods['debit_card']  = 'Debit Card';
-		$payment_methods['net_banking'] = 'NetBanking';
-		$payment_methods['fpx']         = 'FPX';
+		$payment_methods['upi']                = 'UPI';
+		$payment_methods['upi_collect']        = 'UPI Collect';
+		$payment_methods['upi_intent']         = 'UPI Intent';
+		$payment_methods['upi_intent_phonepe'] = 'UPI Intent - PhonePe';
+		$payment_methods['sms_payment_link']   = 'Payment Link via SMS';
+		$payment_methods['paytm']              = 'Paytm';
+		$payment_methods['debit_card']         = 'Debit Card';
+		$payment_methods['net_banking']        = 'NetBanking';
+		$payment_methods['fpx']                = 'FPX';
 	
 		$payment_methods['ebs']           = 'EBS';
 		$payment_methods['flutterwave']   = 'Flutter Wave';
