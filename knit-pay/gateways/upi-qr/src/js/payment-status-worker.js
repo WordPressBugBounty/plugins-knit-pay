@@ -51,7 +51,7 @@ function checkPaymentStatus(ajax_data) {
 
 self.onmessage = function(e) {
     if (e.data.command === 'start') {
-        payment_status_checker = setInterval(() => checkPaymentStatus(e.data.ajax_data), 4000);
+        payment_status_checker = setInterval(() => checkPaymentStatus(e.data.ajax_data), 3000);
     } else if (e.data.command === 'stop') {
         clearInterval(payment_status_checker);
         close();

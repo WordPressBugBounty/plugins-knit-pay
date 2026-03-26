@@ -262,7 +262,7 @@ class Integration extends KnitPayGatewayIntegration {
 		];
 		
 		// UPI VPA ID
-		$fields[] = [
+		$fields['qr_vpa'] = [
 			'section'  => 'general',
 			'meta_key' => '_pronamic_gateway_upi_qr_vpa',
 			'title'    => __( 'UPI VPA ID', 'knit-pay-lang' ),

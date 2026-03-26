@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 9.2.3.0
+Stable tag: 9.2.4.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, PayPal, Razorpay, and SSLCommerz, with over 100 WordPress plugins.
@@ -245,7 +245,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Ninja Forms
 * Contact Form 7 | Redirection for Contact Form 7
 * Gravity Forms
-* WPForms Pro(Try it for free with **Knit Pay - Pro**)
+* WPForms Pro (Try it for free with **Knit Pay - Pro**)
 * Formidable Forms (Try it for free with **Knit Pay - Pro**)
 * Fluent Forms (Try it for free with **Knit Pay - Pro**)
 * WS Form (Contact us for this premium addon.)

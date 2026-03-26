@@ -67,6 +67,10 @@ class Gateway extends Core_Gateway {
 	 * @return PaymentMethodsCollection
 	 */
 	public function get_payment_methods( array $args = [] ): PaymentMethodsCollection {
+		if ( empty( $this->config->access_token ) ) {
+			return parent::get_payment_methods( $args );
+		}
+
 		$cache_key = 'knit_pay_cashfree_payment_methods_' . $this->config->config_id;
 
 		$methods = \get_transient( $cache_key );
@@ -162,7 +166,7 @@ class Gateway extends Core_Gateway {
 		$order_amount   = $payment->get_total_amount()->number_format( null, '.', '' );
 		$order_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 		$order_note     = KnitPayUtils::substr_after_trim( $payment->get_description(), 0, 250 );
-		$customer_name  = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 20 );
+		$customer_name  = KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 100 );
 		$customer_email = $customer->get_email();
 		$return_url     = add_query_arg( 'order_id', '{order_id}', $payment->get_return_url() );
 		$notify_url     = add_query_arg( 'kp_cashfree_webhook', '', home_url( '/' ) );
@@ -320,11 +324,11 @@ class Gateway extends Core_Gateway {
 		$notes = [
 			'1_knitpay_payment_id' => strval( $payment->get_id() ),
 			'2_knitpay_extension'  => $source,
-			'3_knitpay_source_id'  => strval( $payment->get_source_id() ),
-			'4_knitpay_order_id'   => strval( $payment->get_order_id() ),
+			'3_knitpay_source_id'  => KnitPayUtils::substr_after_trim( $payment->get_source_id(), 0, 250 ),
+			'4_knitpay_order_id'   => KnitPayUtils::substr_after_trim( $payment->get_order_id(), 0, 250 ),
 			'5_knitpay_version'    => KNITPAY_VERSION,
 			'6_php_version'        => PHP_VERSION,
-			'7_website_url'        => home_url( '/' ),
+			'7_website_url'        => KnitPayUtils::substr_after_trim( home_url( '/' ), 0, 250 ),
 		];
 
 		$notes['8_auth_type'] = 'Bearer';

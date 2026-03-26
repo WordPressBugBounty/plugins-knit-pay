@@ -583,9 +583,9 @@ class Gateway extends Core_Gateway {
 		$data = [
 			'key'          => $this->config->key_id,
 			'name'         => $box_title,
-			'description'  => $payment->get_description(),
+			'description'  => KnitPayUtils::substr_after_trim( $payment->get_description(), 0, 256 ),
 			'prefill'      => [
-				'name'   => KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 45 ),
+				'name'   => KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 100 ),
 				'email'  => $customer->get_email(),
 				'method' => PaymentMethods::prefill_method( $payment->get_payment_method() ),
 			],

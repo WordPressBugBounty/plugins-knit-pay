@@ -73,7 +73,7 @@ class Listener {
 		
 		$payment->set_transaction_id( $jwt_data->reference );
 		
-		$note = '<strong>Faygaro Webhook Response:</strong><br><pre>' . print_r( $data, true ) . '</pre>';
+		$note = '<strong>Fygaro Webhook Response:</strong><br><pre>' . print_r( $data, true ) . '</pre>';
 		
 		$payment->set_status( PaymentStatus::SUCCESS );
 		$payment->add_note( $note );

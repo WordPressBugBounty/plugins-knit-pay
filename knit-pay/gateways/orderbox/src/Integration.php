@@ -56,6 +56,7 @@ class Integration extends AbstractGatewayIntegration {
 			add_action( 'wp_loaded', $function );
 		}
 
+		add_filter( 'allowed_redirect_hosts', [ $this, 'allowed_redirect_hosts' ] );
 		add_filter( 'pronamic_payment_redirect_url_' . self::get_id(), [ $this, 'redirect_url' ], 10, 2 );
 	}
 	
@@ -368,6 +369,11 @@ class Integration extends AbstractGatewayIntegration {
 			echo $e->getMessage();
 			exit();
 		}
+	}
+
+	public function allowed_redirect_hosts( $hosts ) {
+		$hosts[] = 'payments.foundationapi.com';
+		return $hosts;
 	}
 
 	/**

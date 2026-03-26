@@ -533,17 +533,17 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.32.0",
-            "version_normalized": "3.32.0.0",
+            "version": "3.33.0",
+            "version_normalized": "3.33.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "254b1595b16b22dbddaaef9ed6ca9fdac4956725"
+                "reference": "570b8871e0ce693764434b29154c54b434905350"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/254b1595b16b22dbddaaef9ed6ca9fdac4956725",
-                "reference": "254b1595b16b22dbddaaef9ed6ca9fdac4956725",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/570b8871e0ce693764434b29154c54b434905350",
+                "reference": "570b8871e0ce693764434b29154c54b434905350",
                 "shasum": ""
             },
             "require": {
@@ -579,7 +579,7 @@
                 "phpunit/phpunit": "^9.5.11|^10.0",
                 "sabre/dav": "^4.6.0"
             },
-            "time": "2026-02-25T17:01:41+00:00",
+            "time": "2026-03-25T07:59:30+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -613,23 +613,23 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.32.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.33.0"
             },
             "install-path": "../league/flysystem"
         },
         {
             "name": "league/flysystem-sftp-v3",
-            "version": "3.31.0",
-            "version_normalized": "3.31.0.0",
+            "version": "3.33.0",
+            "version_normalized": "3.33.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-sftp-v3.git",
-                "reference": "f01dd8d66e98b20608846963cc790c2b698e8b03"
+                "reference": "34ff5ef0f841add92e2b902c1005f72135b03646"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-sftp-v3/zipball/f01dd8d66e98b20608846963cc790c2b698e8b03",
-                "reference": "f01dd8d66e98b20608846963cc790c2b698e8b03",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-sftp-v3/zipball/34ff5ef0f841add92e2b902c1005f72135b03646",
+                "reference": "34ff5ef0f841add92e2b902c1005f72135b03646",
                 "shasum": ""
             },
             "require": {
@@ -638,7 +638,7 @@
                 "php": "^8.0.2",
                 "phpseclib/phpseclib": "^3.0"
             },
-            "time": "2026-01-23T15:30:45+00:00",
+            "time": "2026-03-20T13:22:31+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -665,7 +665,7 @@
                 "sftp"
             ],
             "support": {
-                "source": "https://github.com/thephpleague/flysystem-sftp-v3/tree/3.31.0"
+                "source": "https://github.com/thephpleague/flysystem-sftp-v3/tree/3.33.0"
             },
             "install-path": "../league/flysystem-sftp-v3"
         },
@@ -1441,17 +1441,17 @@
         },
         {
             "name": "pronamic/wp-datetime",
-            "version": "v2.1.8",
-            "version_normalized": "2.1.8.0",
+            "version": "v2.2.0",
+            "version_normalized": "2.2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pronamic/wp-datetime.git",
-                "reference": "ffea6a39c8204b958e00f4d1112d2d58ac96f070"
+                "reference": "c4beb8efc81eb522f9fb63f4339e5f00f97e8383"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pronamic/wp-datetime/zipball/ffea6a39c8204b958e00f4d1112d2d58ac96f070",
-                "reference": "ffea6a39c8204b958e00f4d1112d2d58ac96f070",
+                "url": "https://api.github.com/repos/pronamic/wp-datetime/zipball/c4beb8efc81eb522f9fb63f4339e5f00f97e8383",
+                "reference": "c4beb8efc81eb522f9fb63f4339e5f00f97e8383",
                 "shasum": ""
             },
             "require": {
@@ -1474,7 +1474,7 @@
                 "roots/wordpress": "^6.0",
                 "yoast/phpunit-polyfills": "^2.0"
             },
-            "time": "2024-12-17T12:35:00+00:00",
+            "time": "2026-03-23T08:19:30+00:00",
             "type": "wordpress-plugin",
             "installation-source": "dist",
             "autoload": {
@@ -1489,7 +1489,7 @@
             "description": "WordPress DateTime library.",
             "support": {
                 "issues": "https://github.com/pronamic/wp-datetime/issues",
-                "source": "https://github.com/pronamic/wp-datetime/tree/v2.1.8"
+                "source": "https://github.com/pronamic/wp-datetime/tree/v2.2.0"
             },
             "install-path": "../../packages/pronamic/wp-datetime"
         },
@@ -1697,17 +1697,17 @@
         },
         {
             "name": "pronamic/wp-number",
-            "version": "v1.4.0",
-            "version_normalized": "1.4.0.0",
+            "version": "v1.4.1",
+            "version_normalized": "1.4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pronamic/wp-number.git",
-                "reference": "29f8631a4b63f8f303159a5cf76baf6a0ee5eb22"
+                "reference": "263adc9fd881bd9393826b385cfa85b50c3dcbe8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pronamic/wp-number/zipball/29f8631a4b63f8f303159a5cf76baf6a0ee5eb22",
-                "reference": "29f8631a4b63f8f303159a5cf76baf6a0ee5eb22",
+                "url": "https://api.github.com/repos/pronamic/wp-number/zipball/263adc9fd881bd9393826b385cfa85b50c3dcbe8",
+                "reference": "263adc9fd881bd9393826b385cfa85b50c3dcbe8",
                 "shasum": ""
             },
             "require": {
@@ -1730,7 +1730,7 @@
                 "wp-phpunit/wp-phpunit": "^6.1",
                 "yoast/phpunit-polyfills": "^1.0"
             },
-            "time": "2025-11-26T12:19:20+00:00",
+            "time": "2026-03-23T08:26:29+00:00",
             "type": "wordpress-plugin",
             "installation-source": "dist",
             "autoload": {
@@ -1768,7 +1768,7 @@
             ],
             "support": {
                 "issues": "https://github.com/pronamic/wp-number/issues",
-                "source": "https://github.com/pronamic/wp-number/tree/v1.4.0"
+                "source": "https://github.com/pronamic/wp-number/tree/v1.4.1"
             },
             "install-path": "../../packages/pronamic/wp-number"
         },

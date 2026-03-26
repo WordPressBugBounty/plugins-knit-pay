@@ -59,6 +59,11 @@ class Gateway extends Core_Gateway {
 	 *            Payment.
 	 */
 	public function start( Payment $payment ) {
+		if ( ! str_starts_with( home_url( '/' ), 'https' ) ) {
+			$ssl_error = 'SSL is mandatory on the website.';
+			throw new \Exception( $ssl_error );
+		}
+
 		$transaction_id = $payment->key . '_' . $payment->get_id();
 		$payment->set_transaction_id( $transaction_id );
 

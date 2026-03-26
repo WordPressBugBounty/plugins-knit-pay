@@ -105,10 +105,7 @@ class Gateway extends Core_Gateway {
 	 * @return void
 	 */
 	public function redirect_via_html( Payment $payment ) {
-		if ( PaymentStatus::SUCCESS === $payment->get_status() || PaymentStatus::EXPIRED === $payment->get_status() ) {
-			wp_safe_redirect( $payment->get_return_redirect_url() );
-			exit;
-		}
+		$this->check_complete( $payment );
 
 		$payment_page_title       = $this->payment_page_title;
 		$payment_page_description = $this->payment_page_description;
@@ -131,10 +128,7 @@ class Gateway extends Core_Gateway {
 	 * @return void
 	 */
 	public function init_iframe_checkout( Payment $payment ) {
-		if ( PaymentStatus::SUCCESS === $payment->get_status() || PaymentStatus::EXPIRED === $payment->get_status() ) {
-			wp_safe_redirect( $payment->get_return_redirect_url() );
-			exit;
-		}
+		$this->check_complete( $payment );
 		
 		$payment_page_title = __( 'Payment Page', 'knit-pay-lang' );
 		
@@ -147,6 +141,17 @@ class Gateway extends Core_Gateway {
 		}
 		
 		exit;
+	}
+
+	private function check_complete( $payment ) {
+		if ( PaymentStatus::SUCCESS === $payment->get_status() || PaymentStatus::EXPIRED === $payment->get_status() ) {
+			if ( $payment->get_meta( 'rest_redirect_url' ) ) {
+				wp_redirect( $payment->get_return_redirect_url() );
+			} else {
+				wp_safe_redirect( $payment->get_return_redirect_url() );
+			}
+			exit;
+		}
 	}
 	
 	/**
