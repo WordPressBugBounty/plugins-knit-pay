@@ -1,9 +1,6 @@
 {
 	"repositories" : [
 		{
-			"type": "composer",
-			"url": "https://wpackagist.org/"
-		}, {
 			"type" : "git",
 			"url" : "https://github.com/knit-pay/wp-pay-core"
 		}, {
@@ -36,9 +33,6 @@
 		}, {
 			"type" : "git",
 			"url" : "https://github.com/knit-pay/knit-pay-admin-reports"
-		}, {
-			"type" : "git",
-			"url" : "https://github.com/GautamMKGarg/psr-for-wordpress"
 		}
 	],
 	"config" : {
@@ -61,13 +55,9 @@
 		"ext-json": "*",
 		"automattic/jetpack-autoloader": "^5.0",
 		"composer/installers": "^2.3",
-		"gautammkgarg/psr-for-wordpress": "dev-main",
-		"iyzico/iyzipay-php": "^2.0",
-		"knit-pay/omnipay-paypal": "^1.0",
+		"gautammkgarg/psr-for-wordpress": "^0.2",
 		"konekt/pdf-invoice": "^1.14",
-		"league/flysystem-sftp-v3": "^3.31",
 		"omnipay/common": "^3.5",
-		"payrexx/payrexx": "^1.8",
 		"paytm/paytmchecksum": "dev-master",
 		"pronamic/pronamic-pay-admin-reports": "dev-main",
 		"pronamic/wp-datetime": "^2.1",
@@ -109,20 +99,26 @@
 		"rmccue/requests" : "*",
 		"roots/wordpress-no-content" : "*",
 		"wp-pay-gateways/mollie": "*",
-		"phpseclib/phpseclib": "^3.0.16",
-		"league/flysystem-local": "*",
 		"guzzlehttp/guzzle": "^7.5"
 	},
 	"autoload": {
+		"psr-4": {
+			"KnitPay\\": "includes/",
+            "KnitPay\\Gateways\\": "gateways/",
+			"KnitPay\\Extensions\\": "extensions/",
+			"BooklyKnitPay\\": "extensions/BooklyPro/gateway/"
+        },
 		"classmap": [
-			"extensions/",
-			"gateways/",
-			"includes/",
 			"vendor/paytm/paytmchecksum/paytmchecksum/PaytmChecksum.php"
 		],
 		"exclude-from-classmap": [
 			"extensions/*/src/node_modules/",
-			"gateways/*/src/vendor/"
+			"extensions/ContactForm7/WPCF7R_Action_Knit_Pay.php",
+			"extensions/LatePoint/OsPaymentsKnitPayController.php",
+			"extensions/PaidMembershipsPro/PMProGateway_knit_pay.php",
+			"extensions/SproutInvoices/KnitPaySIGateway.php",
+			"includes/knit-pay-pro-setup.php",
+			"includes/pro.php"
 		]
 	},
 	"extra": {
@@ -141,6 +137,10 @@
 		}
 	},
 	"scripts" : {
+		"install-all": [
+			"@composer install",
+			"@composer install --working-dir=secondary-packages"
+		],
 		"build" : [
 			"Pronamic\\ChangelogMdToWordPressPluginReadmeTxt\\Synchronizer::run",
 			"rm -rf ./build",

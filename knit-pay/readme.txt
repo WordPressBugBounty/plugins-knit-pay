@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 9.2.4.0
+Stable tag: 9.3.0.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, PayPal, Razorpay, and SSLCommerz, with over 100 WordPress plugins.
@@ -25,6 +25,7 @@ One plugin to integrate various Payment Gateways like Cashfree, Instamojo, Razor
 * Create multiple payment buttons in Gutenberg blocks and Elementor.
 * Supports WordPress Payments Rest APIs.
 * Auto currency conversion feature automatically converts the amount to the supported currency if the provided currency is not supported by the payment provider.
+* Supports AI Abilities API: Now ask AI to create payment requests and check payment status.
 
 https://www.youtube.com/watch?v=vWxSqhSVCQE
 
@@ -95,6 +96,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Paddle
 * Revolut
 * Pesapal
+* Vipps
 
 = Indian Payment Gateways (Contact us for this premium addon.) =
 * JioPay
@@ -174,7 +176,6 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Yoco
 * Wompi
 * IfthenPay
-* Vipps
 * Montonio
 * Przelewy24
 * Robokassa
@@ -224,6 +225,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 = Other Gateways (Contact us for this premium addon.) =
 * OmniPay Library
 * Payum Library
+* Multipay Library by shetabit
 
 == Supported Payment Methods ==
 * Debit Cards

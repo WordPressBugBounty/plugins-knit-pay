@@ -7,7 +7,7 @@
  * @license   GPL-3.0-or-later
  */
 
-namespace Pronamic\WordPress\Pay\Core;
+namespace KnitPay\Gateways;
 
 /**
  * Integration Mode Trait

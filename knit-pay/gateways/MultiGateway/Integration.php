@@ -1,0 +1,189 @@
+<?php
+
+namespace KnitPay\Gateways\MultiGateway;
+
+use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
+use Pronamic\WordPress\Pay\Plugin;
+use Pronamic\WordPress\Pay\Util;
+use KnitPay\Utils as KnitPayUtils;
+
+
+/**
+ * Title: Multi Gateway Integration
+ * Copyright: 2020-2026 Knit Pay
+ *
+ * @author  Knit Pay
+ * @version 1.0.0
+ * @since   4.0.0
+ */
+class Integration extends AbstractGatewayIntegration {
+	/**
+	 * Construct Multi Gateway integration.
+	 *
+	 * @param array $args Arguments.
+	 */
+	public function __construct( $args = [] ) {
+		$args = wp_parse_args(
+			$args,
+			[
+				'id'          => 'multi-gateway',
+				'name'        => 'Multi Gateway',
+				'product_url' => 'https://www.knitpay.org/indian-payment-gateways-supported-in-knit-pay/',
+				'provider'    => 'multi-gateway',
+			]
+		);
+
+		parent::__construct( $args );
+	}
+
+	/**
+	 * Get settings fields.
+	 *
+	 * @return array
+	 */
+	public function get_settings_fields() {
+		$fields = [];
+		
+		// Gateway Selection Mode.
+		$fields[] = [
+			'section'  => 'general',
+			'filter'   => FILTER_SANITIZE_NUMBER_INT,
+			'meta_key' => '_pronamic_gateway_multi_gateway_gateway_selection_mode',
+			'title'    => __( 'Gateway Selection Mode', 'knit-pay-lang' ),
+			'type'     => 'select',
+			'options'  => [
+				Config::SELECTION_MANUAL_MODE => 'Gateway Selected by Customer',
+				Config::SELECTION_RANDOM_MODE => 'Gateway Randomly Selected',
+			],
+			'default'  => Config::SELECTION_MANUAL_MODE,
+		];
+
+		// Enabled Payment Methods.
+		$fields[] = [
+			'section'  => 'general',
+			'title'    => __( 'Enabled Payment Gateways', 'knit-pay-lang' ),
+			'type'     => 'description',
+			'callback' => [ $this, 'field_enabled_payment_gateways' ],
+		];
+
+		// Gateway Currency.
+		$fields[] = [
+			'section'  => 'advanced',
+			'meta_key' => '_pronamic_gateway_multi_gateway_gateway_currency',
+			'title'    => __( 'Gateway Currency', 'knit-pay-lang' ),
+			'type'     => 'text',
+			'classes'  => [ 'regular-text', 'code' ],
+			'tooltip'  => __( '3 Character Currency Code. (eg. USD) ', 'knit-pay-lang' ),
+		];
+
+		// Exchange Rate.
+		$fields[] = [
+			'section'  => 'advanced',
+			'filter'   => FILTER_VALIDATE_FLOAT,
+			'meta_key' => '_pronamic_gateway_multi_gateway_exchange_rate',
+			'title'    => __( 'Exchange Rate', 'knit-pay-lang' ),
+			'type'     => 'text',
+			'classes'  => [ 'regular-text', 'code' ],
+			'tooltip'  => __( 'Exchange Rate of Payment Currency.', 'knit-pay-lang' ),
+			'default'  => 1.0,
+		];
+
+		// Return fields.
+		return $fields;
+	}
+
+	/**
+	 * Field Enabled Payment Methods.
+	 *
+	 * @param array<string, mixed> $field Field.
+	 * @return void
+	 */
+	public function field_enabled_payment_gateways( $field ) {
+		$config_id = KnitPayUtils::get_gateway_config_id();
+		$config    = self::get_config( $config_id );
+
+		$gateways = Plugin::get_config_select_options();
+		unset( $gateways[0] );
+		unset( $gateways[ $config_id ] );
+		asort( $gateways );
+
+		$attributes['type'] = 'checkbox';
+		$attributes['id']   = '_pronamic_gateway_multi_gateway_enabled_payment_gateways';
+		$attributes['name'] = $attributes['id'] . '[]';
+
+		foreach ( $gateways as $value => $label ) {
+			$attributes['value'] = $value;
+
+			printf(
+				'<input %s %s />',
+	            // @codingStandardsIgnoreStart
+	            Util::array_to_html_attributes( $attributes ),
+	            // @codingStandardsIgnoreEnd
+				in_array( $value, $config->enabled_payment_gateways ) ? 'checked ' : ''
+			);
+
+			printf( ' ' );
+
+			printf(
+				'<label for="%s">%s</label><br>',
+				esc_attr( $attributes['id'] ),
+				esc_html( $label )
+			);
+		}
+		printf( '<br>Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url() . 'edit.php?post_type=pronamic_gateway">"Knit Pay >> Configurations"</a>.' );
+	}
+
+	/**
+	 * Get config.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return Config
+	 */
+	public function get_config( $post_id ) {
+		$config = new Config();
+
+		$config->gateway_selection_mode   = $this->get_meta( $post_id, 'multi_gateway_gateway_selection_mode' );
+		$config->enabled_payment_gateways = $this->get_meta( $post_id, 'multi_gateway_enabled_payment_gateways' );
+		$config->gateway_currency         = $this->get_meta( $post_id, 'multi_gateway_gateway_currency' );
+		$config->exchange_rate            = $this->get_meta( $post_id, 'multi_gateway_exchange_rate' );
+
+		if ( '' === $config->gateway_selection_mode ) {
+			$config->gateway_selection_mode = 0;
+		}
+		if ( empty( $config->enabled_payment_gateways ) ) {
+			$config->enabled_payment_gateways = [];
+		}
+
+		if ( empty( $config->exchange_rate ) ) {
+			$config->exchange_rate = 1.0;
+		}
+
+		return $config;
+	}
+
+	/**
+	 * Get gateway.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return Gateway
+	 */
+	public function get_gateway( $config_id ) {
+		return new Gateway( $this->get_config( $config_id ) );
+	}
+
+	/**
+	 * Save post.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return void
+	 */
+	public function save_post( $post_id ) {
+		$enabled_payment_gateways = [];
+
+		if ( ! empty( $_POST['_pronamic_gateway_multi_gateway_enabled_payment_gateways'] ) ) {
+			$enabled_payment_gateways = array_map( 'absint', (array) $_POST['_pronamic_gateway_multi_gateway_enabled_payment_gateways'] );
+		}
+
+		update_post_meta( $post_id, '_pronamic_gateway_multi_gateway_enabled_payment_gateways', $enabled_payment_gateways );
+	}
+}

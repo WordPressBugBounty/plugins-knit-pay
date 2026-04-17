@@ -39,52 +39,36 @@ return array(
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/ManifestGenerator.php'
 	),
 	'BooklyKnitPay\\Backend\\Modules\\Appearance\\ProxyProviders\\Shared' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/bookly-pro/src/gateway/backend/modules/appearance/proxy_providers/Shared.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BooklyPro/gateway/Backend/Modules/Appearance/ProxyProviders/Shared.php'
 	),
 	'BooklyKnitPay\\Backend\\Modules\\Settings\\ProxyProviders\\Shared' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/bookly-pro/src/gateway/backend/modules/settings/proxy_providers/Shared.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BooklyPro/gateway/Backend/Modules/Settings/ProxyProviders/Shared.php'
 	),
 	'BooklyKnitPay\\Frontend\\Modules\\Booking\\ProxyProviders\\Shared' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/bookly-pro/src/gateway/frontend/modules/booking/proxy_providers/Shared.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BooklyPro/gateway/Frontend/Modules/Booking/ProxyProviders/Shared.php'
 	),
 	'BooklyKnitPay\\Lib\\Payment\\KnitPayGateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/bookly-pro/src/gateway/lib/payment/KnitPayGateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BooklyPro/gateway/Lib/Payment/KnitPayGateway.php'
 	),
 	'BooklyKnitPay\\Lib\\Payment\\ProxyProviders\\Shared' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/bookly-pro/src/gateway/lib/payment/proxy_providers/Shared.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BooklyPro/gateway/Lib/Payment/ProxyProviders/Shared.php'
 	),
 	'BooklyKnitPay\\Lib\\Plugin' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/bookly-pro/src/gateway/lib/Plugin.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BooklyPro/gateway/Lib/Plugin.php'
 	),
 	'BooklyKnitPay\\Lib\\ProxyProviders\\Shared' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/bookly-pro/src/gateway/lib/proxy_providers/Shared.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BooklyPro/gateway/Lib/ProxyProviders/Shared.php'
 	),
 	'Clue\\StreamFilter\\CallbackFilter' => array(
 		'version' => '1.7.0.0',
 		'path'    => $vendorDir . '/clue/stream-filter/src/CallbackFilter.php'
-	),
-	'ComposerAutoloaderInitdd39ce50e566e66948164187ab74642b' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/vendor/composer/autoload_real.php'
-	),
-	'Composer\\Autoload\\ClassLoader' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/vendor/composer/ClassLoader.php'
-	),
-	'Composer\\Autoload\\ComposerStaticInitdd39ce50e566e66948164187ab74642b' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/vendor/composer/autoload_static.php'
-	),
-	'Composer\\InstalledVersions' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/vendor/composer/InstalledVersions.php'
 	),
 	'Composer\\Installers\\AglInstaller' => array(
 		'version' => '2.3.0.0',
@@ -487,95 +471,55 @@ return array(
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-container.php'
 	),
 	'DateError' => array(
-		'version' => '1.33.0.0',
+		'version' => '1.36.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateError.php'
 	),
 	'DateException' => array(
-		'version' => '1.33.0.0',
+		'version' => '1.36.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateException.php'
 	),
 	'DateInvalidOperationException' => array(
-		'version' => '1.33.0.0',
+		'version' => '1.36.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateInvalidOperationException.php'
 	),
 	'DateInvalidTimeZoneException' => array(
-		'version' => '1.33.0.0',
+		'version' => '1.36.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateInvalidTimeZoneException.php'
 	),
 	'DateMalformedIntervalStringException' => array(
-		'version' => '1.33.0.0',
+		'version' => '1.36.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateMalformedIntervalStringException.php'
 	),
 	'DateMalformedPeriodStringException' => array(
-		'version' => '1.33.0.0',
+		'version' => '1.36.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateMalformedPeriodStringException.php'
 	),
 	'DateMalformedStringException' => array(
-		'version' => '1.33.0.0',
+		'version' => '1.36.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateMalformedStringException.php'
 	),
 	'DateObjectError' => array(
-		'version' => '1.33.0.0',
+		'version' => '1.36.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateObjectError.php'
 	),
 	'DateRangeError' => array(
-		'version' => '1.33.0.0',
+		'version' => '1.36.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateRangeError.php'
 	),
 	'FPDF' => array(
-		'version' => '1.8.2.0',
+		'version' => '1.8.6.0',
 		'path'    => $vendorDir . '/setasign/fpdf/fpdf.php'
 	),
-	'Firebase\\JWT\\BeforeValidException' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/BeforeValidException.php'
-	),
-	'Firebase\\JWT\\CachedKeySet' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/CachedKeySet.php'
-	),
-	'Firebase\\JWT\\ExpiredException' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/ExpiredException.php'
-	),
-	'Firebase\\JWT\\JWK' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/JWK.php'
-	),
-	'Firebase\\JWT\\JWT' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/JWT.php'
-	),
-	'Firebase\\JWT\\JWTExceptionWithPayloadInterface' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/JWTExceptionWithPayloadInterface.php'
-	),
-	'Firebase\\JWT\\Key' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/Key.php'
-	),
-	'Firebase\\JWT\\SignatureInvalidException' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/vendor/firebase/php-jwt/src/SignatureInvalidException.php'
-	),
-	'Flatted' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/knit-pay-payment-button/src/node_modules/flatted/php/flatted.php'
-	),
-	'FlattedString' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/knit-pay-payment-button/src/node_modules/flatted/php/flatted.php'
-	),
 	'GautamMKGarg\\PsrForWordPress\\Http\\Exception\\NetworkException' => array(
-		'version' => 'dev-main',
+		'version' => '0.2.0.0',
 		'path'    => $vendorDir . '/gautammkgarg/psr-for-wordpress/src/Http/Exception/NetworkException.php'
 	),
 	'GautamMKGarg\\PsrForWordPress\\Http\\Exception\\RequestException' => array(
-		'version' => 'dev-main',
+		'version' => '0.2.0.0',
 		'path'    => $vendorDir . '/gautammkgarg/psr-for-wordpress/src/Http/Exception/RequestException.php'
 	),
 	'GautamMKGarg\\PsrForWordPress\\Http\\Psr18Client' => array(
-		'version' => 'dev-main',
+		'version' => '0.2.0.0',
 		'path'    => $vendorDir . '/gautammkgarg/psr-for-wordpress/src/Http/Psr18Client.php'
 	),
 	'Hook_Manager' => array(
@@ -663,7 +607,7 @@ return array(
 		'path'    => $vendorDir . '/php-http/discovery/src/Strategy/DiscoveryStrategy.php'
 	),
 	'Http\\Discovery\\Strategy\\GeneratedDiscoveryStrategy' => array(
-		'version' => 'dev-master',
+		'version' => '9.2.9999999.9999999-dev',
 		'path'    => $vendorDir . '/composer/GeneratedDiscoveryStrategy.php'
 	),
 	'Http\\Discovery\\Strategy\\MockClientStrategy' => array(
@@ -874,3249 +818,1653 @@ return array(
 		'version' => '1.16.2.0',
 		'path'    => $vendorDir . '/php-http/message/src/UriFactory/SlimUriFactory.php'
 	),
-	'Iyzipay\\ApiResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/ApiResource.php'
-	),
-	'Iyzipay\\BaseModel' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/BaseModel.php'
-	),
-	'Iyzipay\\Constants' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Constants.php'
-	),
-	'Iyzipay\\Curl' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Curl.php'
-	),
-	'Iyzipay\\DefaultHttpClient' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/DefaultHttpClient.php'
-	),
-	'Iyzipay\\FileBase64Encoder' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/FileBase64Encoder.php'
-	),
-	'Iyzipay\\HttpClient' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/HttpClient.php'
-	),
-	'Iyzipay\\IyziAuthV2Generator' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/IyziAuthV2Generator.php'
-	),
-	'Iyzipay\\IyzipayResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/IyzipayResource.php'
-	),
-	'Iyzipay\\JsonBuilder' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/JsonBuilder.php'
-	),
-	'Iyzipay\\JsonConvertible' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/JsonConvertible.php'
-	),
-	'Iyzipay\\Model\\Address' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Address.php'
-	),
-	'Iyzipay\\Model\\AmountBaseRefund' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/AmountBaseRefund.php'
-	),
-	'Iyzipay\\Model\\ApiTest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/ApiTest.php'
-	),
-	'Iyzipay\\Model\\Apm' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Apm.php'
-	),
-	'Iyzipay\\Model\\ApmResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/ApmResource.php'
-	),
-	'Iyzipay\\Model\\ApmType' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/ApmType.php'
-	),
-	'Iyzipay\\Model\\Approval' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Approval.php'
-	),
-	'Iyzipay\\Model\\BankTransfer' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BankTransfer.php'
-	),
-	'Iyzipay\\Model\\BasicBkm' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BasicBkm.php'
-	),
-	'Iyzipay\\Model\\BasicBkmInitialize' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BasicBkmInitialize.php'
-	),
-	'Iyzipay\\Model\\BasicPayment' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BasicPayment.php'
-	),
-	'Iyzipay\\Model\\BasicPaymentPostAuth' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BasicPaymentPostAuth.php'
-	),
-	'Iyzipay\\Model\\BasicPaymentPreAuth' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BasicPaymentPreAuth.php'
-	),
-	'Iyzipay\\Model\\BasicPaymentResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BasicPaymentResource.php'
-	),
-	'Iyzipay\\Model\\BasicThreedsInitialize' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BasicThreedsInitialize.php'
-	),
-	'Iyzipay\\Model\\BasicThreedsInitializePreAuth' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BasicThreedsInitializePreAuth.php'
-	),
-	'Iyzipay\\Model\\BasicThreedsPayment' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BasicThreedsPayment.php'
-	),
-	'Iyzipay\\Model\\BasketItem' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BasketItem.php'
-	),
-	'Iyzipay\\Model\\BasketItemType' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BasketItemType.php'
-	),
-	'Iyzipay\\Model\\BinNumber' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BinNumber.php'
-	),
-	'Iyzipay\\Model\\Bkm' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Bkm.php'
-	),
-	'Iyzipay\\Model\\BkmInitialize' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BkmInitialize.php'
-	),
-	'Iyzipay\\Model\\BkmInstallment' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BkmInstallment.php'
-	),
-	'Iyzipay\\Model\\BkmInstallmentPrice' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BkmInstallmentPrice.php'
-	),
-	'Iyzipay\\Model\\BlacklistedCard' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BlacklistedCard.php'
-	),
-	'Iyzipay\\Model\\BouncedBankTransferList' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/BouncedBankTransferList.php'
-	),
-	'Iyzipay\\Model\\Buyer' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Buyer.php'
-	),
-	'Iyzipay\\Model\\C2CSubMerchant' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/C2CSubMerchant.php'
-	),
-	'Iyzipay\\Model\\C2CSubMerchantApiCredentials' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/C2CSubMerchantApiCredentials.php'
-	),
-	'Iyzipay\\Model\\C2CSubMerchantSmsVerificationCodeEncrypter' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/C2CSubMerchantSmsVerificationCodeEncrypter.php'
-	),
-	'Iyzipay\\Model\\Cancel' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Cancel.php'
-	),
-	'Iyzipay\\Model\\Card' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Card.php'
-	),
-	'Iyzipay\\Model\\CardInformation' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/CardInformation.php'
-	),
-	'Iyzipay\\Model\\CardList' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/CardList.php'
-	),
-	'Iyzipay\\Model\\CheckoutForm' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/CheckoutForm.php'
-	),
-	'Iyzipay\\Model\\CheckoutFormInitialize' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/CheckoutFormInitialize.php'
-	),
-	'Iyzipay\\Model\\CheckoutFormInitializePreAuth' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/CheckoutFormInitializePreAuth.php'
-	),
-	'Iyzipay\\Model\\CheckoutFormInitializeResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/CheckoutFormInitializeResource.php'
-	),
-	'Iyzipay\\Model\\Consumer' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Consumer.php'
-	),
-	'Iyzipay\\Model\\ConvertedPayout' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/ConvertedPayout.php'
-	),
-	'Iyzipay\\Model\\CrossBookingFromSubMerchant' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/CrossBookingFromSubMerchant.php'
-	),
-	'Iyzipay\\Model\\CrossBookingToSubMerchant' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/CrossBookingToSubMerchant.php'
-	),
-	'Iyzipay\\Model\\Currency' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Currency.php'
-	),
-	'Iyzipay\\Model\\Customer' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Customer.php'
-	),
-	'Iyzipay\\Model\\Disapproval' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Disapproval.php'
-	),
-	'Iyzipay\\Model\\InitialConsumer' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/InitialConsumer.php'
-	),
-	'Iyzipay\\Model\\InstallmentDetail' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/InstallmentDetail.php'
-	),
-	'Iyzipay\\Model\\InstallmentHtml' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/InstallmentHtml.php'
-	),
-	'Iyzipay\\Model\\InstallmentInfo' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/InstallmentInfo.php'
-	),
-	'Iyzipay\\Model\\InstallmentPrice' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/InstallmentPrice.php'
-	),
-	'Iyzipay\\Model\\Iyzilink\\IyziLinkDeleteProduct' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Iyzilink/IyziLinkDeleteProduct.php'
-	),
-	'Iyzipay\\Model\\Iyzilink\\IyziLinkDeleteProductResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Iyzilink/IyziLinkDeleteProductResource.php'
-	),
-	'Iyzipay\\Model\\Iyzilink\\IyziLinkFastLink' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Iyzilink/IyziLinkFastLink.php'
-	),
-	'Iyzipay\\Model\\Iyzilink\\IyziLinkRetrieveAllProduct' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Iyzilink/IyziLinkRetrieveAllProduct.php'
-	),
-	'Iyzipay\\Model\\Iyzilink\\IyziLinkRetrieveAllProductResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Iyzilink/IyziLinkRetrieveAllProductResource.php'
-	),
-	'Iyzipay\\Model\\Iyzilink\\IyziLinkRetrieveProduct' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Iyzilink/IyziLinkRetrieveProduct.php'
-	),
-	'Iyzipay\\Model\\Iyzilink\\IyziLinkRetrieveProductResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Iyzilink/IyziLinkRetrieveProductResource.php'
-	),
-	'Iyzipay\\Model\\Iyzilink\\IyziLinkSaveProduct' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Iyzilink/IyziLinkSaveProduct.php'
-	),
-	'Iyzipay\\Model\\Iyzilink\\IyziLinkSaveProductResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Iyzilink/IyziLinkSaveProductResource.php'
-	),
-	'Iyzipay\\Model\\Iyzilink\\IyziLinkSearchMerchantProducts' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Iyzilink/IyziLinkSearchMerchantProducts.php'
-	),
-	'Iyzipay\\Model\\Iyzilink\\IyziLinkUpdateProduct' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Iyzilink/IyziLinkUpdateProduct.php'
-	),
-	'Iyzipay\\Model\\Iyzilink\\IyziLinkUpdateProductStatus' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Iyzilink/IyziLinkUpdateProductStatus.php'
-	),
-	'Iyzipay\\Model\\IyziupAddress' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/IyziupAddress.php'
-	),
-	'Iyzipay\\Model\\IyziupForm' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/IyziupForm.php'
-	),
-	'Iyzipay\\Model\\IyziupFormInitialize' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/IyziupFormInitialize.php'
-	),
-	'Iyzipay\\Model\\IyziupFormInitializeResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/IyziupFormInitializeResource.php'
-	),
-	'Iyzipay\\Model\\Locale' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Locale.php'
-	),
-	'Iyzipay\\Model\\Loyalty' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Loyalty.php'
-	),
-	'Iyzipay\\Model\\Mapper\\AddressMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/AddressMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\AmountBaseRefundMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/AmountBaseRefundMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\ApmMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/ApmMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\ApmResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/ApmResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\ApprovalMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/ApprovalMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\BasicBkmInitializeMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/BasicBkmInitializeMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\BasicBkmMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/BasicBkmMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\BasicPaymentMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/BasicPaymentMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\BasicPaymentPostAuthMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/BasicPaymentPostAuthMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\BasicPaymentPreAuthMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/BasicPaymentPreAuthMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\BasicPaymentResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/BasicPaymentResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\BasicThreedsInitializeMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/BasicThreedsInitializeMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\BasicThreedsInitializePreAuthMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/BasicThreedsInitializePreAuthMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\BasicThreedsPaymentMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/BasicThreedsPaymentMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\BinNumberMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/BinNumberMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\BkmInitializeMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/BkmInitializeMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\BkmMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/BkmMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\BlacklistedCardMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/BlacklistedCardMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\BouncedBankTransferListMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/BouncedBankTransferListMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\C2CSubMerchantMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/C2CSubMerchantMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\CancelMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/CancelMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\CardListMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/CardListMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\CardMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/CardMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\CheckoutFormInitializeMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/CheckoutFormInitializeMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\CheckoutFormInitializePreAuthMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/CheckoutFormInitializePreAuthMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\CheckoutFormInitializeResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/CheckoutFormInitializeResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\CheckoutFormMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/CheckoutFormMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\ConsumerMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/ConsumerMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\CrossBookingFromSubMerchantMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/CrossBookingFromSubMerchantMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\CrossBookingToSubMerchantMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/CrossBookingToSubMerchantMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\DisapprovalMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/DisapprovalMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\InstallmentHtmlMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/InstallmentHtmlMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\InstallmentInfoMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/InstallmentInfoMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Iyzilink\\IyziLinkCreateFastLinkMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Iyzilink/IyziLinkCreateFastLinkMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Iyzilink\\IyziLinkDeleteProductMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Iyzilink/IyziLinkDeleteProductMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Iyzilink\\IyziLinkDeleteProductResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Iyzilink/IyziLinkDeleteProductResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Iyzilink\\IyziLinkRetrieveAllProductMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Iyzilink/IyziLinkRetrieveAllProductMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Iyzilink\\IyziLinkRetrieveAllProductResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Iyzilink/IyziLinkRetrieveAllProductResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Iyzilink\\IyziLinkRetrieveProductMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Iyzilink/IyziLinkRetrieveProductMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Iyzilink\\IyziLinkRetrieveProductResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Iyzilink/IyziLinkRetrieveProductResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Iyzilink\\IyziLinkSaveProductMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Iyzilink/IyziLinkSaveProductMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Iyzilink\\IyziLinkSaveProductResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Iyzilink/IyziLinkSaveProductResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Iyzilink\\IyziLinkSearchMerchantProductsMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Iyzilink/IyziLinkSearchMerchantProductsMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Iyzilink\\IyziLinkUpdateProductStatusMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Iyzilink/IyziLinkUpdateProductStatusMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\IyzipayResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/IyzipayResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\IyziupFormInitializeMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/IyziupFormInitializeMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\IyziupFormInitializeResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/IyziupFormInitializeResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\IyziupFormMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/IyziupFormMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\LoyaltyMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/LoyaltyMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\PayWithIyzicoInitializeMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/PayWithIyzicoInitializeMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\PayWithIyzicoInitializeResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/PayWithIyzicoInitializeResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\PayWithIyzicoMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/PayWithIyzicoMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\PaymentItemMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/PaymentItemMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\PaymentMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/PaymentMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\PaymentPostAuthMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/PaymentPostAuthMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\PaymentPreAuthMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/PaymentPreAuthMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\PaymentResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/PaymentResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\PayoutCompletedTransactionListMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/PayoutCompletedTransactionListMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\PlusInstallmentPaymentMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/PlusInstallmentPaymentMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\PlusInstallmentPaymentResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/PlusInstallmentPaymentResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\ProtectedOverleyScriptMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/ProtectedOverleyScriptMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\RefundChargedFromMerchantMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/RefundChargedFromMerchantMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\RefundMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/RefundMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\RefundResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/RefundResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\RefundToBalanceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/RefundToBalanceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\RefundToBalanceResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/RefundToBalanceResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\ReportingPaymentDetailMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/ReportingPaymentDetailMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\ReportingPaymentDetailResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/ReportingPaymentDetailResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\ReportingPaymentTransactionMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/ReportingPaymentTransactionMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\ReportingPaymentTransactionResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/ReportingPaymentTransactionResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\ReportingScrollTransactionMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/ReportingScrollTransactionMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\SettlementToBalanceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/SettlementToBalanceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\SettlementToBalanceResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/SettlementToBalanceResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\SubMerchantMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/SubMerchantMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\SubMerchantPaymentItemMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/SubMerchantPaymentItemMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\SubMerchantPaymentItemResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/SubMerchantPaymentItemResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\RetrieveListMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/RetrieveListMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\RetrieveListResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/RetrieveListResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\RetrieveSubscriptionCheckoutFormMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/RetrieveSubscriptionCheckoutFormMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\RetrieveSubscriptionCheckoutFormResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/RetrieveSubscriptionCheckoutFormResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionActionMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionActionMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionActionResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionActionResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionCardUpdateMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionCardUpdateMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionCardUpdateResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionCardUpdateResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionCreateCheckoutFormMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionCreateCheckoutFormMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionCreateCheckoutFormResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionCreateCheckoutFormResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionCreateMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionCreateMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionCreateResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionCreateResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionCustomerMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionCustomerMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionCustomerResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionCustomerResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionDeleteCustomerMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionDeleteCustomerMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionDetailsMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionDetailsMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionDetailsResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionDetailsResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionListMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionListMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionPricingPlanMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionPricingPlanMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionPricingPlanResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionPricingPlanResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionProductMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionProductMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionProductResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionProductResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionUpgradeMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionUpgradeMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\Subscription\\SubscriptionUpgradeResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/Subscription/SubscriptionUpgradeResourceMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\ThreedsInitializeMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/ThreedsInitializeMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\ThreedsInitializePreAuthMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/ThreedsInitializePreAuthMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\ThreedsPaymentMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/ThreedsPaymentMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\ThreedsV2PaymentMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/ThreedsV2PaymentMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\UCSInitializeMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/UCSInitializeMapper.php'
-	),
-	'Iyzipay\\Model\\Mapper\\UCSInitializeResourceMapper' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Mapper/UCSInitializeResourceMapper.php'
-	),
-	'Iyzipay\\Model\\OrderItem' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/OrderItem.php'
-	),
-	'Iyzipay\\Model\\OrderItemType' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/OrderItemType.php'
-	),
-	'Iyzipay\\Model\\PayWithIyzico' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/PayWithIyzico.php'
-	),
-	'Iyzipay\\Model\\PayWithIyzicoInitialize' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/PayWithIyzicoInitialize.php'
-	),
-	'Iyzipay\\Model\\PayWithIyzicoInitializeResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/PayWithIyzicoInitializeResource.php'
-	),
-	'Iyzipay\\Model\\Payment' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Payment.php'
-	),
-	'Iyzipay\\Model\\PaymentCard' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/PaymentCard.php'
-	),
-	'Iyzipay\\Model\\PaymentChannel' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/PaymentChannel.php'
-	),
-	'Iyzipay\\Model\\PaymentGroup' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/PaymentGroup.php'
-	),
-	'Iyzipay\\Model\\PaymentItem' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/PaymentItem.php'
-	),
-	'Iyzipay\\Model\\PaymentPostAuth' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/PaymentPostAuth.php'
-	),
-	'Iyzipay\\Model\\PaymentPreAuth' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/PaymentPreAuth.php'
-	),
-	'Iyzipay\\Model\\PaymentResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/PaymentResource.php'
-	),
-	'Iyzipay\\Model\\PayoutCompletedTransaction' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/PayoutCompletedTransaction.php'
-	),
-	'Iyzipay\\Model\\PayoutCompletedTransactionList' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/PayoutCompletedTransactionList.php'
-	),
-	'Iyzipay\\Model\\PlusInstallmentPayment' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/PlusInstallmentPayment.php'
-	),
-	'Iyzipay\\Model\\PlusInstallmentPaymentResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/PlusInstallmentPaymentResource.php'
-	),
-	'Iyzipay\\Model\\ProtectedOverleyScript' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/ProtectedOverleyScript.php'
-	),
-	'Iyzipay\\Model\\Refund' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Refund.php'
-	),
-	'Iyzipay\\Model\\RefundChargedFromMerchant' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/RefundChargedFromMerchant.php'
-	),
-	'Iyzipay\\Model\\RefundReason' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/RefundReason.php'
-	),
-	'Iyzipay\\Model\\RefundResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/RefundResource.php'
-	),
-	'Iyzipay\\Model\\RefundToBalance' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/RefundToBalance.php'
-	),
-	'Iyzipay\\Model\\RefundToBalanceResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/RefundToBalanceResource.php'
-	),
-	'Iyzipay\\Model\\ReportingPaymentDetail' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/ReportingPaymentDetail.php'
-	),
-	'Iyzipay\\Model\\ReportingPaymentDetailResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/ReportingPaymentDetailResource.php'
-	),
-	'Iyzipay\\Model\\ReportingPaymentTransaction' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/ReportingPaymentTransaction.php'
-	),
-	'Iyzipay\\Model\\ReportingPaymentTransactionResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/ReportingPaymentTransactionResource.php'
-	),
-	'Iyzipay\\Model\\ReportingScrollTransaction' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/ReportingScrollTransaction.php'
-	),
-	'Iyzipay\\Model\\Reward' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Reward.php'
-	),
-	'Iyzipay\\Model\\SettlementToBalance' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/SettlementToBalance.php'
-	),
-	'Iyzipay\\Model\\SettlementToBalanceResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/SettlementToBalanceResource.php'
-	),
-	'Iyzipay\\Model\\Status' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Status.php'
-	),
-	'Iyzipay\\Model\\SubMerchant' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/SubMerchant.php'
-	),
-	'Iyzipay\\Model\\SubMerchantPaymentItemResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/SubMerchantPaymentItemResource.php'
-	),
-	'Iyzipay\\Model\\SubMerchantPaymentItemUpdate' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/SubMerchantPaymentItemUpdate.php'
-	),
-	'Iyzipay\\Model\\SubMerchantType' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/SubMerchantType.php'
-	),
-	'Iyzipay\\Model\\Subscription\\RetrieveList' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/RetrieveList.php'
-	),
-	'Iyzipay\\Model\\Subscription\\RetrieveSubscriptionCheckoutForm' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/RetrieveSubscriptionCheckoutForm.php'
-	),
-	'Iyzipay\\Model\\Subscription\\SubscriptionActivate' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/SubscriptionActivate.php'
-	),
-	'Iyzipay\\Model\\Subscription\\SubscriptionCancel' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/SubscriptionCancel.php'
-	),
-	'Iyzipay\\Model\\Subscription\\SubscriptionCardUpdate' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/SubscriptionCardUpdate.php'
-	),
-	'Iyzipay\\Model\\Subscription\\SubscriptionCreate' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/SubscriptionCreate.php'
-	),
-	'Iyzipay\\Model\\Subscription\\SubscriptionCreateCheckoutForm' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/SubscriptionCreateCheckoutForm.php'
-	),
-	'Iyzipay\\Model\\Subscription\\SubscriptionCreateWithCustomer' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/SubscriptionCreateWithCustomer.php'
-	),
-	'Iyzipay\\Model\\Subscription\\SubscriptionCustomer' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/SubscriptionCustomer.php'
-	),
-	'Iyzipay\\Model\\Subscription\\SubscriptionDeleteCustomer' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/SubscriptionDeleteCustomer.php'
-	),
-	'Iyzipay\\Model\\Subscription\\SubscriptionDetails' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/SubscriptionDetails.php'
-	),
-	'Iyzipay\\Model\\Subscription\\SubscriptionList' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/SubscriptionList.php'
-	),
-	'Iyzipay\\Model\\Subscription\\SubscriptionPricingPlan' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/SubscriptionPricingPlan.php'
-	),
-	'Iyzipay\\Model\\Subscription\\SubscriptionProduct' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/SubscriptionProduct.php'
-	),
-	'Iyzipay\\Model\\Subscription\\SubscriptionRetry' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/SubscriptionRetry.php'
-	),
-	'Iyzipay\\Model\\Subscription\\SubscriptionUpgrade' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/Subscription/SubscriptionUpgrade.php'
-	),
-	'Iyzipay\\Model\\ThreedsInitialize' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/ThreedsInitialize.php'
-	),
-	'Iyzipay\\Model\\ThreedsInitializePreAuth' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/ThreedsInitializePreAuth.php'
-	),
-	'Iyzipay\\Model\\ThreedsPayment' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/ThreedsPayment.php'
-	),
-	'Iyzipay\\Model\\ThreedsV2Payment' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/ThreedsV2Payment.php'
-	),
-	'Iyzipay\\Model\\UCSInitialize' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/UCSInitialize.php'
-	),
-	'Iyzipay\\Model\\UCSInitializeResource' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Model/UCSInitializeResource.php'
-	),
-	'Iyzipay\\Options' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Options.php'
-	),
-	'Iyzipay\\Request' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request.php'
-	),
-	'Iyzipay\\RequestFormatter' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/RequestFormatter.php'
-	),
-	'Iyzipay\\RequestStringBuilder' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/RequestStringBuilder.php'
-	),
-	'Iyzipay\\RequestStringConvertible' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/RequestStringConvertible.php'
-	),
-	'Iyzipay\\Request\\AmountBaseRefundRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/AmountBaseRefundRequest.php'
-	),
-	'Iyzipay\\Request\\CreateApmInitializeRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateApmInitializeRequest.php'
-	),
-	'Iyzipay\\Request\\CreateApprovalRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateApprovalRequest.php'
-	),
-	'Iyzipay\\Request\\CreateBasicBkmInitializeRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateBasicBkmInitializeRequest.php'
-	),
-	'Iyzipay\\Request\\CreateBasicPaymentRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateBasicPaymentRequest.php'
-	),
-	'Iyzipay\\Request\\CreateBkmInitializeRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateBkmInitializeRequest.php'
-	),
-	'Iyzipay\\Request\\CreateBlackListedCardRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateBlackListedCardRequest.php'
-	),
-	'Iyzipay\\Request\\CreateC2CSubMerchantRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateC2CSubMerchantRequest.php'
-	),
-	'Iyzipay\\Request\\CreateCancelRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateCancelRequest.php'
-	),
-	'Iyzipay\\Request\\CreateCardRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateCardRequest.php'
-	),
-	'Iyzipay\\Request\\CreateCheckoutFormInitializeRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateCheckoutFormInitializeRequest.php'
-	),
-	'Iyzipay\\Request\\CreateCrossBookingRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateCrossBookingRequest.php'
-	),
-	'Iyzipay\\Request\\CreateIyziupFormInitializeRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateIyziupFormInitializeRequest.php'
-	),
-	'Iyzipay\\Request\\CreatePayWithIyzicoInitializeRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreatePayWithIyzicoInitializeRequest.php'
-	),
-	'Iyzipay\\Request\\CreatePaymentPostAuthRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreatePaymentPostAuthRequest.php'
-	),
-	'Iyzipay\\Request\\CreatePaymentRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreatePaymentRequest.php'
-	),
-	'Iyzipay\\Request\\CreatePlusInstallmentPaymentRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreatePlusInstallmentPaymentRequest.php'
-	),
-	'Iyzipay\\Request\\CreateRefundRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateRefundRequest.php'
-	),
-	'Iyzipay\\Request\\CreateRefundToBalanceRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateRefundToBalanceRequest.php'
-	),
-	'Iyzipay\\Request\\CreateSettlementToBalanceRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateSettlementToBalanceRequest.php'
-	),
-	'Iyzipay\\Request\\CreateSubMerchantRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateSubMerchantRequest.php'
-	),
-	'Iyzipay\\Request\\CreateThreedsPaymentRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateThreedsPaymentRequest.php'
-	),
-	'Iyzipay\\Request\\CreateThreedsV2PaymentRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/CreateThreedsV2PaymentRequest.php'
-	),
-	'Iyzipay\\Request\\DeleteCardRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/DeleteCardRequest.php'
-	),
-	'Iyzipay\\Request\\Iyzilink\\IyziLinkCreateFastLinkRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Iyzilink/IyziLinkCreateFastLinkRequest.php'
-	),
-	'Iyzipay\\Request\\Iyzilink\\IyziLinkSaveProductRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Iyzilink/IyziLinkSaveProductRequest.php'
-	),
-	'Iyzipay\\Request\\Iyzilink\\IyziLinkSearchMerchantProductsRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Iyzilink/IyziLinkSearchMerchantProductsRequest.php'
-	),
-	'Iyzipay\\Request\\Iyzilink\\IyziLinkUpdateProductStatusRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Iyzilink/IyziLinkUpdateProductStatusRequest.php'
-	),
-	'Iyzipay\\Request\\PagininRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/PagininRequest.php'
-	),
-	'Iyzipay\\Request\\ReportingPaymentDetailRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/ReportingPaymentDetailRequest.php'
-	),
-	'Iyzipay\\Request\\ReportingPaymentTransactionRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/ReportingPaymentTransactionRequest.php'
-	),
-	'Iyzipay\\Request\\ReportingScrollTransactionRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/ReportingScrollTransactionRequest.php'
-	),
-	'Iyzipay\\Request\\RetrieveApmRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/RetrieveApmRequest.php'
-	),
-	'Iyzipay\\Request\\RetrieveBinNumberRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/RetrieveBinNumberRequest.php'
-	),
-	'Iyzipay\\Request\\RetrieveBkmRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/RetrieveBkmRequest.php'
-	),
-	'Iyzipay\\Request\\RetrieveBlacklistedCardRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/RetrieveBlacklistedCardRequest.php'
-	),
-	'Iyzipay\\Request\\RetrieveCardListRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/RetrieveCardListRequest.php'
-	),
-	'Iyzipay\\Request\\RetrieveCheckoutFormRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/RetrieveCheckoutFormRequest.php'
-	),
-	'Iyzipay\\Request\\RetrieveInstallmentInfoRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/RetrieveInstallmentInfoRequest.php'
-	),
-	'Iyzipay\\Request\\RetrieveIyziupFormRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/RetrieveIyziupFormRequest.php'
-	),
-	'Iyzipay\\Request\\RetrieveLoyaltyRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/RetrieveLoyaltyRequest.php'
-	),
-	'Iyzipay\\Request\\RetrievePayWithIyzicoRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/RetrievePayWithIyzicoRequest.php'
-	),
-	'Iyzipay\\Request\\RetrievePaymentRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/RetrievePaymentRequest.php'
-	),
-	'Iyzipay\\Request\\RetrieveProtectedOverleyScriptRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/RetrieveProtectedOverleyScriptRequest.php'
-	),
-	'Iyzipay\\Request\\RetrieveSubMerchantRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/RetrieveSubMerchantRequest.php'
-	),
-	'Iyzipay\\Request\\RetrieveTransactionsRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/RetrieveTransactionsRequest.php'
-	),
-	'Iyzipay\\Request\\SubMerchantPaymentItemUpdateRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/SubMerchantPaymentItemUpdateRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\RetrieveSubscriptionCreateCheckoutFormRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/RetrieveSubscriptionCreateCheckoutFormRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionActivateRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionActivateRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionCancelRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionCancelRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionCardUpdateRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionCardUpdateRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionCardUpdateWithSubscriptionReferenceCodeRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionCardUpdateWithSubscriptionReferenceCodeRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionCreateCheckoutFormRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionCreateCheckoutFormRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionCreateCustomerRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionCreateCustomerRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionCreatePricingPlanRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionCreatePricingPlanRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionCreateProductRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionCreateProductRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionCreateRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionCreateRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionCreateWithCustomerRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionCreateWithCustomerRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionDeleteCustomerRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionDeleteCustomerRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionDeletePricingPlanRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionDeletePricingPlanRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionDeleteProductRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionDeleteProductRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionDetailsRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionDetailsRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionListCustomersRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionListCustomersRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionListPricingPlanRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionListPricingPlanRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionListProductsRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionListProductsRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionListRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionListRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionRetrieveCustomerRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionRetrieveCustomerRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionRetrievePricingPlanRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionRetrievePricingPlanRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionRetrieveProductRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionRetrieveProductRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionRetryRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionRetryRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionSearchRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionSearchRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionUpdateCustomerRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionUpdateCustomerRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionUpdatePricingPlanRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionUpdatePricingPlanRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionUpdateProductRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionUpdateProductRequest.php'
-	),
-	'Iyzipay\\Request\\Subscription\\SubscriptionUpgradeRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/Subscription/SubscriptionUpgradeRequest.php'
-	),
-	'Iyzipay\\Request\\UCSInitializeRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/UCSInitializeRequest.php'
-	),
-	'Iyzipay\\Request\\UpdateBlackListedCardRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/UpdateBlackListedCardRequest.php'
-	),
-	'Iyzipay\\Request\\UpdateSubMerchantRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/UpdateSubMerchantRequest.php'
-	),
-	'Iyzipay\\Request\\VerifyC2CSubMerchantRequest' => array(
-		'version' => '2.0.60.0',
-		'path'    => $vendorDir . '/iyzico/iyzipay-php/src/Iyzipay/Request/VerifyC2CSubMerchantRequest.php'
-	),
 	'KnitPayPro' => array(
-		'version' => 'dev-master',
+		'version' => '9.2.9999999.9999999-dev',
 		'path'    => $baseDir . '/includes/pro.php'
 	),
 	'KnitPayPro_Setup' => array(
-		'version' => 'dev-master',
+		'version' => '9.2.9999999.9999999-dev',
 		'path'    => $baseDir . '/includes/knit-pay-pro-setup.php'
 	),
 	'KnitPaySIGateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/sprout-invoices/src/KnitPaySIGateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/SproutInvoices/KnitPaySIGateway.php'
 	),
 	'KnitPay\\CurrencyConverter' => array(
-		'version' => 'dev-master',
+		'version' => '9.2.9999999.9999999-dev',
 		'path'    => $baseDir . '/includes/CurrencyConverter.php'
 	),
 	'KnitPay\\CustomSettingFields' => array(
-		'version' => 'dev-master',
+		'version' => '9.2.9999999.9999999-dev',
 		'path'    => $baseDir . '/includes/CustomSettingFields.php'
 	),
+	'KnitPay\\CustomSettings' => array(
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/includes/CustomSettings.php'
+	),
 	'KnitPay\\Extensions\\AWPCP\\AWPCPDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/awpcp/src/AWPCPDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/AWPCP/AWPCPDependency.php'
 	),
 	'KnitPay\\Extensions\\AWPCP\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/awpcp/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/AWPCP/Extension.php'
 	),
 	'KnitPay\\Extensions\\AWPCP\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/awpcp/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/AWPCP/Gateway.php'
 	),
 	'KnitPay\\Extensions\\AWPCP\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/awpcp/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/AWPCP/Helper.php'
 	),
 	'KnitPay\\Extensions\\BaBookEverything\\BaBookEverythingDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/ba-book-everything/src/BaBookEverythingDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BaBookEverything/BaBookEverythingDependency.php'
 	),
 	'KnitPay\\Extensions\\BaBookEverything\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/ba-book-everything/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BaBookEverything/Extension.php'
 	),
 	'KnitPay\\Extensions\\BaBookEverything\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/ba-book-everything/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BaBookEverything/Gateway.php'
 	),
 	'KnitPay\\Extensions\\BaBookEverything\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/ba-book-everything/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BaBookEverything/Helper.php'
 	),
 	'KnitPay\\Extensions\\BookingPress\\BookingpressDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/bookingpress/src/BookingpressDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BookingPress/BookingpressDependency.php'
 	),
 	'KnitPay\\Extensions\\BookingPress\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/bookingpress/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BookingPress/Extension.php'
 	),
 	'KnitPay\\Extensions\\BookingPress\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/bookingpress/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BookingPress/Gateway.php'
 	),
 	'KnitPay\\Extensions\\BookingPress\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/bookingpress/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BookingPress/Helper.php'
 	),
 	'KnitPay\\Extensions\\BooklyPro\\BooklyProDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/bookly-pro/src/BooklyProDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BooklyPro/BooklyProDependency.php'
 	),
 	'KnitPay\\Extensions\\BooklyPro\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/bookly-pro/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BooklyPro/Extension.php'
 	),
 	'KnitPay\\Extensions\\BooklyPro\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/bookly-pro/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/BooklyPro/Helper.php'
 	),
 	'KnitPay\\Extensions\\Camptix\\CamptixDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/camptix/src/CamptixDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/Camptix/CamptixDependency.php'
 	),
 	'KnitPay\\Extensions\\Camptix\\CustomCheckoutFields' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/camptix/src/CustomCheckoutFields.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/Camptix/CustomCheckoutFields.php'
 	),
 	'KnitPay\\Extensions\\Camptix\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/camptix/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/Camptix/Extension.php'
 	),
 	'KnitPay\\Extensions\\Camptix\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/camptix/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/Camptix/Gateway.php'
 	),
 	'KnitPay\\Extensions\\Camptix\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/camptix/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/Camptix/Helper.php'
 	),
 	'KnitPay\\Extensions\\Charitable\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/charitable/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/Charitable/Extension.php'
 	),
 	'KnitPay\\Extensions\\ContactForm7\\ContactForm7Dependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/contact-form7/src/ContactForm7Dependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/ContactForm7/ContactForm7Dependency.php'
 	),
 	'KnitPay\\Extensions\\ContactForm7\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/contact-form7/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/ContactForm7/Extension.php'
 	),
 	'KnitPay\\Extensions\\ContactForm7\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/contact-form7/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/ContactForm7/Helper.php'
 	),
 	'KnitPay\\Extensions\\EngineThemes\\EngineThemesDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/enginethemes/src/EngineThemesDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/EngineThemes/EngineThemesDependency.php'
 	),
 	'KnitPay\\Extensions\\EngineThemes\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/enginethemes/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/EngineThemes/Extension.php'
 	),
 	'KnitPay\\Extensions\\EngineThemes\\FreelanceEngine\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/enginethemes/freelanceengine/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/EngineThemes/FreelanceEngine/Extension.php'
 	),
 	'KnitPay\\Extensions\\EngineThemes\\FreelanceEngine\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/enginethemes/freelanceengine/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/EngineThemes/FreelanceEngine/Gateway.php'
 	),
 	'KnitPay\\Extensions\\EngineThemes\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/enginethemes/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/EngineThemes/Gateway.php'
 	),
 	'KnitPay\\Extensions\\EngineThemes\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/enginethemes/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/EngineThemes/Helper.php'
 	),
 	'KnitPay\\Extensions\\EngineThemes\\KnitPayVisitor' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/enginethemes/src/KnitPayVisitor.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/EngineThemes/KnitPayVisitor.php'
 	),
 	'KnitPay\\Extensions\\EngineThemes\\MicroJobEngine\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/enginethemes/microjobengine/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/EngineThemes/MicroJobEngine/Extension.php'
 	),
 	'KnitPay\\Extensions\\EngineThemes\\MicroJobEngine\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/enginethemes/microjobengine/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/EngineThemes/MicroJobEngine/Gateway.php'
 	),
 	'KnitPay\\Extensions\\EventsManagerPro\\EventsManagerProDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/events-manager-pro/src/EventsManagerProDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/EventsManagerPro/EventsManagerProDependency.php'
 	),
 	'KnitPay\\Extensions\\EventsManagerPro\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/events-manager-pro/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/EventsManagerPro/Extension.php'
 	),
 	'KnitPay\\Extensions\\EventsManagerPro\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/events-manager-pro/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/EventsManagerPro/Gateway.php'
 	),
 	'KnitPay\\Extensions\\EventsManagerPro\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/events-manager-pro/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/EventsManagerPro/Helper.php'
 	),
 	'KnitPay\\Extensions\\FluentForms\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/fluent-forms/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/FluentForms/Extension.php'
 	),
 	'KnitPay\\Extensions\\FluentForms\\FluentFormsDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/fluent-forms/src/FluentFormsDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/FluentForms/FluentFormsDependency.php'
 	),
 	'KnitPay\\Extensions\\FluentForms\\GatewayProcessor' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/fluent-forms/src/GatewayProcessor.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/FluentForms/GatewayProcessor.php'
 	),
 	'KnitPay\\Extensions\\FluentForms\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/fluent-forms/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/FluentForms/Helper.php'
 	),
 	'KnitPay\\Extensions\\FluentForms\\KnitPayPaymentMethod' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/fluent-forms/src/KnitPayPaymentMethod.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/FluentForms/KnitPayPaymentMethod.php'
 	),
 	'KnitPay\\Extensions\\Give\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/give/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/Give/Extension.php'
 	),
 	'KnitPay\\Extensions\\Give\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/give/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/Give/Gateway.php'
 	),
 	'KnitPay\\Extensions\\IndeedUltimateMembershipPro\\Dependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/indeed-ultimate-membership-pro/src/Dependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/IndeedUltimateMembershipPro/Dependency.php'
 	),
 	'KnitPay\\Extensions\\IndeedUltimateMembershipPro\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/indeed-ultimate-membership-pro/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/IndeedUltimateMembershipPro/Extension.php'
 	),
 	'KnitPay\\Extensions\\IndeedUltimateMembershipPro\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/indeed-ultimate-membership-pro/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/IndeedUltimateMembershipPro/Gateway.php'
 	),
 	'KnitPay\\Extensions\\IndeedUltimateMembershipPro\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/indeed-ultimate-membership-pro/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/IndeedUltimateMembershipPro/Helper.php'
 	),
 	'KnitPay\\Extensions\\KnitPayPaymentButton\\ElementorPaymentButtonWidget' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/knit-pay-payment-button/src/ElementorPaymentButtonWidget.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/KnitPayPaymentButton/ElementorPaymentButtonWidget.php'
 	),
 	'KnitPay\\Extensions\\KnitPayPaymentButton\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/knit-pay-payment-button/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/KnitPayPaymentButton/Extension.php'
 	),
 	'KnitPay\\Extensions\\KnitPayPaymentButton\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/knit-pay-payment-button/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/KnitPayPaymentButton/Gateway.php'
 	),
 	'KnitPay\\Extensions\\KnitPayPaymentButton\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/knit-pay-payment-button/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/KnitPayPaymentButton/Helper.php'
 	),
 	'KnitPay\\Extensions\\KnitPayPaymentButton\\PaymentButtonBlock' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/knit-pay-payment-button/src/PaymentButtonBlock.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/KnitPayPaymentButton/PaymentButtonBlock.php'
 	),
 	'KnitPay\\Extensions\\KnitPayPaymentLink\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/knit-pay-payment-link/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/KnitPayPaymentLink/Extension.php'
 	),
 	'KnitPay\\Extensions\\KnitPayPaymentLink\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/knit-pay-payment-link/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/KnitPayPaymentLink/Gateway.php'
 	),
 	'KnitPay\\Extensions\\KnitPayPaymentLink\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/knit-pay-payment-link/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/KnitPayPaymentLink/Helper.php'
 	),
 	'KnitPay\\Extensions\\LatePoint\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/latepoint/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LatePoint/Extension.php'
 	),
 	'KnitPay\\Extensions\\LatePoint\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/latepoint/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LatePoint/Gateway.php'
 	),
 	'KnitPay\\Extensions\\LatePoint\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/latepoint/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LatePoint/Helper.php'
 	),
 	'KnitPay\\Extensions\\LatePoint\\LatePointDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/latepoint/src/LatePointDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LatePoint/LatePointDependency.php'
 	),
 	'KnitPay\\Extensions\\LearnDash\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/learndash/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LearnDash/Extension.php'
 	),
 	'KnitPay\\Extensions\\LearnDash\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/learndash/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LearnDash/Gateway.php'
 	),
 	'KnitPay\\Extensions\\LearnDash\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/learndash/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LearnDash/Helper.php'
 	),
 	'KnitPay\\Extensions\\LearnDash\\KnitPaySettingsSection' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/learndash/src/KnitPaySettingsSection.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LearnDash/KnitPaySettingsSection.php'
 	),
 	'KnitPay\\Extensions\\LearnDash\\LearnDashDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/learndash/src/LearnDashDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LearnDash/LearnDashDependency.php'
 	),
 	'KnitPay\\Extensions\\LearnPress\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/learnpress/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LearnPress/Extension.php'
 	),
 	'KnitPay\\Extensions\\LearnPress\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/learnpress/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LearnPress/Gateway.php'
 	),
 	'KnitPay\\Extensions\\LearnPress\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/learnpress/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LearnPress/Helper.php'
 	),
 	'KnitPay\\Extensions\\LearnPress\\LearnPressDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/learnpress/src/LearnPressDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LearnPress/LearnPressDependency.php'
 	),
 	'KnitPay\\Extensions\\LifterLMS\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/lifterlms/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LifterLMS/Extension.php'
 	),
 	'KnitPay\\Extensions\\LifterLMS\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/lifterlms/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LifterLMS/Gateway.php'
 	),
 	'KnitPay\\Extensions\\LifterLMS\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/lifterlms/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LifterLMS/Helper.php'
 	),
 	'KnitPay\\Extensions\\LifterLMS\\LifterLMSDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/lifterlms/src/LifterLMSDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LifterLMS/LifterLMSDependency.php'
 	),
 	'KnitPay\\Extensions\\MotopressHotelBooking\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/motopress-hotel-booking/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/MotopressHotelBooking/Extension.php'
 	),
 	'KnitPay\\Extensions\\MotopressHotelBooking\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/motopress-hotel-booking/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/MotopressHotelBooking/Gateway.php'
 	),
 	'KnitPay\\Extensions\\MotopressHotelBooking\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/motopress-hotel-booking/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/MotopressHotelBooking/Helper.php'
 	),
 	'KnitPay\\Extensions\\MotopressHotelBooking\\MotoPressHotelBookingDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/motopress-hotel-booking/src/MotoPressHotelBookingDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/MotopressHotelBooking/MotoPressHotelBookingDependency.php'
 	),
 	'KnitPay\\Extensions\\MycredBuycred\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/mycred-buycred/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/MycredBuycred/Extension.php'
 	),
 	'KnitPay\\Extensions\\MycredBuycred\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/mycred-buycred/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/MycredBuycred/Gateway.php'
 	),
 	'KnitPay\\Extensions\\MycredBuycred\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/mycred-buycred/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/MycredBuycred/Helper.php'
 	),
 	'KnitPay\\Extensions\\MycredBuycred\\MyCredDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/mycred-buycred/src/MyCredDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/MycredBuycred/MyCredDependency.php'
 	),
 	'KnitPay\\Extensions\\PaidMembershipsPro\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/paid-memberships-pro/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/PaidMembershipsPro/Extension.php'
 	),
 	'KnitPay\\Extensions\\PaidMembershipsPro\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/paid-memberships-pro/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/PaidMembershipsPro/Helper.php'
 	),
 	'KnitPay\\Extensions\\PaidMembershipsPro\\PaidMembershipsProDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/paid-memberships-pro/src/PaidMembershipsProDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/PaidMembershipsPro/PaidMembershipsProDependency.php'
 	),
 	'KnitPay\\Extensions\\ProfilePress\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/profile-press/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/ProfilePress/Extension.php'
 	),
 	'KnitPay\\Extensions\\ProfilePress\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/profile-press/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/ProfilePress/Gateway.php'
 	),
 	'KnitPay\\Extensions\\ProfilePress\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/profile-press/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/ProfilePress/Helper.php'
 	),
 	'KnitPay\\Extensions\\ProfilePress\\ProfilePressDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/profile-press/src/ProfilePressDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/ProfilePress/ProfilePressDependency.php'
 	),
 	'KnitPay\\Extensions\\RegistrationsForTheEventsCalendarPro\\Dependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/registrations-for-the-events-calendar-pro/src/Dependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/RegistrationsForTheEventsCalendarPro/Dependency.php'
 	),
 	'KnitPay\\Extensions\\RegistrationsForTheEventsCalendarPro\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/registrations-for-the-events-calendar-pro/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/RegistrationsForTheEventsCalendarPro/Extension.php'
 	),
 	'KnitPay\\Extensions\\RegistrationsForTheEventsCalendarPro\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/registrations-for-the-events-calendar-pro/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/RegistrationsForTheEventsCalendarPro/Gateway.php'
 	),
 	'KnitPay\\Extensions\\RegistrationsForTheEventsCalendarPro\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/registrations-for-the-events-calendar-pro/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/RegistrationsForTheEventsCalendarPro/Helper.php'
 	),
 	'KnitPay\\Extensions\\RestroPress\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/restropress/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/RestroPress/Extension.php'
 	),
 	'KnitPay\\Extensions\\RestroPress\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/restropress/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/RestroPress/Gateway.php'
 	),
 	'KnitPay\\Extensions\\RestroPress\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/restropress/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/RestroPress/Helper.php'
 	),
 	'KnitPay\\Extensions\\RestroPress\\RestroPressDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/restropress/src/RestroPressDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/RestroPress/RestroPressDependency.php'
 	),
 	'KnitPay\\Extensions\\SproutInvoices\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/sprout-invoices/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/SproutInvoices/Extension.php'
 	),
 	'KnitPay\\Extensions\\SproutInvoices\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/sprout-invoices/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/SproutInvoices/Helper.php'
 	),
 	'KnitPay\\Extensions\\SproutInvoices\\SproutInvoicesDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/sprout-invoices/src/SproutInvoicesDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/SproutInvoices/SproutInvoicesDependency.php'
 	),
 	'KnitPay\\Extensions\\TeamBooking\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/team-booking/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/TeamBooking/Extension.php'
 	),
 	'KnitPay\\Extensions\\TeamBooking\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/team-booking/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/TeamBooking/Gateway.php'
 	),
 	'KnitPay\\Extensions\\TeamBooking\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/team-booking/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/TeamBooking/Helper.php'
 	),
 	'KnitPay\\Extensions\\TeamBooking\\TeamBookingDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/team-booking/src/TeamBookingDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/TeamBooking/TeamBookingDependency.php'
 	),
 	'KnitPay\\Extensions\\Tickera\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/tickera/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/Tickera/Extension.php'
 	),
 	'KnitPay\\Extensions\\Tickera\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/tickera/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/Tickera/Gateway.php'
 	),
 	'KnitPay\\Extensions\\Tickera\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/tickera/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/Tickera/Helper.php'
 	),
 	'KnitPay\\Extensions\\Tickera\\TickeraDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/tickera/src/TickeraDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/Tickera/TickeraDependency.php'
 	),
 	'KnitPay\\Extensions\\TourMaster\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/tourmaster/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/TourMaster/Extension.php'
 	),
 	'KnitPay\\Extensions\\TourMaster\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/tourmaster/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/TourMaster/Gateway.php'
 	),
 	'KnitPay\\Extensions\\TourMaster\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/tourmaster/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/TourMaster/Helper.php'
 	),
 	'KnitPay\\Extensions\\TourMaster\\TourMasterDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/tourmaster/src/TourMasterDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/TourMaster/TourMasterDependency.php'
 	),
 	'KnitPay\\Extensions\\TutorLMS\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/tutor-lms/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/TutorLMS/Extension.php'
 	),
 	'KnitPay\\Extensions\\TutorLMS\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/tutor-lms/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/TutorLMS/Gateway.php'
 	),
 	'KnitPay\\Extensions\\TutorLMS\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/tutor-lms/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/TutorLMS/Helper.php'
 	),
 	'KnitPay\\Extensions\\TutorLMS\\TutorConfig' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/tutor-lms/src/TutorConfig.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/TutorLMS/TutorConfig.php'
 	),
 	'KnitPay\\Extensions\\TutorLMS\\TutorLMSDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/tutor-lms/src/TutorLMSDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/TutorLMS/TutorLMSDependency.php'
 	),
 	'KnitPay\\Extensions\\TutorLMS\\TutorPayment' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/tutor-lms/src/TutorPayment.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/TutorLMS/TutorPayment.php'
 	),
 	'KnitPay\\Extensions\\UncannyAutomator\\Actions\\CreatePaymentAction' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/uncanny-automator/src/actions/CreatePaymentAction.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/UncannyAutomator/Actions/CreatePaymentAction.php'
 	),
 	'KnitPay\\Extensions\\UncannyAutomator\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/uncanny-automator/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/UncannyAutomator/Extension.php'
 	),
 	'KnitPay\\Extensions\\UncannyAutomator\\KnitPayIntegration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/uncanny-automator/src/KnitPayIntegration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/UncannyAutomator/KnitPayIntegration.php'
 	),
 	'KnitPay\\Extensions\\UncannyAutomator\\KnitPayTokens' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/uncanny-automator/src/KnitPayTokens.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/UncannyAutomator/KnitPayTokens.php'
 	),
 	'KnitPay\\Extensions\\UncannyAutomator\\Triggers\\PaymentStatusUpdateTrigger' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/uncanny-automator/src/triggers/PaymentStatusUpdateTrigger.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/UncannyAutomator/Triggers/PaymentStatusUpdateTrigger.php'
 	),
 	'KnitPay\\Extensions\\UncannyAutomator\\UncannyAutomatorDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/uncanny-automator/src/UncannyAutomatorDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/UncannyAutomator/UncannyAutomatorDependency.php'
 	),
 	'KnitPay\\Extensions\\VikWP\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/vik-wp/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/VikWP/Extension.php'
 	),
 	'KnitPay\\Extensions\\VikWP\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/vik-wp/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/VikWP/Helper.php'
 	),
 	'KnitPay\\Extensions\\VikWP\\KnitPayGateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/vik-wp/src/KnitPayGateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/VikWP/KnitPayGateway.php'
 	),
 	'KnitPay\\Extensions\\VikWP\\VikWPDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/vik-wp/src/VikWPDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/VikWP/VikWPDependency.php'
 	),
 	'KnitPay\\Extensions\\WPAdverts\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wpadverts/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPAdverts/Extension.php'
 	),
 	'KnitPay\\Extensions\\WPAdverts\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wpadverts/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPAdverts/Gateway.php'
 	),
 	'KnitPay\\Extensions\\WPAdverts\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wpadverts/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPAdverts/Helper.php'
 	),
 	'KnitPay\\Extensions\\WPAdverts\\WPAdvertsDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wpadverts/src/WPAdvertsDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPAdverts/WPAdvertsDependency.php'
 	),
 	'KnitPay\\Extensions\\WPForms\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wpforms/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPForms/Extension.php'
 	),
 	'KnitPay\\Extensions\\WPForms\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wpforms/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPForms/Gateway.php'
 	),
 	'KnitPay\\Extensions\\WPForms\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wpforms/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPForms/Helper.php'
 	),
 	'KnitPay\\Extensions\\WPForms\\WPFormsDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wpforms/src/WPFormsDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPForms/WPFormsDependency.php'
 	),
 	'KnitPay\\Extensions\\WPTravelEngine\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wptravel-engine/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPTravelEngine/Extension.php'
 	),
 	'KnitPay\\Extensions\\WPTravelEngine\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wptravel-engine/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPTravelEngine/Gateway.php'
 	),
 	'KnitPay\\Extensions\\WPTravelEngine\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wptravel-engine/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPTravelEngine/Helper.php'
 	),
 	'KnitPay\\Extensions\\WPTravelEngine\\WPTravelEngineDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wptravel-engine/src/WPTravelEngineDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPTravelEngine/WPTravelEngineDependency.php'
 	),
 	'KnitPay\\Extensions\\WPTravel\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wptravel/src/Extension.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPTravel/Extension.php'
 	),
 	'KnitPay\\Extensions\\WPTravel\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wptravel/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPTravel/Gateway.php'
 	),
 	'KnitPay\\Extensions\\WPTravel\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wptravel/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPTravel/Helper.php'
 	),
 	'KnitPay\\Extensions\\WPTravel\\WPTravelDependency' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/wptravel/src/WPTravelDependency.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/WPTravel/WPTravelDependency.php'
 	),
 	'KnitPay\\Gateways\\CBK\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cbk/src/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CBK/API.php'
 	),
 	'KnitPay\\Gateways\\CBK\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cbk/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CBK/Config.php'
 	),
 	'KnitPay\\Gateways\\CBK\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cbk/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CBK/Gateway.php'
 	),
 	'KnitPay\\Gateways\\CBK\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cbk/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CBK/Integration.php'
 	),
 	'KnitPay\\Gateways\\CBK\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cbk/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CBK/Statuses.php'
 	),
 	'KnitPay\\Gateways\\CCAvenue\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ccavenue/src/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CCAvenue/API.php'
 	),
 	'KnitPay\\Gateways\\CCAvenue\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ccavenue/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CCAvenue/Config.php'
 	),
 	'KnitPay\\Gateways\\CCAvenue\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ccavenue/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CCAvenue/Gateway.php'
 	),
 	'KnitPay\\Gateways\\CCAvenue\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ccavenue/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CCAvenue/Integration.php'
 	),
 	'KnitPay\\Gateways\\CCAvenue\\PaymentMethods' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ccavenue/src/PaymentMethods.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CCAvenue/PaymentMethods.php'
 	),
 	'KnitPay\\Gateways\\CCAvenue\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ccavenue/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CCAvenue/Statuses.php'
 	),
 	'KnitPay\\Gateways\\CMI\\Client' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cmi/src/Client.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CMI/Client.php'
 	),
 	'KnitPay\\Gateways\\CMI\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cmi/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CMI/Config.php'
 	),
 	'KnitPay\\Gateways\\CMI\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cmi/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CMI/Gateway.php'
 	),
 	'KnitPay\\Gateways\\CMI\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cmi/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CMI/Integration.php'
 	),
 	'KnitPay\\Gateways\\CMI\\Listener' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cmi/src/Listener.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CMI/Listener.php'
 	),
 	'KnitPay\\Gateways\\CMI\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cmi/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/CMI/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Cashfree\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cashfree/src/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Cashfree/API.php'
 	),
 	'KnitPay\\Gateways\\Cashfree\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cashfree/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Cashfree/Config.php'
 	),
 	'KnitPay\\Gateways\\Cashfree\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cashfree/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Cashfree/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Cashfree\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cashfree/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Cashfree/Integration.php'
 	),
 	'KnitPay\\Gateways\\Cashfree\\Listener' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cashfree/src/Listener.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Cashfree/Listener.php'
 	),
 	'KnitPay\\Gateways\\Cashfree\\PaymentMethods' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cashfree/src/PaymentMethods.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Cashfree/PaymentMethods.php'
 	),
 	'KnitPay\\Gateways\\Cashfree\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/cashfree/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Cashfree/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Coinbase\\Coinbase_API_Handler' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/coinbase/src/Coinbase_API_Handler.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Coinbase/Coinbase_API_Handler.php'
 	),
 	'KnitPay\\Gateways\\Coinbase\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/coinbase/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Coinbase/Config.php'
 	),
 	'KnitPay\\Gateways\\Coinbase\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/coinbase/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Coinbase/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Coinbase\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/coinbase/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Coinbase/Integration.php'
 	),
 	'KnitPay\\Gateways\\Coinbase\\Listener' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/coinbase/src/Listener.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Coinbase/Listener.php'
 	),
 	'KnitPay\\Gateways\\Coinbase\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/coinbase/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Coinbase/Statuses.php'
 	),
 	'KnitPay\\Gateways\\EBS\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ebs/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/EBS/Config.php'
 	),
 	'KnitPay\\Gateways\\EBS\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ebs/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/EBS/Gateway.php'
 	),
 	'KnitPay\\Gateways\\EBS\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ebs/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/EBS/Integration.php'
 	),
 	'KnitPay\\Gateways\\EBS\\PaymentMethods' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ebs/src/PaymentMethods.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/EBS/PaymentMethods.php'
 	),
 	'KnitPay\\Gateways\\EBS\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ebs/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/EBS/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Easebuzz\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/easebuzz/src/Config.php'
-	),
-	'KnitPay\\Gateways\\Easebuzz\\Easebuzz' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/easebuzz/src/easebuzz-lib/easebuzz_payment_gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Easebuzz/Config.php'
 	),
 	'KnitPay\\Gateways\\Easebuzz\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/easebuzz/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Easebuzz/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Easebuzz\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/easebuzz/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Easebuzz/Integration.php'
+	),
+	'KnitPay\\Gateways\\Easebuzz\\Lib\\Easebuzz' => array(
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Easebuzz/Lib/Easebuzz.php'
 	),
 	'KnitPay\\Gateways\\Easebuzz\\Listener' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/easebuzz/src/Listener.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Easebuzz/Listener.php'
 	),
 	'KnitPay\\Gateways\\Easebuzz\\PaymentMethods' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/easebuzz/src/PaymentMethods.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Easebuzz/PaymentMethods.php'
 	),
 	'KnitPay\\Gateways\\Easebuzz\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/easebuzz/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Easebuzz/Statuses.php'
 	),
 	'KnitPay\\Gateways\\ElavonConverge\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/elavon-converge/src/lib/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/ElavonConverge/API.php'
 	),
 	'KnitPay\\Gateways\\ElavonConverge\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/elavon-converge/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/ElavonConverge/Config.php'
 	),
 	'KnitPay\\Gateways\\ElavonConverge\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/elavon-converge/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/ElavonConverge/Gateway.php'
 	),
 	'KnitPay\\Gateways\\ElavonConverge\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/elavon-converge/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/ElavonConverge/Integration.php'
 	),
 	'KnitPay\\Gateways\\ElavonConverge\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/elavon-converge/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/ElavonConverge/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Fiserv\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fiserv/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Fiserv/Config.php'
 	),
 	'KnitPay\\Gateways\\Fiserv\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fiserv/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Fiserv/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Fiserv\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fiserv/src/Integration.php'
-	),
-	'KnitPay\\Gateways\\Fiserv\\Lib\\Utility' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fiserv/src/lib/Utility.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Fiserv/Integration.php'
 	),
 	'KnitPay\\Gateways\\Fiserv\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fiserv/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Fiserv/Statuses.php'
+	),
+	'KnitPay\\Gateways\\Fiserv\\Utility' => array(
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Fiserv/Utility.php'
 	),
 	'KnitPay\\Gateways\\Flutterwave\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/flutterwave/src/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Flutterwave/API.php'
 	),
 	'KnitPay\\Gateways\\Flutterwave\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/flutterwave/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Flutterwave/Config.php'
 	),
 	'KnitPay\\Gateways\\Flutterwave\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/flutterwave/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Flutterwave/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Flutterwave\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/flutterwave/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Flutterwave/Integration.php'
 	),
 	'KnitPay\\Gateways\\Flutterwave\\PaymentMethods' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/flutterwave/src/PaymentMethods.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Flutterwave/PaymentMethods.php'
 	),
 	'KnitPay\\Gateways\\Fygaro\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Fygaro/Config.php'
 	),
 	'KnitPay\\Gateways\\Fygaro\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Fygaro/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Fygaro\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Fygaro/Integration.php'
 	),
 	'KnitPay\\Gateways\\Fygaro\\Listener' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/fygaro/src/Listener.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Fygaro/Listener.php'
 	),
 	'KnitPay\\Gateways\\Gateway' => array(
-		'version' => 'dev-master',
+		'version' => '9.2.9999999.9999999-dev',
 		'path'    => $baseDir . '/gateways/Gateway.php'
 	),
 	'KnitPay\\Gateways\\GetEpay\\Client' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/get-epay/src/Client.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/GetEpay/Client.php'
 	),
 	'KnitPay\\Gateways\\GetEpay\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/get-epay/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/GetEpay/Config.php'
 	),
 	'KnitPay\\Gateways\\GetEpay\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/get-epay/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/GetEpay/Gateway.php'
 	),
 	'KnitPay\\Gateways\\GetEpay\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/get-epay/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/GetEpay/Integration.php'
 	),
 	'KnitPay\\Gateways\\GetEpay\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/get-epay/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/GetEpay/Statuses.php'
 	),
 	'KnitPay\\Gateways\\HdfcSmartGateway\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/hdfc-smart-gateway/src/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/HdfcSmartGateway/API.php'
 	),
 	'KnitPay\\Gateways\\HdfcSmartGateway\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/hdfc-smart-gateway/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/HdfcSmartGateway/Config.php'
 	),
 	'KnitPay\\Gateways\\HdfcSmartGateway\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/hdfc-smart-gateway/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/HdfcSmartGateway/Gateway.php'
 	),
 	'KnitPay\\Gateways\\HdfcSmartGateway\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/hdfc-smart-gateway/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/HdfcSmartGateway/Integration.php'
 	),
 	'KnitPay\\Gateways\\HdfcSmartGateway\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/hdfc-smart-gateway/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/HdfcSmartGateway/Statuses.php'
 	),
 	'KnitPay\\Gateways\\IPay88\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ipay88/src/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/IPay88/API.php'
 	),
 	'KnitPay\\Gateways\\IPay88\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ipay88/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/IPay88/Config.php'
 	),
 	'KnitPay\\Gateways\\IPay88\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ipay88/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/IPay88/Gateway.php'
 	),
 	'KnitPay\\Gateways\\IPay88\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ipay88/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/IPay88/Integration.php'
 	),
 	'KnitPay\\Gateways\\IPay88\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/ipay88/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/IPay88/Statuses.php'
 	),
 	'KnitPay\\Gateways\\IciciEazypay\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/icici-eazypay/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/IciciEazypay/Config.php'
 	),
 	'KnitPay\\Gateways\\IciciEazypay\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/icici-eazypay/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/IciciEazypay/Gateway.php'
 	),
 	'KnitPay\\Gateways\\IciciEazypay\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/icici-eazypay/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/IciciEazypay/Integration.php'
 	),
 	'KnitPay\\Gateways\\IciciEazypay\\PaymentMethods' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/icici-eazypay/src/PaymentMethods.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/IciciEazypay/PaymentMethods.php'
 	),
 	'KnitPay\\Gateways\\IciciEazypay\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/icici-eazypay/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/IciciEazypay/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Instamojo\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/instamojo/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Instamojo/Config.php'
 	),
 	'KnitPay\\Gateways\\Instamojo\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/instamojo/src/Gateway.php'
-	),
-	'KnitPay\\Gateways\\Instamojo\\Instamojo' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/instamojo/src/lib/Instamojo.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Instamojo/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Instamojo\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/instamojo/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Instamojo/Integration.php'
+	),
+	'KnitPay\\Gateways\\Instamojo\\Lib\\Instamojo' => array(
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Instamojo/Lib/Instamojo.php'
+	),
+	'KnitPay\\Gateways\\Instamojo\\Lib\\ValidationException' => array(
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Instamojo/Lib/ValidationException.php'
 	),
 	'KnitPay\\Gateways\\Instamojo\\Listener' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/instamojo/src/Listener.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Instamojo/Listener.php'
 	),
 	'KnitPay\\Gateways\\Instamojo\\PaymentMethods' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/instamojo/src/PaymentMethods.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Instamojo/PaymentMethods.php'
 	),
 	'KnitPay\\Gateways\\Instamojo\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/instamojo/src/Statuses.php'
-	),
-	'KnitPay\\Gateways\\Instamojo\\ValidationException' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/instamojo/src/lib/ValidationException.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Instamojo/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Integration' => array(
-		'version' => 'dev-master',
+		'version' => '9.2.9999999.9999999-dev',
 		'path'    => $baseDir . '/gateways/Integration.php'
 	),
+	'KnitPay\\Gateways\\IntegrationModeTrait' => array(
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/IntegrationModeTrait.php'
+	),
 	'KnitPay\\Gateways\\IntegrationOAuthClient' => array(
-		'version' => 'dev-master',
+		'version' => '9.2.9999999.9999999-dev',
 		'path'    => $baseDir . '/gateways/IntegrationOAuthClient.php'
 	),
 	'KnitPay\\Gateways\\Iyzico\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/iyzico/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Iyzico/Config.php'
 	),
 	'KnitPay\\Gateways\\Iyzico\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/iyzico/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Iyzico/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Iyzico\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/iyzico/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Iyzico/Integration.php'
 	),
 	'KnitPay\\Gateways\\Iyzico\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/iyzico/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Iyzico/Statuses.php'
 	),
 	'KnitPay\\Gateways\\MPGS\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/mpgs/src/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MPGS/API.php'
 	),
 	'KnitPay\\Gateways\\MPGS\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/mpgs/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MPGS/Config.php'
 	),
 	'KnitPay\\Gateways\\MPGS\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/mpgs/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MPGS/Gateway.php'
 	),
 	'KnitPay\\Gateways\\MPGS\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/mpgs/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MPGS/Integration.php'
 	),
 	'KnitPay\\Gateways\\MPGS\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/mpgs/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MPGS/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Manual\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/manual/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Manual/Config.php'
 	),
 	'KnitPay\\Gateways\\Manual\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/manual/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Manual/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Manual\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/manual/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Manual/Integration.php'
 	),
 	'KnitPay\\Gateways\\MercadoPago\\Client' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/mercado-pago/src/Client.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MercadoPago/Client.php'
 	),
 	'KnitPay\\Gateways\\MercadoPago\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/mercado-pago/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MercadoPago/Config.php'
 	),
 	'KnitPay\\Gateways\\MercadoPago\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/mercado-pago/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MercadoPago/Gateway.php'
 	),
 	'KnitPay\\Gateways\\MercadoPago\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/mercado-pago/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MercadoPago/Integration.php'
 	),
 	'KnitPay\\Gateways\\MercadoPago\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/mercado-pago/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MercadoPago/Statuses.php'
 	),
 	'KnitPay\\Gateways\\MultiGateway\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/multi-gateway/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MultiGateway/Config.php'
 	),
 	'KnitPay\\Gateways\\MultiGateway\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/multi-gateway/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MultiGateway/Gateway.php'
 	),
 	'KnitPay\\Gateways\\MultiGateway\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/multi-gateway/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MultiGateway/Integration.php'
 	),
 	'KnitPay\\Gateways\\MyFatoorah\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/my-fatoorah/src/lib/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MyFatoorah/API.php'
 	),
 	'KnitPay\\Gateways\\MyFatoorah\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/my-fatoorah/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MyFatoorah/Config.php'
 	),
 	'KnitPay\\Gateways\\MyFatoorah\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/my-fatoorah/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MyFatoorah/Gateway.php'
 	),
 	'KnitPay\\Gateways\\MyFatoorah\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/my-fatoorah/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MyFatoorah/Integration.php'
 	),
 	'KnitPay\\Gateways\\MyFatoorah\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/my-fatoorah/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/MyFatoorah/Statuses.php'
 	),
 	'KnitPay\\Gateways\\NMI\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/nmi/src/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/NMI/API.php'
 	),
 	'KnitPay\\Gateways\\NMI\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/nmi/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/NMI/Config.php'
 	),
 	'KnitPay\\Gateways\\NMI\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/nmi/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/NMI/Gateway.php'
 	),
 	'KnitPay\\Gateways\\NMI\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/nmi/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/NMI/Integration.php'
 	),
 	'KnitPay\\Gateways\\NMI\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/nmi/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/NMI/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Omnipay\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/omnipay/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Omnipay/Config.php'
 	),
 	'KnitPay\\Gateways\\Omnipay\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/omnipay/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Omnipay/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Omnipay\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/omnipay/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Omnipay/Integration.php'
 	),
 	'KnitPay\\Gateways\\Omnipay\\RestController' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/omnipay/src/RestController.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Omnipay/RestController.php'
 	),
 	'KnitPay\\Gateways\\OpenMoney\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/open-money/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/OpenMoney/Config.php'
 	),
 	'KnitPay\\Gateways\\OpenMoney\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/open-money/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/OpenMoney/Gateway.php'
 	),
 	'KnitPay\\Gateways\\OpenMoney\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/open-money/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/OpenMoney/Integration.php'
 	),
 	'KnitPay\\Gateways\\OpenMoney\\LayerApi' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/open-money/src/lib/layer_api.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/OpenMoney/LayerApi.php'
 	),
 	'KnitPay\\Gateways\\OpenMoney\\PaymentMethods' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/open-money/src/PaymentMethods.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/OpenMoney/PaymentMethods.php'
 	),
 	'KnitPay\\Gateways\\OpenMoney\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/open-money/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/OpenMoney/Statuses.php'
 	),
 	'KnitPay\\Gateways\\OrderBox\\Checksum' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/orderbox/src/Checksum.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/OrderBox/Checksum.php'
 	),
 	'KnitPay\\Gateways\\OrderBox\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/orderbox/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/OrderBox/Config.php'
 	),
 	'KnitPay\\Gateways\\OrderBox\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/orderbox/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/OrderBox/Gateway.php'
 	),
 	'KnitPay\\Gateways\\OrderBox\\Helper' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/orderbox/src/Helper.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/OrderBox/Helper.php'
 	),
 	'KnitPay\\Gateways\\OrderBox\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/orderbox/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/OrderBox/Integration.php'
 	),
 	'KnitPay\\Gateways\\PayU\\Client' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/pay-u/src/Client.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PayU/Client.php'
 	),
 	'KnitPay\\Gateways\\PayU\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/pay-u/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PayU/Config.php'
 	),
 	'KnitPay\\Gateways\\PayU\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/pay-u/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PayU/Gateway.php'
 	),
 	'KnitPay\\Gateways\\PayU\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/pay-u/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PayU/Integration.php'
 	),
 	'KnitPay\\Gateways\\PayU\\Listener' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/pay-u/src/Listener.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PayU/Listener.php'
 	),
 	'KnitPay\\Gateways\\PayU\\PaymentMethods' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/pay-u/src/PaymentMethods.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PayU/PaymentMethods.php'
 	),
 	'KnitPay\\Gateways\\PayU\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/pay-u/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PayU/Statuses.php'
 	),
 	'KnitPay\\Gateways\\PaymarkOE\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paymark-oe/src/lib/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PaymarkOE/API.php'
 	),
 	'KnitPay\\Gateways\\PaymarkOE\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paymark-oe/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PaymarkOE/Config.php'
 	),
 	'KnitPay\\Gateways\\PaymarkOE\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paymark-oe/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PaymarkOE/Gateway.php'
 	),
 	'KnitPay\\Gateways\\PaymarkOE\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paymark-oe/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PaymarkOE/Integration.php'
 	),
 	'KnitPay\\Gateways\\PaymarkOE\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paymark-oe/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PaymarkOE/Statuses.php'
 	),
 	'KnitPay\\Gateways\\PaymentMethods' => array(
-		'version' => 'dev-master',
+		'version' => '9.2.9999999.9999999-dev',
 		'path'    => $baseDir . '/gateways/PaymentMethods.php'
 	),
 	'KnitPay\\Gateways\\Paypal\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paypal/src/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paypal/API.php'
 	),
 	'KnitPay\\Gateways\\Paypal\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paypal/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paypal/Config.php'
 	),
 	'KnitPay\\Gateways\\Paypal\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paypal/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paypal/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Paypal\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paypal/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paypal/Integration.php'
 	),
 	'KnitPay\\Gateways\\Paypal\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paypal/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paypal/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Paypal\\Webhook' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paypal/src/Webhook.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paypal/Webhook.php'
 	),
 	'KnitPay\\Gateways\\Payrexx\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/payrexx/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Payrexx/Config.php'
 	),
 	'KnitPay\\Gateways\\Payrexx\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/payrexx/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Payrexx/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Payrexx\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/payrexx/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Payrexx/Integration.php'
 	),
 	'KnitPay\\Gateways\\Payrexx\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/payrexx/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Payrexx/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Paytm\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paytm/src/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paytm/API.php'
 	),
 	'KnitPay\\Gateways\\Paytm\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paytm/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paytm/Config.php'
 	),
 	'KnitPay\\Gateways\\Paytm\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paytm/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paytm/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Paytm\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paytm/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paytm/Integration.php'
 	),
 	'KnitPay\\Gateways\\Paytm\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paytm/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paytm/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Paytr\\Client' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paytr/src/Client.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paytr/Client.php'
 	),
 	'KnitPay\\Gateways\\Paytr\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paytr/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paytr/Config.php'
 	),
 	'KnitPay\\Gateways\\Paytr\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paytr/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paytr/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Paytr\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paytr/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paytr/Integration.php'
 	),
 	'KnitPay\\Gateways\\Paytr\\Listener' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/paytr/src/Listener.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Paytr/Listener.php'
 	),
 	'KnitPay\\Gateways\\Pesapal\\Client' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/pesapal/src/Client.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Pesapal/Client.php'
 	),
 	'KnitPay\\Gateways\\Pesapal\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/pesapal/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Pesapal/Config.php'
 	),
 	'KnitPay\\Gateways\\Pesapal\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/pesapal/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Pesapal/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Pesapal\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/pesapal/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Pesapal/Integration.php'
 	),
 	'KnitPay\\Gateways\\Pesapal\\Listener' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/pesapal/src/Listener.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Pesapal/Listener.php'
 	),
 	'KnitPay\\Gateways\\Pesapal\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/pesapal/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Pesapal/Statuses.php'
 	),
 	'KnitPay\\Gateways\\PhonePe\\APIV1' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/phone-pe/src/APIV1.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PhonePe/APIV1.php'
 	),
 	'KnitPay\\Gateways\\PhonePe\\APIV2' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/phone-pe/src/APIV2.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PhonePe/APIV2.php'
 	),
 	'KnitPay\\Gateways\\PhonePe\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/phone-pe/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PhonePe/Config.php'
 	),
 	'KnitPay\\Gateways\\PhonePe\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/phone-pe/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PhonePe/Gateway.php'
 	),
 	'KnitPay\\Gateways\\PhonePe\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/phone-pe/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PhonePe/Integration.php'
 	),
 	'KnitPay\\Gateways\\PhonePe\\Listener' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/phone-pe/src/Listener.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PhonePe/Listener.php'
 	),
 	'KnitPay\\Gateways\\PhonePe\\PaymentMethods' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/phone-pe/src/PaymentMethods.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PhonePe/PaymentMethods.php'
 	),
 	'KnitPay\\Gateways\\PhonePe\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/phone-pe/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/PhonePe/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Razorpay\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/razorpay/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Razorpay/Config.php'
 	),
 	'KnitPay\\Gateways\\Razorpay\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/razorpay/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Razorpay/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Razorpay\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/razorpay/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Razorpay/Integration.php'
 	),
 	'KnitPay\\Gateways\\Razorpay\\InvoiceUploader' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/razorpay/src/InvoiceUploader.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Razorpay/InvoiceUploader.php'
 	),
 	'KnitPay\\Gateways\\Razorpay\\Listener' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/razorpay/src/Listener.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Razorpay/Listener.php'
 	),
 	'KnitPay\\Gateways\\Razorpay\\PaymentMethods' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/razorpay/src/PaymentMethods.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Razorpay/PaymentMethods.php'
 	),
 	'KnitPay\\Gateways\\Razorpay\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/razorpay/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Razorpay/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Razorpay\\Webhook' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/razorpay/src/Webhook.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Razorpay/Webhook.php'
 	),
 	'KnitPay\\Gateways\\Revolut\\Client' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/revolut/src/Client.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Revolut/Client.php'
 	),
 	'KnitPay\\Gateways\\Revolut\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/revolut/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Revolut/Config.php'
 	),
 	'KnitPay\\Gateways\\Revolut\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/revolut/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Revolut/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Revolut\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/revolut/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Revolut/Integration.php'
 	),
 	'KnitPay\\Gateways\\Revolut\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/revolut/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Revolut/Statuses.php'
 	),
 	'KnitPay\\Gateways\\SBIePay\\AES128' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sbiepay/src/AES128.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SBIePay/AES128.php'
 	),
 	'KnitPay\\Gateways\\SBIePay\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sbiepay/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SBIePay/Config.php'
 	),
 	'KnitPay\\Gateways\\SBIePay\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sbiepay/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SBIePay/Gateway.php'
 	),
 	'KnitPay\\Gateways\\SBIePay\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sbiepay/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SBIePay/Integration.php'
 	),
 	'KnitPay\\Gateways\\SBIePay\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sbiepay/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SBIePay/Statuses.php'
 	),
 	'KnitPay\\Gateways\\SBIePay\\WebhookController' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sbiepay/src/WebhookController.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SBIePay/WebhookController.php'
 	),
 	'KnitPay\\Gateways\\SSLCommerz\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sslcommerz/src/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SSLCommerz/API.php'
 	),
 	'KnitPay\\Gateways\\SSLCommerz\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sslcommerz/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SSLCommerz/Config.php'
 	),
 	'KnitPay\\Gateways\\SSLCommerz\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sslcommerz/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SSLCommerz/Gateway.php'
 	),
 	'KnitPay\\Gateways\\SSLCommerz\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sslcommerz/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SSLCommerz/Integration.php'
 	),
 	'KnitPay\\Gateways\\SSLCommerz\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sslcommerz/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SSLCommerz/Statuses.php'
 	),
 	'KnitPay\\Gateways\\SabPaisa\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sab-paisa/src/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SabPaisa/API.php'
 	),
 	'KnitPay\\Gateways\\SabPaisa\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sab-paisa/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SabPaisa/Config.php'
 	),
 	'KnitPay\\Gateways\\SabPaisa\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sab-paisa/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SabPaisa/Gateway.php'
 	),
 	'KnitPay\\Gateways\\SabPaisa\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sab-paisa/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SabPaisa/Integration.php'
 	),
 	'KnitPay\\Gateways\\SabPaisa\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sab-paisa/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SabPaisa/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Slydepay\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/slydepay/src/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Slydepay/API.php'
 	),
 	'KnitPay\\Gateways\\Slydepay\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/slydepay/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Slydepay/Config.php'
 	),
 	'KnitPay\\Gateways\\Slydepay\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/slydepay/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Slydepay/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Slydepay\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/slydepay/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Slydepay/Integration.php'
 	),
 	'KnitPay\\Gateways\\Slydepay\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/slydepay/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Slydepay/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Sodexo\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sodexo/src/lib/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Sodexo/API.php'
 	),
 	'KnitPay\\Gateways\\Sodexo\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sodexo/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Sodexo/Config.php'
 	),
 	'KnitPay\\Gateways\\Sodexo\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sodexo/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Sodexo/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Sodexo\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sodexo/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Sodexo/Integration.php'
 	),
 	'KnitPay\\Gateways\\Sodexo\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sodexo/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Sodexo/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Stripe\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/stripe/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Stripe/Config.php'
 	),
 	'KnitPay\\Gateways\\Stripe\\Connect\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/stripe/connect/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Stripe/Connect/Config.php'
 	),
 	'KnitPay\\Gateways\\Stripe\\Connect\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/stripe/connect/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Stripe/Connect/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Stripe\\Connect\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/stripe/connect/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Stripe/Connect/Integration.php'
 	),
 	'KnitPay\\Gateways\\Stripe\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/stripe/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Stripe/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Stripe\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/stripe/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Stripe/Integration.php'
 	),
 	'KnitPay\\Gateways\\Stripe\\PaymentMethods' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/stripe/src/PaymentMethods.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Stripe/PaymentMethods.php'
 	),
 	'KnitPay\\Gateways\\Stripe\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/stripe/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Stripe/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Stripe\\Webhook' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/stripe/src/Webhook.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Stripe/Webhook.php'
 	),
 	'KnitPay\\Gateways\\SumUp\\Client' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sum-up/src/Client.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SumUp/Client.php'
 	),
 	'KnitPay\\Gateways\\SumUp\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sum-up/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SumUp/Config.php'
 	),
 	'KnitPay\\Gateways\\SumUp\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sum-up/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SumUp/Gateway.php'
 	),
 	'KnitPay\\Gateways\\SumUp\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sum-up/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SumUp/Integration.php'
 	),
 	'KnitPay\\Gateways\\SumUp\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/sum-up/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/SumUp/Statuses.php'
 	),
 	'KnitPay\\Gateways\\Test\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/test/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Test/Config.php'
 	),
 	'KnitPay\\Gateways\\Test\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/test/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Test/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Test\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/test/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Test/Integration.php'
 	),
 	'KnitPay\\Gateways\\Thawani\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/thawani/src/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Thawani/API.php'
 	),
 	'KnitPay\\Gateways\\Thawani\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/thawani/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Thawani/Config.php'
 	),
 	'KnitPay\\Gateways\\Thawani\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/thawani/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Thawani/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Thawani\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/thawani/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Thawani/Integration.php'
 	),
 	'KnitPay\\Gateways\\Thawani\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/thawani/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Thawani/Statuses.php'
 	),
 	'KnitPay\\Gateways\\UpiQR\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/upi-qr/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/UpiQR/Config.php'
 	),
 	'KnitPay\\Gateways\\UpiQR\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/upi-qr/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/UpiQR/Gateway.php'
 	),
 	'KnitPay\\Gateways\\UpiQR\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/upi-qr/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/UpiQR/Integration.php'
 	),
 	'KnitPay\\Gateways\\Zaakpay\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/zaakpay/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Zaakpay/Config.php'
 	),
 	'KnitPay\\Gateways\\Zaakpay\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/zaakpay/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Zaakpay/Gateway.php'
 	),
 	'KnitPay\\Gateways\\Zaakpay\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/zaakpay/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Zaakpay/Integration.php'
 	),
 	'KnitPay\\Gateways\\Zaakpay\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/zaakpay/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/Zaakpay/Statuses.php'
 	),
 	'KnitPay\\Gateways\\ZohoPay\\API' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/zoho-pay/src/API.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/ZohoPay/API.php'
 	),
 	'KnitPay\\Gateways\\ZohoPay\\Config' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/zoho-pay/src/Config.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/ZohoPay/Config.php'
 	),
 	'KnitPay\\Gateways\\ZohoPay\\Gateway' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/zoho-pay/src/Gateway.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/ZohoPay/Gateway.php'
 	),
 	'KnitPay\\Gateways\\ZohoPay\\Integration' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/zoho-pay/src/Integration.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/ZohoPay/Integration.php'
 	),
 	'KnitPay\\Gateways\\ZohoPay\\Statuses' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/zoho-pay/src/Statuses.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/gateways/ZohoPay/Statuses.php'
+	),
+	'KnitPay\\PaymentApiHelper' => array(
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/includes/PaymentApiHelper.php'
+	),
+	'KnitPay\\PaymentRestController' => array(
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/includes/PaymentRestController.php'
 	),
 	'KnitPay\\Utils' => array(
-		'version' => 'dev-master',
+		'version' => '9.2.9999999.9999999-dev',
 		'path'    => $baseDir . '/includes/Utils.php'
 	),
-	'KnitPay_CustomSettings' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/includes/KnitPay_CustomSettings.php'
-	),
 	'Konekt\\PdfInvoice\\InvoicePrinter' => array(
-		'version' => '1.14.0.0',
+		'version' => '1.15.0.0',
 		'path'    => $vendorDir . '/konekt/pdf-invoice/src/InvoicePrinter.php'
 	),
 	'Latest_Autoloader_Guard' => array(
 		'version' => '5.0.16',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-latest-autoloader-guard.php'
-	),
-	'League\\Flysystem\\CalculateChecksumFromStream' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/CalculateChecksumFromStream.php'
-	),
-	'League\\Flysystem\\ChecksumAlgoIsNotSupported' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/ChecksumAlgoIsNotSupported.php'
-	),
-	'League\\Flysystem\\ChecksumProvider' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/ChecksumProvider.php'
-	),
-	'League\\Flysystem\\Config' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/Config.php'
-	),
-	'League\\Flysystem\\CorruptedPathDetected' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/CorruptedPathDetected.php'
-	),
-	'League\\Flysystem\\DecoratedAdapter' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/DecoratedAdapter.php'
-	),
-	'League\\Flysystem\\DirectoryAttributes' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/DirectoryAttributes.php'
-	),
-	'League\\Flysystem\\DirectoryListing' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/DirectoryListing.php'
-	),
-	'League\\Flysystem\\FileAttributes' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/FileAttributes.php'
-	),
-	'League\\Flysystem\\Filesystem' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/Filesystem.php'
-	),
-	'League\\Flysystem\\FilesystemAdapter' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/FilesystemAdapter.php'
-	),
-	'League\\Flysystem\\FilesystemException' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/FilesystemException.php'
-	),
-	'League\\Flysystem\\FilesystemOperationFailed' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/FilesystemOperationFailed.php'
-	),
-	'League\\Flysystem\\FilesystemOperator' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/FilesystemOperator.php'
-	),
-	'League\\Flysystem\\FilesystemReader' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/FilesystemReader.php'
-	),
-	'League\\Flysystem\\FilesystemWriter' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/FilesystemWriter.php'
-	),
-	'League\\Flysystem\\InvalidStreamProvided' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/InvalidStreamProvided.php'
-	),
-	'League\\Flysystem\\InvalidVisibilityProvided' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/InvalidVisibilityProvided.php'
-	),
-	'League\\Flysystem\\MountManager' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/MountManager.php'
-	),
-	'League\\Flysystem\\PathNormalizer' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/PathNormalizer.php'
-	),
-	'League\\Flysystem\\PathPrefixer' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/PathPrefixer.php'
-	),
-	'League\\Flysystem\\PathTraversalDetected' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/PathTraversalDetected.php'
-	),
-	'League\\Flysystem\\PhpseclibV3\\ConnectionProvider' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem-sftp-v3/ConnectionProvider.php'
-	),
-	'League\\Flysystem\\PhpseclibV3\\ConnectivityChecker' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem-sftp-v3/ConnectivityChecker.php'
-	),
-	'League\\Flysystem\\PhpseclibV3\\FixatedConnectivityChecker' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem-sftp-v3/FixatedConnectivityChecker.php'
-	),
-	'League\\Flysystem\\PhpseclibV3\\SftpAdapter' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem-sftp-v3/SftpAdapter.php'
-	),
-	'League\\Flysystem\\PhpseclibV3\\SftpConnectionProvider' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem-sftp-v3/SftpConnectionProvider.php'
-	),
-	'League\\Flysystem\\PhpseclibV3\\SimpleConnectivityChecker' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem-sftp-v3/SimpleConnectivityChecker.php'
-	),
-	'League\\Flysystem\\PhpseclibV3\\StubSftpConnectionProvider' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem-sftp-v3/StubSftpConnectionProvider.php'
-	),
-	'League\\Flysystem\\PhpseclibV3\\UnableToAuthenticate' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem-sftp-v3/UnableToAuthenticate.php'
-	),
-	'League\\Flysystem\\PhpseclibV3\\UnableToConnectToSftpHost' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem-sftp-v3/UnableToConnectToSftpHost.php'
-	),
-	'League\\Flysystem\\PhpseclibV3\\UnableToEstablishAuthenticityOfHost' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem-sftp-v3/UnableToEstablishAuthenticityOfHost.php'
-	),
-	'League\\Flysystem\\PhpseclibV3\\UnableToLoadPrivateKey' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem-sftp-v3/UnableToLoadPrivateKey.php'
-	),
-	'League\\Flysystem\\PortableVisibilityGuard' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/PortableVisibilityGuard.php'
-	),
-	'League\\Flysystem\\ProxyArrayAccessToProperties' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/ProxyArrayAccessToProperties.php'
-	),
-	'League\\Flysystem\\ResolveIdenticalPathConflict' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/ResolveIdenticalPathConflict.php'
-	),
-	'League\\Flysystem\\StorageAttributes' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/StorageAttributes.php'
-	),
-	'League\\Flysystem\\SymbolicLinkEncountered' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/SymbolicLinkEncountered.php'
-	),
-	'League\\Flysystem\\UnableToCheckDirectoryExistence' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToCheckDirectoryExistence.php'
-	),
-	'League\\Flysystem\\UnableToCheckExistence' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToCheckExistence.php'
-	),
-	'League\\Flysystem\\UnableToCheckFileExistence' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToCheckFileExistence.php'
-	),
-	'League\\Flysystem\\UnableToCopyFile' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToCopyFile.php'
-	),
-	'League\\Flysystem\\UnableToCreateDirectory' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToCreateDirectory.php'
-	),
-	'League\\Flysystem\\UnableToDeleteDirectory' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToDeleteDirectory.php'
-	),
-	'League\\Flysystem\\UnableToDeleteFile' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToDeleteFile.php'
-	),
-	'League\\Flysystem\\UnableToGeneratePublicUrl' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToGeneratePublicUrl.php'
-	),
-	'League\\Flysystem\\UnableToGenerateTemporaryUrl' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToGenerateTemporaryUrl.php'
-	),
-	'League\\Flysystem\\UnableToListContents' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToListContents.php'
-	),
-	'League\\Flysystem\\UnableToMountFilesystem' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToMountFilesystem.php'
-	),
-	'League\\Flysystem\\UnableToMoveFile' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToMoveFile.php'
-	),
-	'League\\Flysystem\\UnableToProvideChecksum' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToProvideChecksum.php'
-	),
-	'League\\Flysystem\\UnableToReadFile' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToReadFile.php'
-	),
-	'League\\Flysystem\\UnableToResolveFilesystemMount' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToResolveFilesystemMount.php'
-	),
-	'League\\Flysystem\\UnableToRetrieveMetadata' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToRetrieveMetadata.php'
-	),
-	'League\\Flysystem\\UnableToSetVisibility' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToSetVisibility.php'
-	),
-	'League\\Flysystem\\UnableToWriteFile' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnableToWriteFile.php'
-	),
-	'League\\Flysystem\\UnixVisibility\\PortableVisibilityConverter' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnixVisibility/PortableVisibilityConverter.php'
-	),
-	'League\\Flysystem\\UnixVisibility\\VisibilityConverter' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnixVisibility/VisibilityConverter.php'
-	),
-	'League\\Flysystem\\UnreadableFileEncountered' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UnreadableFileEncountered.php'
-	),
-	'League\\Flysystem\\UrlGeneration\\ChainedPublicUrlGenerator' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UrlGeneration/ChainedPublicUrlGenerator.php'
-	),
-	'League\\Flysystem\\UrlGeneration\\PrefixPublicUrlGenerator' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UrlGeneration/PrefixPublicUrlGenerator.php'
-	),
-	'League\\Flysystem\\UrlGeneration\\PublicUrlGenerator' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UrlGeneration/PublicUrlGenerator.php'
-	),
-	'League\\Flysystem\\UrlGeneration\\ShardedPrefixPublicUrlGenerator' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UrlGeneration/ShardedPrefixPublicUrlGenerator.php'
-	),
-	'League\\Flysystem\\UrlGeneration\\TemporaryUrlGenerator' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/UrlGeneration/TemporaryUrlGenerator.php'
-	),
-	'League\\Flysystem\\Visibility' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/Visibility.php'
-	),
-	'League\\Flysystem\\WhitespacePathNormalizer' => array(
-		'version' => '3.33.0.0',
-		'path'    => $vendorDir . '/league/flysystem/src/WhitespacePathNormalizer.php'
-	),
-	'League\\MimeTypeDetection\\EmptyExtensionToMimeTypeMap' => array(
-		'version' => '1.16.0.0',
-		'path'    => $vendorDir . '/league/mime-type-detection/src/EmptyExtensionToMimeTypeMap.php'
-	),
-	'League\\MimeTypeDetection\\ExtensionLookup' => array(
-		'version' => '1.16.0.0',
-		'path'    => $vendorDir . '/league/mime-type-detection/src/ExtensionLookup.php'
-	),
-	'League\\MimeTypeDetection\\ExtensionMimeTypeDetector' => array(
-		'version' => '1.16.0.0',
-		'path'    => $vendorDir . '/league/mime-type-detection/src/ExtensionMimeTypeDetector.php'
-	),
-	'League\\MimeTypeDetection\\ExtensionToMimeTypeMap' => array(
-		'version' => '1.16.0.0',
-		'path'    => $vendorDir . '/league/mime-type-detection/src/ExtensionToMimeTypeMap.php'
-	),
-	'League\\MimeTypeDetection\\FinfoMimeTypeDetector' => array(
-		'version' => '1.16.0.0',
-		'path'    => $vendorDir . '/league/mime-type-detection/src/FinfoMimeTypeDetector.php'
-	),
-	'League\\MimeTypeDetection\\GeneratedExtensionToMimeTypeMap' => array(
-		'version' => '1.16.0.0',
-		'path'    => $vendorDir . '/league/mime-type-detection/src/GeneratedExtensionToMimeTypeMap.php'
-	),
-	'League\\MimeTypeDetection\\MimeTypeDetector' => array(
-		'version' => '1.16.0.0',
-		'path'    => $vendorDir . '/league/mime-type-detection/src/MimeTypeDetector.php'
-	),
-	'League\\MimeTypeDetection\\OverridingExtensionToMimeTypeMap' => array(
-		'version' => '1.16.0.0',
-		'path'    => $vendorDir . '/league/mime-type-detection/src/OverridingExtensionToMimeTypeMap.php'
 	),
 	'Manifest_Reader' => array(
 		'version' => '5.0.16',
@@ -4494,244 +2842,12 @@ return array(
 		'version' => '3.5.1.0',
 		'path'    => $vendorDir . '/omnipay/common/src/Omnipay.php'
 	),
-	'Omnipay\\PayPal\\ExpressGateway' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/ExpressGateway.php'
-	),
-	'Omnipay\\PayPal\\ExpressInContextGateway' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/ExpressInContextGateway.php'
-	),
-	'Omnipay\\PayPal\\Message\\AbstractRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/AbstractRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\AbstractRestRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/AbstractRestRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\CaptureRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/CaptureRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\ExpressAuthorizeRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ExpressAuthorizeRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\ExpressAuthorizeResponse' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ExpressAuthorizeResponse.php'
-	),
-	'Omnipay\\PayPal\\Message\\ExpressCompleteAuthorizeRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ExpressCompleteAuthorizeRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\ExpressCompleteOrderRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ExpressCompleteOrderRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\ExpressCompletePurchaseRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ExpressCompletePurchaseRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\ExpressCompletePurchaseResponse' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ExpressCompletePurchaseResponse.php'
-	),
-	'Omnipay\\PayPal\\Message\\ExpressFetchCheckoutRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ExpressFetchCheckoutRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\ExpressInContextAuthorizeRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ExpressInContextAuthorizeRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\ExpressInContextAuthorizeResponse' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ExpressInContextAuthorizeResponse.php'
-	),
-	'Omnipay\\PayPal\\Message\\ExpressInContextOrderRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ExpressInContextOrderRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\ExpressOrderRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ExpressOrderRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\ExpressTransactionSearchRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ExpressTransactionSearchRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\ExpressTransactionSearchResponse' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ExpressTransactionSearchResponse.php'
-	),
-	'Omnipay\\PayPal\\Message\\ExpressVoidRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ExpressVoidRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\FetchTransactionRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/FetchTransactionRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\ProAuthorizeRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ProAuthorizeRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\ProPurchaseRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/ProPurchaseRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RefundRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RefundRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\Response' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/Response.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestAuthorizeRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestAuthorizeRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestAuthorizeResponse' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestAuthorizeResponse.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestCancelSubscriptionRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestCancelSubscriptionRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestCaptureRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestCaptureRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestCompletePurchaseRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestCompletePurchaseRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestCompleteSubscriptionRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestCompleteSubscriptionRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestCreateCardRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestCreateCardRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestCreatePlanRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestCreatePlanRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestCreateSubscriptionRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestCreateSubscriptionRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestCreateWebhookRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestCreateWebhookRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestDeleteCardRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestDeleteCardRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestFetchPurchaseRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestFetchPurchaseRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestFetchTransactionRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestFetchTransactionRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestListPlanRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestListPlanRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestListPurchaseRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestListPurchaseRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestListWebhooksRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestListWebhooksRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestPurchaseRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestPurchaseRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestReactivateSubscriptionRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestReactivateSubscriptionRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestRefundCaptureRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestRefundCaptureRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestRefundRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestRefundRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestResponse' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestResponse.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestSearchTransactionRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestSearchTransactionRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestSuspendSubscriptionRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestSuspendSubscriptionRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestTokenRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestTokenRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestUpdatePlanRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestUpdatePlanRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestVerifyWebhookSignatureRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestVerifyWebhookSignatureRequest.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestVerifyWebhookSignatureResponse' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestVerifyWebhookSignatureResponse.php'
-	),
-	'Omnipay\\PayPal\\Message\\RestVoidRequest' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Message/RestVoidRequest.php'
-	),
-	'Omnipay\\PayPal\\PayPalItem' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/PayPalItem.php'
-	),
-	'Omnipay\\PayPal\\PayPalItemBag' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/PayPalItemBag.php'
-	),
-	'Omnipay\\PayPal\\ProGateway' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/ProGateway.php'
-	),
-	'Omnipay\\PayPal\\RestGateway' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/RestGateway.php'
-	),
-	'Omnipay\\PayPal\\Support\\InstantUpdateApi\\BillingAgreement' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Support/InstantUpdateApi/BillingAgreement.php'
-	),
-	'Omnipay\\PayPal\\Support\\InstantUpdateApi\\ShippingOption' => array(
-		'version' => '1.0.3.0',
-		'path'    => $vendorDir . '/knit-pay/omnipay-paypal/src/Support/InstantUpdateApi/ShippingOption.php'
-	),
 	'OsPaymentsKnitPayController' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/latepoint/src/OsPaymentsKnitPayController.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/LatePoint/OsPaymentsKnitPayController.php'
 	),
 	'Override' => array(
-		'version' => '1.33.0.0',
+		'version' => '1.36.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/Override.php'
 	),
 	'PHP_Autoloader' => array(
@@ -4739,143 +2855,15 @@ return array(
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-php-autoloader.php'
 	),
 	'PMProGateway_knit_pay' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/paid-memberships-pro/src/PMProGateway_knit_pay.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/PaidMembershipsPro/PMProGateway_knit_pay.php'
 	),
 	'Path_Processor' => array(
 		'version' => '5.0.16',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-path-processor.php'
 	),
-	'Payrexx\\CommunicationAdapter\\AbstractCommunication' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/CommunicationAdapter/AbstractCommunication.php'
-	),
-	'Payrexx\\CommunicationAdapter\\CurlCommunication' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/CommunicationAdapter/CurlCommunication.php'
-	),
-	'Payrexx\\Communicator' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Communicator.php'
-	),
-	'Payrexx\\Models\\Base' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Base.php'
-	),
-	'Payrexx\\Models\\Request\\AuthToken' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Request/AuthToken.php'
-	),
-	'Payrexx\\Models\\Request\\Design' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Request/Design.php'
-	),
-	'Payrexx\\Models\\Request\\Gateway' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Request/Gateway.php'
-	),
-	'Payrexx\\Models\\Request\\Invoice' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Request/Invoice.php'
-	),
-	'Payrexx\\Models\\Request\\Page' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Request/Page.php'
-	),
-	'Payrexx\\Models\\Request\\PaymentMethod' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Request/PaymentMethod.php'
-	),
-	'Payrexx\\Models\\Request\\PaymentProvider' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Request/PaymentProvider.php'
-	),
-	'Payrexx\\Models\\Request\\Payout' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Request/Payout.php'
-	),
-	'Payrexx\\Models\\Request\\QrCode' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Request/QrCode.php'
-	),
-	'Payrexx\\Models\\Request\\QrCodeScan' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Request/QrCodeScan.php'
-	),
-	'Payrexx\\Models\\Request\\SignatureCheck' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Request/SignatureCheck.php'
-	),
-	'Payrexx\\Models\\Request\\Subscription' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Request/Subscription.php'
-	),
-	'Payrexx\\Models\\Request\\Transaction' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Request/Transaction.php'
-	),
-	'Payrexx\\Models\\Response\\AuthToken' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Response/AuthToken.php'
-	),
-	'Payrexx\\Models\\Response\\Design' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Response/Design.php'
-	),
-	'Payrexx\\Models\\Response\\Gateway' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Response/Gateway.php'
-	),
-	'Payrexx\\Models\\Response\\Invoice' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Response/Invoice.php'
-	),
-	'Payrexx\\Models\\Response\\Page' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Response/Page.php'
-	),
-	'Payrexx\\Models\\Response\\PaymentMethod' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Response/PaymentMethod.php'
-	),
-	'Payrexx\\Models\\Response\\PaymentProvider' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Response/PaymentProvider.php'
-	),
-	'Payrexx\\Models\\Response\\Payout' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Response/Payout.php'
-	),
-	'Payrexx\\Models\\Response\\QrCode' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Response/QrCode.php'
-	),
-	'Payrexx\\Models\\Response\\QrCodeScan' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Response/QrCodeScan.php'
-	),
-	'Payrexx\\Models\\Response\\SignatureCheck' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Response/SignatureCheck.php'
-	),
-	'Payrexx\\Models\\Response\\Subscription' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Response/Subscription.php'
-	),
-	'Payrexx\\Models\\Response\\Transaction' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Models/Response/Transaction.php'
-	),
-	'Payrexx\\Payrexx' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/Payrexx.php'
-	),
-	'Payrexx\\PayrexxException' => array(
-		'version' => '1.8.11.0',
-		'path'    => $vendorDir . '/payrexx/payrexx/lib/Payrexx/PayrexxException.php'
-	),
 	'PaytmChecksum' => array(
-		'version' => 'dev-master',
+		'version' => '9.2.9999999.9999999-dev',
 		'path'    => $vendorDir . '/paytm/paytmchecksum/paytmchecksum/PaytmChecksum.php'
 	),
 	'Plugin_Locator' => array(
@@ -5121,10 +3109,6 @@ return array(
 	'Pronamic\\WordPress\\Pay\\Core\\IdTrait' => array(
 		'version' => '4.26.0.2',
 		'path'    => $baseDir . '/packages/wp-pay/core/src/Core/IdTrait.php'
-	),
-	'Pronamic\\WordPress\\Pay\\Core\\IntegrationModeTrait' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/gateways/IntegrationModeTrait.php'
 	),
 	'Pronamic\\WordPress\\Pay\\Core\\ModeTrait' => array(
 		'version' => '4.26.0.2',
@@ -5538,10 +3522,6 @@ return array(
 		'version' => 'dev-knitpay-master',
 		'path'    => $baseDir . '/packages/wp-pay-extensions/ninjaforms/src/SubmissionMetaboxReact.php'
 	),
-	'Pronamic\\WordPress\\Pay\\Extensions\\RestrictContentPro\\Extension' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/includes/temp_code.php'
-	),
 	'Pronamic\\WordPress\\Pay\\Extensions\\RestrictContent\\Extension' => array(
 		'version' => 'dev-knitpay-master',
 		'path'    => $baseDir . '/packages/wp-pay-extensions/restrict-content-pro/src/Extension.php'
@@ -5809,10 +3789,6 @@ return array(
 	'Pronamic\\WordPress\\Pay\\Payments\\PaymentPostType' => array(
 		'version' => '4.26.0.2',
 		'path'    => $baseDir . '/packages/wp-pay/core/src/Payments/PaymentPostType.php'
-	),
-	'Pronamic\\WordPress\\Pay\\Payments\\PaymentRestController' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/includes/PaymentRestController.php'
 	),
 	'Pronamic\\WordPress\\Pay\\Payments\\PaymentStatus' => array(
 		'version' => '4.26.0.2',
@@ -6323,7 +4299,7 @@ return array(
 		'path'    => $vendorDir . '/razorpay/razorpay/tests/VirtualAccountTest.php'
 	),
 	'SQLite3Exception' => array(
-		'version' => '1.33.0.0',
+		'version' => '1.36.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/SQLite3Exception.php'
 	),
 	'Shutdown_Handler' => array(
@@ -7743,11 +5719,11 @@ return array(
 		'path'    => $vendorDir . '/symfony/http-foundation/UrlHelper.php'
 	),
 	'Symfony\\Polyfill\\Mbstring\\Mbstring' => array(
-		'version' => '1.33.0.0',
+		'version' => '1.36.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-mbstring/Mbstring.php'
 	),
 	'Symfony\\Polyfill\\Php83\\Php83' => array(
-		'version' => '1.33.0.0',
+		'version' => '1.36.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Php83.php'
 	),
 	'VIISON\\AddressSplitter\\AddressSplitter' => array(
@@ -7767,7 +5743,7 @@ return array(
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-version-selector.php'
 	),
 	'WPCF7R_Action_Knit_Pay' => array(
-		'version' => 'dev-master',
-		'path'    => $baseDir . '/extensions/contact-form7/src/WPCF7R_Action_Knit_Pay.php'
+		'version' => '9.2.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/ContactForm7/WPCF7R_Action_Knit_Pay.php'
 	),
 );

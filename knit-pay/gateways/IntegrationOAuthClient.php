@@ -4,7 +4,7 @@ namespace KnitPay\Gateways;
 
 use Pronamic\WordPress\DateTime\DateTime;
 use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
-use Pronamic\WordPress\Pay\Core\IntegrationModeTrait;
+use KnitPay\Gateways\IntegrationModeTrait;
 use KnitPay\Gateways\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use KnitPay\Utils;

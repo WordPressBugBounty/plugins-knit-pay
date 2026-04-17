@@ -13,7 +13,7 @@ class PaymentMethods extends Core_PaymentMethods {
 
 	const SMS_PAYMENT_LINK = 'sms_payment_link';
 
-	const UPI_INTENT = 'upi_intent';
+	const UPI_INTENT         = 'upi_intent';
 	const UPI_INTENT_PHONEPE = 'upi_intent_phonepe';
 
 	/**

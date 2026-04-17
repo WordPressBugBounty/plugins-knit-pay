@@ -3,6 +3,7 @@
 use Pronamic\WordPress\Pay\Core\PaymentMethodsCollection;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
+
 add_filter(
 	'knit_pay_add_payment_methods',
 	function ( PaymentMethodsCollection $payment_methods ) {

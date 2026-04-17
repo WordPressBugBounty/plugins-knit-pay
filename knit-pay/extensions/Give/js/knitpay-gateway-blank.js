@@ -1,0 +1,1 @@
+// Helps to load wp_add_inline_script in Gateway.php

@@ -2,32 +2,8 @@
 
 // TODO add review notice similar to wpforms
 
-function knit_pay_dependency_autoload( $class ) {
-	if ( preg_match( '/^KnitPay\\\\(.+)?([^\\\\]+)$/U', ltrim( $class, '\\' ), $match ) ) {
-		$extension_dir = KNITPAY_DIR . strtolower( str_replace( '\\', DIRECTORY_SEPARATOR, preg_replace( '/([a-z])([A-Z])/', '$1-$2', $match[1] ) ) );
-		if ( ! is_dir( $extension_dir ) ) {
-			$extension_dir = KNITPAY_DIR . strtolower( str_replace( '\\', DIRECTORY_SEPARATOR, preg_replace( '/([a-z])([A-Z])/', '$1$2', $match[1] ) ) );
-		}
-
-		$file = $extension_dir . 'src' . DIRECTORY_SEPARATOR . $match[2] . '.php';
-		if ( is_readable( $file ) ) {
-			require_once $file;
-		} elseif ( is_readable( KNITPAY_DIR . 'includes' . DIRECTORY_SEPARATOR . $match[2] . '.php' ) ) {
-			require_once KNITPAY_DIR . 'includes' . DIRECTORY_SEPARATOR . $match[2] . '.php';
-		}
-	}
-}
-spl_autoload_register( 'knit_pay_dependency_autoload' );
-
 // Load dependency for get_plugins;
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
-
-// Gateway.
-require_once KNITPAY_DIR . 'gateways/IntegrationModeTrait.php';
-require_once KNITPAY_DIR . 'gateways/Gateway.php';
-require_once KNITPAY_DIR . 'gateways/Integration.php';
-require_once KNITPAY_DIR . 'gateways/IntegrationOAuthClient.php';
-require_once KNITPAY_DIR . 'gateways/PaymentMethods.php';
 
 // Add Knit Pay Deactivate Confirmation Box on Plugin Page
 require_once 'includes/plugin-deactivate-confirmation.php';
@@ -35,27 +11,25 @@ require_once 'includes/plugin-deactivate-confirmation.php';
 // Add Supported Extension and Gateways Sub-menu in Knit Pay Menu
 require_once 'includes/supported-extension-gateway-submenu.php';
 
-// Load Util class.
-require_once 'includes/Utils.php';
-
 // Add custom Knit Pay Custom Payment Methods.
 require_once 'includes/custom-payment-methods.php';
 
 // Add custom Knit Pay Custom Settings on the Settings page of Knit Pay.
-require_once 'includes/KnitPay_CustomSettings.php';
+require_once 'includes/CustomSettings.php';
 
 // Currency Converter.
 require_once 'includes/CurrencyConverter.php';
 
 // Including Knit Pay OmniPay PayPal for better compatibility.
-require_once 'vendor/knit-pay/omnipay-paypal/src/RestGateway.php';
-require_once 'vendor/knit-pay/omnipay-paypal/src/Message/AbstractRestRequest.php';
+require_once 'secondary-packages/vendor/knit-pay/omnipay-paypal/src/RestGateway.php';
+require_once 'secondary-packages/vendor/knit-pay/omnipay-paypal/src/Message/AbstractRestRequest.php';
 
 require_once 'includes/PaymentRestController.php';
 
-require_once 'includes/hooks_mapping.php';
+// WordPress Abilities API integration (WordPress 6.9+).
+require_once 'includes/PaymentAbilities.php';
 
-require_once 'includes/temp_code.php';
+require_once 'includes/hooks_mapping.php';
 
 /*
  * FIXME: This is workaround for fixing

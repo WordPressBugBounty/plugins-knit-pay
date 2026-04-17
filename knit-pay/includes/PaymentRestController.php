@@ -1,16 +1,13 @@
 <?php
 
-namespace Pronamic\WordPress\Pay\Payments;
+namespace KnitPay;
 
-use Pronamic\WordPress\Pay\MoneyJsonTransformer;
-use Pronamic\WordPress\Pay\Plugin;
-use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use Pronamic\WordPress\Http\Facades\Http;
 use WP_Error;
 use WP_REST_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
-use Pronamic\WordPress\Http\Facades\Http;
 
 class PaymentRestController extends WP_REST_Controller {
 	protected $rest_base = 'knit-pay';
@@ -60,7 +57,7 @@ class PaymentRestController extends WP_REST_Controller {
 	}
 
 	/**
-	 * Check permissions for the posts.
+	 * Check permissions for reading a payment.
 	 *
 	 * @param WP_REST_Request $request Current request.
 	 */
@@ -85,26 +82,18 @@ class PaymentRestController extends WP_REST_Controller {
 	 */
 	public function get_item( $request ) {
 		$payment_id = (int) $request['id'];
-		
-		$payment = \get_pronamic_payment( $payment_id );
-		
-		if ( null === $payment ) {
-			return new WP_Error(
-				'rest_payment_not_found',
-				\sprintf(
-					/* translators: %s: payment ID */
-					\__( 'Could not find payment with ID `%s`.', 'knit-pay-lang' ),
-					$payment_id
-				),
-				$payment_id
-			);
+
+		$result = PaymentApiHelper::get_payment( $payment_id );
+
+		if ( is_wp_error( $result ) ) {
+			return $result;
 		}
-		
-		return $this->prepare_item_for_response( $payment, $request );
+
+		return rest_ensure_response( $result );
 	}
 	
 	/**
-	 * Create one item from the collection
+	 * Create one item from the collection.
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
 	 * @return WP_Error|WP_REST_Response
@@ -118,213 +107,64 @@ class PaymentRestController extends WP_REST_Controller {
 			);
 		}
 
-		try {
-			$json_param = $request->get_params();
-			$req_object = json_decode( wp_json_encode( $json_param ) );
+		$params = $request->get_params();
+		$result = PaymentApiHelper::create_payment( $params );
 
-			$config_id = null;
-			if ( property_exists( $req_object, 'config_id' ) ) {
-				$config_id = $req_object->config_id;
-
-				$gateway = Plugin::get_gateway( $config_id );
-				if ( ! $gateway ) {
-					return new WP_Error(
-						'rest_cannot_create',
-						\sprintf(
-							/* translators: %d: Gateway configuration ID */
-							\__( 'Payment failed because gateway configuration with ID `%d` does not exist.', 'knit-pay-lang' ),
-							$config_id
-						),
-						[ 'status' => 500 ]
-					);
-				}
-			}
-			
-			$payment = new Payment();
-			
-			PaymentInfoHelper::from_json( $req_object, $payment );
-
-			$payment->title = property_exists( $req_object, 'title' ) ? $req_object->title : null;
- 
-			// Amount.
-			$payment->set_total_amount( MoneyJsonTransformer::from_json( $req_object->total_amount ) );
-			
-			// Configuration.
-			$payment->config_id = $config_id;
-		
-			$payment = Plugin::start_payment( $payment );
-
-			if ( ! is_null( $request->get_param( 'redirect_url' ) ) ) {
-				$payment->set_meta( 'rest_redirect_url', $request->get_param( 'redirect_url' ) );
-			}
-			if ( ! is_null( $request->get_param( 'notify_url' ) ) ) {
-				$payment->set_meta( 'rest_notify_url', $request->get_param( 'notify_url' ) );
-			}
-			$payment->save();
-
-			$response = $this->prepare_item_for_response( $payment, $request );
-			$response = rest_ensure_response( $response );
-
-			$response->set_status( 201 );
-			$response->header( 'Location', rest_url( $this->namespace . '/payments/' . $payment->get_id() ) );
-
-			return $response;
-		} catch ( \Exception $e ) {
-			return new WP_Error( 'rest_cannot_create', $e->getMessage(), [ 'status' => 500 ] );
+		if ( is_wp_error( $result ) ) {
+			return $result;
 		}
+
+		$response = rest_ensure_response( $result );
+		$response->set_status( 201 );
+		$response->header( 'Location', rest_url( $this->namespace . '/payments/' . $result['id'] ) );
+
+		return $response;
 	}
 
 	/**
-	 * Matches the payment data to the schema we want.
+	 * Get the full item schema (writable input fields + read-only fields).
 	 *
-	 * @param Payment $payment Payment object.
-	 */
-	public function prepare_item_for_response( $payment, $request ) {
-		$post_data = [];
-
-		$payment_json = $payment->get_json();
-
-		$fields = $this->get_fields_for_response( $request );
-
-		foreach ( $fields as  $field ) {
-			if ( rest_is_field_included( $field, $fields ) && property_exists( $payment_json, $field ) ) {
-				$post_data[ $field ] = $payment_json->$field;
-			}
-		}
-
-		if ( rest_is_field_included( 'pay_redirect_url', $fields ) ) {
-			$post_data['pay_redirect_url'] = $payment->get_pay_redirect_url();
-		}
-
-		return rest_ensure_response( $post_data );
-	}
-
-	/**
-	 * Get our sample schema for a post.
+	 * Merges get_input_schema() (no readonly markers) with get_readonly_schema()
+	 * (only truly read-only fields, no overlap with input). Because the two
+	 * schemas are disjoint, array_merge() is safe: no writable field will
+	 * accidentally gain a readonly marker, and get_endpoint_args_for_item_schema()
+	 * will correctly generate args for all writable fields.
 	 *
-	 * @return array The sample schema for a post
+	 * @return array The JSON Schema for a payment.
 	 */
 	public function get_item_schema() {
 		if ( $this->schema ) {
-			// Since WordPress 5.3, the schema can be cached in the $schema property.
 			return $this->schema;
 		}
 
+		$all_properties = array_merge(
+			PaymentApiHelper::get_input_schema()['properties'],
+			PaymentApiHelper::get_readonly_schema()['properties']
+		);
+
 		$this->schema = [
-			// This tells the spec of JSON Schema we are using which is draft 4.
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
-			// The title property marks the identity of the resource.
-			'title'      => 'post',
+			'title'      => 'payment',
 			'type'       => 'object',
-			// In JSON Schema you can specify object properties in the properties attribute.
-			'properties' => [
-				'id'               => [
-					'type'     => 'integer',
-					'readonly' => true,
-				],
-				'config_id'        => [
-					'type' => 'integer',
-				],
-				'total_amount'     => [
-					'type'       => 'object',
-					'required'   => true,
-					'properties' => [
-						'value'    => [
-							'description'      => esc_html__( 'Amount Value', 'knit-pay-lang' ),
-							'type'             => 'number',
-							'minimum'          => 0,
-							'exclusiveMinimum' => true,
-							'required'         => true,
-						],
-						'currency' => [
-							'description' => esc_html__( 'Currency', 'knit-pay-lang' ),
-							'type'        => 'string',
-							'minLength'   => 3,
-							'maxLength'   => 3,
-							'pattern'     => '[A-Z]{3}',
-							'required'    => true,
-						],
-					],
-				],
-				
-				'payment_method'   => [
-					'type' => 'string',
-					'enum' => PaymentMethods::get_active_payment_methods(),
-				],
-				'source'           => [
-					'type' => 'object',
-				],
-				'order_id'         => [
-					'type' => 'string',
-				],
-				'description'      => [
-					'type' => 'string',
-				],
-				'meta'             => [
-					'type'       => 'object',
-					'properties' => [
-						'redirect_url' => [
-							'description' => esc_html__( 'URL where buyer gets redirected after payment attempt.', 'knit-pay-lang' ),
-							'type'        => 'string',
-							'format'      => 'uri',
-							'required'    => true,
-						],
-					],
-				],
-				'action_url'       => [
-					'type'     => 'string',
-					'format'   => 'uri',
-					'readonly' => true,
-					'context'  => [ 'view' ],
-				],
-				'pay_redirect_url' => [
-					'type'     => 'string',
-					'format'   => 'uri',
-					'readonly' => true,
-					'context'  => [ 'view' ],
-				],
-				'status'           => [
-					'type'     => 'string',
-					'readonly' => true,
-				],
-				'customer'         => [
-					'type' => 'object',
-				],
-				'billing_address'  => [
-					'type' => 'object',
-				],
-				'mode'             => [
-					'type'     => 'string',
-					'readonly' => true,
-				],
-				'gateway'          => [
-					'type'     => 'object',
-					'readonly' => true,
-				],
-				'transaction_id'   => [
-					'type'     => 'string',
-					'readonly' => true,
-				],
-			],
+			'properties' => $all_properties,
 		];
 
 		return $this->schema;
 	}
 	
 	/**
-	 * Check if a given request has access to create items
+	 * Check if a given request has access to create items.
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
 	 * @return WP_Error|bool
 	 */
 	public function create_item_permissions_check( $request ) {
-		// Check for internal API call nonce
+		// Check for internal API call nonce.
 		$internal_nonce = $request->get_header( 'X-KnitPay-Internal-Nonce' );
 		if ( $internal_nonce && wp_verify_nonce( $internal_nonce, 'knit_pay_internal_api' ) ) {
 			return true;
 		}
 
-		// Existing permission check for other cases
 		if ( ! empty( $request['id'] ) ) {
 			return new WP_Error(
 				'rest_payment_exists',
