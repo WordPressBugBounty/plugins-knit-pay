@@ -37,20 +37,23 @@ class Helper {
 	/**
 	 * Get description.
 	 *
+	 * @param \OsOrderIntentModel $order_intent Order intent.
 	 * @return string
 	 */
-	public static function get_description( $booking ) {
+	public static function get_description( $order_intent ) {
 		$description = OsSettingsHelper::get_settings_value( 'knit_pay_payment_description' );
 
 		if ( empty( $description ) ) {
-			$description = self::get_title( $booking->generated_form_id );
+			$description = self::get_title( $order_intent->intent_key );
 		}
 
 		// Replacements.
 		$replacements = [
-			'{service_name}'      => $booking->service->name,
-			'{agent_name}'        => $booking->agent->full_name,
-			'{generated_form_id}' => $booking->generated_form_id,
+			'{order_key}'         => $order_intent->intent_key,
+			// Legacy tags kept for backward compatibility; may be empty in new cart-based system.
+			'{generated_form_id}' => $order_intent->intent_key,
+			'{service_name}'      => '',
+			'{agent_name}'        => '',
 		];
 
 		return strtr( $description, $replacements );

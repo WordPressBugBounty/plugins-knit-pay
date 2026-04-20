@@ -21,6 +21,6 @@ class LatePointDependency extends Dependency {
 	 * @return bool True if dependency is met, false otherwise.
 	 */
 	public function is_met() {
-		return \class_exists( 'LatePoint' ) && \defined( 'KNIT_PAY_LATEPOINT' );
+		return \class_exists( 'LatePoint' );
 	}
 }

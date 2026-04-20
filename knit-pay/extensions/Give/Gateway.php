@@ -165,7 +165,7 @@ class Gateway extends PaymentGateway {
 		// Enqueue a minimal/blank script file to ensure the handle exists for wp_add_inline_script.
 		wp_enqueue_script(
 			$handle,
-			plugins_url( 'js/knitpay-gateway-blank.js', __DIR__ ),
+			plugins_url( 'js/knitpay-gateway-blank.js', __FILE__ ),
 			[ 'react', 'wp-element' ],
 			'1.0.0',
 			true

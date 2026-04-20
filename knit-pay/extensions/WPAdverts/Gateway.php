@@ -68,7 +68,7 @@ class Gateway {
 		$module            = filter_input( INPUT_GET, 'module', FILTER_SANITIZE_STRING );
 		$plugin            = 'knit-pay-wpadverts/knit-pay-wpadverts.php';
 		if ( ! empty( $module ) ) {
-			$plugin = 'knit-pay/extensions/wpadverts/src/gateway/admin/';
+			$plugin = 'knit-pay/extensions/WPAdverts/gateway/admin/';
 		}
 
 		foreach ( $module_groups as $key => $group ) {

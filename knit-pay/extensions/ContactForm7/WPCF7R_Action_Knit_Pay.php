@@ -312,7 +312,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 	public static function enqueue_backend_scripts() {
 		\wp_register_script(
 			'knit-pay-contact-form-7-admin',
-			plugins_url( 'js/knit-pay-contact-form-7-admin.js', __DIR__ ),
+			plugins_url( 'js/knit-pay-contact-form-7-admin.js', __FILE__ ),
 			[ 'jquery' ],
 			KNITPAY_VERSION,
 			true
@@ -329,7 +329,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 	public static function enqueue_frontend_scripts() {
 		\wp_register_script(
 			'knit-pay-contact-form-7',
-			plugins_url( 'js/payment-form-processor.js', __DIR__ ),
+			plugins_url( 'js/payment-form-processor.js', __FILE__ ),
 			[ 'jquery', 'wpcf7-redirect-script' ],
 			KNITPAY_VERSION,
 			true

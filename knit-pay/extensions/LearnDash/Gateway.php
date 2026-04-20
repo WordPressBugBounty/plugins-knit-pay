@@ -203,7 +203,7 @@ class Gateway extends Learndash_Payment_Gateway {
 	}
 
 	public function enqueue_scripts(): void {
-		wp_enqueue_script( 'knit-pay-learndash-front', plugins_url( 'js/knit-pay-learndash-front.js', __DIR__ ), [ 'jquery' ], KNITPAY_VERSION, true );
+		wp_enqueue_script( 'knit-pay-learndash-front', plugins_url( 'js/knit-pay-learndash-front.js', __FILE__ ), [ 'jquery' ], KNITPAY_VERSION, true );
 
 		wp_enqueue_script( 'knit-pay-learndash-front' );
 	}

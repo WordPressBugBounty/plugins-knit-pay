@@ -112,7 +112,7 @@
 			"vendor/paytm/paytmchecksum/paytmchecksum/PaytmChecksum.php"
 		],
 		"exclude-from-classmap": [
-			"extensions/*/src/node_modules/",
+			"extensions/*/node_modules/",
 			"extensions/ContactForm7/WPCF7R_Action_Knit_Pay.php",
 			"extensions/LatePoint/OsPaymentsKnitPayController.php",
 			"extensions/PaidMembershipsPro/PMProGateway_knit_pay.php",

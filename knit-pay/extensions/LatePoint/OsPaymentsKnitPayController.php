@@ -18,17 +18,15 @@ if ( ! class_exists( 'OsPaymentsKnitPayController' ) ) :
 			parent::__construct();
 
 			$this->action_access['customer'] = array_merge( $this->action_access['customer'], [ 'get_payment_options' ] );
-			// $this->views_folder              = plugin_dir_path( __FILE__ ) . '../views/payments_razorpay/';
 		}
 
 		/* Generates payment options for Knit Pay payment modal */
 		public function get_payment_options() {
-			OsStepsHelper::set_booking_object( $this->params['booking'] );
-			OsStepsHelper::set_restrictions( $this->params['restrictions'] );
+			OsStepsHelper::set_required_objects( $this->params );
 			$customer = OsAuthHelper::get_logged_in_customer();
 
-			$booking = OsStepsHelper::$booking_object;
-			$amount  = $booking->specs_calculate_price_to_charge();
+			$cart   = OsStepsHelper::$cart_object;
+			$amount = $cart->specs_calculate_amount_to_charge();
 
 			if ( 0 >= $amount && $this->get_return_format() === 'json' ) {
 				// free booking, nothing to pay (probably coupon was applied)
@@ -41,6 +39,16 @@ if ( ! class_exists( 'OsPaymentsKnitPayController' ) ) :
 				);
 				return;
 			}
+
+			// Create or update an order intent so we have a stable key for source tracking.
+			$booking_form_page_url = $this->params['booking_form_page_url'] ?? wp_get_original_referer();
+			$order_intent          = OsOrderIntentHelper::create_or_update_order_intent(
+				$cart,
+				OsStepsHelper::$restrictions,
+				OsStepsHelper::$presets,
+				$booking_form_page_url,
+				OsStepsHelper::get_customer_object_id()
+			);
 
 			$config_id      = OsSettingsHelper::get_settings_value( 'knit_pay_config_id', get_option( 'pronamic_pay_config_id' ) );
 			$payment_method = 'knit_pay';
@@ -70,14 +78,13 @@ if ( ! class_exists( 'OsPaymentsKnitPayController' ) ) :
 			 */
 			$payment = new Payment();
 
-			$payment->source = 'latepoint';
+			$payment->source    = 'latepoint';
+			$payment->source_id = $order_intent->intent_key;
+			$payment->order_id  = $order_intent->intent_key;
 
-			$payment->source_id = $booking->generated_form_id;
-			$payment->order_id  = $booking->generated_form_id;
+			$payment->set_description( Helper::get_description( $order_intent ) );
 
-			$payment->set_description( Helper::get_description( $booking ) );
-
-			$payment->title = Helper::get_title( $booking->generated_form_id );
+			$payment->title = Helper::get_title( $order_intent->intent_key );
 
 			// Customer.
 			$payment->set_customer( Helper::get_customer( $customer ) );
