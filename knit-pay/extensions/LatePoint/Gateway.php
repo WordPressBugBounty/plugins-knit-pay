@@ -140,7 +140,7 @@ class Gateway {
 	/**
 	 * Process payment for an order intent.
 	 *
-	 * @param array              $result
+	 * @param array               $result
 	 * @param \OsOrderIntentModel $order_intent
 	 * @return array
 	 */
@@ -252,6 +252,10 @@ class Gateway {
 	}
 
 	public function add_settings_fields( $processor_code ) {
+		if ( $processor_code !== $this->processor_code ) {
+			return false;
+		}
+
 		$configuration_list = [];
 		foreach ( Plugin::get_config_select_options( $processor_code ) as $value => $label ) {
 			$configuration_list[] = [
@@ -260,28 +264,42 @@ class Gateway {
 			];
 		}
 
-		if ( $processor_code != $this->processor_code ) {
-			return false;
-		} ?>
-		<h3><?php _e( 'Knit Pay Settings', 'knit-pay-lang' ); ?></h3>
-			<?php echo OsFormHelper::select_field( 'settings[knit_pay_config_id]', __( 'Configuration', 'knit-pay-lang' ), $configuration_list, OsSettingsHelper::get_settings_value( 'knit_pay_config_id', get_option( 'pronamic_pay_config_id' ) ) ); ?>
-	   
-		<div class="os-row">
-			<div class="os-col-6">
-				<?php echo OsFormHelper::text_field( 'settings[knit_pay_payment_description]', __( 'Payment Description', 'knit-pay-lang' ), OsSettingsHelper::get_settings_value( 'knit_pay_payment_description', '{order_key}' ) ); ?>
+		$currency_list = [];
+		foreach ( Currencies::get_currencies() as $currency ) {
+			$currency_list[ $currency->get_alphabetic_code() ] = $currency->get_name() . ' (' . $currency->get_alphabetic_code() . ')';
+		}
+
+		?>
+
+		<div class="sub-section-row">
+			<div class="sub-section-label">
+				<h3><?php _e( 'Knit Pay Settings', 'knit-pay-lang' ); ?></h3>
 			</div>
-			<div class="os-col-6">
-				<?php printf( __( 'Available tags: %s', 'knit-pay-lang' ), sprintf( '<code>%s</code>', '{order_key}' ) ); ?>
+			<div class="sub-section-content">
+				<div class="os-row">
+					<div class="os-col-6">
+						<?php echo OsFormHelper::select_field( 'settings[knit_pay_config_id]', __( 'Configuration', 'knit-pay-lang' ), $configuration_list, OsSettingsHelper::get_settings_value( 'knit_pay_config_id', get_option( 'pronamic_pay_config_id' ) ) ); ?>
+					</div>
+					<div class="os-col-6">
+						<?php echo OsFormHelper::text_field( 'settings[knit_pay_payment_description]', __( 'Payment Description', 'knit-pay-lang' ), OsSettingsHelper::get_settings_value( 'knit_pay_payment_description', 'Order: {order_key}' ), [ 'theme' => 'simple' ] ); ?>
+						<?php printf( __( 'Available tags: %s', 'knit-pay-lang' ), sprintf( '<code>%s</code>', '{order_key}' ) ); ?>
+					</div>
+				</div>
 			</div>
 		</div>
 	  
-		<?php
-			$currency_list = [];
-			foreach ( Currencies::get_currencies() as $currency ) {
-				$currency_list[ $currency->get_alphabetic_code() ] = $currency->get_name() . ' (' . $currency->get_alphabetic_code() . ')';
-			}
-			echo OsFormHelper::select_field( 'settings[knit_pay_currency_iso_code]', __( 'ISO Currency Code', 'knit-pay-lang' ), $currency_list, OsSettingsHelper::get_settings_value( 'knit_pay_currency_iso_code' ) );
-		?>
+		<div class="sub-section-row">
+			<div class="sub-section-label">
+				<h3><?php _e( 'Other Settings', 'knit-pay-lang' ); ?></h3>
+			</div>
+			<div class="sub-section-content">
+				<div class="os-row">
+					<div class="os-col-6">
+						<?php echo OsFormHelper::select_field( 'settings[knit_pay_currency_iso_code]', __( 'ISO Currency Code', 'knit-pay-lang' ), $currency_list, OsSettingsHelper::get_settings_value( 'knit_pay_currency_iso_code' ) ); ?>
+					</div>
+				</div>
+			</div>
+		</div>
 		<?php
 	}
 
@@ -296,7 +314,7 @@ class Gateway {
 			$localized_vars['is_knit_pay_active']             = true;
 			$localized_vars['knit_pay_payment_options_route'] = OsRouterHelper::build_route_name( 'payments_knit_pay', 'get_payment_options' );
 			// Translatable label for the "Pay Now" button (overrides LatePoint's default "Next")
-			$localized_vars['knit_pay_pay_btn_label']         = __( 'Pay Now', 'knit-pay-lang' );
+			$localized_vars['knit_pay_pay_btn_label'] = __( 'Pay Now', 'knit-pay-lang' );
 		} else {
 			$localized_vars['is_knit_pay_active'] = false;
 		}

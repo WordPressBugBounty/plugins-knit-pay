@@ -4,6 +4,7 @@ namespace KnitPay\Extensions\LatePoint;
 
 use Pronamic\WordPress\Pay\AbstractPluginIntegration;
 use Pronamic\WordPress\Pay\Payments\Payment;
+use OsOrderModel;
 
 /**
  * Title: LatePoint extension
@@ -82,7 +83,15 @@ class Extension extends AbstractPluginIntegration {
 	 * @return string $text
 	 */
 	public function source_text( $text, Payment $payment ) {
-		$text = __( 'LatePoint Booking', 'knit-pay-lang' ) . '<br />' . $payment->source_id;
+		$order = new OsOrderModel( $payment->source_id );
+		$text  = __( 'LatePoint', 'knit-pay-lang' ) . '<br />';
+
+		$text .= sprintf(
+			'<a href="%s">%s</a>',
+			$order->manage_by_key_url(),
+			/* translators: %s: source id */
+			sprintf( __( 'Booking %s', 'knit-pay-lang' ), $payment->source_id )
+		);
 
 		return $text;
 	}
@@ -108,6 +117,8 @@ class Extension extends AbstractPluginIntegration {
 	 * @return string
 	 */
 	public function source_url( $url, Payment $payment ) {
-		return $url;
+		$order = new OsOrderModel( $payment->source_id );
+
+		return $order->manage_by_key_url();
 	}
 }

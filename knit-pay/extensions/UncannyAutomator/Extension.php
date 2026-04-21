@@ -54,10 +54,10 @@ class Extension extends AbstractPluginIntegration {
 			function () {
 				new KnitPayIntegration();
 
-				require_once 'triggers/PaymentStatusUpdateTrigger.php';
+				require_once 'Triggers/PaymentStatusUpdateTrigger.php';
 				new Triggers\PaymentStatusUpdateTrigger();
 
-				require_once 'actions/CreatePaymentAction.php';
+				require_once 'Actions/CreatePaymentAction.php';
 				new Actions\CreatePaymentAction();
 			} 
 		);
