@@ -89,7 +89,7 @@ class Gateway extends Core_Gateway {
 		}
 		
 		$timeline = $charge_details[1]['data']['timeline'];
-		$payment->add_note( '<strong>' . __( 'Coinbase Charge Timeline:', 'knit-pay-lang' ) . '</strong><br><pre>' . print_r( $timeline, true ) . '</pre>' );
+		$payment->add_note( '<strong>' . __( 'Coinbase Charge Timeline:', 'knit-pay-lang' ) . '</strong><br><pre>' . wp_json_encode( $timeline, JSON_PRETTY_PRINT ) . '</pre>' );
 		$last_update = end( $timeline );
 		$payment->set_status( Statuses::transform( $last_update ) );
 	}

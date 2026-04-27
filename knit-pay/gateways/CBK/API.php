@@ -41,10 +41,10 @@ class API {
 			]
 		);
 		$result   = wp_remote_retrieve_body( $response );
-		$result   = json_decode( $result );
 
-		if ( isset( $result->Status ) && '1' === $result->Status ) {
-			return $result->AccessToken;
+		$result = json_decode( $result, true );
+		if ( isset( $result['Status'] ) && '1' === $result['Status'] ) {
+			return $result['AccessToken'];
 		}
 		throw new Exception( 'Something went wrong. Please try again later.' );
 	}
@@ -70,13 +70,16 @@ class API {
 		);
 		$result   = wp_remote_retrieve_body( $response );
 
-		$result = json_decode( $result );
-		
-		if ( isset( $result->Status ) && ( '0' === $result->Status || '-1' === $result->Status ) ) {
-		    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-			throw new Exception( "Unable to Fetch Payment Details: '$id' Server Response: " . print_R( $result->Message, true ) );
+		$result = json_decode( $result, true );
+
+		if ( isset( $result['Status'] ) && ( '0' === $result['Status'] || '-1' === $result['Status'] ) ) {
+			$message = isset( $result['Message'] ) ? $result['Message'] : '';
+			if ( is_array( $message ) || is_object( $message ) ) {
+				$message = wp_json_encode( $message );
+			}
+			throw new Exception( esc_html( sprintf( 'Unable to Fetch Payment Details: %s Server Response: %s', $id, $message ) ) );
 		}
-		
+
 		return $result;
 	}
 

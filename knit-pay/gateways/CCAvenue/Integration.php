@@ -244,6 +244,7 @@ class Integration extends AbstractGatewayIntegration {
 	}
 
 	private function fields_description() {
+		/* translators: %s: list of available tags */
 		return sprintf( __( 'Available tags: %s', 'knit-pay-lang' ), sprintf( '<code>%s</code> <code>%s</code> <code>%s</code>', '{transaction_id}', '{payment_description}', '{order_id}' ) );
 	}
 }

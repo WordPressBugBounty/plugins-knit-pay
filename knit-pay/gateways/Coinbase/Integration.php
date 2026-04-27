@@ -72,12 +72,12 @@ class Integration extends AbstractGatewayIntegration {
 				/* translators: %s: Coinbase Commerce */
 				__(
 					'Copy the Webhook URL to the %s dashboard to receive automatic transaction status updates.',
-					'knit-pay'
+					'knit-pay-lang'
 				),
 				__( 'Coinbase Commerce', 'knit-pay-lang' )
 			),
 		];
-		
+
 		$fields[] = [
 			'section'  => 'feedback',
 			'meta_key' => '_pronamic_gateway_coinbase_webhook_shared_secret',

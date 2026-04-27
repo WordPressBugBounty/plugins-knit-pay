@@ -20,11 +20,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<meta http-equiv = "refresh" content = "300; url = <?php echo add_query_arg( 'status', 'Expired', $payment->get_return_url() ); ?>" />
+		<meta http-equiv = "refresh" content = "300; url = <?php echo esc_url( add_query_arg( 'status', 'Expired', $payment->get_return_url() ) ); ?>" />
 
 		<title><?php esc_html_e( 'Payment Page', 'knit-pay-lang' ); ?></title>
 
-		<?php 
+		<?php
 			wp_enqueue_scripts();
 			wp_print_scripts( "knit-pay-upi-qr-template-{$this->config->payment_template}" );
 			wp_print_styles( "knit-pay-upi-qr-template-{$this->config->payment_template}" );
@@ -43,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$hide_pay_button         = $this->config->hide_pay_button; // TODO make dynamic
 		$show_download_qr_button = 'yes' === $this->config->show_download_qr_button && 2000 >= $payment->get_total_amount()->number_format( null, '.', '' );
 
-		if ( ! wp_is_mobile() ) {
+		if ( ! wp_is_mobile() ) { // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.wp_is_mobile_wp_is_mobile
 			$hide_pay_button = true;
 		}
 
@@ -54,7 +54,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$payee_name                = rawurldecode( $intent_url_parameters['pn'] );
 		
 		$nonce_action = 'knit_pay_payment_status_check|' . $payment->get_id() . "|$transaction_id";
-		echo wp_nonce_field( $nonce_action, 'knit_pay_nonce', true, true );
+		wp_nonce_field( $nonce_action, 'knit_pay_nonce', true, true );
 
 		/**
 		 * Break out of iframe.
@@ -72,19 +72,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</head>
 
 	<body>
-		<input type='hidden' id='upi_qr_text' value='<?php echo $upi_qr_text; ?>'>
-		<input type='hidden' id='payment_expiry_seconds' value='<?php echo $this->payment_expiry_seconds; ?>'>
-		<input type='hidden' id='enable_polling' value='<?php echo $this->enable_polling; ?>'>
-		<input type='hidden' id='image_dir_path' value='<?php echo KNIT_PAY_UPI_QR_IMAGE_URL; ?>'>
-		<input type='hidden' name='knit_pay_transaction_id' value='<?php echo $transaction_id; ?>'>
-		<input type='hidden' name='knit_pay_payment_id' value='<?php echo $payment->get_id(); ?>'>
+		<input type='hidden' id='upi_qr_text' value='<?php echo esc_attr( $upi_qr_text ); ?>'>
+		<input type='hidden' id='payment_expiry_seconds' value='<?php echo esc_attr( $this->payment_expiry_seconds ); ?>'>
+		<input type='hidden' id='enable_polling' value='<?php echo esc_attr( $this->enable_polling ); ?>'>
+		<input type='hidden' id='image_dir_path' value='<?php echo esc_url( KNIT_PAY_UPI_QR_IMAGE_URL ); ?>'>
+		<input type='hidden' name='knit_pay_transaction_id' value='<?php echo esc_attr( $transaction_id ); ?>'>
+		<input type='hidden' name='knit_pay_payment_id' value='<?php echo esc_attr( $payment->get_id() ); ?>'>
 
-		<form id='formSubmit' action='<?php echo $redirect_url; ?>' method='post' style='display: none;'>
+		<form id='formSubmit' action='<?php echo esc_url( $redirect_url ); ?>' method='post' style='display: none;'>
 			<input type='hidden' name='status' value='Success'>
 		</form>
 
-		<?php 
-			require_once "template{$this->config->payment_template}.php"; 
+		<?php
+			require_once "template{$this->config->payment_template}.php";
 		?>
 	</body>
 </html>

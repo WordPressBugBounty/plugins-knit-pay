@@ -143,6 +143,7 @@ class InvoiceUploader {
 		}
 
 		// No need to wait, upload directly if payment status is getting checked by cron.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! ( array_key_exists( 'payment', $_GET ) && array_key_exists( 'key', $_GET ) ) ) {
 			$this->upload_invoice( $payment->get_id() );
 			return;
@@ -244,7 +245,7 @@ class InvoiceUploader {
 		if ( isset( $lines ) ) {
 			foreach ( $lines as $line ) {
 				$description = is_null( $line->get_description() ) ? '' : $line->get_description();
-				$tax         = $line->get_tax_amount() ?: false;
+				$tax         = $line->get_tax_amount() ? $line->get_tax_amount() : false;
 				$invoice->addItem( $line->get_name(), $description, $line->get_quantity(), $tax, $line->get_unit_price()->get_value(), false, $line->get_total_amount()->get_value() );
 			}
 		} else {
@@ -272,7 +273,7 @@ class InvoiceUploader {
 		try {
 			return $invoice->render( $invoice_number . '.pdf', $destination ); /* I => Display on browser, D => Force Download, F => local path save, S => return document path */
 		} catch ( Exception $e ) {
-			throw new Exception( 'Error: ' . $e->getMessage() );
+			throw new Exception( 'Error: ' . esc_html( $e->getMessage() ) );
 		}
 	}
 
@@ -367,7 +368,7 @@ class InvoiceUploader {
 				'knit-pay'
 			);
 
-			throw new Exception( 'Error: ' . $exception->getMessage() );
+			throw new Exception( 'Error: ' . esc_html( $exception->getMessage() ) );
 		}
 	}
 
@@ -375,7 +376,7 @@ class InvoiceUploader {
 		$filtered_address = array_filter(
 			$address_array,
 			function ( $value ) {
-				return $value !== null && $value !== '';
+				return null !== $value && '' !== $value;
 			}
 		);
 

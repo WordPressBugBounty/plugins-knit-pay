@@ -14,7 +14,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  */
 class Listener {
 	public static function listen() {
-		if ( ! filter_has_var( INPUT_GET, 'kp_cmi_webhook' ) || ! filter_has_var( INPUT_POST, 'oid' ) ) {
+		if ( ! filter_has_var( INPUT_GET, 'kp_cmi_webhook' ) || ! isset( $_POST['oid'] ) ) {
 			return;
 		}
 

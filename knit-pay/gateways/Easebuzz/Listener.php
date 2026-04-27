@@ -13,7 +13,7 @@ use Pronamic\WordPress\Pay\Plugin;
  */
 class Listener {
 	public static function listen() {
-		if ( ! filter_has_var( INPUT_GET, 'easebuzz_webhook' ) || ! filter_has_var( INPUT_POST, 'txnid' ) ) {
+		if ( ! filter_has_var( INPUT_GET, 'easebuzz_webhook' ) || ! isset( $_POST['txnid'] ) ) {
 			return;
 		}
 

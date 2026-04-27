@@ -69,7 +69,7 @@ class Client {
 			'hash'    => $hash,
 		];
 
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$this->get_api_url() . '/merchant/postservice?form=2',
 			[
 				'body'    => $data,
@@ -78,7 +78,7 @@ class Client {
 		);
 
 		if ( is_wp_error( $response ) ) {
-			throw new Exception( $response->get_error_message() );
+			throw new Exception( esc_html( $response->get_error_message() ) );
 		}
 
 		$result = wp_remote_retrieve_body( $response );
@@ -91,11 +91,11 @@ class Client {
 		if ( isset( $result->msg ) ) {
 			$error = trim( $result->msg );
 			if ( knit_pay_plugin()->is_debug_mode() ) {
-				$error = $error . '<pre>' . print_r( $data, true ) . '</pre>';
+				$error = $error . '<pre>' . wp_json_encode( $data ) . '</pre>';
 			}
-			throw new Exception( $error );
+			throw new Exception( esc_html( $error ) );
 		}
-		throw new Exception( 'Something went wrong. Please try again later.' );
+		throw new Exception( esc_html( 'Something went wrong. Please try again later.' ) );
 	}
 
 	public function cancel_refund_transaction( $transaction_id, $token_id, $amount ) {
@@ -113,7 +113,7 @@ class Client {
 			'hash'    => $hash,
 		];
 		
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$this->get_api_url() . '/merchant/postservice?form=2',
 			[
 				'body'    => $data,
@@ -122,7 +122,7 @@ class Client {
 		);
 		
 		if ( is_wp_error( $response ) ) {
-			throw new Exception( $response->get_error_message() );
+			throw new Exception( esc_html( $response->get_error_message() ) );
 		}
 		
 		$result = wp_remote_retrieve_body( $response );
@@ -133,9 +133,9 @@ class Client {
 		}
 		
 		if ( isset( $result->msg ) ) {
-			throw new Exception( trim( $result->msg ) );
+			throw new Exception( esc_html( trim( $result->msg ) ) );
 		}
-		throw new Exception( 'Something went wrong. Please try again later.' );
+		throw new Exception( esc_html( 'Something went wrong. Please try again later.' ) );
 	}
 
 	/**

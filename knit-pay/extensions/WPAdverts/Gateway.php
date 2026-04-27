@@ -105,7 +105,7 @@ class Gateway {
 
 		$scheme = $form->get_scheme();
 
-		if ( $scheme['name'] !== 'adverts-' . $this->id ) {
+		if ( 'adverts-' . $this->id !== $scheme['name'] ) {
 			return $form;
 		}
 

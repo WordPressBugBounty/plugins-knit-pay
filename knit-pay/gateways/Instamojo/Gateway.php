@@ -131,7 +131,7 @@ class Gateway extends Core_Gateway {
 					return $this->createRequest( $payment, false );
 				}
 			}
-			throw new Exception( reset( $method_data['errors'] ) );
+			throw new Exception( esc_html( reset( $method_data['errors'] ) ) );
 		}
 
 		return $method_data;
@@ -153,7 +153,7 @@ class Gateway extends Core_Gateway {
 		$payment_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 		if ( isset( $payment_currency ) && 'INR' !== $payment_currency ) {
 			$currency_error = 'Instamojo only accepts payments in Indian Rupees. If you are a store owner, kindly activate INR currency for ' . $payment->get_source() . ' plugin.';
-			throw new Exception( $currency_error );
+			throw new Exception( esc_html( $currency_error ) );
 		}
 
 		$method_data = $this->createRequest( $payment, true );
@@ -179,24 +179,19 @@ class Gateway extends Core_Gateway {
 			exit;
 		}
 
-		$instamojo_data = wp_json_encode(
-			[
-				'hide_top_bar'         => 'hide' === $this->config->top_bar_mode,
-				'instamojo_signup_url' => 'http://go.thearrangers.xyz/instamojo?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=storefront&utm_content=powered-by',
-				'action_url'           => $payment->get_meta( 'instamojo_action_url' ),
-				'cancel_url'           => add_query_arg( 'cancelled', true, $payment->get_return_url() ),
-				'payment_method'       => PaymentMethods::transform( $payment->get_payment_method() ),
-			]
-		);
+		$instamojo_data = [
+			'hide_top_bar'         => 'hide' === $this->config->top_bar_mode,
+			'instamojo_signup_url' => 'http://go.thearrangers.xyz/instamojo?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=storefront&utm_content=powered-by',
+			'action_url'           => $payment->get_meta( 'instamojo_action_url' ),
+			'cancel_url'           => add_query_arg( 'cancelled', true, $payment->get_return_url() ),
+			'payment_method'       => PaymentMethods::transform( $payment->get_payment_method() ),
+		];
 
 		require_once 'views/checkout.php';
 
-		$script = '';
 		if ( ! ( defined( '\KNIT_PAY_DEBUG' ) && \KNIT_PAY_DEBUG ) ) {
-			$script .= '<script type="text/javascript">document.getElementById("instamojo-pay-button").click();</script>';
+			echo '<script type="text/javascript">document.getElementById("instamojo-pay-button").click();</script>';
 		}
-
-		echo $script;
 	}
 
 	/**
@@ -364,7 +359,7 @@ class Gateway extends Core_Gateway {
 		$description    = $refund->get_description();
 
 		if ( empty( $description ) ) {
-			throw new Exception( __( 'The refund description can not be blank.', 'knit-pay-lang' ) );
+			throw new Exception( esc_html__( 'The refund description can not be blank.', 'knit-pay-lang' ) );
 		}
 		$this->instamojo_api = new Instamojo( $this->config->client_id, $this->config->client_secret, $this->test_mode );
 
@@ -378,7 +373,7 @@ class Gateway extends Core_Gateway {
 		];
 		$instamojo_refund = $this->instamojo_api->create_refund( $refund_data );
 		if ( ! isset( $instamojo_refund->id ) ) {
-			throw new Exception( __( 'Something went wrong.', 'knit-pay-lang' ) );
+			throw new Exception( esc_html__( 'Something went wrong.', 'knit-pay-lang' ) );
 		}
 		$refund->psp_id = $instamojo_refund->id;
 	}

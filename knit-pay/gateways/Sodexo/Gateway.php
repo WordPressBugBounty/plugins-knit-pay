@@ -68,14 +68,18 @@ class Gateway extends Core_Gateway {
 		->get_currency()
 		->get_alphabetic_code();
 		if ( isset( $payment_currency ) && 'INR' !== $payment_currency ) {
-			$currency_error = 'Sodexo only accepts payments in Indian Rupees. If you are a store owner, kindly activate INR currency for ' . $payment->get_source() . ' plugin.';
-			throw new Exception( $currency_error );
+			$currency_error = sprintf(
+				/* translators: 1: Payment source or extension name. */
+				__( 'Sodexo only accepts payments in Indian Rupees. If you are a store owner, kindly activate INR currency for %s plugin.', 'knit-pay-lang' ),
+				esc_html( $payment->get_source() )
+			);
+			throw new Exception( esc_html( $currency_error ) );
 		}
 
 		$transaction = $this->api->create_transaction( $this->get_payment_data( $payment ) );
 
-		$payment->set_transaction_id( $transaction->transactionId );
-		$payment->set_action_url( $transaction->redirectUserTo );
+		$payment->set_transaction_id( $transaction['transactionId'] );
+		$payment->set_action_url( $transaction['redirectUserTo'] );
 	}
 
 	/**
@@ -95,30 +99,30 @@ class Gateway extends Core_Gateway {
 
 		$payment_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 
-		$requestId           = $payment->key . '_' . $payment->get_id();
-		$amount              = [
+		$request_id           = $payment->key . '_' . $payment->get_id();
+		$amount               = [
 			'value'    => $payment->get_total_amount()->number_format( null, '.', '' ),
 			'currency' => $payment_currency,
 		];
-		$merchantInfo['aid'] = $this->config->aid;
-		$merchantInfo['mid'] = $this->config->mid;
-		$merchantInfo['tid'] = $this->config->tid;
-		$returnUrl           = $payment->get_return_url();
+		$merchant_info['aid'] = $this->config->aid;
+		$merchant_info['mid'] = $this->config->mid;
+		$merchant_info['tid'] = $this->config->tid;
+		$return_url           = $payment->get_return_url();
 
 		$data = [
-			'requestId'    => $requestId,
+			'requestId'    => $request_id,
 			'sourceType'   => 'CARD', // TODO: Give admin/user option to choose
 			// 'sourceId'     => $sodexo_source_id,
 			'amount'       => $amount,
-			'merchantInfo' => $merchantInfo,
+			'merchantInfo' => $merchant_info,
 			'purposes'     => [
 				[
 					'purpose' => 'FOOD',
 					'amount'  => $amount,
 				],
 			],
-			'failureUrl'   => $returnUrl,
-			'successUrl'   => $returnUrl,
+			'failureUrl'   => $return_url,
+			'successUrl'   => $return_url,
 		];
 
 		return wp_json_encode( $data );
@@ -137,17 +141,17 @@ class Gateway extends Core_Gateway {
 
 		$transaction_details = $this->api->get_transaction_details( $payment->get_transaction_id() );
 
-		if ( ! empty( $transaction_details->sourceId ) ) {
-			unset( $transaction_details->sourceId );
+		if ( ! empty( $transaction_details['sourceId'] ) ) {
+			unset( $transaction_details['sourceId'] );
 			// update_user_meta( $payment->user_id, 'sodexo_source_id', $transaction_details->sourceId );
 		}
 
-		if ( isset( $transaction_details->transactionState ) ) {
-			$payment->set_status( Statuses::transform( $transaction_details->transactionState ) );
+		if ( isset( $transaction_details['transactionState'] ) ) {
+			$payment->set_status( Statuses::transform( $transaction_details['transactionState'] ) );
 
-			$note = 'Sodexo Transaction State: ' . $transaction_details->transactionState;
-			if ( isset( $transaction_details->failureReason ) ) {
-				$note .= '<br>failureReason: ' . $transaction_details->failureReason;
+			$note = 'Sodexo Transaction State: ' . $transaction_details['transactionState'];
+			if ( isset( $transaction_details['failureReason'] ) ) {
+				$note .= '<br>failureReason: ' . $transaction_details['failureReason'];
 			}
 
 			$payment->add_note( $note );

@@ -15,12 +15,14 @@ class Listener {
 
 
 	public static function listen() {
-		if ( ! filter_has_var( INPUT_GET, 'kp_phonepe_webhook_payment_id' ) || ! filter_has_var( INPUT_GET, 'key' ) ) {
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Webhook request from PhonePe, nonce is not applicable to third-party webhook notifications.
+		if ( ! isset( $_GET['kp_phonepe_webhook_payment_id'] ) || ! isset( $_GET['key'] ) ) {
 			return;
 		}
 
 		$payment_id  = filter_input( INPUT_GET, 'kp_phonepe_webhook_payment_id', FILTER_SANITIZE_NUMBER_INT );
 		$payment_key = \sanitize_text_field( \wp_unslash( $_GET['key'] ) );
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		$payment = get_pronamic_payment( $payment_id );
 

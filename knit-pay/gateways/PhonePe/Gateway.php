@@ -162,6 +162,7 @@ class Gateway extends Core_Gateway {
 
 		$payment_status = $this->api->get_payment_status( $payment->get_transaction_id() );
 
+		// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- PhonePe API response properties
 		if ( isset( $payment_status->state ) ) {
 			// V2 API.
 			if ( isset( $payment_status->errorContext ) ) {
@@ -174,7 +175,7 @@ class Gateway extends Core_Gateway {
 			}
 
 			$payment->set_status( Statuses::transform( $payment_status->state ) );
-			$payment->add_note( '<strong>PhonePe Response:</strong><br><pre>' . print_r( $payment_status, true ) . '</pre><br>' );
+			$payment->add_note( '<strong>' . esc_html__( 'PhonePe Response:', 'knit-pay-lang' ) . '</strong><br><pre>' . wp_json_encode( $payment_status, JSON_PRETTY_PRINT ) . '</pre><br>' );
 		} elseif ( isset( $payment_status->code ) ) {
 			// V1 API.
 			if ( Statuses::SUCCESS === $payment_status->code ) {
@@ -182,7 +183,8 @@ class Gateway extends Core_Gateway {
 			}
 
 			$payment->set_status( Statuses::transform( $payment_status->code ) );
-			$payment->add_note( '<strong>PhonePe Response:</strong><br><pre>' . print_r( $payment_status, true ) . '</pre><br>' );
+			$payment->add_note( '<strong>' . esc_html__( 'PhonePe Response:', 'knit-pay-lang' ) . '</strong><br><pre>' . wp_json_encode( $payment_status, JSON_PRETTY_PRINT ) . '</pre><br>' );
 		}
+		// phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 	}
 }

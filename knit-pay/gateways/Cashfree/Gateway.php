@@ -209,18 +209,18 @@ class Gateway extends Core_Gateway {
 		// @see: https://www.cashfree.com/docs/payments/online/web/redirect#2-initialise-the-sdk
 		$mode = $this->test_mode ? 'sandbox' : 'production';
 
-		$html  = '<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>';
-		$html .= '<script>';
-		$html .= "const cashfree = Cashfree({mode:'{$mode}'});";
-		$html .= "let checkoutOptions = {paymentSessionId: '{$payment->get_meta('cashfree_payment_session_id')}'};";
+		$session_id = $payment->get_meta( 'cashfree_payment_session_id' );
+
+		echo '<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>';
+		echo '<script>';
+		echo "const cashfree = Cashfree({mode:'" . esc_js( $mode ) . "'});";
+		echo "let checkoutOptions = {paymentSessionId: '" . esc_js( $session_id ) . "'};";
 
 		if ( ! ( defined( '\KNIT_PAY_DEBUG' ) && \KNIT_PAY_DEBUG ) ) {
-			$html .= 'cashfree.checkout(checkoutOptions);';
+			echo 'cashfree.checkout(checkoutOptions);';
 		}
 
-		$html .= 'document.getElementById("pronamic_ideal_form").onsubmit = function(e){e.preventDefault();cashfree.checkout(checkoutOptions);}</script>';
-
-		echo $html;
+		echo 'document.getElementById("pronamic_ideal_form").onsubmit = function(e){e.preventDefault();cashfree.checkout(checkoutOptions);}</script>';
 	}
 
 	/**
@@ -239,10 +239,9 @@ class Gateway extends Core_Gateway {
 		// @see https://www.cashfree.com/docs/api-reference/payments/latest/payments/get-payments-for-order
 		$order_payments = $api_client->get_order_payments( $payment->get_transaction_id() );
 		if ( knit_pay_plugin()->is_debug_mode() ) {
-			//phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-			$payment->add_note( '<strong>Cashfree Order Payments:</strong><br><pre>' . print_r( $order_payments, true ) . '</pre><br>' );
+			$payment->add_note( '<strong>Cashfree Order Payments:</strong><br><pre>' . wp_json_encode( $order_payments, JSON_PRETTY_PRINT ) . '</pre><br>' );
 		}
-		
+
 		if ( empty( $order_payments ) ) {
 			if ( filter_has_var( INPUT_GET, 'order_id' ) ) {
 				$payment->set_status( PaymentStatus::CANCELLED );
@@ -251,18 +250,16 @@ class Gateway extends Core_Gateway {
 
 			$order_details = $api_client->get_order_details( $payment->get_transaction_id() );
 			if ( knit_pay_plugin()->is_debug_mode() ) {
-				//phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-				$payment->add_note( '<strong>Cashfree Order Details:</strong><br><pre>' . print_r( $order_details, true ) . '</pre><br>' );
+				$payment->add_note( '<strong>Cashfree Order Details:</strong><br><pre>' . wp_json_encode( $order_details, JSON_PRETTY_PRINT ) . '</pre><br>' );
 			}
 
 			// Check Status from Order Details if Payments not available.
 			$payment->set_status( Statuses::transform( $order_details->order_status ) );
 			return;
 		}
-		
+
 		$current_payment = reset( $order_payments );
-		//phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-		$payment->add_note( '<strong>Cashfree Current Payment:</strong><br><pre>' . print_r( $current_payment, true ) . '</pre><br>' );
+		$payment->add_note( '<strong>Cashfree Current Payment:</strong><br><pre>' . wp_json_encode( $current_payment, JSON_PRETTY_PRINT ) . '</pre><br>' );
 
 		if ( isset( $current_payment->error_details ) ) {
 			$failure_reason = new FailureReason();

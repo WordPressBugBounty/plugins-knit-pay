@@ -27,11 +27,13 @@ class PaymentMethods extends KP_PaymentMethods {
 			case self::CARD:
 				return 'Credit / Debit Cards';
 			case self::UPI:
+				// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.wp_is_mobile_wp_is_mobile
 				if ( wp_is_mobile() ) {
 					return 'QR_INIT'; // For UPI Intent and UPI Collect.
 				}
 				return ''; // Issue in Instamojo, if UPI is passed QR code is not displayed.
 			case self::UPI_COLLECT:
+				// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.wp_is_mobile_wp_is_mobile
 				if ( wp_is_mobile() ) {
 					return 'QR_INIT'; // For UPI Intent and UPI Collect.
 				}

@@ -29,7 +29,7 @@ class API {
 
 		$endpoint = $this->api_endpoint . '/v1.0/sodexo/transactions';
 
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$endpoint,
 			[
 				'body'    => $data,
@@ -39,23 +39,23 @@ class API {
 		);
 		$result = wp_remote_retrieve_body( $response );
 
-		$result = json_decode( $result );
-		if ( isset( $result->redirectUserTo ) ) {
+		$result = json_decode( $result, true );
+		if ( isset( $result['redirectUserTo'] ) ) {
 			return $result;
 		}
 
-		if ( isset( $result->errorCode ) ) {
-			throw new Exception( trim( $result->errorMessage ) );
+		if ( isset( $result['errorCode'] ) ) {
+			throw new Exception( esc_html( trim( $result['errorMessage'] ) ) );
 		}
 
-		throw new Exception( 'Something went wrong. Please try again later.' );
+		throw new Exception( esc_html__( 'Something went wrong. Please try again later.', 'knit-pay-lang' ) );
 	}
 
 	public function get_transaction_details( $transaction_id ) {
 
 		$endpoint = $this->api_endpoint . '/v1.0/sodexo/transactions/' . $transaction_id;
 
-		$response = wp_remote_get(
+		$response = wp_safe_remote_get(
 			$endpoint,
 			[
 				'headers' => $this->get_request_headers(),
@@ -63,23 +63,23 @@ class API {
 		);
 		$result   = wp_remote_retrieve_body( $response );
 
-		$result = json_decode( $result );
+		$result = json_decode( $result, true );
 
-		if ( isset( $result->errorCode ) ) {
-			throw new Exception( trim( $result->additionalInfo ) );
+		if ( isset( $result['errorCode'] ) ) {
+			throw new Exception( esc_html( trim( $result['additionalInfo'] ) ) );
 		}
 
-		if ( isset( $result->transactionId ) ) {
+		if ( isset( $result['transactionId'] ) ) {
 			return $result;
 		}
 
-		throw new Exception( 'Something went wrong. Please try again later.' );
+		throw new Exception( esc_html__( 'Something went wrong. Please try again later.', 'knit-pay-lang' ) );
 	}
 
 	public function refund_transaction( $data ) {
 		$endpoint = $this->api_endpoint . '/v2.0/sodexo/transactions/refund';
 
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$endpoint,
 			[
 				'body'    => $data,
@@ -88,17 +88,17 @@ class API {
 		);
 		$result   = wp_remote_retrieve_body( $response );
 
-		$result = json_decode( $result );
+		$result = json_decode( $result, true );
 
-		if ( isset( $result->errorCode ) ) {
-			throw new Exception( trim( $result->errorMessage ) );
+		if ( isset( $result['errorCode'] ) ) {
+			throw new Exception( esc_html( trim( $result['errorMessage'] ) ) );
 		}
 
-		if ( isset( $result->refundTransactionId ) ) {
-			return $result->refundTransactionId;
+		if ( isset( $result['refundTransactionId'] ) ) {
+			return $result['refundTransactionId'];
 		}
 
-		throw new Exception( 'Something went wrong. Please try again later.' );
+		throw new Exception( esc_html__( 'Something went wrong. Please try again later.', 'knit-pay-lang' ) );
 	}
 
 	private function get_request_headers() {

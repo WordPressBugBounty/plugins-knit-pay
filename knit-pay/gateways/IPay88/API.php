@@ -60,7 +60,7 @@ class API {
 		if ( isset( $result_data['MerchantCode'] ) && $result_data['MerchantCode'] === $this->config->merchant_code ) {
 			return $result_data;
 		} elseif ( isset( $result_data['Errdesc'] ) ) {
-			throw new Exception( $result_data['Errdesc'] );
+			throw new Exception( esc_html( $result_data['Errdesc'] ) );
 		}
 
 		throw new Exception( 'Something went wrong. Please try again later.' );

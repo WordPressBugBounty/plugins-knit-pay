@@ -17,7 +17,9 @@ class Listener {
 			return;
 		}
 
-		$post_string = file_get_contents( 'php://input' );
+		$stream      = fopen( 'php://input', 'rb' );
+		$post_string = stream_get_contents( $stream );
+		fclose( $stream );
 
 		// Convert Query String to Array.
 		parse_str( $post_string, $post_array );

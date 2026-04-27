@@ -56,7 +56,7 @@ if ( empty( $gateways ) ) {
 				'Exciting News! You no longer have to manually check the payment status of your UPI/QR payments for configuration %s. Knit Pay can now check the payment status automatically for you.',
 				'Exciting News! You no longer have to manually check the payment status of your UPI/QR payments for configurations %s. Knit Pay can now check the payment status automatically for you.',
 				count( $config_ids ),
-				'knit-pay'
+				'knit-pay-lang'
 			),
 			implode( ', ', $gateways ) // WPCS: xss ok.
 		);

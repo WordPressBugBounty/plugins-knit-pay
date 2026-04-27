@@ -19,8 +19,10 @@ class Listener {
 			return;
 		}
 		
-		$post_body = file_get_contents( 'php://input' );
-		$data      = json_decode( $post_body, true );
+		$stream    = fopen( 'php://input', 'rb' );
+		$post_body = stream_get_contents( $stream );
+		fclose( $stream );
+		$data = json_decode( $post_body, true );
 		
 		if ( JSON_ERROR_NONE !== json_last_error() ) {
 			exit;

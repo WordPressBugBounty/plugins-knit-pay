@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 9.3.2.0
+Stable tag: 9.3.3.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, PayPal, Razorpay, and SSLCommerz, with over 100 WordPress plugins.
@@ -470,4 +470,8 @@ Special Thanks to the Developers of the libraries used in the plugin. [Click Her
 5. You can also show the payment method name on the checkout page instead of the Payment Gateway name for some of the Payment Gateways.
 
 == Changelog ==
-Please [click here](https://plugins.trac.wordpress.org/log/knit-pay/tags?verbose=on) to see change logs.
+Stay up to date with every release of Knit Pay through our official WordPress SVN repository:
+
+* **[Changelog](https://plugins.trac.wordpress.org/log/knit-pay/tags?verbose=on&format=changelog&limit=20&mode=stop_on_copy)** – View a detailed, human-readable log of all tagged releases and the changes they include.
+* **[RSS Feed](https://plugins.trac.wordpress.org/log/knit-pay/tags?verbose=on&format=rss&limit=20&mode=stop_on_copy)** – Subscribe to get notified automatically whenever a new version is released.
+* **[SVN Repository](https://plugins.trac.wordpress.org/log/knit-pay/tags?verbose=on&limit=20&mode=stop_on_copy)** – Browse the full commit history and tagged versions directly in the Trac repository.

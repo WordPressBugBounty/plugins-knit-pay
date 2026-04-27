@@ -97,7 +97,7 @@ class Integration extends AbstractGatewayIntegration {
 			) . sprintf(
 					/* translators: 1: PayU */
 				__( '<br><br>For Testing, kindly create an account at %1$s if you don\'t have one already.%2$s', 'knit-pay-lang' ),
-				__( '<strong>PayU UAT Dashboard</strong>', 'knit-pay-lang' ),
+				'<strong>' . __( 'PayU UAT Dashboard', 'knit-pay-lang' ) . '</strong>',
 				'<br><a class="button button-primary" target="_blank" href="https://test.payumoney.com/url/QIJLMsgaurL3"
                      role="button"><strong>Sign Up on PayU Test/UAT</strong></a>'
 			),
@@ -166,7 +166,7 @@ class Integration extends AbstractGatewayIntegration {
 				/* translators: %s: PayU */
 				__(
 					'Copy the Webhook URL to the %s dashboard to receive automatic transaction status updates.',
-					'knit-pay'
+					'knit-pay-lang'
 				),
 				__( 'PayU', 'knit-pay-lang' )
 			),

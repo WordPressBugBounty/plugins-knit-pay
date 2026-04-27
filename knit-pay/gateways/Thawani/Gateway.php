@@ -109,7 +109,7 @@ class Gateway extends Core_Gateway {
 			$payment_status = $session->payment_status;
 
 			$payment->set_status( Statuses::transform( $payment_status ) );
-			$payment->add_note( '<strong>Thawani Session:</strong><br><pre>' . print_r( $session, true ) . '</pre><br>' );
+			$payment->add_note( '<strong>Thawani Session:</strong><br><pre>' . wp_json_encode( $session, JSON_PRETTY_PRINT ) . '</pre><br>' );
 		}
 	}
 	

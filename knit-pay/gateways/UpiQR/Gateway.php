@@ -41,7 +41,7 @@ class Gateway extends Core_Gateway {
 
 		$this->payment_page_title = 'Payment Page';
 		
-		if ( wp_is_mobile() ) {
+		if ( wp_is_mobile() ) { // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.wp_is_mobile_wp_is_mobile
 			$this->payment_page_description = $config->mobile_payment_instruction;
 		} else {
 			$this->payment_page_description = $config->payment_instruction;
@@ -76,17 +76,17 @@ class Gateway extends Core_Gateway {
 		$payment_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 		if ( isset( $payment_currency ) && 'INR' !== $payment_currency ) {
 			$currency_error = 'UPI only accepts payments in Indian Rupees. If you are a store owner, kindly activate INR currency for ' . $payment->get_source() . ' plugin.';
-			throw new Exception( $currency_error );
+			throw new Exception( esc_html( $currency_error ) );
 		}
 
 		if ( 200 > $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' ) ) {
 			$amount_error = 'The amount should be at least ₹2.';
-			throw new Exception( $amount_error );
+			throw new Exception( esc_html( $amount_error ) );
 		}
 
 		if ( $this->config->hide_mobile_qr && $this->config->hide_pay_button ) {
 			$mobile_error = "QR code and Payment Button can't be hidden at the same time. Kindly show at least one of them from the configuration page.";
-			throw new Exception( $mobile_error );
+			throw new Exception( esc_html( $mobile_error ) );
 		}
 	}
 
@@ -100,7 +100,7 @@ class Gateway extends Core_Gateway {
 	public function output_form( Payment $payment ) {
 		$hide_pay_button = $this->config->hide_pay_button;
 
-		if ( ! wp_is_mobile() ) {
+		if ( ! wp_is_mobile() ) { // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.wp_is_mobile_wp_is_mobile
 			$hide_pay_button = true;
 		}
 
@@ -144,7 +144,7 @@ class Gateway extends Core_Gateway {
                 </script>';
 		
 		// Show QR Code.
-		if ( ! ( wp_is_mobile() && $this->config->hide_mobile_qr ) ) {
+		if ( ! ( wp_is_mobile() && $this->config->hide_mobile_qr ) ) { // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.wp_is_mobile_wp_is_mobile
 			$html .= '<div><strong>Scan the QR Code</strong></div><div class="qrcode"></div>';
 			$html .= "<script type='text/javascript'>
                         jQuery(document).ready(function() {
@@ -329,7 +329,7 @@ class Gateway extends Core_Gateway {
 			try {
 				$this->update_status( $payment );
 			} catch ( Exception $e ) {
-				echo $e->getMessage();
+				echo esc_html( $e->getMessage() );
 				exit;
 			}
 		}
@@ -375,7 +375,7 @@ class Gateway extends Core_Gateway {
 		try {
 			$this->intent_url_parameters = $this->get_output_fields( $payment );
 		} catch ( Exception $e ) {
-			echo $e->getMessage();
+			echo esc_html( $e->getMessage() );
 			exit;
 		}
 		return $this->intent_url_parameters;
@@ -426,7 +426,7 @@ class Gateway extends Core_Gateway {
 			],
 		];
 		return [
-			'data' => base64_encode( json_encode( $phonepe_intent_params ) ),
+			'data' => base64_encode( wp_json_encode( $phonepe_intent_params ) ),
 			'id'   => 'p2ppayment',
 		];
 	}

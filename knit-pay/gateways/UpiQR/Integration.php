@@ -173,16 +173,16 @@ class Integration extends KnitPayGatewayIntegration {
 			'callback' => function () {
 				$utm_parameter = '?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=help-signup';
 
-				echo '<p><strong>' . __( 'Steps to Integrate UPI QR', 'knit-pay-lang' ) . '</strong></p>' .
+				echo '<p><strong>' . esc_html__( 'Steps to Integrate UPI QR', 'knit-pay-lang' ) . '</strong></p>' .
 
 				'<ol>
 					<li>Signup at any UPI-enabled App. If you will signup using provided signup URLs and use the referral codes, you might also get a bonus after making few payments.
 						<ul>
-							<li>- <a target="_blank" href="' . $this->get_url() . 'bharatpe' . $utm_parameter . '">BharatPe (' . $this->get_url() . 'bharatpe)</a> - Signup using the referral link (on the phone) to get ₹200 bonus.</li>
-							<li>- <a target="_blank" href="' . $this->get_url() . 'open-money' . $utm_parameter . '">Open Money</a></li>
-							<li>- <a target="_blank" href="' . $this->get_url() . 'gpay' . $utm_parameter . '">Google Pay</a> Referral Code: Z05o0</li>
-							<li>- <a target="_blank" href="' . $this->get_url() . 'phonepe' . $utm_parameter . '">PhonePe</a></li>
-							<li>- <a target="_blank" href="' . $this->get_url() . 'amazon-pay' . $utm_parameter . '">Amazon Pay</a> Referral Code: K1ZESF</li>
+							<li>- <a target="_blank" href="' . esc_url( $this->get_url() . 'bharatpe' . $utm_parameter ) . '">BharatPe (' . esc_url( $this->get_url() . 'bharatpe' ) . ')</a> - Signup using the referral link (on the phone) to get ₹200 bonus.</li>
+							<li>- <a target="_blank" href="' . esc_url( $this->get_url() . 'open-money' . $utm_parameter ) . '">Open Money</a></li>
+							<li>- <a target="_blank" href="' . esc_url( $this->get_url() . 'gpay' . $utm_parameter ) . '">Google Pay</a> Referral Code: Z05o0</li>
+							<li>- <a target="_blank" href="' . esc_url( $this->get_url() . 'phonepe' . $utm_parameter ) . '">PhonePe</a></li>
+							<li>- <a target="_blank" href="' . esc_url( $this->get_url() . 'amazon-pay' . $utm_parameter ) . '">Amazon Pay</a> Referral Code: K1ZESF</li>
 							<li>- <a target="_blank" href="https://play.google.com/store/search?q=merchant%20business%20upi&c=apps">More UPI Apps</a></li>
 						</ul>
 					</li>
@@ -205,7 +205,7 @@ class Integration extends KnitPayGatewayIntegration {
 			'section'  => 'general',
 			'type'     => 'custom',
 			'callback' => function () {
-				echo '<p><strong>' . __( 'How does it work?', 'knit-pay-lang' ) . '</strong></p>' .
+				echo '<p><strong>' . esc_html__( 'How does it work?', 'knit-pay-lang' ) . '</strong></p>' .
 
 				'<ol>
 						<li>On the payment screen, the customer scans the QR code using any UPI-enabled mobile app and makes the payment.</li>
@@ -233,7 +233,7 @@ class Integration extends KnitPayGatewayIntegration {
 
 				$message .= 'Unlock this feature now!<br><br><a class="button button-large button-primary" target="_blank" href="' . admin_url( 'plugin-install.php?s=Knit%2520Pay%2520UPI%2520QR%2520code%2520RapidAPI&tab=search&type=term' ) . '">Click here</a>';
 
-				echo $message;
+				echo wp_kses_post( $message );
 			},
 		];
 

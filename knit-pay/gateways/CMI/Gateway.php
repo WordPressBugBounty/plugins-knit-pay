@@ -136,7 +136,9 @@ class Gateway extends Core_Gateway {
 		}
 
 		if ( filter_has_var( INPUT_POST, 'HASH' ) ) {
-			$post_string = file_get_contents( 'php://input' );
+			$stream      = fopen( 'php://input', 'rb' );
+			$post_string = stream_get_contents( $stream );
+			fclose( $stream );
 
 			// Convert Query String to Array.
 			parse_str( $post_string, $order_status );
@@ -149,7 +151,7 @@ class Gateway extends Core_Gateway {
 			$order_status = $this->cmi_client->get_order_status( $payment->get_transaction_id() );
 		}
 
-		$payment->add_note( '<strong>CMI Response:</strong><br><pre>' . print_r( $order_status, true ) . '</pre><br>' );
+		$payment->add_note( '<strong>CMI Response:</strong><br><pre>' . wp_json_encode( $order_status, JSON_PRETTY_PRINT ) . '</pre><br>' );
 
 		if ( isset( $order_status['ProcReturnCode'] ) ) {
 			$payment->set_status( Statuses::transform( $order_status['ProcReturnCode'] ) );

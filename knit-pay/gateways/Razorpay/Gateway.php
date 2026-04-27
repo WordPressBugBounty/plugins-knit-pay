@@ -502,16 +502,13 @@ class Gateway extends Core_Gateway {
 
 		switch ( $this->config->checkout_mode ) {
 			case Config::CHECKOUT_STANDARD_MODE:
-				$data_json = wp_json_encode( $this->get_output_fields_base( $payment ) );
+				$data = $this->get_output_fields_base( $payment );
 
 				require_once 'views/checkout.php';
 
-				$script = '';
 				if ( $auto_submit ) {
-					$script .= '<script type="text/javascript">document.getElementById("rzp-button1").click();</script>';
+					echo '<script type="text/javascript">document.getElementById("rzp-button").click();</script>';
 				}
-
-				echo $script;
 				return;
 			case Config::CHECKOUT_HOSTED_MODE:
 				$payment->set_action_url( self::HOSTED_CHECKOUT_URL );
@@ -587,7 +584,7 @@ class Gateway extends Core_Gateway {
 		$data = [
 			'key'          => $this->config->key_id,
 			'name'         => $box_title,
-			'description'  => KnitPayUtils::substr_after_trim( $payment->get_description(), 0, 256 ),
+			'description'  => KnitPayUtils::substr_after_trim( $payment->get_description(), 0, 255 ),
 			'prefill'      => [
 				'name'   => KnitPayUtils::substr_after_trim( $customer->get_name(), 0, 100 ),
 				'email'  => $customer->get_email(),
@@ -672,9 +669,9 @@ class Gateway extends Core_Gateway {
 				$api_client = $this->get_razorpay_api();
 			}
 
-			$className = 'Razorpay\\Api\\' . ucwords( $entity );
-			if ( class_exists( $className ) ) {
-				$entity_obj = new $className();
+			$class_name = 'Razorpay\\Api\\' . ucwords( $entity );
+			if ( class_exists( $class_name ) ) {
+				$entity_obj = new $class_name();
 				$response   = $entity_obj->$method( $args );
 			} else {
 				// For custom endpoints not available in SDK, use Request class directly.
@@ -805,7 +802,7 @@ class Gateway extends Core_Gateway {
 			}
 			$transaction_fees_fix_amount = new Money( $transaction_fees_fix, $amount->get_currency() );
 		} catch ( \Exception $e ) {
-			throw new \Exception( 'Invalid Transaction Fees. ' . $e->getMessage() );
+			throw new \Exception( 'Invalid Transaction Fees. ' . esc_html( $e->getMessage() ) );
 		}
 
 		$transaction_fees_percentage_divide = ( new Number( 100 ) )->subtract( $transaction_fees_percentage )->divide( new Number( 100 ) );

@@ -44,7 +44,7 @@ class API {
 		if ( isset( $result->data ) && isset( $result->data->error ) && is_array( $result->data->error ) ) {
 			throw new Exception( wp_json_encode( $result->data->error[0]->message ) );
 		} elseif ( isset( $result->detail ) ) {
-			throw new Exception( $result->detail );
+			throw new Exception( esc_html( $result->detail ) );
 		}
 
 		return $result->data;
@@ -53,7 +53,7 @@ class API {
 	public function get_session_by_invoice( $id ) {
 		$endpoint = $this->get_api_endpoint() . 'checkout/invoice/' . $id;
 
-		$response = wp_remote_get(
+		$response = wp_safe_remote_get(
 			$endpoint,
 			[
 				'headers' => $this->get_request_headers(),
@@ -64,7 +64,7 @@ class API {
 		$result = json_decode( $result );
 		
 		if ( ! isset( $result->success ) || ! $result->success ) {
-			throw new Exception( 'Unable to Fetch Session: ' . $result->description );
+			throw new Exception( 'Unable to Fetch Session: ' . esc_html( $result->description ) );
 		}
 		
 		return $result->data;

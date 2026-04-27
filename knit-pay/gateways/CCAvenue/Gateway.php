@@ -165,7 +165,7 @@ class Gateway extends Core_Gateway {
 				$order_status = $this->api->get_order_status( $this->get_order_id( $payment ) );
 			}
 		} catch ( Exception $e ) {
-			throw new Exception( $e->getMessage() );
+			throw new Exception( esc_html( $e->getMessage() ) );
 		}
 
 		$payment_status = Statuses::transform( $order_status['order_status'] );
@@ -177,12 +177,12 @@ class Gateway extends Core_Gateway {
 			$payment->set_failure_reason( $failure_reason );
 		}
 		$payment->set_status( $payment_status );
-		$payment->add_note( '<strong>CCAvenue Response:</strong><br><pre>' . print_r( $order_status, true ) . '</pre><br>' );
+		$payment->add_note( '<strong>CCAvenue Response:</strong><br><pre>' . wp_json_encode( $order_status, JSON_PRETTY_PRINT ) . '</pre><br>' );
 	}
 
 	private function get_order_response( $payment ) {
-		$post_order_no     = \sanitize_text_field( \wp_unslash( $_POST['orderNo'] ) );
-		$post_enc_response = \sanitize_text_field( \wp_unslash( $_POST['encResp'] ) );
+		$post_order_no     = isset( $_POST['orderNo'] ) ? \sanitize_text_field( \wp_unslash( $_POST['orderNo'] ) ) : '';
+		$post_enc_response = isset( $_POST['encResp'] ) ? \sanitize_text_field( \wp_unslash( $_POST['encResp'] ) ) : '';
 		$post_access_code  = isset( $_POST['accessCode'] ) ? \sanitize_text_field( \wp_unslash( $_POST['accessCode'] ) ) : null;
 		$response_array    = [];
 

@@ -192,7 +192,7 @@ class Extension extends AbstractPluginIntegration {
 	 *
 	 * @return string
 	 */
-	function change_membership_level( $txn_id, &$morder ) {
+	private function change_membership_level( $txn_id, &$morder ) {
 		// TODO Set Recurring paramer, removed hardcoded value
 		// $recurring = pmpro_getParam( 'recurring', 'POST' );
 		$recurring = false;
@@ -210,7 +210,7 @@ class Extension extends AbstractPluginIntegration {
 
 		// fix expiration date
 		if ( ! empty( $morder->membership_level->expiration_number ) ) {
-			$enddate = "'" . date_i18n( 'Y-m-d', strtotime( '+ ' . $morder->membership_level->expiration_number . ' ' . $morder->membership_level->expiration_period, current_time( 'timestamp' ) ) ) . "'";
+			$enddate = "'" . date_i18n( 'Y-m-d', strtotime( '+ ' . $morder->membership_level->expiration_number . ' ' . $morder->membership_level->expiration_period, time() ) ) . "'";
 		} else {
 			$enddate = 'NULL';
 		}
@@ -246,7 +246,7 @@ class Extension extends AbstractPluginIntegration {
 
 		global $pmpro_error;
 		if ( ! empty( $pmpro_error ) ) {
-			echo $pmpro_error;
+			echo wp_kses_post( $pmpro_error );
 			$this->pmp_log( $pmpro_error );
 		}
 
@@ -257,7 +257,7 @@ class Extension extends AbstractPluginIntegration {
 			$morder->payment_transaction_id = $txn_id;
 			if ( $recurring ) {
 				// TODO
-				$morder->subscription_transaction_id = sanitize_text_field( $_POST['subscr_id'] );
+				$morder->subscription_transaction_id = isset( $_POST['subscr_id'] ) ? sanitize_text_field( wp_unslash( $_POST['subscr_id'] ) ) : '';
 			} else {
 				$morder->subscription_transaction_id = '';
 			}
@@ -271,11 +271,11 @@ class Extension extends AbstractPluginIntegration {
 						"INSERT INTO {$wpdb->pmpro_discount_codes_uses}
 						( code_id, user_id, order_id, timestamp )
 						VALUES( %d, %d, %s, %s )",
-						$discount_code_id
-					),
-					$morder->user_id,
-					$morder->id,
-					current_time( 'mysql' )
+						$discount_code_id,
+						$morder->user_id,
+						$morder->id,
+						current_time( 'mysql' )
+					)
 				);
 			}
 
@@ -305,14 +305,14 @@ class Extension extends AbstractPluginIntegration {
 				$invoice = null;
 			}
 
-			$this->pmp_log( 'CHANGEMEMBERSHIPLEVEL: ORDER: ' . var_export( $morder, true ) . "\n---\n" );
+			$this->pmp_log( 'CHANGEMEMBERSHIPLEVEL: ORDER: ' . wp_json_encode( $morder ) . "\n---\n" );
 
 			$user = get_userdata( $morder->user_id );
 			if ( empty( $user ) ) {
 				return false;
 			}
 
-			$user->membership_level = $morder->membership_level;        // make sure they have the right level info
+			$user->membership_level = $morder->membership_level; // make sure they have the right level info
 
 			// send email to member
 			$pmproemail = new \PMProEmail();
@@ -328,7 +328,12 @@ class Extension extends AbstractPluginIntegration {
 		}
 	}
 
-	function pmp_log( $s ) {
+	/**
+	 * Log message.
+	 *
+	 * @param string $s Log message.
+	 */
+	private function pmp_log( $s ) {
 		global $logstr;
 		$logstr .= "\t" . $s . "\n";
 	}
@@ -340,7 +345,7 @@ class Extension extends AbstractPluginIntegration {
 	 */
 	public function pmpro_default_country( $pmpro_default_country ) {
 		$gateway = pmpro_getOption( 'gateway' );
-		if ( $gateway !== 'knit_pay' ) {
+		if ( 'knit_pay' !== $gateway ) {
 			return $pmpro_default_country;
 		}
 

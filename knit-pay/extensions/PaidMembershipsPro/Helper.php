@@ -50,23 +50,29 @@ class Helper {
 			'{order_id}'        => $morder->id,
 			'{code}'            => $morder->code,
 			'{invoice_id}'      => $morder->code,
-			'{membership_name}' => $morder->membership_name,
+			'{membership_name}' => $morder->membership_level->name,
 		];
 
 		return strtr( $description, $replacements );
 	}
 
+	/**
+	 * Get amount.
+	 *
+	 * @param MemberOrder $morder Member Order.
+	 * @return Money
+	 */
 	public static function get_amount( $morder ) {
 		global $pmpro_currency;
 
-		$initial_payment     = $morder->InitialPayment;
-		$initial_payment_tax = $morder->getTaxForPrice( $initial_payment );
-		$initial_payment     = \pmpro_round_price( (float) $initial_payment + (float) $initial_payment_tax );
+		$subtotal       = $morder->subtotal;
+		$initial_tax    = $morder->getTaxForPrice( $subtotal );
+		$initial_amount = pmpro_round_price( (float) $subtotal + (float) $initial_tax );
 
 		// Currency.
 		$currency = Currency::get_instance( $pmpro_currency );
 
-		$amount = new Money( $initial_payment, $currency, null, $initial_payment_tax );
+		$amount = new Money( $initial_amount, $currency );
 
 		return $amount;
 	}
@@ -77,10 +83,10 @@ class Helper {
 	 * @return string|null
 	 */
 	public static function get_email( $morder ) {
-		if ( isset( $morder->Email ) ) {
-			return $morder->Email;
-		} elseif ( isset( $_REQUEST['bemail'] ) ) {
-			return sanitize_email( $_REQUEST['bemail'] );
+		if ( isset( $morder->Email ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Email is a property of PMPro's MemberOrder class, cannot rename.
+			return $morder->Email; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Email is a property of PMPro's MemberOrder class, cannot rename.
+		} elseif ( isset( $_REQUEST['bemail'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification handled by PMPro core checkout process.
+			return sanitize_email( wp_unslash( $_REQUEST['bemail'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification handled by PMPro core checkout process.
 		}
 
 		return null;

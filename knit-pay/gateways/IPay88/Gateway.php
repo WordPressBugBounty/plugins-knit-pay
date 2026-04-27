@@ -123,7 +123,7 @@ class Gateway extends Core_Gateway {
 				$transaction_details = $this->api->get_transaction_details( $transaction_data );
 			}
 		} catch ( Exception $e ) {
-			throw new Exception( $e->getMessage() );
+			throw new Exception( esc_html( $e->getMessage() ) );
 		}
 
 		$payment_status = Statuses::transform( $transaction_details['Status'] );

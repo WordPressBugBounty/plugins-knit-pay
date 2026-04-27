@@ -29,6 +29,8 @@ require_once 'includes/PaymentRestController.php';
 // WordPress Abilities API integration (WordPress 6.9+).
 require_once 'includes/PaymentAbilities.php';
 
+require_once 'includes/customizations.php';
+
 require_once 'includes/hooks_mapping.php';
 
 /*

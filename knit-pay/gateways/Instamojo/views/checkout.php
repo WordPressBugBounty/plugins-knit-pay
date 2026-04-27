@@ -6,7 +6,7 @@
 		<div class="columns">
 			<div class="left top-bar-button">
 				<a id="instamojo-powered-button" target="_blank" rel="nofollow" style="background: none;">
-					<img src="<?php echo KNITPAY_URL . '/images/instamojo/icon.svg'; ?>" alt="share smart link" class="push-half--right" style="height: 38px;background: white;border-radius: 4px;">
+					<img src="<?php echo esc_url( KNITPAY_URL . '/images/instamojo/icon.svg' ); ?>" alt="share smart link" class="push-half--right" style="height: 38px;background: white;border-radius: 4px;">
 				</a>
 			</div>
 			<div class="right top-bar-button">
@@ -20,7 +20,7 @@
 </div>
 
 <script>
-	var options = <?php echo $instamojo_data; ?>;
+	var options = <?php echo wp_json_encode( $instamojo_data ); ?>;
 
 	if (options.hide_top_bar){
 		document.getElementsByClassName('top-bar')[0].setAttribute("hidden", true);

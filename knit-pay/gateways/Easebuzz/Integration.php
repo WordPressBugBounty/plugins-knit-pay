@@ -118,7 +118,7 @@ class Integration extends AbstractGatewayIntegration {
 				/* translators: %s: PayUmoney */
 				__(
 					'Copy the Webhook URL to the %s dashboard to receive automatic transaction status updates.',
-					'knit-pay'
+					'knit-pay-lang'
 				),
 				__( 'Easebuzz', 'knit-pay-lang' )
 			),

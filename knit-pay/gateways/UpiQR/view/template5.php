@@ -7,9 +7,13 @@ use KnitPay\Gateways\PaymentMethods;
 		<!-- Header Section -->
 		<div class="header">
 			<div class="header-info">
-				<img src="<?php echo get_site_icon_url( 512, $image_path . 'upi_icon.svg' ); ?>" class="logo" alt="UPI">
+				<img src="<?php echo esc_url( get_site_icon_url( 512, $image_path . 'upi_icon.svg' ) ); ?>" class="logo" alt="UPI">
 				<div>
-					<div class="merchant-name"><?php echo $payee_name; ?></div>
+					<div class="merchant-name">
+						<?php
+						echo esc_html( $payee_name );
+						?>
+					</div>
 					<?php if ( $this->merchant_verified ) { ?>
 						<div class="verified-badge">
 							<span class="dashicons dashicons-yes-alt"></span>
@@ -54,7 +58,11 @@ use KnitPay\Gateways\PaymentMethods;
 
 				<div class="upi-id-display">
 					<div class="upi-id-label">SMS sent to:</div>
-					<div class="upi-id-value"><?php echo $this->mask_phone_number( $payment->get_billing_address()->get_phone() ); ?></div>
+					<div class="upi-id-value">
+						<?php
+						echo esc_html( $this->mask_phone_number( $payment->get_billing_address()->get_phone() ) );
+						?>
+					</div>
 				</div>
 
 				<div class="waiting-indicator">
@@ -86,7 +94,11 @@ use KnitPay\Gateways\PaymentMethods;
 
 				<div class="upi-id-display">
 					<div class="upi-id-label">Payment request sent to:</div>
-					<div class="upi-id-value"><?php echo $this->mask_upi_id( $customer_upi_id ); ?></div>
+					<div class="upi-id-value">
+						<?php
+						echo esc_html( $this->mask_upi_id( $customer_upi_id ) );
+						?>
+					</div>
 				</div>
 
 				<div class="waiting-indicator">
@@ -102,16 +114,16 @@ use KnitPay\Gateways\PaymentMethods;
 						<div class='qr-code no-drag qrCodeBody'></div>
 					</div>
 					<div class="qr-overlay">
-						<img src="<?php echo $image_path; ?>upi_icon.svg" alt="UPI" class="no-drag">
+						<img src="<?php echo esc_url( $image_path ); ?>upi_icon.svg" alt="UPI" class="no-drag">
 					</div>
 				</div>
 				<div class="scan-text">Scan QR code with any UPI app</div>
 
 				<div class="upi-apps">
-					<img src="<?php echo $image_path; ?>gpay_icon.svg" alt="Google Pay" class="upi-app-icon no-drag">
-					<img src="<?php echo $image_path; ?>phonepe.svg" alt="PhonePe" class="upi-app-icon no-drag">
-					<img src="<?php echo $image_path; ?>paytm_icon.svg" alt="Paytm" class="upi-app-icon no-drag">
-					<img src="<?php echo $image_path; ?>upi_icon.svg" alt="BHIM" class="upi-app-icon no-drag">
+					<img src="<?php echo esc_url( $image_path ); ?>gpay_icon.svg" alt="Google Pay" class="upi-app-icon no-drag">
+					<img src="<?php echo esc_url( $image_path ); ?>phonepe.svg" alt="PhonePe" class="upi-app-icon no-drag">
+					<img src="<?php echo esc_url( $image_path ); ?>paytm_icon.svg" alt="Paytm" class="upi-app-icon no-drag">
+					<img src="<?php echo esc_url( $image_path ); ?>upi_icon.svg" alt="BHIM" class="upi-app-icon no-drag">
 				</div>
 
 				<?php if ( $show_download_qr_button ) { ?>
@@ -188,23 +200,23 @@ use KnitPay\Gateways\PaymentMethods;
 			<?php if ( isset( $order_id ) ) { ?>
 				<div class="order-row">
 					<span class="label">Order ID:</span>
-					<span class="value"><?php echo $order_id; ?></span>
+					<span class="value"><?php echo esc_html( $order_id ); ?></span>
 				</div>
 			<?php } ?>
 			<div class="order-row">
 				<span class="label">Transaction ID:</span>
-				<span class="value"><?php echo $transaction_id; ?></span>
+				<span class="value"><?php echo esc_html( $transaction_id ); ?></span>
 			</div>
 			<div class="order-row">
 				<span class="label">Order Amount:</span>
-				<span class="value">₹<?php echo $intent_url_parameters['am']; ?></span>
+				<span class="value">₹<?php echo esc_html( $intent_url_parameters['am'] ); ?></span>
 			</div>
 		</div>
 
 		<!-- Footer Section -->
 		<div class="footer">
 			<div>All UPI Accepted</div><br>
-			<div>Need help? <a href="mailto:<?php echo $this->config->support_email; ?>"><?php echo $this->config->support_email; ?></a></div>
+			<div>Need help? <a href="mailto:<?php echo esc_attr( $this->config->support_email ); ?>"><?php echo esc_html( $this->config->support_email ); ?></a></div>
 		</div>
 	</div>
 </div>

@@ -54,7 +54,7 @@ class Client {
 
 		// Check for errors
 		if ( is_wp_error( $response ) ) {
-			throw new Exception( $response->get_error_message() );
+			throw new Exception( esc_html( $response->get_error_message() ) );
 		}
 
 		// Get response body
@@ -62,7 +62,7 @@ class Client {
 
 		// Parse XML response
 		$xml_response = simplexml_load_string( $body );
-		if ( $xml_response === false ) {
+		if ( false === $xml_response ) {
 			throw new Exception( 'Failed to parse XML response' );
 		}
 
@@ -74,7 +74,7 @@ class Client {
 		}
 
 		if ( ! empty( $result['ErrMsg'] ) ) {
-			throw new Exception( $result['ErrMsg'] );
+			throw new Exception( esc_html( $result['ErrMsg'] ) );
 		}
 
 		$order_status = explode( "\t", $result['Extra']['TRX1'] );
@@ -89,36 +89,36 @@ class Client {
 
 	public function generate_hash( array $data ): string {
 		// Assign store key
-		$storeKey = $this->config->store_key;
+		$store_key = $this->config->store_key;
 
 		// Retrieve and sort parameters
-		$cmiParams  = $data;
-		$postParams = array_keys( $cmiParams );
-		natcasesort( $postParams );
+		$cmi_params  = $data;
+		$post_params = array_keys( $cmi_params );
+		natcasesort( $post_params );
 
 		// Construct hash input string
 		$hashval = '';
-		foreach ( $postParams as $param ) {
-			if ( null === $cmiParams[ $param ] ) {
+		foreach ( $post_params as $param ) {
+			if ( null === $cmi_params[ $param ] ) {
 				$hashval .= '|';
 				continue;
 			}
 
-			$paramValue        = trim( $cmiParams[ $param ] );
-			$escapedParamValue = str_replace( '|', '\\|', str_replace( '\\', '\\\\', $paramValue ) );
-			$lowerParam        = strtolower( $param );
-			if ( $lowerParam !== 'hash' && $lowerParam !== 'encoding' ) {
-				$hashval .= $escapedParamValue . '|';
+			$param_value         = trim( $cmi_params[ $param ] );
+			$escaped_param_value = str_replace( '|', '\\|', str_replace( '\\', '\\\\', $param_value ) );
+			$lower_param         = strtolower( $param );
+			if ( 'hash' !== $lower_param && 'encoding' !== $lower_param ) {
+				$hashval .= $escaped_param_value . '|';
 			}
 		}
 
-		// Append storeKey and prepare for hashing
-		$escapedStoreKey = str_replace( '|', '\\|', str_replace( '\\', '\\\\', $storeKey ) );
-		$hashval        .= $escapedStoreKey;
+		// Append store_key and prepare for hashing
+		$escaped_store_key = str_replace( '|', '\\|', str_replace( '\\', '\\\\', $store_key ) );
+		$hashval          .= $escaped_store_key;
 
 		// Calculate hash
-		$calculatedHashValue = hash( 'sha512', $hashval );
-		$hash                = base64_encode( pack( 'H*', $calculatedHashValue ) );
+		$calculated_hash_value = hash( 'sha512', $hashval );
+		$hash                  = base64_encode( pack( 'H*', $calculated_hash_value ) );
 
 		return $hash;
 	}

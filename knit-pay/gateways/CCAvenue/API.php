@@ -81,11 +81,11 @@ class API {
 		}
 
 		if ( $result_array['status'] && isset( $result_array['enc_response'] ) ) {
-			throw new Exception( $result_array['enc_response'] );
+			throw new Exception( esc_html( $result_array['enc_response'] ) );
 		} else {
 			$response = json_decode( $this->decrypt( $result_array['enc_response'] ), true )['Order_Status_Result'];
 			if ( $response['status'] ) {
-				throw new Exception( $response['error_desc'] );
+				throw new Exception( esc_html( $response['error_desc'] ) );
 			}
 			return $response;
 		}

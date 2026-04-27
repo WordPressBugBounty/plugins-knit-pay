@@ -33,7 +33,7 @@ class APIV2 {
 	public function create_transaction_link( $json_data ) {
 		$sub_url = '/checkout/v2/pay';
 
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$this->api_endpoint . $sub_url,
 			[
 				'headers' => $this->get_headers(),
@@ -43,7 +43,7 @@ class APIV2 {
 		);
 
 		if ( 401 === wp_remote_retrieve_response_code( $response ) ) {
-			throw new Exception( 'Unauthorized request. Please check your credentials.', 401 );
+			throw new Exception( esc_html__( 'Unauthorized request. Please check your credentials.', 'knit-pay-lang' ), 401 );
 		}
 
 		$result = wp_remote_retrieve_body( $response );
@@ -51,12 +51,12 @@ class APIV2 {
 		$result = json_decode( $result );
 
 		if ( isset( $result->success ) && false === $result->success ) {
-			throw new Exception( $result->message ?? 'Something went wrong. Please try again later.' );
-		} elseif ( isset( $result->redirectUrl ) ) {
-			return $result->redirectUrl;
+			throw new Exception( isset( $result->message ) ? esc_html( $result->message ) : esc_html__( 'Something went wrong. Please try again later.', 'knit-pay-lang' ) );
+		} elseif ( isset( $result->redirectUrl ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- PhonePe API response property
+			return $result->redirectUrl; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- PhonePe API response property
 		}
 
-		throw new Exception( 'Something went wrong. Please try again later.' );
+		throw new Exception( esc_html__( 'Something went wrong. Please try again later.', 'knit-pay-lang' ) );
 	}
 
 	public function get_payment_status( $id ) {
@@ -64,7 +64,7 @@ class APIV2 {
 
 		$endpoint = $this->api_endpoint . $sub_url;
 
-		$response = wp_remote_get(
+		$response = wp_safe_remote_get(
 			$endpoint,
 			[
 				'headers' => $this->get_headers(),
@@ -98,7 +98,7 @@ class APIV2 {
 			'client_version' => $this->config->client_version,
 		];
 
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$this->auth_host_url,
 			[
 				'headers' => [
@@ -109,10 +109,22 @@ class APIV2 {
 			]
 		);
 
+		if ( is_wp_error( $response ) ) {
+			throw new Exception( esc_html__( 'Request failed. Please check your connection and try again.', 'knit-pay-lang' ) );
+		}
+
+		if ( 401 === wp_remote_retrieve_response_code( $response ) ) {
+			throw new Exception( esc_html__( 'Unauthorized request. Please check your credentials.', 'knit-pay-lang' ), 401 );
+		}
+
 		$result = wp_remote_retrieve_body( $response );
 
 		$result = json_decode( $result );
-		
+
+		if ( empty( $result ) || ! isset( $result->access_token ) ) {
+			throw new Exception( esc_html__( 'Failed to retrieve access token.', 'knit-pay-lang' ) );
+		}
+
 		$this->access_token = $result->access_token;
 	}
 }

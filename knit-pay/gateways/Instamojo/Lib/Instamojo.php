@@ -48,7 +48,7 @@ class Instamojo {
 		$data['scopes']        = 'all';
 		$data['grant_type']    = 'client_credentials';
 
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$this->auth_endpoint,
 			[
 				'body'    => $data,
@@ -60,11 +60,11 @@ class Instamojo {
 			$result = json_decode( $result );
 			if ( isset( $result->error ) ) {
 				throw new ValidationException(
-					"The Authorization request failed with message '$result->error'",
+					esc_html( "The Authorization request failed with message '$result->error'" ),
 					[
-						'Payment Gateway Authorization Failed.',
+						esc_html( 'Payment Gateway Authorization Failed.' ),
 					],
-					$result
+					$result // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 				);
 			}
 		}
@@ -76,7 +76,7 @@ class Instamojo {
 
 	public function create_order_payment( $data ) {
 		$endpoint = $this->api_endpoint . 'gateway/orders/';
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$endpoint,
 			[
 				'body'    => $data,
@@ -89,14 +89,14 @@ class Instamojo {
 		if ( isset( $result->order ) ) {
 			return $result;
 		}
-			$errors = [];
+		$errors = [];
 		if ( isset( $result->message ) ) {
 			throw new ValidationException(
-				"Validation Error with message: $result->message",
+				esc_html( "Validation Error with message: $result->message" ),
 				[
-					$result->message,
+					esc_html( $result->message ),
 				],
-				$result
+				$result // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 			);
 		}
 
@@ -106,13 +106,13 @@ class Instamojo {
 			}
 		}
 		if ( $errors ) {
-			throw new ValidationException( 'Validation Error Occured with following Errors : ', $errors, $result );
+			throw new ValidationException( esc_html( 'Validation Error Occured with following Errors : ' ), array_map( 'esc_html', $errors ), $result ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 		}
 	}
 
 	public function create_payment_request( $data ) {
 		$endpoint = $this->api_endpoint . 'payment_requests/';
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$endpoint,
 			[
 				'body'    => $data,
@@ -129,11 +129,11 @@ class Instamojo {
 			$errors = [];
 			if ( isset( $result->message ) ) {
 				throw new ValidationException(
-					"Validation Error with message: $result->message",
+					esc_html( "Validation Error with message: $result->message" ),
 					[
-						$result->message,
+						esc_html( $result->message ),
 					],
-					$result
+					$result // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 				);
 			}
 
@@ -143,7 +143,7 @@ class Instamojo {
 				}
 			}
 			if ( $errors ) {
-				throw new ValidationException( 'Validation Error Occured with following Errors : ', $errors, $result );
+				throw new ValidationException( esc_html( 'Validation Error Occured with following Errors : ' ), array_map( 'esc_html', $errors ), $result ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 			}
 		}
 	}
@@ -151,7 +151,7 @@ class Instamojo {
 	public function get_order_by_id( $id ) {
 		$endpoint = $this->api_endpoint . "gateway/orders/id:$id/";
 
-		$response = wp_remote_get(
+		$response = wp_safe_remote_get(
 			$endpoint,
 			[
 				'headers' => $this->auth_headers,
@@ -163,13 +163,12 @@ class Instamojo {
 		if ( isset( $result->id ) && $result->id ) {
 			return $result;
 		}
-		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-		throw new Exception( "Unable to Fetch Payment Request id:'$id' Server Responds " . print_R( $result, true ) );
+		throw new Exception( esc_html( "Unable to Fetch Payment Request id:'$id' Server Responds " . wp_json_encode( $result ) ) );
 	}
 
 	public function get_payment_request_by_id( $id ) {
 		$endpoint = $this->api_endpoint . "payment_requests/$id/";
-		$response = wp_remote_get(
+		$response = wp_safe_remote_get(
 			$endpoint,
 			[
 				'headers' => $this->auth_headers,
@@ -181,14 +180,13 @@ class Instamojo {
 		if ( isset( $result->id ) && $result->id ) {
 			return $result;
 		}
-		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-		throw new Exception( "Unable to Fetch Payment Request id:'$id' Server Responds " . print_R( $result, true ) );
+		throw new Exception( esc_html( "Unable to Fetch Payment Request id:'$id' Server Responds " . wp_json_encode( $result ) ) );
 	}
 
 	public function get_payment_by_id( $id ) {
 		$endpoint = $this->api_endpoint . "payments/$id/";
 
-		$response = wp_remote_get(
+		$response = wp_safe_remote_get(
 			$endpoint,
 			[
 				'headers' => $this->auth_headers,
@@ -200,8 +198,7 @@ class Instamojo {
 		if ( isset( $result->id ) && $result->id ) {
 			return $result;
 		}
-		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-		throw new Exception( "Unable to Fetch Payment id:'$id' Server Responds " . print_R( $result, true ) );
+		throw new Exception( esc_html( "Unable to Fetch Payment id:'$id' Server Responds " . wp_json_encode( $result ) ) );
 	}
 
 	public function get_payment_status( $payment_id, $payments ) {
@@ -214,7 +211,7 @@ class Instamojo {
 
 	public function create_refund( $data ) {
 		$endpoint = $this->api_endpoint . 'payments/' . $data['payment_id'] . '/refund/';
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$endpoint,
 			[
 				'body'    => $data,
@@ -230,14 +227,14 @@ class Instamojo {
 		}
 		if ( isset( $result->reason ) ) {
 			throw new Exception(
-				$result->reason
+				esc_html( $result->reason )
 			);
 		}
 	}
 
 	public function disable_payment_request( $payment_request_id ) {
 		$endpoint = $this->api_endpoint . 'payment_requests/' . $payment_request_id . '/disable/';
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$endpoint,
 			[
 				'timeout' => self::CONNECTION_TIMEOUT,

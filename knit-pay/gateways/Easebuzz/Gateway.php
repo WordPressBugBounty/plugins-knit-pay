@@ -74,7 +74,7 @@ class Gateway extends Core_Gateway {
 		$payment_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 		if ( isset( $payment_currency ) && 'INR' !== $payment_currency ) {
 			$currency_error = 'Easebuzz only accepts payments in Indian Rupees. If you are a store owner, kindly activate INR currency for ' . $payment->get_source() . ' plugin.';
-			throw new Exception( $currency_error );
+			throw new Exception( esc_html( $currency_error ) );
 		}
 
 		$merchant_key    = $this->config->merchant_key;
@@ -96,7 +96,7 @@ class Gateway extends Core_Gateway {
 		$surl = $payment->get_return_url();
 		$furl = $payment->get_return_url();
 
-		$easebuzzObj = new Easebuzz( $merchant_key, $merchant_salt, $this->env );
+		$easebuzz_obj = new Easebuzz( $merchant_key, $merchant_salt, $this->env );
 
 		$payment_source = $payment->get_source();
 		if ( 'woocommerce' === $payment_source ) {
@@ -104,7 +104,7 @@ class Gateway extends Core_Gateway {
 		}
 
 		// @see https://docs.easebuzz.in/docs/payment-gateway/8ec545c331e6f-initiate-payment-api
-		$postData = wp_parse_args(
+		$post_data = wp_parse_args(
 			$this->get_transaction_data_array( $payment ),
 			[
 				'txnid'             => $payment->key . '_' . $payment->get_id(),
@@ -130,7 +130,7 @@ class Gateway extends Core_Gateway {
 			]
 		);
 
-		$response = $easebuzzObj->initiatePaymentAPI( $postData, false );
+		$response = $easebuzz_obj->initiatePaymentAPI( $post_data, false );
 
 		if ( ! isset( $response->status ) ) {
 			throw new Exception( 'An error occurred while creating the payment link. Kindly retry after some time.' );
@@ -138,18 +138,18 @@ class Gateway extends Core_Gateway {
 
 		if ( 0 === $response->status ) {
 			if ( isset( $response->error_desc ) ) {
-				throw new Exception( $response->error_desc );
+				throw new Exception( esc_html( $response->error_desc ) );
 			} else {
-				throw new Exception( $response->data );
+				throw new Exception( esc_html( $response->data ) );
 			}
 			return;
 		}
 
-		$accesskey = ( $response->status === 1 ) ? $response->data : null;
+		$access_key = ( 1 === $response->status ) ? $response->data : null;
 
-		$payment_link = EasebuzzLib\_getURL( $this->env ) . 'pay/' . $accesskey;
+		$payment_link = EasebuzzLib\_getURL( $this->env ) . 'pay/' . $access_key;
 
-		$payment->set_transaction_id( $postData['txnid'] );
+		$payment->set_transaction_id( $post_data['txnid'] );
 		$payment->set_action_url( $payment_link );
 	}
 
@@ -164,22 +164,24 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 
+		$post_key = filter_input( \INPUT_POST, 'key', \FILTER_SANITIZE_SPECIAL_CHARS );
+
 		$status_check_action = false;
-		if ( empty( $_POST['key'] ) ) {
+		if ( empty( $post_key ) ) {
 			$status_check_action = true;
 		}
 
 		$merchant_key  = $this->config->merchant_key;
 		$merchant_salt = $this->config->merchant_salt;
 
-		$easebuzzObj = new Easebuzz( $merchant_key, $merchant_salt, $this->env );
+		$easebuzz_obj = new Easebuzz( $merchant_key, $merchant_salt, $this->env );
 
 		if ( $status_check_action ) {
 
-			$postData          = $this->get_transaction_data_array( $payment );
-			$postData['txnid'] = $payment->get_transaction_id();
+			$post_data          = $this->get_transaction_data_array( $payment );
+			$post_data['txnid'] = $payment->get_transaction_id();
 
-			$response = $easebuzzObj->transactionAPI( $postData );
+			$response = $easebuzz_obj->transactionAPI( $post_data );
 			$response = json_decode( $response, true );
 
 			if ( empty( $response ) ) {
@@ -188,21 +190,21 @@ class Gateway extends Core_Gateway {
 
 			// Error from Easebuzz PHP Library.
 			if ( 0 === $response['status'] ) {
-				throw new Exception( $response['data'] );
+				throw new Exception( esc_html( $response['data'] ) );
 			}
 
 			// Error from Easebuzz API Call.
 			if ( ! $response['status'] ) {
-				throw new Exception( $response['msg'] );
+				throw new Exception( esc_html( $response['msg'] ) );
 			}
 
 			$data = $response['msg'];
 		} else {
-			$result = $easebuzzObj->easebuzzResponse( $_POST );
+			$result = $easebuzz_obj->easebuzzResponse( $_POST );
 			$result = json_decode( $result, true );
 
 			if ( 0 === $result['status'] ) {
-				throw new Exception( $result['data'] );
+				throw new Exception( esc_html( $result['data'] ) );
 			}
 			$data = $result['data'];
 		}
@@ -243,13 +245,13 @@ class Gateway extends Core_Gateway {
 			$amount .= '0';
 		}
 
-		$postData = [
+		$post_data = [
 			'amount' => $amount,
 			'email'  => $email,
 			'phone'  => $phone,
 		];
 
-		return $postData;
+		return $post_data;
 	}
 
 	/**
@@ -257,7 +259,7 @@ class Gateway extends Core_Gateway {
 	 *
 	 * @param Refund $refund Refund.
 	 * @return void
-	 * @throws \Exception Throws exception on unknown resource type.
+	 * @throws Exception Throws exception on unknown resource type.
 	 */
 	public function create_refund( Refund $refund ) {
 		$amount         = $refund->get_amount();
@@ -265,20 +267,20 @@ class Gateway extends Core_Gateway {
 
 		$merchant_key  = $this->config->merchant_key;
 		$merchant_salt = $this->config->merchant_salt;
-		$easebuzzObj   = new Easebuzz( $merchant_key, $merchant_salt, $this->env );
+		$easebuzz_obj  = new Easebuzz( $merchant_key, $merchant_salt, $this->env );
 
-		$postData                  = $this->get_transaction_data_array( $refund->get_payment() );
-		$postData['txnid']         = $transaction_id;
-		$postData['refund_amount'] = $amount->number_format( null, '.', '' );
+		$post_data                  = $this->get_transaction_data_array( $refund->get_payment() );
+		$post_data['txnid']         = $transaction_id;
+		$post_data['refund_amount'] = $amount->number_format( null, '.', '' );
 
-		$response = json_decode( $easebuzzObj->refundAPI( $postData ), false );
+		$response = json_decode( $easebuzz_obj->refundAPI( $post_data ), false );
 
 		if ( ! isset( $response->status ) ) {
 			throw new Exception( 'An error occurred while initiating refund.' );
 		}
 
 		if ( ! $response->status ) {
-			throw new Exception( $response->reason );
+			throw new Exception( esc_html( $response->reason ) );
 		}
 
 		if ( ! isset( $response->refund_id ) ) {

@@ -123,9 +123,9 @@ class Listener {
 		exit;
 	}
 
-	private static function verify_webhook_signature( $post_body, $object ) {
+	private static function verify_webhook_signature( $post_body, $kp_object ) {
 		$razorpay_integration = new Integration();
-		$config               = $razorpay_integration->get_config( $object->get_config_id() );
+		$config               = $razorpay_integration->get_config( $kp_object->get_config_id() );
 
 		$webhook_secret = $config->webhook_secret;
 
@@ -138,7 +138,7 @@ class Listener {
 					$webhook_secret
 				);
 			} catch ( Errors\SignatureVerificationError $e ) {
-				$object->add_note( 'Webhook Error: ' . $e->getMessage() );
+				$kp_object->add_note( 'Webhook Error: ' . $e->getMessage() );
 				http_response_code( 400 );
 				return false;
 			}

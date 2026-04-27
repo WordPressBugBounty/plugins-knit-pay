@@ -97,16 +97,17 @@ class Gateway extends Core_Gateway {
 		}
 		
 		if ( filter_has_var( INPUT_GET, 'ErrorCode' ) ) {
-			$payment->add_note( 'Error Code: ' . \sanitize_text_field( $_GET['ErrorCode'] ) );
+			$error_code = filter_input( INPUT_GET, 'ErrorCode', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			$payment->add_note( 'Error Code: ' . $error_code );
 			$payment->set_status( PaymentStatus::FAILURE );
 			return;
 		}
-		
+
 		$payment_details = $this->api->get_payment_details( $payment->get_transaction_id() );
-		
-		if ( isset( $payment_details->Status ) ) {
-			$payment->set_status( Statuses::transform( $payment_details->Status ) );
-			$payment->add_note( '<strong>CBK Response:</strong><br><pre>' . print_r( $payment_details, true ) . '</pre><br>' );
+
+		if ( isset( $payment_details['Status'] ) ) {
+			$payment->set_status( Statuses::transform( $payment_details['Status'] ) );
+			$payment->add_note( '<strong>CBK Response:</strong><br><pre>' . wp_json_encode( $payment_details, JSON_PRETTY_PRINT ) . '</pre><br>' );
 		}
 	}
 }

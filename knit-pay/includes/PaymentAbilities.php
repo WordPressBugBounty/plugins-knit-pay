@@ -81,11 +81,11 @@ function knit_pay_register_abilities() {
 	wp_register_ability(
 		'knit-pay/get-payment',
 		[
-			'label'       => __( 'Get Payment', 'knit-pay-lang' ),
-			'description' => __( 'Retrieves a Knit Pay payment by its ID and returns its current status and details. Use this after sharing the payment link with a customer to check whether they have completed, failed, or not yet attempted the payment. Common status values: open (not yet paid), success (payment completed), failure (payment failed), cancelled (customer cancelled).', 'knit-pay-lang' ),
-			'category'    => 'knit-pay',
+			'label'               => __( 'Get Payment', 'knit-pay-lang' ),
+			'description'         => __( 'Retrieves a Knit Pay payment by its ID and returns its current status and details. Use this after sharing the payment link with a customer to check whether they have completed, failed, or not yet attempted the payment. Common status values: open (not yet paid), success (payment completed), failure (payment failed), cancelled (customer cancelled).', 'knit-pay-lang' ),
+			'category'            => 'knit-pay',
 
-			'input_schema' => [
+			'input_schema'        => [
 				'type'       => 'object',
 				'required'   => [ 'id' ],
 				'properties' => [

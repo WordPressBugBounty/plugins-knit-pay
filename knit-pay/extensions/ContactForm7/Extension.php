@@ -103,19 +103,21 @@ class Extension extends AbstractPluginIntegration {
 	public function install_dependency_message( $cf7 ) {
 		$wpcf7_redirect_base = 'wpcf7-redirect/wpcf7-redirect.php';
 		$plugin_link         = '<a href="https://wordpress.org/plugins/wpcf7-redirect/" target="_blank">Redirection For Contact Form 7</a>';
-		
-		$error = '<h2>For Knit Pay to work with Contact Form 7, %s plugin is required. Please %s to continue!</h2>';
-				
+
 		$plugins = get_plugins();
 		if ( isset( $plugins[ $wpcf7_redirect_base ] ) ) {
 			$url  = esc_url( wp_nonce_url( admin_url( 'plugins.php?action=activate&plugin=' . $wpcf7_redirect_base ), 'activate-plugin_' . $wpcf7_redirect_base ) );
-			$link = '<a href="' . $url . '">' . __( 'activate it', 'knit-pay-lang' ) . '</a>';
+			$link = '<a href="' . $url . '">' . esc_html__( 'activate it', 'knit-pay-lang' ) . '</a>';
 		} else {
 			$url  = esc_url( wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=wpcf7-redirect' ), 'install-plugin_wpcf7-redirect' ) );
-			$link = '<a href="' . $url . '">' . __( 'install it', 'knit-pay-lang' ) . '</a>';
+			$link = '<a href="' . $url . '">' . esc_html__( 'install it', 'knit-pay-lang' ) . '</a>';
 		}
-						  
-		echo '<p>' . sprintf( $error, $plugin_link, $link ) . '</p>';
+
+		$error = '<h2>For Knit Pay to work with Contact Form 7, %s plugin is required. Please %s to continue!</h2>';
+
+		$message = sprintf( $error, $plugin_link, $link );
+
+		echo '<p>' . wp_kses_post( $message ) . '</p>';
 	}
 
 	/**

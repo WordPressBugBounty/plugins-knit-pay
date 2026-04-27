@@ -359,7 +359,17 @@ class Integration extends IntegrationOAuthClient {
 						<li><a target='_blank' href='" . admin_url( 'plugin-install.php?s=Wp%2520Social%2520Login%2520and%2520Register%2520Social%2520Counter%2520roxnor&tab=search&type=term' ) . "'>Wp Social</a></li>
 						</ol>";
 
-						echo $message;
+						echo wp_kses(
+							$message,
+							[
+								'ol' => [],
+								'li' => [],
+								'a'  => [
+									'href'   => [],
+									'target' => [],
+								],
+							]
+						);
 					},
 				];
 			}
@@ -549,8 +559,11 @@ class Integration extends IntegrationOAuthClient {
 			return;
 		}
 
-		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-		$content = file_get_contents( 'https://api.razorpay.com/.well-known/apple-developer-merchantid-domain-association' );
+		$remote_response = wp_safe_remote_get( 'https://api.razorpay.com/.well-known/apple-developer-merchantid-domain-association' );
+		if ( is_wp_error( $remote_response ) ) {
+			return;
+		}
+		$content = wp_remote_retrieve_body( $remote_response );
 
 		if ( false === $content ) {
 			return;

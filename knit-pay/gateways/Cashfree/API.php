@@ -127,7 +127,7 @@ class API {
 
 		$result = json_decode( $result );
 		if ( isset( $result->message ) ) {
-			throw new Exception( $result->message );
+			throw new Exception( esc_html( $result->message ) );
 		}
 
 		return $result;

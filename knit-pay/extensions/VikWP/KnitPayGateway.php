@@ -22,7 +22,7 @@ use Pronamic\WordPress\Pay\Plugin;
  * @since   8.96.3.0
  */
 
-defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+defined( 'ABSPATH' ) || die( 'No script kiddies please!' );
 
 JLoader::import( 'adapter.payment.payment' );
 
@@ -38,10 +38,6 @@ class KnitPayGateway extends JPayment {
 	 * @var string
 	 */
 	private $payment_method;
-	
-	public function __construct( $alias, $order, $params = [] ) {
-		parent::__construct( $alias, $order, $params );
-	}
 
 	// Error message in case of failed payment is not getting displayed without this message.
 	protected function complete( $res = 0 ) {
@@ -78,10 +74,10 @@ class KnitPayGateway extends JPayment {
 		switch ( $this->getCaller() ) {
 			case 'vikbooking':
 				return sprintf( '<code>%s</code>', '{room_name}' );
-				break;
+
 			case 'vikrentcar':
 				return sprintf( '<code>%s</code>', '{vehicle_name}' );
-				break;
+
 			default:
 				return '';
 		}
@@ -178,12 +174,11 @@ class KnitPayGateway extends JPayment {
 			case Core_Statuses::EXPIRED:
 				$status->appendLog( 'Payment Cancelled.' );
 				return false;
-				break;
+
 			case Core_Statuses::FAILURE:
 				$status->appendLog( 'Payment Failed.' );
 				return false;
 				
-				break;
 			case Core_Statuses::SUCCESS:
 				$status->appendLog( 'Payment is Successful. Knit Pay Payment ID: ' . $payment->get_id() . '. Transaction ID: ' . $payment->get_transaction_id() );
 				$status->verified();

@@ -31,7 +31,9 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 	 */
 	public function get_action_fields() {
 		$this->payment_method = 'knit_pay';
-		
+
+		$settings_url = add_query_arg( 'page', 'pronamic_pay_settings', get_admin_url( null, 'admin.php' ) );
+
 		return array_merge(
 			[
 				'save_entry_recommendation' => [
@@ -78,7 +80,11 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 					'name'        => 'general-alert',
 					'type'        => 'notice',
 					'label'       => __( 'Redirection Pages!', 'knit-pay-lang' ),
-					'sub_title'   => __( 'Redirection pages can be configured on the <a href="' . add_query_arg( 'page', 'pronamic_pay_settings', get_admin_url( null, 'admin.php' ) ) . '" target="_blank">"Knit Pay >> Settings"</a> page.', 'knit-pay-lang' ),
+					'sub_title'   => sprintf(
+						/* translators: %s: URL of the Knit Pay settings page */
+						__( 'Redirection pages can be configured on the <a href="%s" target="_blank">"Knit Pay >> Settings"</a> page.', 'knit-pay-lang' ),
+						esc_url( $settings_url )
+					),
 					'placeholder' => '',
 					'class'       => 'field-notice-alert',
 				],
@@ -87,7 +93,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 					'type'   => 'section',
 					'title'  => __( 'Pricing Details (Required)', 'knit-pay-lang' ),
 					'class'  => '',
-					'footer' => __( '<div class="qs-col qs-col-12">' . $this->get_formatted_mail_tags() . '</div>', 'knit-pay-lang' ),
+					'footer' => '<div class="qs-col qs-col-12">' . $this->get_formatted_mail_tags() . '</div>',
 					'fields' => [
 						'currency' => [
 							'name'        => 'currency',
@@ -113,7 +119,7 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 					'name'   => 'user_details',
 					'type'   => 'section',
 					'title'  => __( 'User details (Required for some payment gateways)', 'knit-pay-lang' ),
-					'footer' => __( '<div>' . $this->get_formatted_mail_tags() . '</div>', 'knit-pay-lang' ),
+					'footer' => '<div>' . $this->get_formatted_mail_tags() . '</div>',
 					'class'  => '',
 					'fields' => [
 						'optional_fields_alert' => [

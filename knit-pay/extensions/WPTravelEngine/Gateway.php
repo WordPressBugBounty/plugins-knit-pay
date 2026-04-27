@@ -119,15 +119,14 @@ class Gateway {
 			$payment->set_meta( 'wte_payment_id', $wte_payment_id );
 			$payment->save();
 
-			wp_redirect( $payment->get_pay_redirect_url() );
+			wp_safe_redirect( $payment->get_pay_redirect_url() );
 			exit;
 		} catch ( \Exception $e ) {
 			WTE()->notices->add( Plugin::get_default_error_message(), 'error' );
 			WTE()->notices->add( $e->getMessage(), 'error' );
-			wp_redirect( get_permalink( get_option( 'wp_travel_engine_wp-travel-engine-checkout_page_id' ) ) );
+			wp_safe_redirect( get_permalink( get_option( 'wp_travel_engine_wp-travel-engine-checkout_page_id' ) ) );
 			exit;
 		}
-		return;
 	}
 
 	public static function instance() {

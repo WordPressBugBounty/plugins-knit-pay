@@ -75,7 +75,7 @@ class Gateway extends Core_Gateway {
 		// Show error If Knit Pay Pay not available after 30 Jun 2024.
 		if ( ! defined( 'KNIT_PAY_PRO' ) && ( new DateTime() > new DateTime( '2024-06-30' ) ) ) {
 			$error = 'Support for PayU has ended. Please contact the website admin to fix the configuration.';
-			throw new \Exception( $error );
+			throw new \Exception( esc_html( $error ) );
 		}
 
 		if ( '0.00' === $payment->get_total_amount()->number_format( null, '.', '' ) ) {
@@ -88,7 +88,7 @@ class Gateway extends Core_Gateway {
 		$payment_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 		if ( isset( $payment_currency ) && 'INR' !== $payment_currency ) {
 			$currency_error = 'PayU only accepts payments in Indian Rupees. If you are a store owner, kindly activate INR currency for ' . $payment->get_source() . ' plugin.';
-			throw new \Exception( $currency_error );
+			throw new \Exception( esc_html( $currency_error ) );
 		}
 
 		$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
@@ -108,7 +108,7 @@ class Gateway extends Core_Gateway {
 
 		$transaction = $this->client->verify_payment( $payment->get_transaction_id() );
 		if ( $transaction->txnid !== $payment->get_transaction_id() ) {
-			$payment->add_note( 'Something went wrong: ' . print_r( $transaction, true ) );
+			$payment->add_note( 'Something went wrong: ' . wp_json_encode( $transaction ) );
 			return;
 		}
 
@@ -117,13 +117,15 @@ class Gateway extends Core_Gateway {
 
 			if ( Statuses::SUCCESS === $transaction_status ) {
 				$payment->set_transaction_id( $transaction->mihpayid );
+				// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- PayU API returns the property as `error_Message`; it is external data and cannot be renamed.
 			} elseif ( isset( $transaction->error_Message ) ) {
 				$failure_reason = new FailureReason();
 				$failure_reason->set_message( $transaction->error_Message );
 				$payment->set_failure_reason( $failure_reason );
+				// phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			}
 
-			$note = '<strong>PayU Transaction Details:</strong><br><pre>' . print_r( $transaction, true ) . '</pre>';
+			$note = '<strong>PayU Transaction Details:</strong><br><pre>' . wp_json_encode( $transaction ) . '</pre>';
 
 			$payment->set_status( Statuses::transform( $transaction_status ) );
 			$payment->add_note( $note );
@@ -275,7 +277,7 @@ class Gateway extends Core_Gateway {
 				'transaction_fees_fix'        => $transaction_fees_fix,
 			];
 		} catch ( \Exception $e ) {
-			throw new Exception( 'Invalid Transaction Fees. ' . $e->getMessage() );
+			throw new Exception( esc_html( 'Invalid Transaction Fees. ' . $e->getMessage() ) );
 		}
 	}
 

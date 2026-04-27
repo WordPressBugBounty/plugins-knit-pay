@@ -26,7 +26,7 @@ class Gateway extends Core_Gateway {
 
 		$this->set_method( self::METHOD_HTML_FORM );
 		
-		$this->features = Utility::getFeatures();
+		$this->features = Utility::get_features();
 	}
 
 	/**
@@ -44,7 +44,7 @@ class Gateway extends Core_Gateway {
 			->get_alphabetic_code();
 		if ( isset( $payment_currency ) && 'INR' !== $payment_currency ) {
 			$currency_error = 'Fiserv only accepts payments in Indian Rupees. If you are a store owner, kindly activate INR currency for ' . $payment->get_source() . ' plugin.';
-			throw new \Exception( $currency_error );
+			throw new \Exception( esc_html( $currency_error ) );
 		}
 
 		$payment->set_transaction_id( $payment->get_id() );
@@ -102,10 +102,10 @@ class Gateway extends Core_Gateway {
 		
 		$post_data = [];
 		
-		$getPost = wp_unslash( $_POST );
+		$get_post = wp_unslash( $_POST );
 		
-		if ( ! empty( $getPost ) ) {
-			foreach ( $getPost as $key => $value ) {
+		if ( ! empty( $get_post ) ) {
+			foreach ( $get_post as $key => $value ) {
 				$post_data[ $key ] = htmlentities( $value, ENT_QUOTES );
 			}
 		} else {
@@ -124,10 +124,10 @@ class Gateway extends Core_Gateway {
 		$sharedsecret = $this->config->sharedsecret;
 		$storename    = $this->config->storename;
 		
-		$payment->add_note( '<strong>Fiserv Response:</strong><br><pre>' . print_r( $post_data, true ) . '</pre><br>' );
+		$payment->add_note( '<strong>Fiserv Response:</strong><br><pre>' . wp_json_encode( $post_data, JSON_PRETTY_PRINT ) . '</pre><br>' );
 		
-		$hashValue = sha1( bin2hex( $sharedsecret . $approvalcode . $chargetotal . $currency . $txndatetime . $storename ) );
-		if ( $hashValue !== $post_data['response_hash'] ) {
+		$hash_value = sha1( bin2hex( $sharedsecret . $approvalcode . $chargetotal . $currency . $txndatetime . $storename ) );
+		if ( $hash_value !== $post_data['response_hash'] ) {
 			throw new \Exception( 'Hash missmatch.' );
 		}
 		
@@ -138,37 +138,37 @@ class Gateway extends Core_Gateway {
 	}
 	
 	private function get_feature( $type ) {
-		$resellerFeatures = $this->features['ind']['icici']; // TODO remove hardcode
+		$reseller_features = $this->features['ind']['icici']; // TODO remove hardcode
 		
 		switch ( $type ) {
 			case 'customer':
-				$return = $resellerFeatures['customer_detail_title'];
+				$return = $reseller_features['customer_detail_title'];
 				break;
 			case 'customer_detail':
-				$return = $resellerFeatures['customer_detail'];
+				$return = $reseller_features['customer_detail'];
 				break;
 			case 'contact_support_title':
-				$return = $resellerFeatures['contact_support_title'];
+				$return = $reseller_features['contact_support_title'];
 				break;
 			case 'contact_support':
-				$return = $resellerFeatures['contact_support'];
+				$return = $reseller_features['contact_support'];
 				break;
 			case 'connecturl':
 				if ( self::MODE_TEST === $this->config->mode ) {
-					$return = $resellerFeatures['testurl'];
+					$return = $reseller_features['testurl'];
 				} else {
-					$return = $resellerFeatures['produrl'];
+					$return = $reseller_features['produrl'];
 				}
 				break;
 			case 'apiurl':
 				if ( self::MODE_TEST === $this->config->mode ) {
-					$return = $resellerFeatures['apiurl'];
+					$return = $reseller_features['apiurl'];
 				} else {
-					$return = $resellerFeatures['prodapiurl'];
+					$return = $reseller_features['prodapiurl'];
 				}
 				break;
 			case 'refunds':
-				$return = $resellerFeatures['refunds'];
+				$return = $reseller_features['refunds'];
 				break;
 			default:
 				$return = '';
@@ -177,8 +177,8 @@ class Gateway extends Core_Gateway {
 	}
 	
 	private function create_hash( $txndatetime, $charge_total, $currency ) {       
-		$stringToHash = $this->config->storename . $txndatetime . $charge_total . $currency . $this->config->sharedsecret;
-		$ascii        = bin2hex( $stringToHash );
+		$string_to_hash = $this->config->storename . $txndatetime . $charge_total . $currency . $this->config->sharedsecret;
+		$ascii          = bin2hex( $string_to_hash );
 		
 		return sha1( $ascii );
 	}

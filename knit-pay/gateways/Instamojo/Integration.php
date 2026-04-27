@@ -113,15 +113,15 @@ class Integration extends AbstractGatewayIntegration {
 			'type'     => 'custom',
 			'title'    => 'Steps to Integrate Instamojo',
 			'callback' => function () { 
-				echo '<p>' . __(
+				echo '<p>' . esc_html__(
 					'Instamojo is a free Payment Gateway for 12,00,000+ Businesses in India. There is no setup or annual fee. Just pay a transaction fee of 2% + ₹3 for the transactions. Instamojo accepts Debit Cards, Credit Cards, Net Banking, UPI, Wallets, and EMI.',
-					'knit-pay'
-				) . '</p><p><strong>' . __( 'Steps to Integrate Instamojo', 'knit-pay-lang' ) . '</strong></p>' .
+					'knit-pay-lang'
+				) . '</p><p><strong>' . esc_html__( 'Steps to Integrate Instamojo', 'knit-pay-lang' ) . '</strong></p>' .
 
 				'<ol><li>Some features may not work with the old Instamojo account! We
                     recommend you create a new account. Sign up process will hardly
                     take 10-15 minutes.<br />
-                    <br /> <a class="button button-primary" target="_blank" href="' . $this->get_url() . 'help-signup"
+                    <br /> <a class="button button-primary" target="_blank" href="' . esc_url( $this->get_url() . 'help-signup' ) . '"
                      role="button"><strong>Sign Up on Instamojo Live</strong></a>
                     </li>
                     <br />
@@ -158,7 +158,7 @@ class Integration extends AbstractGatewayIntegration {
 
                     </ol>' .
 					'For more details about Instamojo service and details about transactions, you need to access Instamojo dashboard. <br />
-                    <a target="_blank" href="' . $this->get_url() . 'know-more">Access Instamojo</a>';
+                    <a target="_blank" href="' . esc_url( $this->get_url() . 'know-more' ) . '">Access Instamojo</a>';
 			},
 		];
 

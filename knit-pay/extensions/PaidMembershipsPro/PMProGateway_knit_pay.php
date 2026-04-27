@@ -19,6 +19,14 @@ use KnitPay\Extensions\PaidMembershipsPro\Helper;
  */
 defined( 'ABSPATH' ) || exit();
 
+/**
+ * PMProGateway_knit_pay class
+ *
+ * The class name must match PMPro core's dynamic instantiation pattern
+ * (PMProGateway_ + gateway name), so we cannot rename it to satisfy
+ * PEAR naming conventions without breaking PMPro integration.
+ */
+// phpcs:ignore PEAR.NamingConventions.ValidClassName.Invalid
 class PMProGateway_knit_pay extends PMProGateway {
 
 
@@ -49,7 +57,6 @@ class PMProGateway_knit_pay extends PMProGateway {
 		$this->gateway = $gateway;
 		$this->title   = __( 'Knit Pay', 'knit-pay-lang' );
 		$this->id      = 'knit_pay';
-		return $this->gateway;
 	}
 
 	/**
@@ -57,7 +64,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 	 *
 	 * @since 1.8
 	 */
-	function init() {
+	public function init() {
 		$this->config_id = self::pmpro_getOption( 'knit_pay_config_id' );
 
 		// make sure knit pay is a gateway option
@@ -86,7 +93,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 	 *
 	 * @since 1.8
 	 */
-	function pmpro_gateways( $gateways ) {
+	public function pmpro_gateways( $gateways ) {
 		if ( empty( $gateways[ $this->id ] ) ) {
 			// TODO: remove hardcode
 			$gateways[ $this->id ] = __( 'Knit Pay', 'knit-pay-lang' );
@@ -100,7 +107,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 	 *
 	 * @since 1.8
 	 */
-	static function getGatewayOptions() {
+	public static function getGatewayOptions() {
 		_deprecated_function( __METHOD__, '8.96.22.0' );
 		$options = [
 			'sslseal',
@@ -126,7 +133,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 	 *
 	 * @since 1.8
 	 */
-	function pmpro_payment_options( $options ) {
+	public function pmpro_payment_options( $options ) {
 		// TODO: Deprecated in PMPro 3.5, remove after Dec 2026.
 		_deprecated_function( __METHOD__, '8.96.22.0' );
 
@@ -139,6 +146,14 @@ class PMProGateway_knit_pay extends PMProGateway {
 		return $options;
 	}
 
+	/**
+	 * Settings form fields.
+	 *
+	 * @param string $form    Existing form HTML.
+	 * @param string $gateway Current gateway.
+	 * @param string $id      Gateway ID.
+	 * @return string
+	 */
 	private static function setting_form( $form, $gateway = 'knit_pay', $id = 'knit_pay' ) {
 		$configurations = Plugin::get_config_select_options( $id );
 		if ( 1 < count( $configurations ) ) {
@@ -169,90 +184,90 @@ class PMProGateway_knit_pay extends PMProGateway {
 		}
 
 		// Title.
-		$form .= '<tr class="gateway gateway_' . $id . '"';
-		if ( $gateway != $id ) {
-			$form .= '	style="display: none;"';
+		$form .= '<tr class="gateway gateway_' . esc_attr( $id ) . '"';
+		if ( $gateway !== $id ) {
+			$form .= ' style="display: none;"';
 		}
 		$form .= '>
-            <th scope="row" valign="top"><label for="knit_pay_title">Title:</label>	</th>
+            <th scope="row" valign="top"><label for="knit_pay_title">' . esc_html__( 'Title:', 'knit-pay-lang' ) . '</label></th>
             <td>
-                <input type="text" id="knit_pay_title" name="knit_pay_title"	value="' . $title . '" class="regular-text code" />
-            	<p class="description">' . __( 'Payment Method title visible on the payment confirmation page and invoice page.', 'knit-pay-lang' ) . '</p>
+                <input type="text" id="knit_pay_title" name="knit_pay_title" value="' . esc_attr( $title ) . '" class="regular-text code" />
+            	<p class="description">' . esc_html__( 'Payment Method title visible on the payment confirmation page and invoice page.', 'knit-pay-lang' ) . '</p>
             </td>
         </tr>';
 
 		// Configuration.
-		$form .= '<tr class="gateway gateway_' . $id . '"';
-		if ( $gateway != $id ) {
-			$form .= '	style="display: none;"';
+		$form .= '<tr class="gateway gateway_' . esc_attr( $id ) . '"';
+		if ( $gateway !== $id ) {
+			$form .= ' style="display: none;"';
 		}
 		$form                       .= '>
-            <th scope="row" valign="top"><label for="knit_pay_config_id">Configuration:</label></th>
+            <th scope="row" valign="top"><label for="knit_pay_config_id">' . esc_html__( 'Configuration:', 'knit-pay-lang' ) . '</label></th>
         	<td><select id="knit_pay_config_id" name="knit_pay_config_id[]" multiple size="8">';
 		$knit_pay_selected_config_id = self::pmpro_getOption( 'knit_pay_config_id' );
 		if ( is_string( $knit_pay_selected_config_id ) ) {
 			$knit_pay_selected_config_id = [ $knit_pay_selected_config_id ];
 		}
 		foreach ( $configurations as $key => $configuration ) {
-			$selected = in_array( $key, $knit_pay_selected_config_id ) ? 'selected ' : '';
-			$form    .= '<option value="' . $key . '"' . $selected . '>' . $configuration . '</option>';
+			$selected = in_array( (string) $key, array_map( 'strval', (array) $knit_pay_selected_config_id ), true ) ? 'selected ' : '';
+			$form    .= '<option value="' . esc_attr( $key ) . '"' . esc_attr( $selected ) . '>' . esc_html( $configuration ) . '</option>';
 		}
 		$form .= '</select>
-        		<p class="description">' . __( 'Configurations can be created in Knit Pay gateway configurations page at <a href="' . admin_url( 'edit.php?post_type=pronamic_gateway' ) . '">"Knit Pay >> Configurations"</a>.', 'knit-pay-lang' ) . '</p>
-				<p class="description">' . __( 'Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.', 'knit-pay-lang' ) . '</p>
+        		<p class="description">' . esc_html__( 'Configurations can be created in Knit Pay gateway configurations page at', 'knit-pay-lang' ) . ' <a href="' . esc_url( admin_url( 'edit.php?post_type=pronamic_gateway' ) ) . '" target="_blank">"Knit Pay >> ' . esc_html__( 'Configurations', 'knit-pay-lang' ) . '"</a>.</p>
+				<p class="description">' . esc_html__( 'Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.', 'knit-pay-lang' ) . '</p>
         	</td>
         </tr>';
 
 		// Payment Description.
-		$form .= '<tr class="gateway gateway_' . $id . '"';
-		if ( $gateway != $id ) {
-			$form .= '	style="display: none;"';
+		$form .= '<tr class="gateway gateway_' . esc_attr( $id ) . '"';
+		if ( $gateway !== $id ) {
+			$form .= ' style="display: none;"';
 		}
 		$form .= '>
-            <th scope="row" valign="top"><label for="knit_pay_payment_description">Payment Description:</label>	</th>
+            <th scope="row" valign="top"><label for="knit_pay_payment_description">' . esc_html__( 'Payment Description:', 'knit-pay-lang' ) . '</label></th>
             <td>
-                <input type="text" id="knit_pay_payment_description" name="knit_pay_payment_description"	value="' . $payment_description . '" class="regular-text code" />
-            	<p class="description">' . sprintf( __( 'Available tags: %s', 'knit-pay-lang' ), sprintf( '<code>%s</code>', '{order_id}, {code}, {invoice_id}, {membership_name}' ) ) . '</p>
+                <input type="text" id="knit_pay_payment_description" name="knit_pay_payment_description" value="' . esc_attr( $payment_description ) . '" class="regular-text code" />
+            	<p class="description">' . esc_html__( 'Available tags:', 'knit-pay-lang' ) . ' <code>{order_id}, {code}, {invoice_id}, {membership_name}</code></p>
             </td>
         </tr>';
 
 		// Hide Billing Address.
 		$hide_options = [
-			'0' => 'No',
-			'1' => 'Yes',
+			'0' => __( 'No', 'knit-pay-lang' ),
+			'1' => __( 'Yes', 'knit-pay-lang' ),
 		];
-		$form        .= '<tr class="gateway gateway_' . $id . '"';
-		if ( $gateway != $id ) {
-			$form .= '	style="display: none;"';
+		$form        .= '<tr class="gateway gateway_' . esc_attr( $id ) . '"';
+		if ( $gateway !== $id ) {
+			$form .= ' style="display: none;"';
 		}
 		$form .= '>
-            <th scope="row" valign="top"><label for="knit_pay_hide_billing_address">Hide Billing Address Fields:</label></th>
+            <th scope="row" valign="top"><label for="knit_pay_hide_billing_address">' . esc_html__( 'Hide Billing Address Fields:', 'knit-pay-lang' ) . '</label></th>
         	<td><select id="knit_pay_hide_billing_address" name="knit_pay_hide_billing_address">';
 		foreach ( $hide_options as $key => $hide_option ) {
-			$form .= '<option value="' . $key . '"' . selected( $hide_billing_address, $key, false ) . '>' . $hide_option . '</option>';
+			$form .= '<option value="' . esc_attr( $key ) . '"' . selected( $hide_billing_address, $key, false ) . '>' . esc_html( $hide_option ) . '</option>';
 		}
-		$form .= '	</select>
-        		<p class="description">' . __( 'Hide not required billing address fields on the checkout page.', 'knit-pay-lang' ) . '</p>
+		$form .= '</select>
+        		<p class="description">' . esc_html__( 'Hide not required billing address fields on the checkout page.', 'knit-pay-lang' ) . '</p>
         	</td>
         </tr>';
 
 		// Hide Phone Field.
 		$hide_options = [
-			'0' => 'No',
-			'1' => 'Yes',
+			'0' => __( 'No', 'knit-pay-lang' ),
+			'1' => __( 'Yes', 'knit-pay-lang' ),
 		];
-		$form        .= '<tr class="gateway gateway_' . $id . '"';
-		if ( $gateway != $id ) {
-			$form .= '	style="display: none;"';
+		$form        .= '<tr class="gateway gateway_' . esc_attr( $id ) . '"';
+		if ( $gateway !== $id ) {
+			$form .= ' style="display: none;"';
 		}
 		$form .= '>
-            <th scope="row" valign="top"><label for="knit_pay_hide_phone">Hide Phone Field:</label></th>
+            <th scope="row" valign="top"><label for="knit_pay_hide_phone">' . esc_html__( 'Hide Phone Field:', 'knit-pay-lang' ) . '</label></th>
         	<td><select id="knit_pay_hide_phone" name="knit_pay_hide_phone">';
 		foreach ( $hide_options as $key => $hide_option ) {
-			$form .= '<option value="' . $key . '"' . selected( $hide_phone_field, $key, false ) . '>' . $hide_option . '</option>';
+			$form .= '<option value="' . esc_attr( $key ) . '"' . selected( $hide_phone_field, $key, false ) . '>' . esc_html( $hide_option ) . '</option>';
 		}
-		$form .= '	</select>
-        		<p class="description">' . __( 'Hide Phone field on the checkout page.', 'knit-pay-lang' ) . '</p>
+		$form .= '</select>
+        		<p class="description">' . esc_html__( 'Hide Phone field on the checkout page.', 'knit-pay-lang' ) . '</p>
         	</td>
         </tr>';
 
@@ -265,25 +280,28 @@ class PMProGateway_knit_pay extends PMProGateway {
 	 *
 	 * @since 1.8
 	 */
-	function pmpro_payment_option_fields( $values, $gateway ) {
+	public function pmpro_payment_option_fields( $values, $gateway ) {
 		// TODO: Deprecated in PMPro 3.5, remove after Dec 2026.
 		_deprecated_function( __METHOD__, '8.96.22.0' );
 
 		// Knit Pay Settings Heading.
 		// TODO add message that recurring payments are not supported.
 		$form  = '';
-		$form .= '<tr class="pmpro_settings_divider gateway gateway_' . $this->id . '"';
+		$form .= '<tr class="pmpro_settings_divider gateway gateway_' . esc_attr( $this->id ) . '"';
 		if ( $gateway !== $this->id ) {
 			$form .= ' style="display: none;"';
 		}
-		$form .= '><td colspan="2">	<hr /><h2 class="title">Knit Pay Settings</h2></td></tr>';
+		$form .= '><td colspan="2">	<hr /><h2 class="title">' . esc_html__( 'Knit Pay Settings', 'knit-pay-lang' ) . '</h2></td></tr>';
 
 		$form .= self::setting_form( $form, $gateway, $this->id );
 
 		// Display Currency Fields.
 		$form .= '<script>window.onload = function() {pmpro_changeGateway();}</script>';
 
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- The HTML string contains <select>/<option>/<script> and inline styles which wp_kses functions strip. All dynamic strings, attributes, and URLs are individually escaped during build-up.
 		echo $form;
+
+		return $form;
 	}
 
 	/**
@@ -312,6 +330,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 					<tbody>
 
 						<?php
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- The form contains <select>/<option>/<script> and inline styles which wp_kses functions strip. All dynamic strings and attributes are individually escaped during build-up.
 						echo self::setting_form( '', 'knit_pay', 'knit_pay' );
 						?>
 
@@ -334,11 +353,13 @@ class PMProGateway_knit_pay extends PMProGateway {
 			'knit_pay_hide_phone',
 		];
 
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Nonce is verified by PMPro core (check_admin_referer) before this gateway hook executes.
 		foreach ( $settings_to_save as $setting ) {
 			if ( isset( $_REQUEST[ $setting ] ) ) {
-				update_option( 'pmpro_' . $setting, sanitize_text_field( $_REQUEST[ $setting ] ) );
+				update_option( 'pmpro_' . $setting, sanitize_text_field( wp_unslash( $_REQUEST[ $setting ] ) ) );
 			}
 		}
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
@@ -346,7 +367,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 	 *
 	 * @since 1.8
 	 */
-	static function pmpro_required_billing_fields( $fields ) {
+	public static function pmpro_required_billing_fields( $fields ) {
 		global $pmpro_required_billing_fields;
 		$fields = $pmpro_required_billing_fields;
 
@@ -372,12 +393,12 @@ class PMProGateway_knit_pay extends PMProGateway {
 	/**
 	 * Instead of change membership levels, send users to Payment Gateway to pay.
 	 *
-	 * @param int          $user_id
-	 * @param \MemberOrder $morder
+	 * @param int          $user_id User ID.
+	 * @param \MemberOrder $morder  Member Order.
 	 *
 	 * @since 1.8
 	 */
-	static function pmpro_checkout_before_change_membership_level( $user_id, $morder ) {
+	public static function pmpro_checkout_before_change_membership_level( $user_id, $morder ) {
 		global $wpdb, $discount_code, $discount_code_id, $knit_pay_redirect_url;
 
 		// if no order, no need to pay
@@ -390,24 +411,33 @@ class PMProGateway_knit_pay extends PMProGateway {
 
 		// If we have a discount code but not the ID, get the ID.
 		if ( ! empty( $discount_code ) && empty( $discount_code_id ) ) {
-			$discount_code_id = $wpdb->get_var( "SELECT id FROM $wpdb->pmpro_discount_codes WHERE code = '" . esc_sql( $discount_code ) . "' LIMIT 1" );
+			$discount_code_id = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$wpdb->pmpro_discount_codes} WHERE code = %s LIMIT 1", $discount_code ) );
 		}
 		// save discount code use
 		if ( ! empty( $discount_code_id ) ) {
-			$wpdb->query( "INSERT INTO $wpdb->pmpro_discount_codes_uses (code_id, user_id, order_id, timestamp) VALUES('" . $discount_code_id . "', '" . $user_id . "', '" . $morder->id . "', now())" );
+			$wpdb->query(
+				$wpdb->prepare(
+					"INSERT INTO {$wpdb->pmpro_discount_codes_uses} (code_id, user_id, order_id, timestamp) VALUES(%d, %d, %s, %s)",
+					$discount_code_id,
+					$user_id,
+					$morder->id,
+					current_time( 'mysql' )
+				)
+			);
 		}
 
 		do_action( 'pmpro_before_send_to_knit_pay', $user_id, $morder );
 		do_action( 'pmpro_after_checkout', $user_id, $morder );
 
-		wp_redirect( $knit_pay_redirect_url );
+		wp_safe_redirect( $knit_pay_redirect_url );
 		exit();
 	}
 
 	/**
 	 * Send Paramenters to payment gateway to generate the payment link
 	 *
-	 * @param \MemberOrder $morder
+	 * @param \MemberOrder $morder Member Order.
+	 * @return bool
 	 */
 	private function sendToGateway( &$morder ) {
 		// TODO add recuring option
@@ -420,7 +450,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 
 		$this->config_id = self::pmpro_getOption( 'knit_pay_config_id' );
 		if ( is_array( $this->config_id ) ) {
-			$this->config_id = isset( $_POST['knit_pay_config_id'] ) ? sanitize_text_field( $_POST['knit_pay_config_id'] ) : $this->config_id[0];
+			$this->config_id = isset( $_POST['knit_pay_config_id'] ) ? sanitize_text_field( wp_unslash( $_POST['knit_pay_config_id'] ) ) : $this->config_id[0];
 		}
 		// Use default gateway if no configuration has been set.
 		if ( empty( $this->config_id ) ) {
@@ -434,9 +464,6 @@ class PMProGateway_knit_pay extends PMProGateway {
 		if ( ! $gateway ) {
 			return false;
 		}
-
-		// Data.
-		// $data = new PaymentData( $morder );
 
 		/**
 		 * Build payment.
@@ -472,12 +499,18 @@ class PMProGateway_knit_pay extends PMProGateway {
 			$knit_pay_redirect_url = $payment->get_pay_redirect_url();
 			return true;
 		} catch ( \Exception $e ) {
-			$morder->error = __( $e->getMessage(), 'knit-pay-lang' ) . '<br>' . __( Plugin::get_default_error_message(), 'knit-pay-lang' );
+			$morder->error = $e->getMessage() . '<br>' . Plugin::get_default_error_message();
 			return false;
 		}
 	}
 
-	function process( &$order ) {
+	/**
+	 * Process order.
+	 *
+	 * @param \MemberOrder $order Member Order.
+	 * @return bool
+	 */
+	public function process( &$order ) {
 		if ( empty( $order->code ) ) {
 			$order->code = $order->getRandomCode();
 		}
@@ -498,10 +531,15 @@ class PMProGateway_knit_pay extends PMProGateway {
 		$order->status = 'pending';
 		$order->saveOrder();
 
-		return $order->Gateway->sendToGateway( $order );
+		return $order->Gateway->sendToGateway( $order ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Gateway is a property of PMPro's MemberOrder class, cannot rename.
 	}
 
-	function hide_checkout_fields() {
+	/**
+	 * Hide checkout fields.
+	 *
+	 * @return void
+	 */
+	public function hide_checkout_fields() {
 		$style = '';
 
 		if ( self::pmpro_getOption( 'knit_pay_hide_billing_address' ) ) {
@@ -523,21 +561,42 @@ class PMProGateway_knit_pay extends PMProGateway {
 			$style = '<style>' . $style . '{display: none;}</style>';
 		}
 
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $style is composed solely of hardcoded CSS selector strings, containing no user input or dynamic data.
 		echo $style;
 	}
 
+	/**
+	 * Get PMPro option.
+	 *
+	 * @param string $s     Option name.
+	 * @param bool   $force Force.
+	 * @return mixed
+	 */
 	private static function pmpro_getOption( $s, $force = false ) {
 		return get_option( 'pmpro_' . $s, '' );
 	}
 
+	/**
+	 * Save configuration IDs.
+	 *
+	 * @return void
+	 */
 	public function save_config_ids() {
+		// Nonce verification is handled by PMPro core in adminpages/paymentsettings.php
+		// before this hook is called. All PMPro gateway classes follow this pattern.
+
 		if ( isset( $_POST['knit_pay_config_id'] ) ) {
-			$value = array_map( 'sanitize_text_field', $_POST['knit_pay_config_id'] );
+			$value = array_map( 'sanitize_text_field', wp_unslash( (array) $_POST['knit_pay_config_id'] ) );
 
 			update_option( 'pmpro_knit_pay_config_id', $value );
 		}
 	}
 
+	/**
+	 * Checkout boxes for multiple gateways.
+	 *
+	 * @return void
+	 */
 	public function pmpro_checkout_boxes_multi_gateway() {
 		$knit_pay_selected_config_id = self::pmpro_getOption( 'knit_pay_config_id' );
 		if ( ! ( is_array( $knit_pay_selected_config_id ) && count( $knit_pay_selected_config_id ) > 1 ) ) {
@@ -562,9 +621,13 @@ class PMProGateway_knit_pay extends PMProGateway {
 								foreach ( $knit_pay_selected_config_id as $config_id ) {
 									?>
 									<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_field pmpro_form_field-radio-item' ) ); ?> gateway_knit_pay">
-										<input type="radio" id="knit_pay_<?php echo $config_id; ?>" name="gateway" class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_input pmpro_form_input-radio' ) ); ?>" value="knit_pay" onclick="document.getElementById('knit_pay_config_id').value='<?php echo $config_id; ?>'" required />
-										<label for="knit_pay_<?php echo $config_id; ?>" class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_label pmpro_form_label-inline pmpro_clickable' ) ); ?>">
-											<?php esc_html_e( $knit_pay_gateways[ $config_id ], 'knit-pay-lang' ); ?>
+										<input type="radio" id="knit_pay_<?php echo esc_attr( $config_id ); ?>" name="gateway" class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_input pmpro_form_input-radio' ) ); ?>" value="knit_pay" onclick="document.getElementById('knit_pay_config_id').value='<?php echo esc_attr( $config_id ); ?>'" required />
+										<label for="knit_pay_<?php echo esc_attr( $config_id ); ?>" class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_label pmpro_form_label-inline pmpro_clickable' ) ); ?>">
+											<?php
+											if ( isset( $knit_pay_gateways[ $config_id ] ) ) {
+												echo esc_html( $knit_pay_gateways[ $config_id ] );
+											}
+											?>
 										</label>
 									</div> <!-- end pmpro_form_field pmpro_form_field-radio-item -->
 								<?php } ?>

@@ -4,7 +4,7 @@ namespace KnitPay\Gateways\Fiserv;
 
 class Utility {
 
-	public static function getFeatures() {
+	public static function get_features() {
 		// removed installments for india 
 		// enabled card function for all resellers
 		return [

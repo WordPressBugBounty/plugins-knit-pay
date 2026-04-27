@@ -34,7 +34,7 @@ class APIV1 {
 		$sub_url = '/pg/v1/pay';
 
 		$encoded_data = base64_encode( $json_data );
-		$response     = wp_remote_post(
+		$response     = wp_safe_remote_post(
 			$this->api_endpoint . $sub_url,
 			[
 				'headers' => [
@@ -55,7 +55,8 @@ class APIV1 {
 		$result = json_decode( $result );
 
 		if ( ! $result->success ) {
-			throw new Exception( isset( $result->message ) ? $result->message : 'Error Code: ' . $result->code );
+			// translators: %s: Error code returned by PhonePe API.
+			throw new Exception( isset( $result->message ) ? esc_html( $result->message ) : esc_html( sprintf( __( 'Error Code: %s', 'knit-pay-lang' ), $result->code ) ) );
 		}
 
 		return $result->data->instrumentResponse->redirectInfo->url;
@@ -66,7 +67,7 @@ class APIV1 {
 
 		$endpoint = $this->api_endpoint . $sub_url;
 
-		$response = wp_remote_get(
+		$response = wp_safe_remote_get(
 			$endpoint,
 			[
 				'headers' => [
@@ -86,11 +87,11 @@ class APIV1 {
 	}
 
 	private function get_x_verify( $params, $url ) {
-		$phonepeString = $params . $url . $this->salt_key;
+		$phonepe_string = $params . $url . $this->salt_key;
 
-		$hashString = hash( 'sha256', $phonepeString );
+		$hash_string = hash( 'sha256', $phonepe_string );
 
-		$hashedString = $hashString . '###' . $this->salt_index;
-		return $hashedString;
+		$hashed_string = $hash_string . '###' . $this->salt_index;
+		return $hashed_string;
 	}
 }

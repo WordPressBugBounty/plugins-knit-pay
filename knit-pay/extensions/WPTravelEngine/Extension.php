@@ -287,17 +287,16 @@ class Extension extends AbstractPluginIntegration {
 			case Core_Statuses::EXPIRED:
 			case Core_Statuses::FAILURE:
 				// TODO redirect to fail page
-				return WTE_Booking::get_cancel_url( $booking_id, $wte_payment_id, $payment->get_payment_method() );
-
+				$url = WTE_Booking::get_cancel_url( $booking_id, $wte_payment_id, $payment->get_payment_method() );
 				break;
 
 			case Core_Statuses::SUCCESS:
-				return WTE_Booking::get_return_url( $booking_id, $wte_payment_id, $payment->get_payment_method() );
+				$url = WTE_Booking::get_return_url( $booking_id, $wte_payment_id, $payment->get_payment_method() );
 				break;
 
 			case Core_Statuses::AUTHORIZED:
 			case Core_Statuses::OPEN:
-				return home_url( '/' );
+				$url = home_url( '/' );
 		}
 
 		return $url;
