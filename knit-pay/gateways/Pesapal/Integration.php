@@ -60,10 +60,12 @@ class Integration extends KnitPayGatewayIntegration {
 	 * Webhook listener
 	 */
 	public function webhook_listener() {
-		if ( ! filter_has_var( INPUT_GET, 'knit_pay_webhook' ) ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- External payment gateway webhook; no WordPress nonce available.
+		if ( ! isset( $_REQUEST['knit_pay_webhook'] ) ) {
 			return;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- External payment gateway webhook; no WordPress nonce available.
 		$gateway_id = \sanitize_text_field( \wp_unslash( $_REQUEST['knit_pay_webhook'] ) );
 		
 		if ( $this->get_id() !== $gateway_id ) {

@@ -131,7 +131,7 @@ class Helper {
 			}
 			$transaction_fees_fix_amount = new Money( $transaction_fees_fix, $amount->get_currency() );
 		} catch ( \Exception $e ) {
-			throw new \Exception( 'Invalid Transaction Fees. ' . $e->getMessage() );
+			throw new \Exception( esc_html( 'Invalid Transaction Fees. ' . $e->getMessage() ) );
 		}
 
 		$transaction_fees_percentage_divide = ( new Number( 100 ) )->subtract( $transaction_fees_percentage )->divide( new Number( 100 ) );

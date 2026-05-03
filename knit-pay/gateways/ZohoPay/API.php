@@ -82,7 +82,7 @@ class API {
 
 		$result = json_decode( $result );
 		if ( isset( $result->code ) && 0 !== $result->code ) {
-			throw new Exception( $result->message );
+			throw new Exception( esc_html( $result->message ) );
 		}
 
 		return $result;

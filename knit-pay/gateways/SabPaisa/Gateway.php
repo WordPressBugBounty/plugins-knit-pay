@@ -118,7 +118,7 @@ class Gateway extends Core_Gateway {
 			$payment->set_failure_reason( $failure_reason );
 		}
 		$payment->set_status( $payment_status );
-		$payment->add_note( '<strong>Sab Paisa Response:</strong><br><pre>' . print_r( $transaction_status, true ) . '</pre><br>' );
+		$payment->add_note( '<strong>Sab Paisa Response:</strong><br><pre>' . wp_json_encode( $transaction_status, JSON_PRETTY_PRINT ) . '</pre><br>' );
 	}
 
 	private function get_return_url( Payment $payment ) {

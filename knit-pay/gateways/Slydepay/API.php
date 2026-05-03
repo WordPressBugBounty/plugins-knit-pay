@@ -50,9 +50,13 @@ class API {
 			return $result->result->payToken;
 		}
 
+		// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Slydepay API returns camelCase property names.
 		if ( isset( $result->errorMessage ) ) {
-			throw new Exception( trim( $result->errorMessage ) );
+			throw new Exception( esc_html( trim( $result->errorMessage ) ) );
 		}
+		// phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+
+		// Retry after 1 sec.
 		sleep( 1 );
 		return self::create_invoice( $data, --$retry );
 	}
@@ -80,10 +84,13 @@ class API {
 			return $result;
 		}
 
+		// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Slydepay API returns camelCase property names.
 		if ( isset( $result->errorMessage ) ) {
-		    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-			throw new Exception( 'Unable to Check Payment Status: Server Responds ' . print_R( $result->reason, true ) );
+			throw new Exception( esc_html( 'Unable to Check Payment Status: Server Responds ' . wp_json_encode( $result->reason ) ) );
 		}
+		// phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+
+		// Retry after 1 sec.
 		sleep( 1 );
 		return self::check_payment_status( $data, --$retry );
 	}

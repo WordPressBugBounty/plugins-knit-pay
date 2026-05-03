@@ -92,7 +92,7 @@ class Gateway extends Core_Gateway {
 		
 		if ( isset( $payment_status->result ) ) {           
 			$payment->set_status( Statuses::transform( $payment_status->result ) );
-			$payment->add_note( '<strong>Slydepay Response:</strong><br><pre>' . print_r( $payment_status, true ) . '</pre><br>' );
+			$payment->add_note( '<strong>Slydepay Response:</strong><br><pre>' . wp_json_encode( $payment_status, JSON_PRETTY_PRINT ) . '</pre><br>' );
 		}
 	}
 }

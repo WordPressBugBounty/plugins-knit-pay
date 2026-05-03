@@ -237,7 +237,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 						'knitpay_version' => KNITPAY_VERSION,
 					]
 				),
-				'timeout' => 60,
+				'timeout' => 60, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout -- External OAuth server handshake; 60s is needed for reliability.
 			]
 		);
 		$result   = wp_remote_retrieve_body( $response );
@@ -259,10 +259,10 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			wp_safe_redirect( $result->data->auth_url );
 			exit;
 		} elseif ( isset( $result->data ) ) {
-			echo $result->data->message;
+			echo esc_html( $result->data->message );
 			exit;
 		} elseif ( isset( $result->errors ) ) {
-			echo $result->errors[0]->message;
+			echo esc_html( $result->errors[0]->message );
 			exit;
 		}
 	}
@@ -292,11 +292,13 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			return;
 		}
 
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- External OAuth callback; validation relies on `state` parameter from OAuth provider and `gateway` parameter match below.
 		$code                      = isset( $_GET['code'] ) ? sanitize_text_field( $_GET['code'] ) : null;
 		$state                     = isset( $_GET['state'] ) ? sanitize_text_field( $_GET['state'] ) : null;
 		$gateway_id                = isset( $_GET['gateway_id'] ) ? sanitize_text_field( $_GET['gateway_id'] ) : null;
 		$gateway                   = isset( $_GET['gateway'] ) ? sanitize_text_field( $_GET['gateway'] ) : null;
 		$knitpay_oauth_auth_status = isset( $_GET['knitpay_oauth_auth_status'] ) ? sanitize_text_field( $_GET['knitpay_oauth_auth_status'] ) : null;
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		if ( $this->get_id() !== $gateway ) {
 			return;
@@ -323,7 +325,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			self::KNIT_PAY_OAUTH_SERVER_URL . $this->get_id() . '/oauth/token',
 			[
 				'body'    => wp_json_encode( $oauth_token_request_body ),
-				'timeout' => 90,
+				'timeout' => 90, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout -- External OAuth token endpoint exchanging authorization codes; response times can be high.
 			]
 		);
 		$result   = wp_remote_retrieve_body( $response );
@@ -382,7 +384,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 						'knitpay_version' => KNITPAY_VERSION,
 					]
 				),
-				'timeout' => 90,
+				'timeout' => 90, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout -- External OAuth token endpoint exchanging authorization codes; response times can be high.
 			]
 		);
 		$result   = wp_remote_retrieve_body( $response );
@@ -464,15 +466,12 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	}
 
 	protected function configure_webhook( $config_id ) {
-		return;
 	}
 
 	protected function create_basic_connection( $config_id ) {
-		return;
 	}
 
 	protected function save_child_config( $config_id ) {
-		return;
 	}
 
 	/*
@@ -525,9 +524,12 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		}
 		$connection_status .= '</dl>';
 
-		$disconnect_button = '<a id="knit-pay-oauth-disconnect-button" class="button button button-large"
-		role="button">Disconnect</strong></a>
-		<script>
+		$disconnect_button = '<a id="knit-pay-oauth-disconnect-button" class="button button-secondary button-large" role="button"><strong>Disconnect</strong></a>';
+
+		echo wp_kses_post( $connection_status . $disconnect_button );
+
+		// Disconnect Button JS.
+		echo '<script>
 			document.getElementById("knit-pay-oauth-disconnect-button").addEventListener("click", function(event){
 				event.preventDefault();
 				if(!confirm("Are you sure you want to disconnect this connection?")) return;
@@ -535,8 +537,6 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 				document.getElementById("publish").click();
 			});
 		</script>';
-
-		echo $connection_status . $disconnect_button;
 	}
 
 	protected function is_auth_basic_enabled() {
@@ -559,10 +559,15 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			'title'    => 'Sign Up Now',
 			'callback' => function () {
 				printf(
-					__( 'Before proceeding, kindly create an account at %1$s if you don\'t have one already.%2$s', 'knit-pay-lang' ),
-					$this->gateway_name,
-					'<br><br><a class="button button-primary button-large" target="_blank" href="' . $this->get_url() . 'help-signup"
-					 role="button"><strong>Sign Up for ' . $this->gateway_name . '</strong></a>'
+					/* translators: 1: Gateway name */
+					esc_html__( 'Before proceeding, kindly create an account at %1$s if you don\'t have one already.', 'knit-pay-lang' ),
+					esc_html( $this->gateway_name )
+				);
+				echo wp_kses_post(
+					'<br><br><a class="button button-secondary button-large" target="_blank" href="' . esc_url( $this->get_url() . 'help-signup' ) . '"
+					 role="button"><strong>' .
+					/* translators: %s: Gateway name */
+					sprintf( esc_html__( 'Sign Up for %s', 'knit-pay-lang' ), esc_html( $this->gateway_name ) ) . '</strong></a>'
 				);
 			},
 		];
@@ -577,9 +582,17 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			'type'     => 'custom',
 			'title'    => $this->gateway_name . ' Connect',
 			'callback' => function () {
-				echo '<p><h1>' . __( 'How it works?', 'knit-pay-lang' ) . '</h1></p>' .
-				'<p>' . __( 'To provide a seamless integration experience, Knit Pay has introduced ' . $this->gateway_name . ' Platform Connect. Now you can integrate ' . $this->gateway_name . ' in Knit Pay with just a few clicks.', 'knit-pay-lang' ) . '</p>' .
-				'<p>' . __( 'Click on "<strong>Connect with ' . $this->gateway_name . '</strong>" below to initiate the connection.', 'knit-pay-lang' ) . '</p>';
+				echo '<p><h1>' . esc_html__( 'How it works?', 'knit-pay-lang' ) . '</h1></p>';
+
+				/* translators: 1: Gateway name */
+				$introduced_text = __( 'To provide a seamless integration experience, Knit Pay has introduced %1$s Platform Connect. Now you can integrate %1$s in Knit Pay with just a few clicks.', 'knit-pay-lang' );
+				$description     = sprintf( $introduced_text, $this->gateway_name );
+				printf( '<p>%s</p>', esc_html( $description ) );
+
+				/* translators: %s: Gateway name */
+				$click_text  = __( 'Click on "Connect with %s" below to initiate the connection.', 'knit-pay-lang' );
+				$instruction = sprintf( $click_text, $this->gateway_name );
+				printf( '<p>%s</p>', esc_html( $instruction ) );
 			},
 		];
 		
@@ -588,14 +601,17 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			'section'  => 'general',
 			'type'     => 'custom',
 			'callback' => function () {
-				echo '<a id="' . $this->get_id() . '-platform-connect" class="button button-primary button-large"
-		            role="button" style="font-size: 21px;">Connect with <strong>' . $this->gateway_name . '</strong></a>
-                    <script>
-                        document.getElementById("' . $this->get_id() . '-platform-connect").addEventListener("click", function(event){
-                             event.preventDefault();
-                            document.getElementById("publish").click();
-                        });
-                    </script>';
+				printf(
+					'<a id="%1$s" class="button button-primary button-large" role="button" style="font-size: 21px;">Connect with <strong>%2$s</strong></a>
+					<script>
+						document.getElementById( "%1$s" ).addEventListener( "click", function( event ) {
+							event.preventDefault();
+							document.getElementById( "publish" ).click();
+						} );
+					</script>',
+					esc_attr( $this->get_id() . '-platform-connect' ),
+					esc_html( $this->gateway_name )
+				);
 			},
 		];
 		
@@ -644,7 +660,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 					document.getElementById('knit-pay-oauth-disconnect-button').click();
 				});
 			</script>";
-			echo '<p class="pronamic-pay-description description">' . 'Mode change is not allowed after connecting in a mode. To create the connection in the new mode, first disconnect from the current mode.' . '</p>';
+			echo '<p class="pronamic-pay-description description">' . esc_html__( 'Mode change is not allowed after connecting in a mode. To create the connection in the new mode, first disconnect from the current mode.', 'knit-pay-lang' ) . '</p>';
 		}
 
 		if ( $this->auto_save_on_mode_change ) {

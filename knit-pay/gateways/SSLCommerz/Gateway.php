@@ -124,7 +124,7 @@ class Gateway extends Core_Gateway {
 		try {
 			$transaction_status = $this->api->get_transaction_status( $payment->get_transaction_id() );
 		} catch ( Exception $e ) {
-			throw new Exception( $e->getMessage() );
+			throw new Exception( esc_html( $e->getMessage() ) );
 		}
 
 		$payment_status = Statuses::transform( $transaction_status->status );
@@ -134,6 +134,6 @@ class Gateway extends Core_Gateway {
 			$payment->set_failure_reason( $failure_reason );
 		}
 		$payment->set_status( $payment_status );
-		$payment->add_note( '<strong>SSLCommerz Response:</strong><br><pre>' . print_r( $transaction_status, true ) . '</pre><br>' );
+		$payment->add_note( '<strong>SSLCommerz Response:</strong><br><pre>' . wp_json_encode( $transaction_status, JSON_PRETTY_PRINT ) . '</pre><br>' );
 	}
 }

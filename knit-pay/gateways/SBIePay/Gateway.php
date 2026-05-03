@@ -56,7 +56,7 @@ class Gateway extends Core_Gateway {
 		$payment_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 		if ( isset( $payment_currency ) && 'INR' !== $payment_currency ) {
 			$currency_error = 'SBIePay only accepts payments in Indian Rupees. If you are a store owner, kindly activate INR currency for ' . $payment->get_source() . ' plugin.';
-			throw new Exception( $currency_error );
+			throw new Exception( esc_html( $currency_error ) );
 		}
 
 		$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
@@ -118,13 +118,9 @@ class Gateway extends Core_Gateway {
 		$transaction_id = $payment->get_transaction_id();
 
 		try {
-			if ( filter_has_var( INPUT_POST, 'encData' ) && filter_has_var( INPUT_POST, 'merchIdVal' ) ) {
-				$order_status = $this->get_post_order_status( $payment );
-			} else {
-				$order_status = $this->get_api_order_status( $transaction_id );
-			}
+			$order_status = $this->get_order_status( $payment );
 		} catch ( Exception $e ) {
-			throw new Exception( $e->getMessage() );
+			throw new Exception( esc_html( $e->getMessage() ) );
 		}
 
 		$note = \sprintf(
@@ -148,11 +144,11 @@ class Gateway extends Core_Gateway {
 			'merchantId'   => $merchant_id,
 		];
 
-		$response     = wp_remote_post(
+		$response     = wp_safe_remote_post(
 			$this->endpoint_url . 'payagg/orderStatusQuery/getOrderStatusQuery',
 			[
 				'body'    => $api_data,
-				'timeout' => 10,
+				'timeout' => 10, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout -- SBIePay order status API needs adequate time to respond.
 			]
 		);
 		$order_status = wp_remote_retrieve_body( $response );
@@ -164,12 +160,19 @@ class Gateway extends Core_Gateway {
 		return $order_status;
 	}
 
-	private function get_post_order_status() {
+	private function get_order_status( $payment ) {
+		if ( ! isset( $_POST['encData'] ) || ! isset( $_POST['merchIdVal'] ) ) {
+			return $this->get_api_order_status( $payment->get_transaction_id() );
+		}
+
+		/**
+		 * Get Order Status from POST Parameters.
+		 */
 		$encryption_key = $this->config->encryption_key;
 		$merchant_id    = $this->config->merchant_id;
 
 		$encrypted_order_status = \sanitize_text_field( \wp_unslash( $_POST['encData'] ) );
-		$merchant_id_val        = array_key_exists( 'merchIdVal', $_POST ) ? \sanitize_text_field( \wp_unslash( $_POST['merchIdVal'] ) ) : '';
+		$merchant_id_val        = \sanitize_text_field( \wp_unslash( $_POST['merchIdVal'] ) );
 
 		if ( $merchant_id_val !== $merchant_id ) {
 			throw new \Exception( 'Merchant ID missmatch.' );

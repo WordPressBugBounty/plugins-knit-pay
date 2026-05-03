@@ -105,10 +105,10 @@ class WebhookController {
 		// Find Gateway Configuration for provided payment type id.
 		$query = new WP_Query(
 			[
-				'post_type'  => 'pronamic_gateway',
-				'fields'     => 'ids',
-				'nopaging'   => true,
-				'meta_query' => [
+				'post_type'      => 'pronamic_gateway',
+				'fields'         => 'ids',
+				'posts_per_page' => 2,
+				'meta_query'     => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Required to look up gateway config by merchant ID for webhook routing.
 					[
 						'key'   => '_pronamic_gateway_sbiepay_merchant_id',
 						'value' => $merchant_id,

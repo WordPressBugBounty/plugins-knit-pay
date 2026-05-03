@@ -157,7 +157,7 @@ class Gateway extends Core_Gateway {
 		if ( knit_pay_plugin()->is_debug_mode() ) {
 			$payment->add_note(
 				'<details><summary>Revolut Response</summary><pre>' .
-				print_r( $revolut_order, true ) .
+				wp_json_encode( $revolut_order, JSON_PRETTY_PRINT ) .
 				'</pre></details>'
 			);
 		}

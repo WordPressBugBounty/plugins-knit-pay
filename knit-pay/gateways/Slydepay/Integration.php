@@ -130,7 +130,7 @@ class Integration extends AbstractGatewayIntegration {
 				/* translators: %s: PayUmoney */
 				__(
 					'Copy the Redirect URL to the %s dashboard.',
-					'knit-pay'
+					'knit-pay-lang'
 				),
 				__( 'Slydepay', 'knit-pay-lang' )
 			),

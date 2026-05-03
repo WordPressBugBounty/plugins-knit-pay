@@ -6,20 +6,20 @@ class AES128 {
 	public static function encrypt( $data, $key ) {
 		$algo = 'aes-128-cbc';
 
-		$iv         = substr( $key, 0, 16 );
-		$cipherText = openssl_encrypt( $data, $algo, $key, OPENSSL_RAW_DATA, $iv );
-		$cipherText = base64_encode( $cipherText );
+		$iv          = substr( $key, 0, 16 );
+		$cipher_text = openssl_encrypt( $data, $algo, $key, OPENSSL_RAW_DATA, $iv );
+		$cipher_text = base64_encode( $cipher_text );
 
-		return $cipherText;
+		return $cipher_text;
 	}
 
-	public static function decrypt( $cipherText, $key ) {
+	public static function decrypt( $cipher_text, $key ) {
 		$algo = 'aes-128-cbc';
 
-		$iv         = substr( $key, 0, 16 );
-		$cipherText = base64_decode( $cipherText );
-		$plaintext  = openssl_decrypt( $cipherText, $algo, $key, OPENSSL_RAW_DATA, $iv );
+		$iv          = substr( $key, 0, 16 );
+		$cipher_text = base64_decode( $cipher_text );
+		$plain_text  = openssl_decrypt( $cipher_text, $algo, $key, OPENSSL_RAW_DATA, $iv );
 
-		return $plaintext;
+		return $plain_text;
 	}
 }

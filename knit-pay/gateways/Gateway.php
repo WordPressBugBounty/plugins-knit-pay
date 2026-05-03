@@ -146,11 +146,13 @@ class Gateway extends Core_Gateway {
 	private function check_complete( $payment ) {
 		if ( PaymentStatus::SUCCESS === $payment->get_status() || PaymentStatus::EXPIRED === $payment->get_status() ) {
 			if ( $payment->get_meta( 'rest_redirect_url' ) ) {
+				// phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect -- Admin-configured external redirect URL; wp_safe_redirect would block it.
 				wp_redirect( $payment->get_return_redirect_url() );
+				exit;
 			} else {
 				wp_safe_redirect( $payment->get_return_redirect_url() );
+				exit;
 			}
-			exit;
 		}
 	}
 	

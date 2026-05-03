@@ -27,7 +27,7 @@ class API {
 		if ( $this->test_mode ) {
 			return 'https://open.demo.paymark.co.nz/v1';
 		}
-		return $this->api_endpoint = 'https://open.paymark.co.nz/v1';
+		return 'https://open.paymark.co.nz/v1';
 	}
 
 	private function get_endpoint_url() {
@@ -45,12 +45,14 @@ class API {
 		$data               = [];
 		$data['grant_type'] = 'client_credentials';
 
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$this->get_endpoint_url() . 'bearer',
 			[
 				'body'    => $data,
-				'headers' =>
-					'Authorization:Basic ' . base64_encode( $this->consumer_key . ':' . $this->consumer_secret ),
+				'headers' => [
+					'Authorization' => 'Basic ' . base64_encode( $this->consumer_key . ':' . $this->consumer_secret ),
+				],
+				'timeout' => self::CONNECTION_TIMEOUT, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout -- PaymarkOE API requires adequate time for authentication and session creation.
 
 			]
 		);
@@ -71,7 +73,7 @@ class API {
 		$api_url  = $this->get_api_endpoint_url() . 'session';
 		$api_data = wp_parse_args( $data, $this->get_api_data() );
 
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$api_url,
 			[
 				'body'    => wp_json_encode( $api_data ),
@@ -80,7 +82,7 @@ class API {
 					'Accept'        => 'application/json',
 					'Content-Type'  => 'application/json',
 				],
-				'timeout' => self::CONNECTION_TIMEOUT,
+				'timeout' => self::CONNECTION_TIMEOUT, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout -- PaymarkOE API requires adequate time for session creation.
 			]
 		);
 		$result   = wp_remote_retrieve_body( $response );
@@ -88,7 +90,7 @@ class API {
 		$result = json_decode( $result );
 
 		if ( isset( $result->error ) ) {
-			throw new Exception( $result->error . ': ' . print_r( $result->messages, true ) );
+			throw new Exception( esc_html( $result->error . ': ' . wp_json_encode( $result->messages ) ) );
 		}
 
 		return $result->id;
@@ -97,14 +99,14 @@ class API {
 	public function get_session( $session_id ) {
 		$api_url = $this->get_api_endpoint_url() . 'session/' . $session_id;
 
-		$response = wp_remote_get(
+		$response = wp_safe_remote_get(
 			$api_url,
 			[
 				'headers' => [
 					'Authorization' => $this->get_access_token(),
 					'Accept'        => 'application/json',
 				],
-				'timeout' => self::CONNECTION_TIMEOUT,
+				'timeout' => self::CONNECTION_TIMEOUT, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout -- PaymarkOE session status retrieval needs adequate timeout.
 			]
 		);
 		$result   = wp_remote_retrieve_body( $response );
@@ -121,14 +123,14 @@ class API {
 	public function get_payment( $session_id ) {
 		$api_url = $this->get_api_endpoint_url() . 'payment?sessionId=' . $session_id;
 
-		$response = wp_remote_get(
+		$response = wp_safe_remote_get(
 			$api_url,
 			[
 				'headers' => [
 					'Authorization' => $this->get_access_token(),
 					'Accept'        => 'application/json',
 				],
-				'timeout' => self::CONNECTION_TIMEOUT,
+				'timeout' => self::CONNECTION_TIMEOUT, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout -- PaymarkOE payment status retrieval needs adequate timeout.
 			]
 		);
 		$result   = wp_remote_retrieve_body( $response );

@@ -112,7 +112,10 @@ class Gateway extends Core_Gateway {
 		
 		$form_inner = '';
 
-		$html = wp_head() . '<hr>';
+		wp_enqueue_scripts();
+		ob_start();
+		wp_print_head_scripts();
+		$html = ob_get_clean() . '<hr>';
 		
 		// Show Pay Button after delay.
 		$html .= '<script type="text/javascript">
@@ -202,7 +205,9 @@ class Gateway extends Core_Gateway {
 			esc_attr( $payment->get_return_url() ),
 			$form_inner
 		);
-		$html .= wp_footer();
+		ob_start();
+		wp_print_footer_scripts();
+		$html .= ob_get_clean();
 
 		echo $html;
 	}

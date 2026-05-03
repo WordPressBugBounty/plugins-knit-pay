@@ -52,19 +52,19 @@ class Client {
 			'body'    => wp_json_encode( $data ),
 		];
 
-		$response = wp_remote_post( $api_url, $args );
+		$response = wp_safe_remote_post( $api_url, $args );
 
 		if ( is_wp_error( $response ) ) {
-			throw new \Exception( $response->get_error_message() );
+			throw new \Exception( esc_html( $response->get_error_message() ) );
 		}
 
 		$status_code = wp_remote_retrieve_response_code( $response );
 		$body        = wp_remote_retrieve_body( $response );
 		$data        = json_decode( $body, true );
 
-		if ( $status_code !== 200 && $status_code !== 201 ) {
+		if ( 200 !== $status_code && 201 !== $status_code ) {
 			$error_message = isset( $data['message'] ) ? $data['message'] : 'Unknown error occurred';
-			throw new \Exception( 'SumUp API Error (' . $status_code . '): ' . $error_message );
+			throw new \Exception( esc_html( 'SumUp API Error (' . $status_code . '): ' . $error_message ) );
 		}
 
 		if ( empty( $data['id'] ) ) {
@@ -91,10 +91,10 @@ class Client {
 			],
 		];
 
-		$response = wp_remote_get( $api_url, $args );
+		$response = wp_safe_remote_get( $api_url, $args );
 
 		if ( is_wp_error( $response ) ) {
-			throw new \Exception( $response->get_error_message() );
+			throw new \Exception( esc_html( $response->get_error_message() ) );
 		}
 
 		$body = wp_remote_retrieve_body( $response );
@@ -123,17 +123,17 @@ class Client {
 			],
 		];
 
-		$response = wp_remote_post( $token_url, $args );
+		$response = wp_safe_remote_post( $token_url, $args );
 
 		if ( is_wp_error( $response ) ) {
-			throw new \Exception( $response->get_error_message() );
+			throw new \Exception( esc_html( $response->get_error_message() ) );
 		}
 
 		$body = wp_remote_retrieve_body( $response );
 		$data = json_decode( $body, true );
 
 		if ( isset( $data['error'] ) ) {
-			throw new \Exception( $data['error_description'] );
+			throw new \Exception( esc_html( $data['error_description'] ) );
 		}
 
 		return $data['access_token'];

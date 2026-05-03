@@ -35,23 +35,25 @@ class API {
 	public function create_session( $data ) {
 		$endpoint = $this->api_endpoint . 'gwprocess/v4/api.php';
 
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$endpoint,
 			[
 				'body'    => $this->add_store_keys( $data ),
-				'timeout' => self::CONNECTION_TIMEOUT,
+				'timeout' => self::CONNECTION_TIMEOUT, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout -- SSLCommerz session creation needs adequate time.
 			]
 		);
 		$result   = wp_remote_retrieve_body( $response );
 
 		$result = json_decode( $result );
 		if ( isset( $result->status ) && 'FAILED' === $result->status ) {
-			throw new Exception( $result->failedreason );
+			throw new Exception( esc_html( $result->failedreason ) );
 		}
 
+		// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- SSLCommerz API returns camelCase property names.
 		if ( ! empty( $result->GatewayPageURL ) ) {
 			return $result->GatewayPageURL;
 		}
+		// phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 
 		throw new Exception( 'Something went wrong. Please try again later.' );
 	}
@@ -59,9 +61,10 @@ class API {
 	public function get_transaction_status( $tran_id ) {
 		$endpoint = $this->api_endpoint . 'validator/api/merchantTransIDvalidationAPI.php';
 
+		$data            = [];
 		$data['tran_id'] = $tran_id;
 
-		$response = wp_remote_get(
+		$response = wp_safe_remote_get(
 			$endpoint,
 			[
 				'body'    => $this->add_store_keys( $data ),
@@ -72,7 +75,7 @@ class API {
 
 		$result = json_decode( $result );
 
-		if ( isset( $result->APIConnect ) && 'DONE' !== $result->APIConnect ) {
+		if ( isset( $result->APIConnect ) && 'DONE' !== $result->APIConnect ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- SSLCommerz API returns camelCase property names.
 			throw new Exception( 'Something went wrong. Please try again later.' );
 		}
 

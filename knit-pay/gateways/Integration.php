@@ -35,7 +35,8 @@ class Integration extends AbstractGatewayIntegration {
 	}
 
 	public function admin_notice() {
-		if ( $error = get_transient( 'knit_pay_post_save_error' ) ) {
+		$error = get_transient( 'knit_pay_post_save_error' );
+		if ( ! empty( $error ) ) {
 			delete_transient( 'knit_pay_post_save_error' );
 			wp_admin_notice(
 				$error,

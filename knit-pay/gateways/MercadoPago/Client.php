@@ -27,7 +27,7 @@ class Client {
 	}
 	
 	public function create_preference( $data ) {
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$this->get_endpoint_url() . '/checkout/preferences',
 			[
 				'body'    => wp_json_encode( $data ),
@@ -37,7 +37,7 @@ class Client {
 		$result   = wp_remote_retrieve_body( $response );
 		$result   = json_decode( $result );
 		if ( isset( $result->message ) ) {
-			throw new Exception( $result->message );
+			throw new Exception( esc_html( $result->message ) );
 		}
 		return $result;
 	}
@@ -52,7 +52,7 @@ class Client {
 			$this->get_endpoint_url() . '/v1/payments/search'
 		);
 		
-		$response = wp_remote_get(
+		$response = wp_safe_remote_get(
 			$api_url,
 			[
 				'headers' => $this->get_request_headers(),
@@ -61,7 +61,7 @@ class Client {
 		$result   = wp_remote_retrieve_body( $response );
 		$result   = json_decode( $result );
 		if ( 0 === $result->paging->total ) {
-			throw new Exception( $result->message );
+			throw new Exception( esc_html( $result->message ) );
 		}
 		return $result->results;
 	}

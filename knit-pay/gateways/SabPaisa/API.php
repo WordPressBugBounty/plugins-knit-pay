@@ -34,7 +34,7 @@ class API {
 	private function is_new_key_format( $key ) {
 		// Check if it's valid base64 and decodes to 32 bytes (256 bits).
 		$decoded = base64_decode( $key, true );
-		if ( $decoded !== false && 32 === strlen( $decoded ) ) {
+		if ( false !== $decoded && 32 === strlen( $decoded ) ) {
 			return true;
 		}
 

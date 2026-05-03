@@ -182,7 +182,7 @@ class Gateway extends Core_Gateway {
 			
 			$payment->set_action_url( str_replace( '?', $language . '/?', $response->getLink() ) );
 		} catch ( \Payrexx\PayrexxException $e ) {
-			throw new Exception( $e->getMessage() );
+			throw new Exception( esc_html( $e->getMessage() ) );
 		}
 	}
 
@@ -200,11 +200,11 @@ class Gateway extends Core_Gateway {
 		try {
 			$response = $this->payrexx->getOne( $gateway );
 		} catch ( \Payrexx\PayrexxException $e ) {
-			throw new Exception( $e->getMessage() );
+			throw new Exception( esc_html( $e->getMessage() ) );
 		}
 
 		$gateway_status = Statuses::transform( $response->getStatus() );
 		$payment->set_status( $gateway_status );
-		$payment->add_note( '<strong>Payrexx Response:</strong><br><pre>' . print_r( $response, true ) . '</pre><br>' );
+		$payment->add_note( '<strong>Payrexx Response:</strong><br><pre>' . esc_html( print_r( $response, true ) ) . '</pre><br>' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r -- Payrexx SDK Gateway object properties are not JSON-encodable, don't use wp_json_encode.
 	}
 }

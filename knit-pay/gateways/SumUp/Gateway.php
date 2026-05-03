@@ -81,7 +81,7 @@ class Gateway extends Core_Gateway {
 				$payment->set_transaction_id( $data['transaction_id'] );
 			}
 
-			$payment->add_note( '<strong>SumUp Checkout Response:</strong><br><pre>' . print_r( $data, true ) . '</pre><br>' );
+			$payment->add_note( '<strong>SumUp Checkout Response:</strong><br><pre>' . wp_json_encode( $data, JSON_PRETTY_PRINT ) . '</pre><br>' );
 		} catch ( \Exception $e ) {
 			$payment->add_note( 'SumUp Status Error: ' . $e->getMessage() );
 		}
@@ -97,11 +97,10 @@ class Gateway extends Core_Gateway {
 	public function output_form( Payment $payment ) {
 		if ( PaymentStatus::SUCCESS === $payment->get_status() ) {
 			wp_safe_redirect( $payment->get_return_redirect_url() );
+			exit;
 		}
 
 		$script_url = 'https://gateway.sumup.com/gateway/ecom/card/v2/sdk.js';
-
-		$html = '<meta name="viewport" content="width=device-width, initial-scale=1.0"><div id="sumup-card"></div>';
 
 		// Get customer email if available for better APM support
 		$customer = $payment->get_customer();
@@ -123,23 +122,25 @@ class Gateway extends Core_Gateway {
 			],*/
 		];
 
-		$script  = '<script src="' . $script_url . '"></script>';
-		$script .= '<script type="text/javascript">';
-		$script .= 'var mount_parameter = ' . json_encode( $mount_parameter ) . ';';
-		$script .= 'mount_parameter.onResponse = function(type, body) {';
-		$script .= '    console.log("SumUp Response Type:", type);';
-		$script .= '    console.log("SumUp Response Body:", body);';
-		$script .= '    if ("sent" !== type) {';
-		$script .= '        document.getElementById("sumup-card").style.display = "none";';
-		$script .= '        window.location.href = "' . $payment->get_return_url() . '";';
-		$script .= '    }';
-		$script .= '};';
-		$script .= 'mount_parameter.onPaymentMethodsLoad = function(methods) {';
-		$script .= '    console.log("Available Payment Methods:", methods);';
-		$script .= '};';
-		$script .= 'SumUpCard.mount(mount_parameter);';
-		$script .= '</script>';
-
-		echo $html . $script;
+		?>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<div id="sumup-card"></div>
+		<script src="<?php echo esc_url( $script_url ); ?>"></script>
+		<script type="text/javascript">
+		var mount_parameter = <?php echo wp_json_encode( $mount_parameter ); ?>;
+		mount_parameter.onResponse = function(type, body) {
+			console.log("SumUp Response Type:", type);
+			console.log("SumUp Response Body:", body);
+			if ("sent" !== type) {
+				document.getElementById("sumup-card").style.display = "none";
+				window.location.href = "<?php echo esc_url( $payment->get_return_url() ); ?>";
+			}
+		};
+		mount_parameter.onPaymentMethodsLoad = function(methods) {
+			console.log("Available Payment Methods:", methods);
+		};
+		SumUpCard.mount(mount_parameter);
+		</script>
+		<?php
 	}
 }

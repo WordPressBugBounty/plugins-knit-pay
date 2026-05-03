@@ -161,7 +161,7 @@ class Gateway extends Core_Gateway {
 			unset( $gateway_payment->call_back_url );
 			$payment->add_note( 
 				'<details><summary>Pesapal Response</summary><pre>' . 
-				print_r( $gateway_payment, true ) . 
+				wp_json_encode( $gateway_payment, JSON_PRETTY_PRINT ) .
 				'</pre></details>' 
 			);
 		}   

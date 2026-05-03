@@ -45,11 +45,11 @@ class Client {
 		$result = json_decode( $result );
 
 		if ( JSON_ERROR_NONE !== json_last_error() ) {
-			echo wp_remote_retrieve_body( $response );
+			throw new Exception( esc_html( 'Invalid response from PayTR API. Raw response: ' . wp_remote_retrieve_body( $response ) ) );
 		}
 
 		if ( isset( $result->status ) && 'failed' === $result->status ) {
-			throw new Exception( $result->reason );
+			throw new Exception( esc_html( $result->reason ) );
 		}
 
 		if ( isset( $result->status ) && 'success' === $result->status ) {

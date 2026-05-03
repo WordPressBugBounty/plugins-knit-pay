@@ -57,12 +57,12 @@ class Gateway extends Core_Gateway {
 		$payment_currency = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
 		if ( isset( $payment_currency ) && 'NZD' !== $payment_currency ) {
 			$currency_error = 'Paymark - Online EFTPOS only accepts payments in NZD. If you are a store owner, kindly activate NZD currency for ' . $payment->get_source() . ' plugin.';
-			throw new \Exception( $currency_error );
+			throw new \Exception( esc_html( $currency_error ) );
 		}
 
 		if ( ! str_starts_with( home_url( '/' ), 'https' ) ) {
 			$ssl_error = 'SSL is mandatory on the website.';
-			throw new \Exception( $ssl_error );
+			throw new \Exception( esc_html( $ssl_error ) );
 		}
 
 
@@ -148,23 +148,23 @@ class Gateway extends Core_Gateway {
 	) {
 		if ( PaymentStatus::SUCCESS === $payment->get_status() ) {
 			wp_safe_redirect( $payment->get_return_redirect_url() );
+			exit;
 		}
 
-		$html  = '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
-		$html .= '<div id="embed-openjs" class="embed-openjs-wrap"></div>';
-
-		$script  = '<script type="text/javascript" src="' . $this->api->get_open_plugin_url() . '"></script>';
-		$script .= "
-        <script>
-            const sessionId = '{$payment->get_transaction_id()}'
-            if (window.openjs) {
-            window.openjs.init({
-                sessionId: sessionId,
-                elementId: 'embed-openjs',
-            })
-            }
-        </script>";
-
-		echo $html . $script;
+		$script_url = $this->api->get_open_plugin_url();
+		?>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<div id="embed-openjs" class="embed-openjs-wrap"></div>
+		<script type="text/javascript" src="<?php echo esc_url( $script_url ); ?>"></script>
+		<script type="text/javascript">
+		const sessionId = <?php echo wp_json_encode( $payment->get_transaction_id() ); ?>;
+		if (window.openjs) {
+			window.openjs.init({
+				sessionId: sessionId,
+				elementId: 'embed-openjs',
+			});
+		}
+		</script>
+		<?php
 	}
 }

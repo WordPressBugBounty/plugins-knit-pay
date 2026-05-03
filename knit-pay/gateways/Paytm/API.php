@@ -40,21 +40,23 @@ class API {
 			$endpoint
 		);
 
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$endpoint,
 			[
 				'body'    => $data,
 				'headers' => $this->get_request_headers(),
-				'timeout' => self::CONNECTION_TIMEOUT,
+				'timeout' => self::CONNECTION_TIMEOUT, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout -- Paytm API needs adequate time to respond.
 			]
 		);
 		$result   = wp_remote_retrieve_body( $response );
 
 		$result = json_decode( $result );
 
+		// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Paytm API returns camelCase property names.
 		if ( isset( $result->body->resultInfo->resultStatus ) && 'F' === $result->body->resultInfo->resultStatus ) {
-			throw new Exception( $result->body->resultInfo->resultMsg );
+			throw new Exception( esc_html( $result->body->resultInfo->resultMsg ) );
 		}
+		// phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 
 		if ( ! isset( $result->head->signature ) ) {
 			throw new Exception( 'Something went wrong. Please try again later.' );

@@ -141,7 +141,7 @@ class Integration extends AbstractGatewayIntegration {
 				/* translators: %s: PayUmoney */
 				__(
 					'Copy the Gateway URL to the %s reseller dashboard while creating payment gateway configuration.',
-					'knit-pay'
+					'knit-pay-lang'
 				),
 				__( 'Orderbox', 'knit-pay-lang' )
 			),
@@ -247,7 +247,8 @@ class Integration extends AbstractGatewayIntegration {
 	}
 
 	public static function payment_request_listener() {
-		if ( ! ( filter_has_var( INPUT_GET, 'paymenttypeid' ) && filter_has_var( INPUT_GET, 'transactiontype' ) ) ) {
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Payment request callback from OrderBox reseller dashboard; no WordPress nonce available.
+		if ( ! ( isset( $_GET['paymenttypeid'] ) && isset( $_GET['transactiontype'] ) ) ) {
 			return;
 		}
 
@@ -255,7 +256,7 @@ class Integration extends AbstractGatewayIntegration {
 		Core_Util::no_cache();
 
 		// Sanitize GET parameters.
-		$_GET = array_map( 'sanitize_text_field', $_GET );
+		$_GET = array_map( 'sanitize_text_field', wp_unslash( $_GET ) );
 
 		if ( ! empty( $_GET['kp_orderbox_payment_request'] ) ) {
 			$config_id = \sanitize_text_field( $_GET['kp_orderbox_payment_request'] );
@@ -266,12 +267,14 @@ class Integration extends AbstractGatewayIntegration {
 		$integration = new Integration();
 		$config      = $integration->get_config( $config_id );
 
-		if ( $config->payment_type_id != $_GET['paymenttypeid'] ) {
+		if ( sanitize_text_field( wp_unslash( $_GET['paymenttypeid'] ) ) !== $config->payment_type_id ) {
 			echo 'Gateway Configuration not found for provided payment type id.';
 			exit;
 		}
 
 		$integration->init_payment( $_GET, $config, $config_id );
+
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
@@ -362,11 +365,11 @@ class Integration extends AbstractGatewayIntegration {
 
 			$payment->save();
 
-			echo '<meta http-equiv="refresh" content="0; URL=' . $payment->get_pay_redirect_url() . '" />';
+			echo '<meta http-equiv="refresh" content="0; URL=' . esc_url( $payment->get_pay_redirect_url() ) . '" />';
 			echo '<div style="display: flex;justify-content: center;align-items: center;height: 100vh;">Please wait while the browser redirects you.</div>';
 			exit;
 		} catch ( \Exception $e ) {
-			echo $e->getMessage();
+			echo esc_html( $e->getMessage() );
 			exit();
 		}
 	}
@@ -438,10 +441,10 @@ class Integration extends AbstractGatewayIntegration {
 		// Find Gateway Configuration for provided payment type id.
 		$query = new WP_Query(
 			[
-				'post_type'  => 'pronamic_gateway',
-				'fields'     => 'ids',
-				'nopaging'   => true,
-				'meta_query' => [
+				'post_type'      => 'pronamic_gateway',
+				'fields'         => 'ids',
+				'posts_per_page' => 2,
+				'meta_query'     => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Required to look up gateway config by payment type ID for OrderBox routing.
 					[
 						'key'   => '_pronamic_gateway_orderbox_payment_type_id',
 						'value' => $get_array['paymenttypeid'],

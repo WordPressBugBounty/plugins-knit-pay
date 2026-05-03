@@ -120,7 +120,7 @@ class Gateway extends Core_Gateway {
 		$payment->set_status( $payment_status );
 		
 		if ( knit_pay_plugin()->is_debug_mode() ) {
-			$payment->add_note( '<strong>MP Response:</strong><br><pre>' . print_r( $mp_payment, true ) . '</pre><br>' );
+			$payment->add_note( '<strong>MP Response:</strong><br><pre>' . wp_json_encode( $mp_payment, JSON_PRETTY_PRINT ) . '</pre><br>' );
 		}
 	}
 	

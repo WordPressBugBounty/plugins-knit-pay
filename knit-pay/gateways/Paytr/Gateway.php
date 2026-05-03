@@ -88,7 +88,7 @@ class Gateway extends Core_Gateway {
 		$debug_on        = knit_pay_plugin()->is_debug_mode();
 
 		$user_basket = base64_encode(
-			json_encode(
+			wp_json_encode(
 				[
 					[ $payment->get_description(), $payment->get_total_amount()->number_format( null, '.', '' ), 1 ],
 				]

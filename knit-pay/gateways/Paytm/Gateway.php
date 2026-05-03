@@ -64,7 +64,7 @@ class Gateway extends Core_Gateway {
 			->get_alphabetic_code();
 		if ( isset( $payment_currency ) && 'INR' !== $payment_currency ) {
 			$currency_error = 'Paytm only accepts payments in Indian Rupees. If you are a store owner, kindly activate INR currency for ' . $payment->get_source() . ' plugin.';
-			throw new \Exception( $currency_error );
+			throw new \Exception( esc_html( $currency_error ) );
 		}
 
 		$payment_data = $this->get_payment_data( $payment );
@@ -110,9 +110,9 @@ class Gateway extends Core_Gateway {
 
 		// Create an array having all required parameters for creating checksum.
 		// @see https://www.paytmpayments.com/docs/api/initiate-transaction-api
-		$paytmParams = [];
+		$paytm_params = [];
 
-		$paytmParams['body'] = [
+		$paytm_params['body'] = [
 			'requestType' => 'Payment',
 			'mid'         => $merchant_id,
 			'websiteName' => $website,
@@ -133,16 +133,16 @@ class Gateway extends Core_Gateway {
 		];
 
 		if ( isset( $billing_address ) && ! empty( $billing_address->get_phone() ) ) {
-			$paytmParams['body']['userInfo']['mobile'] = $billing_address->get_phone();
+			$paytm_params['body']['userInfo']['mobile'] = $billing_address->get_phone();
 		}
 
 		if ( null !== $customer->get_name() ) {
-			$paytmParams['body']['userInfo']['firstName'] = $customer->get_name()->get_first_name();
-			$paytmParams['body']['userInfo']['lastName']  = $customer->get_name()->get_last_name();
+			$paytm_params['body']['userInfo']['firstName'] = $customer->get_name()->get_first_name();
+			$paytm_params['body']['userInfo']['lastName']  = $customer->get_name()->get_last_name();
 		}
 
 		if ( ! empty( $payment->get_payment_method() ) && PaymentMethods::UPI === $payment->get_payment_method() ) {
-			$paytmParams['body']['enablePaymentMode'] = [
+			$paytm_params['body']['enablePaymentMode'] = [
 				[
 					'mode' => 'UPI',
 				],
@@ -150,13 +150,13 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Generate checksum by parameters we have in body.
-		$checksum = PaytmChecksum::generateSignature( wp_json_encode( $paytmParams['body'] ), $merchant_key );
+		$checksum = PaytmChecksum::generateSignature( wp_json_encode( $paytm_params['body'] ), $merchant_key );
 
-		$paytmParams['head'] = [
+		$paytm_params['head'] = [
 			'signature' => $checksum,
 		];
 
-		return $paytmParams;
+		return $paytm_params;
 	}
 
 	/**
@@ -192,32 +192,34 @@ class Gateway extends Core_Gateway {
 		$merchant_key = $this->config->merchant_key;
 
 		// Create an array having all required parameters for status query.
-		$requestParamList = [
+		$request_param_list = [
 			'body' => [
 				'mid'     => $merchant_id,
 				'orderId' => $this->get_order_id( $payment ),
 			],
 		];
 
-		$requestParamList['head']['signature'] = PaytmChecksum::generateSignature( wp_json_encode( $requestParamList['body'] ), $merchant_key );
+		$request_param_list['head']['signature'] = PaytmChecksum::generateSignature( wp_json_encode( $request_param_list['body'] ), $merchant_key );
 
 
-		$transaction_status = $this->api->get_transaction_status( $requestParamList );
+		$transaction_status = $this->api->get_transaction_status( $request_param_list );
+
+		// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Paytm API returns camelCase property names.
 
 		if ( $transaction_status->orderId !== $this->get_order_id( $payment ) ) {
-			throw new \Exception( 'Something went wrong:<br><pre>' . print_r( $transaction_status, true ) . '</pre>' );
+			throw new \Exception( 'Something went wrong:<br><pre>' . esc_html( wp_json_encode( $transaction_status ) ) . '</pre>' );
 		}
 
 		$note = '<strong>Paytm Parameters:</strong>';
 		if ( isset( $transaction_status->txnId ) ) {
-			$note .= '<br>Paytm txnId: ' . $transaction_status->txnId;
+			$note .= '<br>Paytm txnId: ' . esc_html( $transaction_status->txnId );
 		}
 		if ( isset( $transaction_status->bankTxnId ) ) {
-			$note .= '<br>Paytm bankTxnId: ' . $transaction_status->bankTxnId;
+			$note .= '<br>Paytm bankTxnId: ' . esc_html( $transaction_status->bankTxnId );
 		}
-		$note .= '<br>Paytm orderId: ' . $transaction_status->orderId;
-		$note .= '<br>Status: ' . $transaction_status->resultInfo->resultStatus;
-		$note .= '<br>Message: ' . $transaction_status->resultInfo->resultMsg;
+		$note .= '<br>Paytm orderId: ' . esc_html( $transaction_status->orderId );
+		$note .= '<br>Status: ' . esc_html( $transaction_status->resultInfo->resultStatus );
+		$note .= '<br>Message: ' . esc_html( $transaction_status->resultInfo->resultMsg );
 
 		$payment->add_note( $note );
 		$payment->set_status( Statuses::transform( $transaction_status->resultInfo->resultStatus ) );
@@ -225,6 +227,8 @@ class Gateway extends Core_Gateway {
 		if ( PaymentStatus::SUCCESS === $payment->get_status() ) {
 			$payment->set_transaction_id( $transaction_status->txnId );
 		}
+
+		// phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 
 		if ( PaymentStatus::OPEN === $payment->get_status() ) {
 			$this->expire_old_payment( $payment );

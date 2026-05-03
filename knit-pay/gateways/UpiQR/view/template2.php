@@ -183,7 +183,7 @@
 	</div>
 </div>
 <?php
-wp_footer();
+wp_print_footer_scripts();
 if ( ! wp_is_mobile() || $hide_pay_button ) { // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.wp_is_mobile_wp_is_mobile
 	?>
 	<script>

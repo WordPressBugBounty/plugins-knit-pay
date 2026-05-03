@@ -19,7 +19,7 @@ class Client {
 	 * @var Config
 	 */
 	private $config;
-	
+
 	/**
 	 * API endpoint URL
 	 *
@@ -51,19 +51,19 @@ class Client {
 	 */
 	public function create_order( array $data ) {
 		$endpoint = $this->api_url . '/orders';
-		
-		$response = wp_remote_post(
+
+		$response = wp_safe_remote_post(
 			$endpoint,
 			[
 				'body'    => wp_json_encode( $data ),
 				'headers' => $this->get_request_headers(),
-				'timeout' => 30,
+				'timeout' => 30, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout -- Revolut order creation can be slow; 30s ensures reliability.
 			]
 		);
 		
 		// Handle WordPress HTTP errors
 		if ( is_wp_error( $response ) ) {
-			throw new Exception( 'API request failed: ' . $response->get_error_message() );
+			throw new Exception( esc_html( 'API request failed: ' . $response->get_error_message() ) );
 		}
 		
 		// Get response body
@@ -77,12 +77,12 @@ class Client {
 			if ( isset( $result->code ) ) {
 				$error_message = $result->code . ': ' . $error_message;
 			}
-			throw new Exception( $error_message );
+			throw new Exception( esc_html( $error_message ) );
 		}
-		
+
 		return $result;
 	}
-	
+
 	/**
 	 * Retrieve an order from Revolut
 	 *
@@ -92,18 +92,18 @@ class Client {
 	 */
 	public function retrieve_order( string $order_id ) {
 		$endpoint = $this->api_url . '/orders/' . $order_id;
-		
-		$response = wp_remote_get(
+
+		$response = wp_safe_remote_get(
 			$endpoint,
 			[
 				'headers' => $this->get_request_headers(),
-				'timeout' => 30,
+				'timeout' => 30, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout -- Revolut order retrieval can be slow; 30s ensures reliability.
 			]
 		);
 		
 		// Handle WordPress HTTP errors
 		if ( is_wp_error( $response ) ) {
-			throw new Exception( 'Failed to get order status: ' . $response->get_error_message() );
+			throw new Exception( esc_html( 'Failed to get order status: ' . $response->get_error_message() ) );
 		}
 		
 		// Get response body
@@ -114,9 +114,9 @@ class Client {
 		$status_code = wp_remote_retrieve_response_code( $response );
 		if ( $status_code >= 400 ) {
 			$error_message = $result->message ?? 'Order not found';
-			throw new Exception( $error_message );
+			throw new Exception( esc_html( $error_message ) );
 		}
-		
+
 		return $result;
 	}
 
@@ -132,7 +132,7 @@ class Client {
 			'Revolut-Api-Version' => '2025-10-16',
 			'Authorization'       => 'Bearer ' . $this->config->api_secret_key,
 		];
-		
+
 		return $headers;
 	}
 }

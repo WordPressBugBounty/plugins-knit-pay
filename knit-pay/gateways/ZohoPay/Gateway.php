@@ -61,7 +61,7 @@ class Gateway extends Core_Gateway {
 	public function start( Payment $payment ) {
 		if ( ! str_starts_with( home_url( '/' ), 'https' ) ) {
 			$ssl_error = 'SSL is mandatory on the website.';
-			throw new \Exception( $ssl_error );
+			throw new \Exception( esc_html( $ssl_error ) );
 		}
 
 		$transaction_id = $payment->key . '_' . $payment->get_id();
@@ -99,7 +99,7 @@ class Gateway extends Core_Gateway {
 			'currency'     => $currency,
 			'reference_id' => $reference_id,
 			'description'  => $payment_description,
-			'expires_at'   => date( 'Y-m-d', strtotime( '+1 day' ) ),
+			'expires_at'   => ( new \DateTime( '+1 day', new \DateTimeZone( 'Asia/Kolkata' ) ) )->format( 'Y-m-d' ),
 			'notify_user'  => true,
 			'return_url'   => $return_url,
 		];

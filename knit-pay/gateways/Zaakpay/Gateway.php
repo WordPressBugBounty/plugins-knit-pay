@@ -57,7 +57,7 @@ class Gateway extends Core_Gateway {
 			->get_alphabetic_code();
 		if ( isset( $payment_currency ) && 'INR' !== $payment_currency ) {
 			$currency_error = 'Zaakpay only accepts payments in Indian Rupees. If you are a store owner, kindly activate INR currency for ' . $payment->get_source() . ' plugin.';
-			throw new \Exception( $currency_error );
+			throw new \Exception( esc_html( $currency_error ) );
 		}
 
 		$payment->set_transaction_id( $payment->key . '_' . $payment->get_id() );
@@ -136,11 +136,11 @@ class Gateway extends Core_Gateway {
 		];
 		$api_data['checksum'] = hash_hmac( 'sha256', $api_data['data'], $secret_key );
 
-		$response = wp_remote_post(
+		$response = wp_safe_remote_post(
 			$endpoint,
 			[
 				'body'    => $api_data,
-				'timeout' => 10,
+				'timeout' => 10, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout -- Zaakpay API needs adequate time to respond.
 			]
 		);
 		$result   = wp_remote_retrieve_body( $response );
@@ -152,11 +152,13 @@ class Gateway extends Core_Gateway {
 		
 		$order = end( $result->orders );
 
+		// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Zaakpay API returns camelCase property names.
 		$payment->set_status( Statuses::transform( $order->txnStatus ) );
-		$payment->add_note( '<strong>Zaakpay Response:</strong><br><pre>' . print_r( $result->orders, true ) . '</pre><br>' );
+		$payment->add_note( '<strong>Zaakpay Response:</strong><br><pre>' . wp_json_encode( $result->orders, JSON_PRETTY_PRINT ) . '</pre><br>' );
 		
 		if ( PaymentStatus::SUCCESS === $payment->get_status() ) {
 			$payment->set_transaction_id( $order->orderDetail->txnId );
 		}
+		// phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 	}
 }

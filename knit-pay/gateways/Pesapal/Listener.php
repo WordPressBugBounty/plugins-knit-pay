@@ -36,13 +36,18 @@ class Listener {
 	 */
 	public function listen() {
 		// Pesapal sends webhooks via GET request
-		// Extract parameters from GET request
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- External payment gateway webhook via GET; no WordPress nonce available.
+		if ( ! isset( $_REQUEST['OrderTrackingId'] ) ) {
+			exit;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- External payment gateway webhook via GET; no WordPress nonce available.
 		$order_tracking_id = \sanitize_text_field( \wp_unslash( $_REQUEST['OrderTrackingId'] ) );
-		
+
 		if ( empty( $order_tracking_id ) ) {
 			exit;
 		}
-		
+
 		// Get Payment from Order Tracking ID.
 		$payment = get_pronamic_payment_by_transaction_id( $order_tracking_id );
 
