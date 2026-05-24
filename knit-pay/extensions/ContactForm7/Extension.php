@@ -4,6 +4,7 @@ namespace KnitPay\Extensions\ContactForm7;
 
 use Pronamic\WordPress\Pay\AbstractPluginIntegration;
 use Pronamic\WordPress\Pay\Payments\Payment;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use WPCF7_ContactForm;
 use WPCF7_Mail;
 
@@ -57,6 +58,7 @@ class Extension extends AbstractPluginIntegration {
 		}
 
 		add_action( 'pronamic_payment_status_update_' . self::SLUG, [ $this, 'status_update' ], 10 );
+		add_filter( 'pronamic_payment_redirect_url_' . self::SLUG, [ $this, 'redirect_url' ], 10, 2 );
 
 		if ( ! class_exists( 'WPCF7R_Action' ) ) {
 			add_filter( 'wpcf7_editor_panels', [ $this, 'missing_dependency_panel' ] );
@@ -244,6 +246,71 @@ class Extension extends AbstractPluginIntegration {
 	 */
 	public function source_description( $description, Payment $payment ) {
 		return __( 'Contact Form 7 Payment', 'knit-pay-lang' );
+	}
+
+	/**
+	 * Payment redirect URL filter.
+	 *
+	 * @param string  $url     Redirect URL.
+	 * @param Payment $payment Payment.
+	 *
+	 * @return string
+	 */
+	public function redirect_url( $url, $payment ) {
+		$action_post_id = $payment->get_meta( 'cf7_action_post_id' );
+
+		if ( empty( $action_post_id ) ) {
+			return $url;
+		}
+
+		$status_url = null;
+
+		switch ( $payment->status ) {
+			case PaymentStatus::CANCELLED:
+				$status_url = self::get_page_link_by_meta( $action_post_id, 'cancelled_page_id' );
+				break;
+			case PaymentStatus::EXPIRED:
+				$status_url = self::get_page_link_by_meta( $action_post_id, 'expired_page_id' );
+				break;
+			case PaymentStatus::FAILURE:
+				$status_url = self::get_page_link_by_meta( $action_post_id, 'error_page_id' );
+				break;
+			case PaymentStatus::SUCCESS:
+				$status_url = self::get_page_link_by_meta( $action_post_id, 'completed_page_id' );
+				break;
+			case PaymentStatus::OPEN:
+			default:
+				$status_url = self::get_page_link_by_meta( $action_post_id, 'unknown_page_id' );
+				break;
+		}
+
+		if ( ! empty( $status_url ) ) {
+			return $status_url;
+		}
+
+		return $url;
+	}
+
+	/**
+	 * Get page permalink from action post meta.
+	 *
+	 * @param int    $action_post_id Action post ID.
+	 * @param string $meta_key       Meta key for the page ID field.
+	 *
+	 * @return string|null
+	 */
+	private static function get_page_link_by_meta( $action_post_id, $meta_key ) {
+		$page_id = \get_post_meta( $action_post_id, $meta_key, true );
+
+		if ( empty( $page_id ) ) {
+			return null;
+		}
+
+		if ( 'publish' !== get_post_status( $page_id ) ) {
+			return null;
+		}
+
+		return \get_permalink( $page_id );
 	}
 
 	/**

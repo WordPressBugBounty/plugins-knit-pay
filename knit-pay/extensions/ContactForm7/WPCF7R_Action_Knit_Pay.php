@@ -32,7 +32,8 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 	public function get_action_fields() {
 		$this->payment_method = 'knit_pay';
 
-		$settings_url = add_query_arg( 'page', 'pronamic_pay_settings', get_admin_url( null, 'admin.php' ) );
+		$settings_url  = add_query_arg( 'page', 'pronamic_pay_settings', get_admin_url( null, 'admin.php' ) );
+		$pages_options = self::get_pages_options();
 
 		return array_merge(
 			[
@@ -75,18 +76,6 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 					'sub_title'   => '',
 					'placeholder' => '',
 					'value'       => $this->get( 'email_delay' ),
-				],
-				'redirection_pages'         => [
-					'name'        => 'general-alert',
-					'type'        => 'notice',
-					'label'       => __( 'Redirection Pages!', 'knit-pay-lang' ),
-					'sub_title'   => sprintf(
-						/* translators: %s: URL of the Knit Pay settings page */
-						__( 'Redirection pages can be configured on the <a href="%s" target="_blank">"Knit Pay >> Settings"</a> page.', 'knit-pay-lang' ),
-						esc_url( $settings_url )
-					),
-					'placeholder' => '',
-					'class'       => 'field-notice-alert',
 				],
 				'pricing_details'           => [
 					'name'   => $this->payment_method . '_pricing_details',
@@ -211,11 +200,74 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 						],
 					],
 				],
+				'redirection_pages'         => [
+					'name'   => 'redirection_pages',
+					'type'   => 'section',
+					'title'  => __( 'Payment Status Pages', 'knit-pay-lang' ),
+					'class'  => '',
+					'footer' => sprintf(
+						/* translators: %s: URL of the Knit Pay settings page */
+						__( 'Leave as "— Select —" to use global default pages configured in <a href="%s" target="_blank">"Knit Pay >> Settings"</a>.', 'knit-pay-lang' ),
+						esc_url( $settings_url )
+					),
+					'fields' => [
+						'completed_page_id' => [
+							'name'    => 'completed_page_id',
+							'type'    => 'select',
+							'label'   => __( 'Completed', 'knit-pay-lang' ),
+							'options' => $pages_options,
+							'value'   => $this->get( 'completed_page_id' ),
+							'class'   => 'qs-col qs-col-6',
+						],
+						'cancelled_page_id' => [
+							'name'    => 'cancelled_page_id',
+							'type'    => 'select',
+							'label'   => __( 'Cancelled', 'knit-pay-lang' ),
+							'options' => $pages_options,
+							'value'   => $this->get( 'cancelled_page_id' ),
+							'class'   => 'qs-col qs-col-6',
+						],
+						'expired_page_id'   => [
+							'name'    => 'expired_page_id',
+							'type'    => 'select',
+							'label'   => __( 'Expired', 'knit-pay-lang' ),
+							'options' => $pages_options,
+							'value'   => $this->get( 'expired_page_id' ),
+							'class'   => 'qs-col qs-col-6',
+						],
+						'error_page_id'     => [
+							'name'    => 'error_page_id',
+							'type'    => 'select',
+							'label'   => __( 'Error', 'knit-pay-lang' ),
+							'options' => $pages_options,
+							'value'   => $this->get( 'error_page_id' ),
+							'class'   => 'qs-col qs-col-6',
+						],
+						'unknown_page_id'   => [
+							'name'    => 'unknown_page_id',
+							'type'    => 'select',
+							'label'   => __( 'Unknown', 'knit-pay-lang' ),
+							'options' => $pages_options,
+							'value'   => $this->get( 'unknown_page_id' ),
+							'class'   => 'qs-col qs-col-6',
+						],
+					],
+				],
 			],
 			parent::get_default_fields()
 		);
 	}
 	
+	public static function get_pages_options() {
+		$options = [ '' => __( '— Select —', 'knit-pay-lang' ) ];
+
+		foreach ( \get_pages() as $page ) {
+			$options[ $page->ID ] = $page->post_title;
+		}
+
+		return $options;
+	}
+
 	/**
 	 * Handle a simple redirect rule
 	 *
@@ -292,6 +344,8 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 			$payment->config_id = $config_id;
 
 			$payment->set_meta( 'email_delay', $this->get( 'email_delay' ) );
+
+			$payment->set_meta( 'cf7_action_post_id', $this->get_id() );
 
 			// Start the Payment.
 			$payment = Plugin::start_payment( $payment );

@@ -575,9 +575,8 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		return $fields;
 	}
 	
-	protected function get_oauth_connect_button_fields( $fields ) {
-		// Oauth Connect Description.
-		$fields[] = [
+	protected function get_oauth_connect_how_to_connect_field() {
+		return [
 			'section'  => 'general',
 			'type'     => 'custom',
 			'title'    => $this->gateway_name . ' Connect',
@@ -595,6 +594,11 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 				printf( '<p>%s</p>', esc_html( $instruction ) );
 			},
 		];
+	}
+
+	protected function get_oauth_connect_button_fields( $fields ) {
+		// Oauth Connect Description.
+		$fields[] = $this->get_oauth_connect_how_to_connect_field();
 		
 		// Connect.
 		$fields[] = [

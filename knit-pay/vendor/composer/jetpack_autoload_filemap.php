@@ -7,7 +7,7 @@ $baseDir   = dirname($vendorDir);
 
 return array(
 	'509f66d930a3f0b7d9b65b22aa319565' => array(
-		'version' => '4.26.0.2',
+		'version' => '4.26.0.3',
 		'path'    => $baseDir . '/packages/wp-pay/core/includes/functions.php'
 	),
 	'9c67151ae59aff4788964ce8eb2a0f43' => array(
@@ -15,15 +15,15 @@ return array(
 		'path'    => $vendorDir . '/clue/stream-filter/src/functions_include.php'
 	),
 	'6e3fae29631ef280660b3cdad06f25a8' => array(
-		'version' => '3.6.0.0',
+		'version' => '3.7.0.0',
 		'path'    => $vendorDir . '/symfony/deprecation-contracts/function.php'
 	),
 	'0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => array(
-		'version' => '1.36.0.0',
+		'version' => '1.37.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-mbstring/bootstrap.php'
 	),
 	'662a729f963d39afe703c9d9b7ab4a8c' => array(
-		'version' => '1.36.0.0',
+		'version' => '1.37.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/bootstrap.php'
 	),
 	'8cff32064859f4559445b89279f3199c' => array(

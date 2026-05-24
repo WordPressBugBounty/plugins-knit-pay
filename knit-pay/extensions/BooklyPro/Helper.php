@@ -25,8 +25,8 @@ class Helper {
 	 *
 	 * @return string
 	 */
-	public static function get_title( $userData ) {
-		return $userData->cart->getItemsTitle( 128, false );
+	public static function get_title( $user_data ) {
+		return $user_data->cart->getItemsTitle( 128, false );
 	}
 
 	/**
@@ -34,17 +34,17 @@ class Helper {
 	 *
 	 * @return string
 	 */
-	public static function get_description( $payment_method, $form_id, $userData, $bookly_payment ) {
+	public static function get_description( $payment_method, $form_id, $user_data, $bookly_payment ) {
 		$description = get_option( 'bookly_' . $payment_method . '_payment_description' );
 
 		if ( empty( $description ) ) {
-			$description = self::get_title( $userData );
+			$description = self::get_title( $user_data );
 		}
 
 		// Replacements.
 		$replacements = [
 			'{form_id}'      => $form_id,
-			'{service_name}' => $userData->cart->getItemsTitle( 128, false ),
+			'{service_name}' => $user_data->cart->getItemsTitle( 128, false ),
 			'{payment_id}'   => $bookly_payment->getId(),
 		];
 

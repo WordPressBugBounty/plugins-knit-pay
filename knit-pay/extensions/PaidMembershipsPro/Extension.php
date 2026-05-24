@@ -64,6 +64,7 @@ class Extension extends AbstractPluginIntegration {
 
 		add_action( 'init', [ $gateway, 'init' ] );
 		add_filter( 'pmpro_default_country', [ $this, 'pmpro_default_country' ] );
+		add_filter( 'pmpro_is_ready', [ $this, 'pmpro_is_ready' ] );
 	}
 
 	/**
@@ -336,6 +337,34 @@ class Extension extends AbstractPluginIntegration {
 	private function pmp_log( $s ) {
 		global $logstr;
 		$logstr .= "\t" . $s . "\n";
+	}
+
+	/**
+	 * Mark PMPro as ready in Dashboard when Knit Pay is configured.
+	 *
+	 * @param bool $ready Current ready state.
+	 * @return bool
+	 */
+	public function pmpro_is_ready( $ready ) {
+		global $pmpro_gateway_ready;
+
+		// Only intervene if the active gateway is knit_pay and PMPro still thinks it's not ready.
+		if ( $ready || get_option( 'pmpro_gateway' ) !== 'knit_pay' ) {
+			return $ready;
+		}
+
+		// Check that a configuration ID is set.
+		$config_id = get_option( 'pmpro_knit_pay_config_id' );
+		if ( empty( $config_id ) ) {
+			$config_id = get_option( 'pronamic_pay_config_id' );
+		}
+
+		if ( ! empty( $config_id ) ) {
+			$pmpro_gateway_ready = true;
+			$ready               = true;
+		}
+
+		return $ready;
 	}
 
 	/**

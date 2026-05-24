@@ -55,7 +55,7 @@
 		"ext-json": "*",
 		"automattic/jetpack-autoloader": "^5.0",
 		"composer/installers": "^2.3",
-		"gautammkgarg/psr-for-wordpress": "^0.2",
+		"gautammkgarg/psr-for-wordpress": "*",
 		"konekt/pdf-invoice": "^1.14",
 		"omnipay/common": "^3.5",
 		"paytm/paytmchecksum": "dev-master",
@@ -69,7 +69,7 @@
 		"razorpay/razorpay": "2.*",
 		"stripe/stripe-php": "^7.67",
 		"woocommerce/action-scheduler": "^3.9",
-		"wp-pay-extensions/charitable": "dev-knitpay-master as 4.3.4",
+		"wp-pay-extensions/charitable": "dev-knitpay-master as 4.3.5",
 		"wp-pay-extensions/easy-digital-downloads": "dev-knitpay-master as 4.3.6",
 		"wp-pay-extensions/formidable-forms": "dev-knitpay-master as 4.4.3",
 		"wp-pay-extensions/give": "dev-knitpay-master as 4.2.5",
@@ -78,7 +78,7 @@
 		"wp-pay-extensions/ninjaforms": "dev-knitpay-master as 3.3.4",
 		"wp-pay-extensions/restrict-content-pro": "dev-knitpay-master as 4.6.3",
 		"wp-pay-extensions/woocommerce": "dev-knitpay-master as 4.12.1",
-		"wp-pay/core": "4.26.0.2 as 4.26.0"
+		"wp-pay/core": "4.26.0.3 as 4.26.0"
 	},
 	"require-dev": {
 		"automattic/wordbless": "^0.3 || ^0.4",

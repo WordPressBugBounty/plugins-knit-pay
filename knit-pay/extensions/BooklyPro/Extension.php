@@ -7,7 +7,6 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus as Core_Statuses;
 use Pronamic\WordPress\Pay\Core\Util;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Bookly\Lib as BooklyLib;
-use Bookly\Lib\Config as BooklyConfig;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 
 /**
@@ -63,22 +62,8 @@ class Extension extends AbstractPluginIntegration {
 		add_action( 'plugins_loaded', [ $this, 'init_gateway' ] );
 
 		// TODO check if webhook is possible or not. Refer /bookly-addon-stripe/frontend/modules/stripe/Ajax.php
-		
-		/*
-		 * TODO check the solution for paymentStepDisabled() function;
-		 * There is a bug in Bookly which don't allow to accept payment if official payment gateway addons are not enabled.
-		 * This is a workaround to make change in Bookly code so that Thirdparty payment gateway become supported.
-		 * This workaround might not work on some hosting providers.
-		 */
-		if ( class_exists( '\Bookly\Lib\Config' ) && BooklyConfig::paymentStepDisabled() ) {
-			$edited_code      = 'return false;';
-			$reflector        = new \ReflectionClass( '\Bookly\Lib\Config' );
-			$config_file_path = $reflector->getFileName();
-			$filecontent      = file_get_contents( $config_file_path );
-			$pos              = strpos( $filecontent, 'return ! ( self::payLocallyEnabled()' );
-			$filecontent      = substr( $filecontent, 0, $pos ) . $edited_code . "\r\n\t\t" . substr( $filecontent, $pos );
-			file_put_contents( $config_file_path, $filecontent ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_file_put_contents
-		}
+
+		add_filter( 'pre_option_bookly_pmt_local', [ $this, 'filter_payment_step_disabled' ], 10, 2 );
 	}
 
 	/**
@@ -159,5 +144,50 @@ class Extension extends AbstractPluginIntegration {
 	public static function is_gateway_enabled( $gateway ) {
 		$active_payment_methods = self::get_active_payment_methods();
 		return in_array( $gateway, $active_payment_methods ) && get_option( 'bookly_' . $gateway . '_enabled' );
+	}
+
+	/**
+	 * Check if any Knit Pay payment method is enabled.
+	 *
+	 * @return bool True if at least one Knit Pay payment method is enabled, false otherwise.
+	 */
+	public static function is_any_knit_pay_enabled() {
+		$active_payment_methods = self::get_active_payment_methods();
+		foreach ( $active_payment_methods as $payment_method ) {
+			if ( get_option( 'bookly_' . $payment_method . '_enabled' ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Ensure the Bookly payment step remains visible when only Knit Pay is enabled.
+	 *
+	 * \Bookly\Lib\Config::paymentStepDisabled() only checks built-in gateways.
+	 * When Knit Pay is the only active gateway,
+	 * the payment step gets hidden. This filter returns '1' for the
+	 * 'bookly_pmt_local' option only when paymentStepDisabled() is asking,
+	 * so payLocallyEnabled() evaluates as true and the step stays visible.
+	 *
+	 * @param mixed  $pre_value The pre-filtered value.
+	 * @param string $option    Option name.
+	 * @return string|mixed '1' if called from paymentStepDisabled(), otherwise the real value.
+	 */
+	public static function filter_payment_step_disabled( $pre_value, $option ) {
+		if ( ! self::is_any_knit_pay_enabled() ) {
+			return $pre_value;
+		}
+
+		$backtrace = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 10 ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
+		foreach ( $backtrace as $frame ) {
+			if ( isset( $frame['class'], $frame['function'] )
+				&& 'Bookly\Lib\Config' === $frame['class']
+				&& 'paymentStepDisabled' === $frame['function'] ) {
+				return '1';
+			}
+		}
+
+		return $pre_value;
 	}
 }

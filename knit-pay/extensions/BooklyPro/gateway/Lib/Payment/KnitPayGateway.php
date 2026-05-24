@@ -40,7 +40,7 @@ class KnitPayGateway extends BooklyLib\Base\Gateway {
 		}
 		
 		$cart_info      = $this->request->getCartInfo();
-		$userData       = $this->request->getUserData();
+		$user_data      = $this->request->getUserData();
 		$form_id        = $this->request->getFormId();
 		$bookly_payment = $this->payment;
 
@@ -61,15 +61,15 @@ class KnitPayGateway extends BooklyLib\Base\Gateway {
 		$payment->order_id = $bookly_payment->getId();
 
 
-		$payment->set_description( Helper::get_description( $bookly_payment_method, $form_id, $userData, $bookly_payment ) );
+		$payment->set_description( Helper::get_description( $bookly_payment_method, $form_id, $user_data, $bookly_payment ) );
 
-		$payment->title = Helper::get_title( $userData );
+		$payment->title = Helper::get_title( $user_data );
 
 		// Customer.
-		$payment->set_customer( Helper::get_customer( $userData ) );
+		$payment->set_customer( Helper::get_customer( $user_data ) );
 
 		// Address.
-		$payment->set_billing_address( Helper::get_address( $userData ) );
+		$payment->set_billing_address( Helper::get_address( $user_data ) );
 
 		// Currency.
 		$currency = Currency::get_instance( BooklyLib\Config::getCurrency() );
@@ -110,17 +110,12 @@ class KnitPayGateway extends BooklyLib\Base\Gateway {
 			case Core_Statuses::EXPIRED:
 			case Core_Statuses::FAILURE:
 				return self::STATUS_FAILED;
-				
-				break;
 			case Core_Statuses::SUCCESS:
 				return self::STATUS_COMPLETED;
-				
 			case Core_Statuses::OPEN:
 			default:
 				return self::STATUS_PROCESSING;
 		}
-		
-		return self::STATUS_PROCESSING;
 	}
 
 	/**

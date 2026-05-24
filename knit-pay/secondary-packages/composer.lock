@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec5c4d3d82d83924ec3ed3a086d1c9e7",
+    "content-hash": "2aefd7dcca0a122407058fb14c1e9c6c",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -72,16 +72,16 @@
         },
         {
             "name": "iyzico/iyzipay-php",
-            "version": "v2.0.60",
+            "version": "v2.0.61",
             "source": {
                 "type": "git",
                 "url": "https://github.com/iyzico/iyzipay-php.git",
-                "reference": "fda153102f4dc9ffdebc72a6ab47c83123e8333e"
+                "reference": "168839f9ccb2aebaa2cb9f07b883b1b2bb0cf87a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/iyzico/iyzipay-php/zipball/fda153102f4dc9ffdebc72a6ab47c83123e8333e",
-                "reference": "fda153102f4dc9ffdebc72a6ab47c83123e8333e",
+                "url": "https://api.github.com/repos/iyzico/iyzipay-php/zipball/168839f9ccb2aebaa2cb9f07b883b1b2bb0cf87a",
+                "reference": "168839f9ccb2aebaa2cb9f07b883b1b2bb0cf87a",
                 "shasum": ""
             },
             "require": {
@@ -89,7 +89,7 @@
                 "php": ">=7.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~9.6",
+                "phpunit/phpunit": "^9.6.34",
                 "satooshi/php-coveralls": "~0.6.1"
             },
             "type": "library",
@@ -122,9 +122,9 @@
             ],
             "support": {
                 "issues": "https://github.com/iyzico/iyzipay-php/issues",
-                "source": "https://github.com/iyzico/iyzipay-php/tree/v2.0.60"
+                "source": "https://github.com/iyzico/iyzipay-php/tree/v2.0.61"
             },
-            "time": "2026-02-11T10:44:12+00:00"
+            "time": "2026-04-28T11:31:34+00:00"
         },
         {
             "name": "knit-pay/omnipay-paypal",
@@ -190,16 +190,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.33.0",
+            "version": "3.34.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "570b8871e0ce693764434b29154c54b434905350"
+                "reference": "2daaac3b0d4c83ea7ed5d8586e786f5d00f3540e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/570b8871e0ce693764434b29154c54b434905350",
-                "reference": "570b8871e0ce693764434b29154c54b434905350",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/2daaac3b0d4c83ea7ed5d8586e786f5d00f3540e",
+                "reference": "2daaac3b0d4c83ea7ed5d8586e786f5d00f3540e",
                 "shasum": ""
             },
             "require": {
@@ -267,9 +267,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.33.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.34.0"
             },
-            "time": "2026-03-25T07:59:30+00:00"
+            "time": "2026-05-14T10:28:08+00:00"
         },
         {
             "name": "league/flysystem-sftp-v3",
@@ -377,6 +377,58 @@
             "time": "2024-09-21T08:32:55+00:00"
         },
         {
+            "name": "nafezly/payments",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/knit-pay/nafezly-payments",
+                "reference": "b32490aba6c8ab22c4a465504d464dff05f4f442"
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "laravel/framework": ">=6.0",
+                "paypal/paypal-checkout-sdk": "1.0.2",
+                "php": ">=7.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Nafezly\\Payments\\NafezlyPaymentsServiceProvider"
+                    ],
+                    "aliases": {
+                        "NafezlyPayments": "Nafezly\\Payments\\Facades"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nafezly\\Payments\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "nafezly.com",
+                    "email": "nafezly.com@gmail.com"
+                }
+            ],
+            "description": "Payment helper for Paypal, Paymob, Kashier, Hyperpay and Fawry",
+            "keywords": [
+                "fawry",
+                "hyperpay",
+                "kashier",
+                "online payments",
+                "paymob",
+                "paypal"
+            ],
+            "time": "2026-05-15T08:51:43+00:00"
+        },
+        {
             "name": "payrexx/payrexx",
             "version": "v1.8.11",
             "source": {
@@ -428,7 +480,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "nafezly/payments": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {},

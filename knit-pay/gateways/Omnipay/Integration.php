@@ -100,7 +100,8 @@ class Integration extends AbstractGatewayIntegration {
 
 		$params = $this->get_omnipay_params();
 		
-		$meta_key_prefix = str_replace( '-', '_', '_pronamic_gateway_' . $this->get_id() . '_' );
+		$provider_id     = str_replace( '-', '_', $this->get_id() );
+		$meta_key_prefix = '_pronamic_gateway_' . $provider_id . '_';
 
 		foreach ( $params as $parm => $val ) {
 			switch ( getType( $val ) ) {

@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v5.0.16",
-            "version_normalized": "5.0.16.0",
+            "version": "v5.0.18",
+            "version_normalized": "5.0.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "d8ae822a35e7431137e860ee60eceedaa745e4d1"
+                "reference": "be5ea0f2109f3300a22a05727721587c9116ffe8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/d8ae822a35e7431137e860ee60eceedaa745e4d1",
-                "reference": "d8ae822a35e7431137e860ee60eceedaa745e4d1",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/be5ea0f2109f3300a22a05727721587c9116ffe8",
+                "reference": "be5ea0f2109f3300a22a05727721587c9116ffe8",
                 "shasum": ""
             },
             "require": {
@@ -20,12 +20,11 @@
                 "php": ">=7.2"
             },
             "require-dev": {
-                "automattic/jetpack-changelogger": "^6.0.14",
-                "automattic/phpunit-select-config": "^1.0.3",
+                "automattic/phpunit-select-config": "^1.0.6",
                 "composer/composer": "^2.2",
                 "yoast/phpunit-polyfills": "^4.0.0"
             },
-            "time": "2026-02-16T10:33:15+00:00",
+            "time": "2026-05-19T09:17:26+00:00",
             "type": "composer-plugin",
             "extra": {
                 "class": "Automattic\\Jetpack\\Autoloader\\CustomAutoloaderPlugin",
@@ -64,7 +63,7 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.16"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.18"
             },
             "install-path": "../automattic/jetpack-autoloader"
         },
@@ -288,17 +287,17 @@
         },
         {
             "name": "gautammkgarg/psr-for-wordpress",
-            "version": "v0.2",
-            "version_normalized": "0.2.0.0",
+            "version": "v0.3",
+            "version_normalized": "0.3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GautamMKGarg/psr-for-wordpress.git",
-                "reference": "fd20ce5f6b0a7276d5a06e4fcf78b2d32c81aae7"
+                "reference": "00fbc504db0b3865b5486269868f186c1ddba39e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GautamMKGarg/psr-for-wordpress/zipball/fd20ce5f6b0a7276d5a06e4fcf78b2d32c81aae7",
-                "reference": "fd20ce5f6b0a7276d5a06e4fcf78b2d32c81aae7",
+                "url": "https://api.github.com/repos/GautamMKGarg/psr-for-wordpress/zipball/00fbc504db0b3865b5486269868f186c1ddba39e",
+                "reference": "00fbc504db0b3865b5486269868f186c1ddba39e",
                 "shasum": ""
             },
             "require": {
@@ -306,19 +305,22 @@
                 "php": ">=8.1",
                 "psr/http-client": "^1.0",
                 "psr/http-factory": "^1.0",
-                "psr/http-message": "^1.1 || ^2.0"
+                "psr/http-message": "^1.1 || ^2.0",
+                "psr/simple-cache": "^3.0"
             },
             "provide": {
-                "psr/http-client-implementation": "1.0"
+                "psr/http-client-implementation": "1.0",
+                "psr/simple-cache-implementation": "1.0"
             },
             "require-dev": {
+                "cache/integration-tests": "dev-master",
                 "php-http/client-integration-tests": "^4.0",
                 "php-http/discovery": "^1.14",
                 "php-http/httplug": "^2.0",
                 "phpunit/phpunit": "^10.0 || ^11.0",
                 "rmccue/requests": "^2.0"
             },
-            "time": "2026-04-16T12:00:25+00:00",
+            "time": "2026-05-19T03:28:21+00:00",
             "type": "library",
             "extra": {
                 "discovery": {
@@ -341,21 +343,24 @@
                     "homepage": "https://github.com/GautamMKGarg"
                 }
             ],
-            "description": "PSR-18 HTTP Client implementation for WordPress using the WordPress HTTP API (wp_remote_request) with fallback to WpOrg\\Requests for non-WordPress environments",
+            "description": "PSR implementations for WordPress that bridge PSR interfaces to native WordPress APIs. PSR-18 HTTP Client (wp_remote_request) and PSR-16 Simple Cache (transients / wp_cache) with companion key pattern.",
             "keywords": [
+                "cache",
                 "http",
                 "http-client",
+                "object-cache",
                 "psr",
-                "psr-17",
+                "psr-16",
                 "psr-18",
-                "psr-7",
                 "requests",
+                "simple-cache",
+                "transients",
                 "wordpress",
                 "wp"
             ],
             "support": {
                 "issues": "https://github.com/GautamMKGarg/psr-for-wordpress/issues",
-                "source": "https://github.com/GautamMKGarg/psr-for-wordpress/tree/v0.2"
+                "source": "https://github.com/GautamMKGarg/psr-for-wordpress/tree/v0.3"
             },
             "install-path": "../gautammkgarg/psr-for-wordpress"
         },
@@ -415,17 +420,17 @@
         },
         {
             "name": "moneyphp/money",
-            "version": "v4.8.0",
-            "version_normalized": "4.8.0.0",
+            "version": "v4.9.0",
+            "version_normalized": "4.9.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moneyphp/money.git",
-                "reference": "b358727ea5a5cd2d7475e59c31dfc352440ae7ec"
+                "reference": "d49ee625c6ba79b9d7a228ce153b02fc1032152b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moneyphp/money/zipball/b358727ea5a5cd2d7475e59c31dfc352440ae7ec",
-                "reference": "b358727ea5a5cd2d7475e59c31dfc352440ae7ec",
+                "url": "https://api.github.com/repos/moneyphp/money/zipball/d49ee625c6ba79b9d7a228ce153b02fc1032152b",
+                "reference": "d49ee625c6ba79b9d7a228ce153b02fc1032152b",
                 "shasum": ""
             },
             "require": {
@@ -461,7 +466,7 @@
                 "florianv/swap": "Exchange rates library for PHP",
                 "psr/cache-implementation": "Used for Currency caching"
             },
-            "time": "2025-10-23T07:55:09+00:00",
+            "time": "2026-05-04T20:23:15+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -502,7 +507,7 @@
             ],
             "support": {
                 "issues": "https://github.com/moneyphp/money/issues",
-                "source": "https://github.com/moneyphp/money/tree/v4.8.0"
+                "source": "https://github.com/moneyphp/money/tree/v4.9.0"
             },
             "install-path": "../moneyphp/money"
         },
@@ -1623,6 +1628,60 @@
             "install-path": "../psr/http-message"
         },
         {
+            "name": "psr/simple-cache",
+            "version": "3.0.0",
+            "version_normalized": "3.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/simple-cache.git",
+                "reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/764e0b3939f5ca87cb904f570ef9be2d78a07865",
+                "reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.0"
+            },
+            "time": "2021-10-29T13:26:27+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Psr\\SimpleCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interfaces for simple caching",
+            "keywords": [
+                "cache",
+                "caching",
+                "psr",
+                "psr-16",
+                "simple-cache"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/simple-cache/tree/3.0.0"
+            },
+            "install-path": "../psr/simple-cache"
+        },
+        {
             "name": "razorpay/razorpay",
             "version": "2.9.2",
             "version_normalized": "2.9.2.0",
@@ -1804,23 +1863,23 @@
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v3.6.0",
-            "version_normalized": "3.6.0.0",
+            "version": "v3.7.0",
+            "version_normalized": "3.7.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "63afe740e99a13ba87ec199bb07bbdee937a5b62"
+                "reference": "50f59d1f3ca46d41ac911f97a78626b6756af35b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/63afe740e99a13ba87ec199bb07bbdee937a5b62",
-                "reference": "63afe740e99a13ba87ec199bb07bbdee937a5b62",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/50f59d1f3ca46d41ac911f97a78626b6756af35b",
+                "reference": "50f59d1f3ca46d41ac911f97a78626b6756af35b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.1"
             },
-            "time": "2024-09-25T14:21:43+00:00",
+            "time": "2026-04-13T15:52:40+00:00",
             "type": "library",
             "extra": {
                 "thanks": {
@@ -1828,7 +1887,7 @@
                     "name": "symfony/contracts"
                 },
                 "branch-alias": {
-                    "dev-main": "3.6-dev"
+                    "dev-main": "3.7-dev"
                 }
             },
             "installation-source": "dist",
@@ -1854,7 +1913,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.6.0"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.7.0"
             },
             "funding": [
                 {
@@ -1863,6 +1922,10 @@
                 },
                 {
                     "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
                     "type": "github"
                 },
                 {
@@ -1958,8 +2021,8 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.36.0",
-            "version_normalized": "1.36.0.0",
+            "version": "v1.37.0",
+            "version_normalized": "1.37.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -2022,7 +2085,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.36.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.37.0"
             },
             "funding": [
                 {
@@ -2046,8 +2109,8 @@
         },
         {
             "name": "symfony/polyfill-php83",
-            "version": "v1.36.0",
-            "version_normalized": "1.36.0.0",
+            "version": "v1.37.0",
+            "version_normalized": "1.37.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php83.git",
@@ -2105,7 +2168,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php83/tree/v1.36.0"
+                "source": "https://github.com/symfony/polyfill-php83/tree/v1.37.0"
             },
             "funding": [
                 {
@@ -2226,7 +2289,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/extension-charitable",
-                "reference": "ad888018746ead87e3f896fbe3f81dbdc694541c"
+                "reference": "fc38c91fb451a6d77b45bd7f0198b1e6b2d1ff11"
             },
             "require": {
                 "php": ">=7.4",
@@ -2246,7 +2309,7 @@
                 "wpackagist-plugin/charitable": "^1.7",
                 "yoast/phpunit-polyfills": "^1.0"
             },
-            "time": "2025-12-28T13:11:39+00:00",
+            "time": "2026-05-23T10:02:35+00:00",
             "type": "wordpress-plugin",
             "installation-source": "source",
             "autoload": {
@@ -3233,12 +3296,12 @@
         },
         {
             "name": "wp-pay/core",
-            "version": "4.26.0.2",
-            "version_normalized": "4.26.0.2",
+            "version": "4.26.0.3",
+            "version_normalized": "4.26.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/wp-pay-core",
-                "reference": "8f4b9efae67c272acefefd2855022e149809935c"
+                "reference": "7f48cc91a68d9b3cdf4e20f3cf558eb2aadfe59e"
             },
             "require": {
                 "automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
@@ -3275,7 +3338,7 @@
                 "wp-phpunit/wp-phpunit": "^6.1",
                 "yoast/phpunit-polyfills": "^2.0"
             },
-            "time": "2026-02-25T08:18:37+00:00",
+            "time": "2026-05-06T14:00:37+00:00",
             "type": "wordpress-plugin",
             "installation-source": "source",
             "autoload": {

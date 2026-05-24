@@ -39,6 +39,7 @@ class ComposerStaticInitf2c3742f1a4dd897508bac6ba588afbd
         ),
         'P' =>
         array (
+            'Psr\\SimpleCache\\' => 16,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
             'Pronamic\\WpPayLogos\\' => 20,
@@ -136,6 +137,10 @@ class ComposerStaticInitf2c3742f1a4dd897508bac6ba588afbd
         'Razorpay\\Api\\' =>
         array (
             0 => __DIR__ . '/..' . '/razorpay/razorpay/src',
+        ),
+        'Psr\\SimpleCache\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
         ),
         'Psr\\Http\\Message\\' =>
         array (
@@ -404,6 +409,10 @@ class ComposerStaticInitf2c3742f1a4dd897508bac6ba588afbd
         'DateObjectError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateObjectError.php',
         'DateRangeError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateRangeError.php',
         'FPDF' => __DIR__ . '/..' . '/setasign/fpdf/fpdf.php',
+        'GautamMKGarg\\PsrForWordPress\\Cache\\BaseCache' => __DIR__ . '/..' . '/gautammkgarg/psr-for-wordpress/src/Cache/BaseCache.php',
+        'GautamMKGarg\\PsrForWordPress\\Cache\\Exception\\InvalidArgumentException' => __DIR__ . '/..' . '/gautammkgarg/psr-for-wordpress/src/Cache/Exception/InvalidArgumentException.php',
+        'GautamMKGarg\\PsrForWordPress\\Cache\\WpObjectCache' => __DIR__ . '/..' . '/gautammkgarg/psr-for-wordpress/src/Cache/WpObjectCache.php',
+        'GautamMKGarg\\PsrForWordPress\\Cache\\WpTransientsCache' => __DIR__ . '/..' . '/gautammkgarg/psr-for-wordpress/src/Cache/WpTransientsCache.php',
         'GautamMKGarg\\PsrForWordPress\\Http\\Exception\\NetworkException' => __DIR__ . '/..' . '/gautammkgarg/psr-for-wordpress/src/Http/Exception/NetworkException.php',
         'GautamMKGarg\\PsrForWordPress\\Http\\Exception\\RequestException' => __DIR__ . '/..' . '/gautammkgarg/psr-for-wordpress/src/Http/Exception/RequestException.php',
         'GautamMKGarg\\PsrForWordPress\\Http\\Psr18Client' => __DIR__ . '/..' . '/gautammkgarg/psr-for-wordpress/src/Http/Psr18Client.php',
@@ -748,6 +757,10 @@ class ComposerStaticInitf2c3742f1a4dd897508bac6ba588afbd
         'KnitPay\\Gateways\\NMI\\Gateway' => __DIR__ . '/../..' . '/gateways/NMI/Gateway.php',
         'KnitPay\\Gateways\\NMI\\Integration' => __DIR__ . '/../..' . '/gateways/NMI/Integration.php',
         'KnitPay\\Gateways\\NMI\\Statuses' => __DIR__ . '/../..' . '/gateways/NMI/Statuses.php',
+        'KnitPay\\Gateways\\Nafezly\\Config' => __DIR__ . '/../..' . '/gateways/Nafezly/Config.php',
+        'KnitPay\\Gateways\\Nafezly\\Gateway' => __DIR__ . '/../..' . '/gateways/Nafezly/Gateway.php',
+        'KnitPay\\Gateways\\Nafezly\\Integration' => __DIR__ . '/../..' . '/gateways/Nafezly/Integration.php',
+        'KnitPay\\Gateways\\Nafezly\\Statuses' => __DIR__ . '/../..' . '/gateways/Nafezly/Statuses.php',
         'KnitPay\\Gateways\\Omnipay\\Config' => __DIR__ . '/../..' . '/gateways/Omnipay/Config.php',
         'KnitPay\\Gateways\\Omnipay\\Gateway' => __DIR__ . '/../..' . '/gateways/Omnipay/Gateway.php',
         'KnitPay\\Gateways\\Omnipay\\Integration' => __DIR__ . '/../..' . '/gateways/Omnipay/Integration.php',
@@ -763,6 +776,12 @@ class ComposerStaticInitf2c3742f1a4dd897508bac6ba588afbd
         'KnitPay\\Gateways\\OrderBox\\Gateway' => __DIR__ . '/../..' . '/gateways/OrderBox/Gateway.php',
         'KnitPay\\Gateways\\OrderBox\\Helper' => __DIR__ . '/../..' . '/gateways/OrderBox/Helper.php',
         'KnitPay\\Gateways\\OrderBox\\Integration' => __DIR__ . '/../..' . '/gateways/OrderBox/Integration.php',
+        'KnitPay\\Gateways\\PayPal\\API' => __DIR__ . '/../..' . '/gateways/PayPal/API.php',
+        'KnitPay\\Gateways\\PayPal\\Config' => __DIR__ . '/../..' . '/gateways/PayPal/Config.php',
+        'KnitPay\\Gateways\\PayPal\\Gateway' => __DIR__ . '/../..' . '/gateways/PayPal/Gateway.php',
+        'KnitPay\\Gateways\\PayPal\\Integration' => __DIR__ . '/../..' . '/gateways/PayPal/Integration.php',
+        'KnitPay\\Gateways\\PayPal\\Statuses' => __DIR__ . '/../..' . '/gateways/PayPal/Statuses.php',
+        'KnitPay\\Gateways\\PayPal\\Webhook' => __DIR__ . '/../..' . '/gateways/PayPal/Webhook.php',
         'KnitPay\\Gateways\\PayU\\Client' => __DIR__ . '/../..' . '/gateways/PayU/Client.php',
         'KnitPay\\Gateways\\PayU\\Config' => __DIR__ . '/../..' . '/gateways/PayU/Config.php',
         'KnitPay\\Gateways\\PayU\\Gateway' => __DIR__ . '/../..' . '/gateways/PayU/Gateway.php',
@@ -776,12 +795,6 @@ class ComposerStaticInitf2c3742f1a4dd897508bac6ba588afbd
         'KnitPay\\Gateways\\PaymarkOE\\Integration' => __DIR__ . '/../..' . '/gateways/PaymarkOE/Integration.php',
         'KnitPay\\Gateways\\PaymarkOE\\Statuses' => __DIR__ . '/../..' . '/gateways/PaymarkOE/Statuses.php',
         'KnitPay\\Gateways\\PaymentMethods' => __DIR__ . '/../..' . '/gateways/PaymentMethods.php',
-        'KnitPay\\Gateways\\Paypal\\API' => __DIR__ . '/../..' . '/gateways/Paypal/API.php',
-        'KnitPay\\Gateways\\Paypal\\Config' => __DIR__ . '/../..' . '/gateways/Paypal/Config.php',
-        'KnitPay\\Gateways\\Paypal\\Gateway' => __DIR__ . '/../..' . '/gateways/Paypal/Gateway.php',
-        'KnitPay\\Gateways\\Paypal\\Integration' => __DIR__ . '/../..' . '/gateways/Paypal/Integration.php',
-        'KnitPay\\Gateways\\Paypal\\Statuses' => __DIR__ . '/../..' . '/gateways/Paypal/Statuses.php',
-        'KnitPay\\Gateways\\Paypal\\Webhook' => __DIR__ . '/../..' . '/gateways/Paypal/Webhook.php',
         'KnitPay\\Gateways\\Payrexx\\Config' => __DIR__ . '/../..' . '/gateways/Payrexx/Config.php',
         'KnitPay\\Gateways\\Payrexx\\Gateway' => __DIR__ . '/../..' . '/gateways/Payrexx/Gateway.php',
         'KnitPay\\Gateways\\Payrexx\\Integration' => __DIR__ . '/../..' . '/gateways/Payrexx/Integration.php',
@@ -1266,6 +1279,9 @@ class ComposerStaticInitf2c3742f1a4dd897508bac6ba588afbd
         'Psr\\Http\\Message\\UploadedFileInterface' => __DIR__ . '/..' . '/psr/http-message/src/UploadedFileInterface.php',
         'Psr\\Http\\Message\\UriFactoryInterface' => __DIR__ . '/..' . '/psr/http-factory/src/UriFactoryInterface.php',
         'Psr\\Http\\Message\\UriInterface' => __DIR__ . '/..' . '/psr/http-message/src/UriInterface.php',
+        'Psr\\SimpleCache\\CacheException' => __DIR__ . '/..' . '/psr/simple-cache/src/CacheException.php',
+        'Psr\\SimpleCache\\CacheInterface' => __DIR__ . '/..' . '/psr/simple-cache/src/CacheInterface.php',
+        'Psr\\SimpleCache\\InvalidArgumentException' => __DIR__ . '/..' . '/psr/simple-cache/src/InvalidArgumentException.php',
         'Razorpay\\Api\\Account' => __DIR__ . '/..' . '/razorpay/razorpay/src/Account.php',
         'Razorpay\\Api\\Addon' => __DIR__ . '/..' . '/razorpay/razorpay/src/Addon.php',
         'Razorpay\\Api\\Api' => __DIR__ . '/..' . '/razorpay/razorpay/src/Api.php',

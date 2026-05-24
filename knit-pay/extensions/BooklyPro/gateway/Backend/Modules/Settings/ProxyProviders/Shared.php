@@ -42,7 +42,7 @@ class Shared extends Proxy\Shared {
 	 * @inheritdoc
 	 */
 	public static function saveSettings( array $alert, $tab, array $params ) {
-		if ( $tab == 'payments' ) {
+		if ( 'payments' === $tab ) {
 			$options = [];
 
 			$active_payment_methods = Extension::get_active_payment_methods();

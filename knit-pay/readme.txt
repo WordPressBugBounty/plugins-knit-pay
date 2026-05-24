@@ -1,10 +1,10 @@
-=== Knit Pay - Cashfree, Instamojo, Razorpay, Paypal and more ===
+=== Knit Pay - Cashfree, Instamojo, Razorpay, PayPal and more ===
 Contributors: knitpay, GautamMKGarg
 Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 9.3.4.0
+Stable tag: 9.4.0.0-rc.1
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, PayPal, Razorpay, and SSLCommerz, with over 100 WordPress plugins.
@@ -34,7 +34,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 = Payment Gateways in Knit Pay =
 * Cashfree
 * Instamojo
-* Paypal
+* PayPal (Supports 50+ payment methods like Venmo, Card Fields, iDeal, BLIK, P24, Apple Pay, Google Pay, ACH, bancontact and many more)
 * RazorPay (Indian and Import Flow for Non-Indian businesses)
 * SSLCommerz - Bangladesh
 * Stripe Connect (For Indian Businesses) (Use Stripe at just 0.75% additional fee.)
@@ -97,6 +97,10 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Revolut
 * Pesapal
 * Vipps
+* Paylink
+* Paymob
+* PayTabs
+* Tap Payments
 
 = Indian Payment Gateways (Contact us for this premium addon.) =
 * JioPay
@@ -192,15 +196,16 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Omise
 * Nuvei
 * AsiaPay
-* Paymob
 * Dodo Payments
 * Kashier
-* PayTabs
 * PayLetter
 * PaymentWall
 * Toss
 * 2c2p
 * esPay
+* Transbank Webpay
+* UnionPay
+* WeChat
 * and many more...
 
 = Crypto Currencies Payment Gateways (Contact us for this premium addon.) =
@@ -238,6 +243,10 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Manual Payment
 * Sofort Banking
 * Bancontact
+* PIX
+* OXXO
+* Pago Fácil
+* UnionPay
 * Bitcoin (BTC), Bitcoin Cash (BCH), Ethereum (ETH), Tether (USDT), USD Coin (USDC), and Altcoin cryptocurrencies
 * and many more...
 
