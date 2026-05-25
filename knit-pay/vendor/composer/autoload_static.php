@@ -515,6 +515,7 @@ class ComposerStaticInitf2c3742f1a4dd897508bac6ba588afbd
         'KnitPay\\Extensions\\ContactForm7\\ContactForm7Dependency' => __DIR__ . '/../..' . '/extensions/ContactForm7/ContactForm7Dependency.php',
         'KnitPay\\Extensions\\ContactForm7\\Extension' => __DIR__ . '/../..' . '/extensions/ContactForm7/Extension.php',
         'KnitPay\\Extensions\\ContactForm7\\Helper' => __DIR__ . '/../..' . '/extensions/ContactForm7/Helper.php',
+        'KnitPay\\Extensions\\EasyDigitalDownloads\\Extension' => __DIR__ . '/../..' . '/extensions/EasyDigitalDownloads/Extension.php',
         'KnitPay\\Extensions\\EngineThemes\\EngineThemesDependency' => __DIR__ . '/../..' . '/extensions/EngineThemes/EngineThemesDependency.php',
         'KnitPay\\Extensions\\EngineThemes\\Extension' => __DIR__ . '/../..' . '/extensions/EngineThemes/Extension.php',
         'KnitPay\\Extensions\\EngineThemes\\FreelanceEngine\\Extension' => __DIR__ . '/../..' . '/extensions/EngineThemes/FreelanceEngine/Extension.php',

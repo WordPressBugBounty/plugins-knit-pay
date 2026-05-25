@@ -6,5 +6,6 @@ Special thanks to the developers of the following projects. We have modified and
 5. WordPress Plugin - Pronamic Pay (https://wordpress.org/plugins/pronamic-ideal/)
 6. Icon: Designed by monkik from Flaticon
 7. OmniPay (https://github.com/thephpleague/omnipay)
+8. Nafezly (https://packagist.org/packages/nafezly/payments)
 
 Kindly inform us if we missed any names or references.

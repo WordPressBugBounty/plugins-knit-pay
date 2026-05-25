@@ -235,6 +235,7 @@ return array(
     'KnitPay\\Extensions\\ContactForm7\\ContactForm7Dependency' => $baseDir . '/extensions/ContactForm7/ContactForm7Dependency.php',
     'KnitPay\\Extensions\\ContactForm7\\Extension' => $baseDir . '/extensions/ContactForm7/Extension.php',
     'KnitPay\\Extensions\\ContactForm7\\Helper' => $baseDir . '/extensions/ContactForm7/Helper.php',
+    'KnitPay\\Extensions\\EasyDigitalDownloads\\Extension' => $baseDir . '/extensions/EasyDigitalDownloads/Extension.php',
     'KnitPay\\Extensions\\EngineThemes\\EngineThemesDependency' => $baseDir . '/extensions/EngineThemes/EngineThemesDependency.php',
     'KnitPay\\Extensions\\EngineThemes\\Extension' => $baseDir . '/extensions/EngineThemes/Extension.php',
     'KnitPay\\Extensions\\EngineThemes\\FreelanceEngine\\Extension' => $baseDir . '/extensions/EngineThemes/FreelanceEngine/Extension.php',

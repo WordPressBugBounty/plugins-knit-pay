@@ -154,8 +154,10 @@ class Gateway extends Core_Gateway {
 				
 		// optional: add contact information which should be stored along with payment
 		// $gateway->addField('title', 'mister');
-		$gateway->addField( 'forename', $customer->get_name()->get_first_name() );
-		$gateway->addField( 'surname', $customer->get_name()->get_last_name() );
+		if ( null !== $customer->get_name() ) {
+			$gateway->addField( 'forename', $customer->get_name()->get_first_name() );
+			$gateway->addField( 'surname', $customer->get_name()->get_last_name() );
+		}
 		$gateway->addField( 'company', $customer->get_company_name() );
 		$gateway->addField( 'street', $billing_address->get_line_1() );
 		$gateway->addField( 'postcode', $billing_address->get_line_2() );

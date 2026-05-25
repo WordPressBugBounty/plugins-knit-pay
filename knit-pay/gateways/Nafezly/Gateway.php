@@ -136,8 +136,9 @@ class Gateway extends Core_Gateway {
 		$language       = $customer ? $customer->get_language() : '';
 
 		$user_id        = $customer ? $customer->get_user_id() : null;
-		$first_name     = $customer ? $customer->get_name()->get_first_name() : null;
-		$last_name      = $customer ? $customer->get_name()->get_last_name() : null;
+		$customer_name  = $customer ? $customer->get_name() : null;
+		$first_name     = $customer_name ? $customer_name->get_first_name() : null;
+		$last_name      = $customer_name ? $customer_name->get_last_name() : null;
 		$email          = $customer ? $customer->get_email() : null;
 		$customer_phone = $billing_address ? $billing_address->get_phone() : null;
 
@@ -226,8 +227,12 @@ class Gateway extends Core_Gateway {
 			// Resolve payment_id regardless of source.
 			$payment_id = $payment->get_meta( 'nafezly_payment_id' );
 
-			// Read the real HTTP request.
-			$json         = json_decode( file_get_contents( 'php://input' ), true );
+			// Read the real HTTP request (body can only be consumed once).
+			$raw_content = file_get_contents( 'php://input' );
+			if ( false === $raw_content ) {
+				$raw_content = '';
+			}
+			$json         = json_decode( $raw_content, true );
 			$request_data = array_merge( $_GET, $_POST, $json ?: [] );
 
 			// Detect webhook via optional per-gateway callback.
@@ -242,7 +247,8 @@ class Gateway extends Core_Gateway {
 				$request_data['payment_id'] = $payment_id;
 			}
 
-			$request = new Request( $request_data );
+			// Pass $raw_content so getContent() and header() remain accurate for Binance.
+			$request = new Request( $request_data, [], [], [], [], $_SERVER, $raw_content );
 
 			$verified = $this->driver->verify( $request );
 

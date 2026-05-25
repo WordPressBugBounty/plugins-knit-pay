@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => '9.4.x-dev',
         'version' => '9.4.9999999.9999999-dev',
-        'reference' => '698001528f24732946eaba8caac5589eecd4fa4d',
+        'reference' => '2e4f654fc0559e4a6a1aeb976a51ff15bec07ffc',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => '9.4.x-dev',
             'version' => '9.4.9999999.9999999-dev',
-            'reference' => '698001528f24732946eaba8caac5589eecd4fa4d',
+            'reference' => '2e4f654fc0559e4a6a1aeb976a51ff15bec07ffc',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -397,7 +397,7 @@
         'wp-pay-extensions/easy-digital-downloads' => array(
             'pretty_version' => 'dev-knitpay-master',
             'version' => 'dev-knitpay-master',
-            'reference' => 'd75a00694d277c222969454421d49177fc7b9888',
+            'reference' => '879ecbe3dadb58f873eb6922884844bdf1490a81',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../packages/wp-pay-extensions/easy-digital-downloads',
             'aliases' => array(

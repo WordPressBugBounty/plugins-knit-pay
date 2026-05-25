@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 9.4.0.0-rc.1
+Stable tag: 9.4.0.0-rc.3
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, PayPal, Razorpay, and SSLCommerz, with over 100 WordPress plugins.
@@ -231,6 +231,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * OmniPay Library
 * Payum Library
 * Multipay Library by shetabit
+* Nafezly Payments Library
 
 == Supported Payment Methods ==
 * Debit Cards

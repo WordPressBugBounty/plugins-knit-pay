@@ -998,6 +998,10 @@ return array(
 		'version' => '9.4.9999999.9999999-dev',
 		'path'    => $baseDir . '/extensions/ContactForm7/Helper.php'
 	),
+	'KnitPay\\Extensions\\EasyDigitalDownloads\\Extension' => array(
+		'version' => '9.4.9999999.9999999-dev',
+		'path'    => $baseDir . '/extensions/EasyDigitalDownloads/Extension.php'
+	),
 	'KnitPay\\Extensions\\EngineThemes\\EngineThemesDependency' => array(
 		'version' => '9.4.9999999.9999999-dev',
 		'path'    => $baseDir . '/extensions/EngineThemes/EngineThemesDependency.php'

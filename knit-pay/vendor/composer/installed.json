@@ -2390,7 +2390,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/extension-easy-digital-downloads",
-                "reference": "d75a00694d277c222969454421d49177fc7b9888"
+                "reference": "879ecbe3dadb58f873eb6922884844bdf1490a81"
             },
             "require": {
                 "php": ">=8.0",
@@ -2411,7 +2411,7 @@
                 "wpackagist-plugin/wordpress-seo": "^22.3",
                 "yoast/phpunit-polyfills": "^2.0"
             },
-            "time": "2025-12-28T13:17:45+00:00",
+            "time": "2026-05-25T13:23:32+00:00",
             "type": "wordpress-plugin",
             "installation-source": "source",
             "autoload": {

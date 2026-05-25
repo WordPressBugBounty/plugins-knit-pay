@@ -1,0 +1,197 @@
+<?php
+
+namespace Nafezly\Payments\Classes;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Nafezly\Payments\Interfaces\PaymentInterface;
+use Nafezly\Payments\Classes\BaseController;
+
+class KashierPayment extends BaseController implements PaymentInterface
+{
+    public  $kashier_url;
+    public  $kashier_webhook_url;
+    public  $kashier_mode;
+    public  $kashier_account_key;
+    public $kashier_iframe_key;
+    public $kashier_token;
+    public  $app_name;
+    public  $auto_redirect_back_on_fail = false;
+    public  $hosted_payment = false;
+
+
+    public $verify_route_name;
+
+    public function __construct()
+    {
+        $this->kashier_url = config("nafezly-payments.KASHIER_URL");
+        $this->kashier_webhook_url = config("nafezly-payments.KASHIER_WEBHOOK_URL");
+        $this->kashier_mode = config("nafezly-payments.KASHIER_MODE");
+        $this->kashier_account_key = config("nafezly-payments.KASHIER_ACCOUNT_KEY");
+        $this->kashier_iframe_key = config("nafezly-payments.KASHIER_IFRAME_KEY");
+        $this->kashier_token = config("nafezly-payments.KASHIER_TOKEN");
+        $this->currency = config('nafezly-payments.KASHIER_CURRENCY');
+        $this->app_name = config('nafezly-payments.APP_NAME');
+        $this->verify_route_name = config('nafezly-payments.VERIFY_ROUTE_NAME');
+    }
+
+    /**
+     * Get language in Kashier format (ar, en)
+     *
+     * @return string
+     */
+    protected function getKashierLang()
+    {
+        return $this->language;
+    }
+
+    
+    /**
+     * @param $amount
+     * @param null $user_id
+     * @param null $user_first_name
+     * @param null $user_last_name
+     * @param null $user_email
+     * @param null $user_phone
+     * @param null $source
+     * @return string[]
+     */
+    public function pay($amount = null, $user_id = null, $user_first_name = null, $user_last_name = null, $user_email = null, $user_phone = null, $source = null): array
+    {
+        $this->setPassedVariablesToGlobal($amount,$user_id,$user_first_name,$user_last_name,$user_email,$user_phone,$source);
+        $required_fields = ['amount'];
+        $this->checkRequiredFields($required_fields, 'KASHIER');
+
+        if($this->payment_id==null)
+            $unique_id = uniqid().rand(100000,999999);
+        else
+            $unique_id = $this->payment_id;
+
+        $mid = $this->kashier_account_key;
+        $order_id = $unique_id;
+        $secret = $this->kashier_iframe_key;
+        $path = "/?payment={$mid}.{$order_id}.{$this->amount}.{$this->currency}";
+        $hash = hash_hmac('sha256', $path, $secret);
+
+        $data = [
+            'mid' => $mid,
+            'webhook_url'=> $this->kashier_webhook_url,
+            'amount' => $this->amount,
+            'currency' => $this->currency,
+            'order_id' => $order_id,
+            'path' => $path,
+            'hash' => $hash,
+            'source'=>$this->source??"card,bank_installments,wallet,fawry",
+            'auto_redirect_back_on_fail'=>$this->auto_redirect_back_on_fail,
+            'language'=>$this->getKashierLang(),
+            'hosted_payment'=>$this->hosted_payment,
+            'redirect_back' => route($this->verify_route_name, ['payment' => "kashier"])
+        ];
+
+
+        if($this->hosted_payment == false){
+            return [
+                'payment_id' => $unique_id,
+                'html' => $this->generate_html($data),
+                'redirect_url'=>""
+            ];
+        }
+        else{
+            $query = http_build_query([
+                'merchantId'        => $this->kashier_account_key,
+                'orderId'           => $data['order_id'],
+                'amount'            => $data['amount'],
+                'currency'          => $data['currency'],
+                'hash'              => $hash,
+                'mode'              => $this->kashier_mode == "live"?'live':'test',
+                'language'          => $this->language,
+                'display'           => $this->language,
+                'merchantRedirect'  => route($this->verify_route_name, ['payment' => "kashier"]),
+                'serverWebhook'     => route($this->verify_route_name, ['payment' => "kashier"]),
+                'paymentRequestId'  => $data['order_id'],
+                'allowedMethods'    => $this->source??"card,bank_installments,wallet,fawry",
+                'failureRedirect'   => route($this->verify_route_name, ['payment' => "kashier"]),
+            ]);
+
+            $url = $this->kashier_url."/?$query";
+            return [
+                'payment_id' => $unique_id,
+                'html'=>"",
+                'redirect_url'=>$url
+            ];
+        }
+
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function verify(Request $request): array
+    {
+        if($request["paymentStatus"] == "SUCCESS" && $request['signature']!=null) {
+            $queryString = "";
+            foreach ($request->all() as $key => $value) {
+
+                if ($key == "signature" || $key == "mode") {
+                    continue;
+                }
+                $queryString = $queryString . "&" . $key . "=" . $value;
+            }
+            $queryString = ltrim($queryString, $queryString[0]);
+            $signature = hash_hmac('sha256', $queryString, $this->kashier_iframe_key,false);
+            if ($signature == $request["signature"]) {
+                return [
+                    'success' => true,
+                    'payment_id'=>$request['merchantOrderId'],
+                    'message' => __('nafezly::messages.PAYMENT_DONE'),
+                    'process_data' => $request->all()
+                ];
+            }
+        }if($request["paymentStatus"] == "SUCCESS" && $request['merchantOrderId']!=null){
+           
+            $url_mode = $this->kashier_mode == "live"?'':'test-';
+            $response = Http::withHeaders([
+                'Authorization' => $this->kashier_token
+            ])->retry(3, 100)->get('https://'.$url_mode.'api.kashier.io/payments/orders/'.$request['merchantOrderId'])->json();
+          
+            if(isset($response['response']['status']) && $response['response']['status']=="CAPTURED"){
+                return [
+                    'success' => true,
+                    'payment_id'=>$request['merchantOrderId'],
+                    'message' => __('nafezly::messages.PAYMENT_DONE'),
+                    'process_data' => array_merge($request->all(),$response)
+                ];
+            }
+        }
+
+        return [
+            'success' => false,
+            'payment_id'=>$request['merchantOrderId'],
+            'message' => __('nafezly::messages.PAYMENT_FAILED'),
+            'process_data' => $request->all()
+        ];
+        
+    }
+
+    /**
+     * @param $amount
+     * @param $data
+     * @return string
+     */
+    private function generate_html($data): string
+    {
+        return view('nafezly::html.kashier', ['model' => $this, 'data' => $data])->render();
+    }
+
+    public function setAutoRedirectOnFail($value=false){
+        $this->auto_redirect_back_on_fail = $value;
+        return $this;
+    }
+    
+    public function setHostedPayment($value=false){
+        $this->hosted_payment = $value;
+        return $this;
+    }
+
+}

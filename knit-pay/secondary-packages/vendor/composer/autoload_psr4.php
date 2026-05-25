@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Omnipay\\PayPal\\' => array($vendorDir . '/knit-pay/omnipay-paypal/src'),
+    'Nafezly\\Payments\\' => array($vendorDir . '/nafezly/payments/src'),
     'League\\MimeTypeDetection\\' => array($vendorDir . '/league/mime-type-detection/src'),
     'League\\Flysystem\\PhpseclibV3\\' => array($vendorDir . '/league/flysystem-sftp-v3'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),

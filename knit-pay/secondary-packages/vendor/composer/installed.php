@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => '9.2.x-dev',
-        'version' => '9.2.9999999.9999999-dev',
-        'reference' => 'bde9a55268bdc3f2a1955cbda8c465c5bff74c60',
+        'pretty_version' => '9.4.x-dev',
+        'version' => '9.4.9999999.9999999-dev',
+        'reference' => '698001528f24732946eaba8caac5589eecd4fa4d',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '9.2.x-dev',
-            'version' => '9.2.9999999.9999999-dev',
-            'reference' => 'bde9a55268bdc3f2a1955cbda8c465c5bff74c60',
+            'pretty_version' => '9.4.x-dev',
+            'version' => '9.4.9999999.9999999-dev',
+            'reference' => '698001528f24732946eaba8caac5589eecd4fa4d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -29,9 +29,9 @@
             'dev_requirement' => false,
         ),
         'iyzico/iyzipay-php' => array(
-            'pretty_version' => 'v2.0.60',
-            'version' => '2.0.60.0',
-            'reference' => 'fda153102f4dc9ffdebc72a6ab47c83123e8333e',
+            'pretty_version' => 'v2.0.61',
+            'version' => '2.0.61.0',
+            'reference' => '168839f9ccb2aebaa2cb9f07b883b1b2bb0cf87a',
             'type' => 'library',
             'install_path' => __DIR__ . '/../iyzico/iyzipay-php',
             'aliases' => array(),
@@ -46,10 +46,16 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'laravel/framework' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
         'league/flysystem' => array(
-            'pretty_version' => '3.33.0',
-            'version' => '3.33.0.0',
-            'reference' => '570b8871e0ce693764434b29154c54b434905350',
+            'pretty_version' => '3.34.0',
+            'version' => '3.34.0.0',
+            'reference' => '2daaac3b0d4c83ea7ed5d8586e786f5d00f3540e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/flysystem',
             'aliases' => array(),
@@ -79,6 +85,17 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'nafezly/payments' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'b32490aba6c8ab22c4a465504d464dff05f4f442',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nafezly/payments',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
+            'dev_requirement' => false,
+        ),
         'omnipay/common' => array(
             'dev_requirement' => false,
             'replaced' => array(
@@ -92,6 +109,12 @@
             ),
         ),
         'omnipay/tests' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
+        'paypal/paypal-checkout-sdk' => array(
             'dev_requirement' => false,
             'replaced' => array(
                 0 => '*',

@@ -4,7 +4,7 @@
  * Plugin URI: https://www.knitpay.org
  * Description: Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, Razorpay, PayPal, Stripe, UPI QR, and SSLCommerz, with over 100 WordPress plugins.
  *
- * Version: 9.4.0.0-rc.1
+ * Version: 9.4.0.0-rc.3
  * Requires at least: 6.2
  * Requires PHP: 8.1
  *
@@ -90,7 +90,7 @@ add_filter(
 		$integrations[] = new \KnitPay\Extensions\ContactForm7\Extension();
 
 		// Easy Digital Downloads.
-		$integrations[] = new \Pronamic\WordPress\Pay\Extensions\EasyDigitalDownloads\Extension();
+		$integrations[] = new \KnitPay\Extensions\EasyDigitalDownloads\Extension();
 
 		// Give.
 		$integrations[] = new \KnitPay\Extensions\Give\Extension();

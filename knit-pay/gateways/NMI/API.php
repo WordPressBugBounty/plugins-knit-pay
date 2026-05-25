@@ -25,8 +25,9 @@ class API {
 	function setBilling( Payment $payment ) {
 		$billing_address = $payment->get_billing_address();
 
-		$this->billing['firstname'] = $payment->get_customer()->get_name()->get_first_name();
-		$this->billing['lastname']  = $payment->get_customer()->get_name()->get_last_name();
+		$customer_name = $payment->get_customer()->get_name();
+		$this->billing['firstname'] = $customer_name ? $customer_name->get_first_name() : '';
+		$this->billing['lastname']  = $customer_name ? $customer_name->get_last_name() : '';
 		$this->billing['company']   = $billing_address->get_company_name();
 		$this->billing['address1']  = $billing_address->get_line_1();
 		$this->billing['address2']  = $billing_address->get_line_2();
