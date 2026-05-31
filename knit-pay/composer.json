@@ -118,7 +118,8 @@
 			"extensions/PaidMembershipsPro/PMProGateway_knit_pay.php",
 			"extensions/SproutInvoices/KnitPaySIGateway.php",
 			"includes/knit-pay-pro-setup.php",
-			"includes/pro.php"
+			"includes/pro.php",
+			"gateways/Nafezly/Compat/"
 		]
 	},
 	"extra": {

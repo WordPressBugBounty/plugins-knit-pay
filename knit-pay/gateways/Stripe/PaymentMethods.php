@@ -44,6 +44,12 @@ class PaymentMethods extends KP_PaymentMethods {
 		if ( $output_array && ! is_array( $payment_method_types ) ) {
 			return [ $payment_method_types ];
 		}
+
+		// Remove duplicates.
+		if ( is_array( $payment_method_types ) ) {
+			$payment_method_types = array_values( array_unique( $payment_method_types ) );
+		}
+
 		return $payment_method_types;
 	}
 }

@@ -482,34 +482,13 @@ class Integration extends IntegrationOAuthClient {
 		return $config;
 	}
 
-	/**
-	 * Get gateway.
-	 *
-	 * @param int $post_id Post ID.
-	 * @return Gateway
-	 */
-	public function get_gateway( $config_id ) {
-		/** @var Config $config */
-		$config = $this->get_config( $config_id );
-
-		$gateway = new Gateway();
-		
-		$mode = Gateway::MODE_LIVE;
-		if ( Gateway::MODE_TEST === $config->mode ) {
-			$mode = Gateway::MODE_TEST;
-		}
-		
-		$this->set_mode( $mode );
-		$gateway->set_mode( $mode );
-		$gateway->init( $config );
-
-		return $gateway;
-	}
-
 	public function clear_child_config( $config_id ) {
 		delete_post_meta( $config_id, '_pronamic_gateway_razorpay_key_id' );
 		delete_post_meta( $config_id, '_pronamic_gateway_razorpay_key_secret' );
 		delete_post_meta( $config_id, '_pronamic_gateway_razorpay_webhook_id' );
+
+		// Clear Payment Methods Cache.
+		delete_transient( 'knit_pay_razorpay_payment_methods_' . $config_id );
 	}
 
 	public function update_connection_status() {

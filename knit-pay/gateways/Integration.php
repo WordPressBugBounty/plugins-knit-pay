@@ -5,7 +5,7 @@ namespace KnitPay\Gateways;
 use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 
 /**
- * Title: Other Payment Provider Integration
+ * Title: Base Integration for Gateways
  * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
@@ -19,25 +19,15 @@ class Integration extends AbstractGatewayIntegration {
 	 * @param array $args Arguments.
 	 */
 	public function __construct( $args = [] ) {
-		$args = wp_parse_args(
-			$args,
-			[
-				'id'          => 'other',
-				'name'        => 'Other Payment Providers',
-				'product_url' => KNITPAY_GLOBAL_GATEWAY_LIST_URL,
-				'provider'    => 'other',
-			]
-		);
-
 		parent::__construct( $args );
 
 		add_action( 'admin_notices', [ $this, 'admin_notice' ] );
 	}
 
 	public function admin_notice() {
-		$error = get_transient( 'knit_pay_post_save_error' );
+		$error = get_transient( 'knit_pay_post_save_error_' . $this->get_id() );
 		if ( ! empty( $error ) ) {
-			delete_transient( 'knit_pay_post_save_error' );
+			delete_transient( 'knit_pay_post_save_error_' . $this->get_id() );
 			wp_admin_notice(
 				$error,
 				[
@@ -47,65 +37,31 @@ class Integration extends AbstractGatewayIntegration {
 			);
 			echo '<script>alert("Error: ' . esc_js( $error ) . '");</script>';
 		}
-	}
 
-	protected function knit_pay_post_save_notice( $message ) {
-		set_transient( 'knit_pay_post_save_error', $message, 60 );
-	}
-
-	/**
-	 * Get settings fields.
-	 *
-	 * @return array
-	 */
-	public function get_settings_fields() {
-		$fields = [];
-
-		if ( ! defined( 'KNIT_PAY_PRO' ) ) {
-			$plugins           = get_plugins();
-			$knit_pay_pro_base = 'knit-pay-pro/knit-pay-pro.php';
-
-			$plugins = get_plugins();
-			if ( isset( $plugins[ $knit_pay_pro_base ] ) ) {
-				$url  = esc_url( wp_nonce_url( admin_url( 'plugins.php?action=activate&plugin=' . $knit_pay_pro_base ), 'activate-plugin_' . $knit_pay_pro_base ) );
-				$link = '<a class="button button-primary" target="_blank" href="' . $url . '">' . __( 'Activate it', 'knit-pay-lang' ) . '</a>';
-			} else {
-				$url  = esc_url( wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=knit-pay-pro' ), 'install-plugin_knit-pay-pro' ) );
-				$link = '<a class="button button-primary" target="_blank" href="' . $url . '">' . __( 'Install it', 'knit-pay-lang' ) . '</a>';
-			}
-
-			$fields[] = [
-				'section'     => 'general',
-				'type'        => 'custom',
-				'title'       => 'Install Knit Pay - Pro',
-				'description' => '<h1>If the Payment Gateway provider which you want to integrate is not on the list above, try installing Knit Pay - Pro. Now you can use 65+ Knit Pay premium addons with Knit Pay Pro.</h1>'
-				. '<br><br>' . $link,
-			];
-
-			// Return fields.
-			return $fields;
+		$success = get_transient( 'knit_pay_post_save_success_' . $this->get_id() );
+		if ( ! empty( $success ) ) {
+			delete_transient( 'knit_pay_post_save_success_' . $this->get_id() );
+			wp_admin_notice(
+				$success,
+				[
+					'type'        => 'success',
+					'dismissible' => true,
+				]
+			);
 		}
-
-		$fields[] = [
-			'section'     => 'general',
-			'type'        => 'custom',
-			'title'       => 'Contact Us',
-			'description' => '<h1>If the Payment Gateway provider which you want to integrate is not on the list above, contact us to learn about the premium addon.</h1>'
-			. '<br><br><a class="button button-primary" target="_blank" href="https://www.knitpay.org/contact-us/?utm_source=knit-pay&utm_medium=ecommerce-module&utm_campaign=module-admin&utm_content=other-gateways"
-		    role="button"><strong>Contact Us</strong></a>',
-		];
-
-		// Return fields.
-		return $fields;
 	}
 
 	/**
-	 * Get gateway.
+	 * Store a post-save notice message in transient so it survives redirects.
 	 *
-	 * @param int $post_id Post ID.
-	 * @return Gateway
+	 * @param string $message Message to display.
+	 * @param string $type    Notice type: 'error' or 'success'.
 	 */
-	public function get_gateway( $config_id ) {
-		return new Gateway();
+	protected function knit_pay_post_save_notice( $message, $type = 'error' ) {
+		if ( 'error' === $type ) {
+			set_transient( 'knit_pay_post_save_error_' . $this->get_id(), $message, 60 );
+		} else {
+			set_transient( 'knit_pay_post_save_success_' . $this->get_id(), $message, 60 );
+		}
 	}
 }

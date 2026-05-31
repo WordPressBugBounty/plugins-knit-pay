@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 9.4.0.0-rc.3
+Stable tag: 9.4.0.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, PayPal, Razorpay, and SSLCommerz, with over 100 WordPress plugins.
@@ -297,10 +297,12 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Paid Member Subscriptions (Contact us for this premium addon.)
 * ARMember (Contact us for this premium addon.)
 * WP User Frontend (Contact us for this premium addon.)
+* Smart Creator Press (Contact us for this premium addon.)
 
 = E-commerce Platforms =
 * Easy Digital Downloads (EDD)
 * WooCommerce and WooCommerce Blocks
+* FluentCart (Contact us for this premium addon.)
 * WP e-Commerce (Contact us for this premium addon.)
 * Welcart e-Commerce (Contact us for this premium addon.)
 
@@ -418,6 +420,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Prestashop / Thirty Bees
 * Opencart
 * Smart School
+* Telegram
 * BoxBilling / FOSSBilling
 
 == Frequently Asked Questions ==

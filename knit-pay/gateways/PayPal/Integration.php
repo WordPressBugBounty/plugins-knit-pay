@@ -351,28 +351,6 @@ class Integration extends IntegrationOAuthClient {
 		return $config;
 	}
 
-	/**
-	 * Get gateway.
-	 *
-	 * @param int $post_id Post ID.
-	 * @return Gateway
-	 */
-	public function get_gateway( $config_id ) {
-		$config  = $this->get_config( $config_id );
-		$gateway = new Gateway();
-
-		$mode = Gateway::MODE_LIVE;
-		if ( Gateway::MODE_TEST === $config->mode ) {
-			$mode = Gateway::MODE_TEST;
-		}
-
-		$this->set_mode( $mode );
-		$gateway->set_mode( $mode );
-		$gateway->init( $config );
-
-		return $gateway;
-	}
-
 	public function clear_child_config( $config_id ) {
 		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_client_id' );
 		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->get_id() . '_client_secret' );

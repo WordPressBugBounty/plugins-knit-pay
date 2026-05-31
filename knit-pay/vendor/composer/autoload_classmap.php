@@ -497,6 +497,7 @@ return array(
     'KnitPay\\Gateways\\OrderBox\\Gateway' => $baseDir . '/gateways/OrderBox/Gateway.php',
     'KnitPay\\Gateways\\OrderBox\\Helper' => $baseDir . '/gateways/OrderBox/Helper.php',
     'KnitPay\\Gateways\\OrderBox\\Integration' => $baseDir . '/gateways/OrderBox/Integration.php',
+    'KnitPay\\Gateways\\Other\\Integration' => $baseDir . '/gateways/Other/Integration.php',
     'KnitPay\\Gateways\\PayPal\\API' => $baseDir . '/gateways/PayPal/API.php',
     'KnitPay\\Gateways\\PayPal\\Config' => $baseDir . '/gateways/PayPal/Config.php',
     'KnitPay\\Gateways\\PayPal\\Gateway' => $baseDir . '/gateways/PayPal/Gateway.php',

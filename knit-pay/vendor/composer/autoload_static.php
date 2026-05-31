@@ -777,6 +777,7 @@ class ComposerStaticInitf2c3742f1a4dd897508bac6ba588afbd
         'KnitPay\\Gateways\\OrderBox\\Gateway' => __DIR__ . '/../..' . '/gateways/OrderBox/Gateway.php',
         'KnitPay\\Gateways\\OrderBox\\Helper' => __DIR__ . '/../..' . '/gateways/OrderBox/Helper.php',
         'KnitPay\\Gateways\\OrderBox\\Integration' => __DIR__ . '/../..' . '/gateways/OrderBox/Integration.php',
+        'KnitPay\\Gateways\\Other\\Integration' => __DIR__ . '/../..' . '/gateways/Other/Integration.php',
         'KnitPay\\Gateways\\PayPal\\API' => __DIR__ . '/../..' . '/gateways/PayPal/API.php',
         'KnitPay\\Gateways\\PayPal\\Config' => __DIR__ . '/../..' . '/gateways/PayPal/Config.php',
         'KnitPay\\Gateways\\PayPal\\Gateway' => __DIR__ . '/../..' . '/gateways/PayPal/Gateway.php',

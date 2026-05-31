@@ -17,7 +17,7 @@ use KnitPay\Utils;
  * @version 1.0.0
  * @since   1.7.0
  */
-abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
+abstract class IntegrationOAuthClient extends Integration {
 	use IntegrationModeTrait;
 
 	protected $config;
@@ -167,23 +167,35 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 	/**
 	 * Get gateway.
 	 *
-	 * @param int $post_id Post ID.
-	 * @return Gateway
+	 * Resolves the Gateway class using ReflectionClass to extract the child's
+	 * actual namespace at runtime. This guarantees correctness regardless of
+	 * class naming conventions.
+	 *
+	 * @param int $config_id Post ID.
+	 * @return \Pronamic\WordPress\Pay\Core\Gateway
 	 */
 	public function get_gateway( $config_id ) {
 		$config = $this->get_config( $config_id );
 
-		$gateway = new Gateway();
+		$reflection_class = new \ReflectionClass( $this );
+		$namespace        = $reflection_class->getNamespaceName();
+		$gateway_class    = $namespace . '\Gateway';
+
+		if ( ! class_exists( $gateway_class ) ) {
+			$gateway_class = Gateway::class;
+		}
+
+		$gateway = new $gateway_class();
 
 		$mode = Gateway::MODE_LIVE;
 		if ( Gateway::MODE_TEST === $config->mode ) {
 			$mode = Gateway::MODE_TEST;
 		}
-		
+
 		$this->set_mode( $mode );
 		$gateway->set_mode( $mode );
 		$gateway->init( $config );
-		
+
 		return $gateway;
 	}
 
@@ -214,6 +226,8 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		} elseif ( filter_has_var( INPUT_POST, 'knit_pay_oauth_client_disconnect' ) ) {
 			// Clear Keys if connected and disconnect action is initiated.
 			self::clear_config( $config_id );
+			/* translators: %s: Gateway name */
+			$this->knit_pay_post_save_notice( sprintf( __( 'Successfully disconnected from %s.', 'knit-pay-lang' ), $this->gateway_name ), 'success' );
 			return;
 		}
 
@@ -258,12 +272,12 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 			add_filter( 'allowed_redirect_hosts', [ $this, 'allowed_redirect_hosts' ] );
 			wp_safe_redirect( $result->data->auth_url );
 			exit;
-		} elseif ( isset( $result->data ) ) {
-			echo esc_html( $result->data->message );
-			exit;
-		} elseif ( isset( $result->errors ) ) {
-			echo esc_html( $result->errors[0]->message );
-			exit;
+		} elseif ( isset( $result->data ) && isset( $result->data->message ) ) {
+			$this->knit_pay_post_save_notice( $result->data->message );
+			self::redirect_to_config( $config_id );
+		} elseif ( isset( $result->errors ) && is_array( $result->errors ) && isset( $result->errors[0]->message ) ) {
+			$this->knit_pay_post_save_notice( $result->errors[0]->message );
+			self::redirect_to_config( $config_id );
 		}
 	}
 
@@ -279,12 +293,12 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->snake_case_id . '_account_id' );
 		delete_post_meta( $config_id, '_pronamic_gateway_' . $this->snake_case_id . '_connection_fail_count' );
 
-		// Clear Payment Methods Cache.
-		delete_transient( 'knit_pay_razorpay_payment_methods_' . $config_id );
-
 		// Stop Refresh Token Scheduler.
 		$timestamp_next_schedule = wp_next_scheduled( 'knit_pay_' . $this->snake_case_id . '_refresh_access_token', [ 'config_id' => $config_id ] );
-		wp_unschedule_event( $timestamp_next_schedule, 'knit_pay_' . $this->snake_case_id . '_refresh_access_token', [ 'config_id' => $config_id ] );
+		if ( false !== $timestamp_next_schedule ) {
+			wp_unschedule_event( $timestamp_next_schedule, 'knit_pay_' . $this->snake_case_id . '_refresh_access_token', [ 'config_id' => $config_id ] );
+		}
+
 	}
 
 	public function update_connection_status() {
@@ -306,6 +320,7 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 
 		if ( empty( $code ) || empty( $state ) || 'failed' === $knitpay_oauth_auth_status ) {
 			self::clear_config( $gateway_id );
+			$this->knit_pay_post_save_notice( __( 'OAuth authorization failed or was cancelled. Please try connecting again.', 'knit-pay-lang' ) );
 			$this->redirect_to_config( $gateway_id );
 		}
 
@@ -332,6 +347,14 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 		$result   = json_decode( $result );
 
 		if ( JSON_ERROR_NONE !== json_last_error() ) {
+			$this->knit_pay_post_save_notice( __( 'Unable to decode the response from the OAuth server after successful authorization. Please report this issue to the Knit Pay support team.', 'knit-pay-lang' ) );
+			self::redirect_to_config( $gateway_id );
+			return;
+		}
+
+		if ( ! ( isset( $result->success ) && $result->success ) ) {
+			$message = isset( $result->data->message ) ? $result->data->message : __( 'OAuth server returned an error while exchanging tokens. Please try again or report the issue to the Knit Pay support team.', 'knit-pay-lang' );
+			$this->knit_pay_post_save_notice( $message );
 			self::redirect_to_config( $gateway_id );
 			return;
 		}
@@ -345,6 +368,8 @@ abstract class IntegrationOAuthClient extends AbstractGatewayIntegration {
 
 		$this->configure_webhook( $gateway_id );
 
+		/* translators: %s: Gateway name */
+		$this->knit_pay_post_save_notice( sprintf( __( 'Successfully connected with %s.', 'knit-pay-lang' ), $this->gateway_name ), 'success' );
 		self::redirect_to_config( $gateway_id );
 	}
 

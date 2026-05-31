@@ -132,6 +132,7 @@ class Integration extends IntegrationOAuthClient {
 			$config->connection_fail_count = 0;
 		}
 
+		// Temporary code, remove after 31 Dec 2026.
 		if ( ! $this->is_auth_basic_enabled( $config ) && $this->is_auth_basic_connected( $config ) && defined( 'KNIT_PAY_PRO' ) ) {
 			update_post_meta( $post_id, '_pronamic_gateway_id', 'cashfree-pro' );
 			$this->set_id( 'cashfree-pro' );
@@ -139,28 +140,6 @@ class Integration extends IntegrationOAuthClient {
 		}
 
 		return $config;
-	}
-
-	/**
-	 * Get gateway.
-	 *
-	 * @param int $post_id Post ID.
-	 * @return Gateway
-	 */
-	public function get_gateway( $config_id ) {
-		$config  = $this->get_config( $config_id );
-		$gateway = new Gateway();
-
-		$mode = Gateway::MODE_LIVE;
-		if ( Gateway::MODE_TEST === $config->mode ) {
-			$mode = Gateway::MODE_TEST;
-		}
-
-		$this->set_mode( $mode );
-		$gateway->set_mode( $mode );
-		$gateway->init( $config );
-
-		return $gateway;
 	}
 
 	public function clear_child_config( $config_id ) {
