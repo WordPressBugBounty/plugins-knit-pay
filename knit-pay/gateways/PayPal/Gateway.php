@@ -153,9 +153,8 @@ class Gateway extends Core_Gateway {
 			wp_send_json_error( [ 'message' => 'Security check failed. Please refresh the page and try again.' ], 403 );
 		}
 
-		$order_id   = isset( $_POST['order_id'] ) ? sanitize_text_field( wp_unslash( $_POST['order_id'] ) ) : '';
 		$payment_id = isset( $_POST['payment_id'] ) ? absint( $_POST['payment_id'] ) : 0;
-		if ( empty( $order_id ) || empty( $payment_id ) ) {
+		if ( empty( $payment_id ) ) {
 			wp_send_json_error( [ 'message' => 'Invalid request parameters.' ], 400 );
 		}
 
@@ -164,11 +163,15 @@ class Gateway extends Core_Gateway {
 			wp_send_json_error( [ 'message' => 'Payment not found.' ], 404 );
 		}
 
+		$order_id = $payment->get_meta( 'paypal_order_id' );
+		if ( empty( $order_id ) ) {
+			wp_send_json_error( [ 'message' => 'No PayPal order found for this payment.' ], 400 );
+		}
+
 		try {
 			$integration = new Integration();
 			$gateway     = $integration->get_gateway( $payment->get_config_id() );
 
-			$payment->set_transaction_id( $order_id );
 			$gateway->update_status( $payment );
 			$payment->save();
 
