@@ -34,7 +34,6 @@ return array(
     'Pronamic\\WordPress\\Html\\' => array($baseDir . '/packages/pronamic/wp-html/src'),
     'Pronamic\\WordPress\\GravityFormsNL\\' => array($baseDir . '/packages/pronamic/wp-gravityforms-nl/src'),
     'Pronamic\\WordPress\\DateTime\\' => array($baseDir . '/packages/pronamic/wp-datetime/src'),
-    'Pronamic\\PronamicPayAdminReports\\' => array($baseDir . '/packages/pronamic/pronamic-pay-admin-reports/php/classes'),
     'Pronamic\\IDealIssuers\\' => array($vendorDir . '/pronamic/ideal-issuers/src'),
     'Omnipay\\Common\\' => array($vendorDir . '/omnipay/common/src/Common'),
     'Nyholm\\Psr7\\' => array($vendorDir . '/nyholm/psr7/src'),

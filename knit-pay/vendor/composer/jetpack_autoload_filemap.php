@@ -7,7 +7,7 @@ $baseDir   = dirname($vendorDir);
 
 return array(
 	'509f66d930a3f0b7d9b65b22aa319565' => array(
-		'version' => '4.26.0.3',
+		'version' => '4.26.0.5',
 		'path'    => $baseDir . '/packages/wp-pay/core/includes/functions.php'
 	),
 	'9c67151ae59aff4788964ce8eb2a0f43' => array(
@@ -19,11 +19,11 @@ return array(
 		'path'    => $vendorDir . '/symfony/deprecation-contracts/function.php'
 	),
 	'0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => array(
-		'version' => '1.38.1.0',
+		'version' => '1.38.2.0',
 		'path'    => $vendorDir . '/symfony/polyfill-mbstring/bootstrap.php'
 	),
 	'662a729f963d39afe703c9d9b7ab4a8c' => array(
-		'version' => '1.38.1.0',
+		'version' => '1.38.2.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/bootstrap.php'
 	),
 	'8cff32064859f4559445b89279f3199c' => array(
@@ -31,7 +31,7 @@ return array(
 		'path'    => $vendorDir . '/php-http/message/src/filters.php'
 	),
 	'13906c19e3d8fcd1341b24ed4d51cf72' => array(
-		'version' => '2.9.2.0',
+		'version' => '2.9.3.0',
 		'path'    => $vendorDir . '/razorpay/razorpay/Deprecated.php'
 	),
 );

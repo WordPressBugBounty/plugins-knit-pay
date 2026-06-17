@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 9.4.0.1
+Stable tag: 9.5.0.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, PayPal, Razorpay, and SSLCommerz, with over 100 WordPress plugins.
@@ -26,6 +26,7 @@ One plugin to integrate various Payment Gateways like Cashfree, Instamojo, Razor
 * Supports WordPress Payments Rest APIs.
 * Auto currency conversion feature automatically converts the amount to the supported currency if the provided currency is not supported by the payment provider.
 * Supports AI Abilities API: Now ask AI to create payment requests and check payment status.
+* Built-in payment analytics dashboard with multi-currency reports — track revenue trends, success rates, gateway performance, payment methods, and integrations in one place.
 
 https://www.youtube.com/watch?v=vWxSqhSVCQE
 
@@ -479,7 +480,7 @@ Special Thanks to the Developers of the libraries used in the plugin. [Click Her
 1. Add configurations from multiple payment gateways. You can even add multiple accounts from a payment gateway.
 2. Visit Knit Pay >> Configurations >> Add New to create a configuration for a payment gateway. After saving the configuration, you can test the configuration from the Configuration Page.
 3. On Knit Pay >> Payments page, you can see payment status from all the payment gateways and all the plugins on one page.
-4. On Knit Pay >> Reports page, you can regularly monitor the growth of the transactions.
+4. Use the Knit Pay >> Reports analytics dashboard to track revenue, success rates, gateway and payment method performance, and integration insights in one place.
 5. You can also show the payment method name on the checkout page instead of the Payment Gateway name for some of the Payment Gateways.
 
 == Changelog ==

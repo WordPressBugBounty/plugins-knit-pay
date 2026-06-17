@@ -59,7 +59,6 @@ class ComposerStaticInitf2c3742f1a4dd897508bac6ba588afbd
             'Pronamic\\WordPress\\Html\\' => 24,
             'Pronamic\\WordPress\\GravityFormsNL\\' => 34,
             'Pronamic\\WordPress\\DateTime\\' => 28,
-            'Pronamic\\PronamicPayAdminReports\\' => 33,
             'Pronamic\\IDealIssuers\\' => 22,
         ),
         'O' =>
@@ -218,10 +217,6 @@ class ComposerStaticInitf2c3742f1a4dd897508bac6ba588afbd
         'Pronamic\\WordPress\\DateTime\\' =>
         array (
             0 => __DIR__ . '/../..' . '/packages/pronamic/wp-datetime/src',
-        ),
-        'Pronamic\\PronamicPayAdminReports\\' =>
-        array (
-            0 => __DIR__ . '/../..' . '/packages/pronamic/pronamic-pay-admin-reports/php/classes',
         ),
         'Pronamic\\IDealIssuers\\' =>
         array (
@@ -900,6 +895,13 @@ class ComposerStaticInitf2c3742f1a4dd897508bac6ba588afbd
         'KnitPay\\Gateways\\ZohoPay\\Statuses' => __DIR__ . '/../..' . '/gateways/ZohoPay/Statuses.php',
         'KnitPay\\PaymentApiHelper' => __DIR__ . '/../..' . '/includes/PaymentApiHelper.php',
         'KnitPay\\PaymentRestController' => __DIR__ . '/../..' . '/includes/PaymentRestController.php',
+        'KnitPay\\Reports\\Aggregator' => __DIR__ . '/../..' . '/includes/Reports/Aggregator.php',
+        'KnitPay\\Reports\\Exporter\\CsvExporter' => __DIR__ . '/../..' . '/includes/Reports/Exporter/CsvExporter.php',
+        'KnitPay\\Reports\\Exporter\\PdfExporter' => __DIR__ . '/../..' . '/includes/Reports/Exporter/PdfExporter.php',
+        'KnitPay\\Reports\\QueryBuilder' => __DIR__ . '/../..' . '/includes/Reports/QueryBuilder.php',
+        'KnitPay\\Reports\\ReportsApiHelper' => __DIR__ . '/../..' . '/includes/Reports/ReportsApiHelper.php',
+        'KnitPay\\Reports\\ReportsModule' => __DIR__ . '/../..' . '/includes/Reports/ReportsModule.php',
+        'KnitPay\\Reports\\ReportsRestController' => __DIR__ . '/../..' . '/includes/Reports/ReportsRestController.php',
         'KnitPay\\Utils' => __DIR__ . '/../..' . '/includes/Utils.php',
         'Konekt\\PdfInvoice\\InvoicePrinter' => __DIR__ . '/..' . '/konekt/pdf-invoice/src/InvoicePrinter.php',
         'Money\\Calculator' => __DIR__ . '/..' . '/moneyphp/money/src/Calculator.php',
@@ -1000,7 +1002,6 @@ class ComposerStaticInitf2c3742f1a4dd897508bac6ba588afbd
         'Pronamic\\IDealIssuers\\IDealIssuerCode' => __DIR__ . '/..' . '/pronamic/ideal-issuers/src/IDealIssuerCode.php',
         'Pronamic\\IDealIssuers\\IDealIssuerService' => __DIR__ . '/..' . '/pronamic/ideal-issuers/src/IDealIssuerService.php',
         'Pronamic\\IDealIssuers\\IDealIssuers' => __DIR__ . '/..' . '/pronamic/ideal-issuers/src/IDealIssuers.php',
-        'Pronamic\\PronamicPayAdminReports\\Plugin' => __DIR__ . '/../..' . '/packages/pronamic/pronamic-pay-admin-reports/php/classes/Plugin.php',
         'Pronamic\\WordPress\\DateTime\\DateTime' => __DIR__ . '/../..' . '/packages/pronamic/wp-datetime/src/DateTime.php',
         'Pronamic\\WordPress\\DateTime\\DateTimeImmutable' => __DIR__ . '/../..' . '/packages/pronamic/wp-datetime/src/DateTimeImmutable.php',
         'Pronamic\\WordPress\\DateTime\\DateTimeInterface' => __DIR__ . '/../..' . '/packages/pronamic/wp-datetime/src/DateTimeInterface.php',

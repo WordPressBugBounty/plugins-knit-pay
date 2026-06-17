@@ -13,7 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 class CustomSettings {
 	public function __construct() {
 		// Actions.
-		add_action( 'admin_init', [ $this, 'admin_init' ] );
+		// Priority 20 ensures this runs after core Knit Pay fields (priority 10)
+		// so the "Enable MCP Access" checkbox appears after "Default Gateway".
+		add_action( 'admin_init', [ $this, 'admin_init' ], 20 );
 	}
 
 	/**
@@ -29,6 +31,18 @@ class CustomSettings {
 				'type'              => 'string',
 				'sanitize_callback' => 'sanitize_text_field',
 				'default'           => 'auto_free',
+			]
+		);
+
+		\register_setting(
+			'pronamic_pay',
+			'knit_pay_enable_mcp_public',
+			[
+				'type'              => 'boolean',
+				'sanitize_callback' => function ( $value ) {
+					return filter_var( $value, FILTER_VALIDATE_BOOLEAN );
+				},
+				'default'           => false,
 			]
 		);
 
@@ -49,6 +63,40 @@ class CustomSettings {
 				'default'     => 'auto_free',
 			]
 		);
+
+		\add_settings_field(
+			'knit_pay_enable_mcp_public',
+			\__( 'Enable MCP Access', 'knit-pay-lang' ),
+			[ $this, 'input_checkbox' ],
+			'pronamic_pay',
+			'pronamic_pay_general',
+			[
+				'label_for'   => 'knit_pay_enable_mcp_public',
+				'description' => \__( 'Enable to expose Knit Pay abilities to the WordPress MCP Adapter (Model Context Protocol). When enabled, AI agents and MCP clients can discover and invoke Knit Pay capabilities — including payment operations and reports. Only users with the proper capabilities can execute them. Leave disabled unless you explicitly want AI agents to access Knit Pay via MCP.', 'knit-pay-lang' ),
+				'default'     => false,
+			]
+		);
+	}
+
+	public function input_checkbox( $args ) {
+		$args['id']   = $args['label_for'];
+		$args['name'] = $args['label_for'];
+
+		$checked = \get_option( $args['name'], $args['default'] ?? false );
+
+		$attributes = [
+			'type'  => 'checkbox',
+			'value' => '1',
+		];
+
+		if ( \wp_validate_boolean( $checked ) ) {
+			$attributes['checked'] = 'checked';
+		}
+
+		$element = new Element( 'input', array_merge( $args, $attributes ) );
+		$element->output();
+
+		self::print_description( $args );
 	}
 
 	/**

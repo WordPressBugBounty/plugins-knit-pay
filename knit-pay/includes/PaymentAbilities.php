@@ -58,6 +58,10 @@ function knit_pay_register_abilities() {
 		return current_user_can( $post_type->cap->edit_posts );
 	};
 
+	// Determine whether abilities should be exposed to the default MCP server.
+	// This is controlled by an admin setting (Akismet-style toggle) and defaults to OFF.
+	$mcp_public = \wp_validate_boolean( \get_option( 'knit_pay_enable_mcp_public', false ) );
+
 	// -----------------------------------------------------------------
 	// Ability: create-payment
 	// -----------------------------------------------------------------
@@ -71,7 +75,13 @@ function knit_pay_register_abilities() {
 			'output_schema'       => PaymentApiHelper::get_output_schema(),
 			'execute_callback'    => __NAMESPACE__ . '\knit_pay_ability_create_payment',
 			'permission_callback' => $permission_callback,
-			'meta'                => [ 'show_in_rest' => true ],
+			'meta'                => [
+				'show_in_rest' => true,
+				'mcp'          => [
+					'public' => $mcp_public,
+					'type'   => 'tool',
+				],
+			],
 		]
 	);
 
@@ -99,7 +109,13 @@ function knit_pay_register_abilities() {
 			'output_schema'       => PaymentApiHelper::get_output_schema(),
 			'execute_callback'    => __NAMESPACE__ . '\knit_pay_ability_get_payment',
 			'permission_callback' => $permission_callback,
-			'meta'                => [ 'show_in_rest' => true ],
+			'meta'                => [
+				'show_in_rest' => true,
+				'mcp'          => [
+					'public' => $mcp_public,
+					'type'   => 'tool',
+				],
+			],
 		]
 	);
 }

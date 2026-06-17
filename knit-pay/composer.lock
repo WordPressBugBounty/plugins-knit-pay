@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d6d178b3a0a8ba62a807e2a14a28ad13",
+    "content-hash": "101e9387ee17d85b23aea24ed768e179",
     "packages": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v5.0.18",
+            "version": "v5.0.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "be5ea0f2109f3300a22a05727721587c9116ffe8"
+                "reference": "b6abf43a9ea638d6a0edc02f0dd7575703f9c2a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/be5ea0f2109f3300a22a05727721587c9116ffe8",
-                "reference": "be5ea0f2109f3300a22a05727721587c9116ffe8",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/b6abf43a9ea638d6a0edc02f0dd7575703f9c2a1",
+                "reference": "b6abf43a9ea638d6a0edc02f0dd7575703f9c2a1",
                 "shasum": ""
             },
             "require": {
@@ -25,7 +25,7 @@
                 "php": ">=7.2"
             },
             "require-dev": {
-                "automattic/phpunit-select-config": "^1.0.6",
+                "automattic/phpunit-select-config": "^1.0.9",
                 "composer/composer": "^2.2",
                 "yoast/phpunit-polyfills": "^4.0.0"
             },
@@ -66,9 +66,9 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.18"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.20"
             },
-            "time": "2026-05-19T09:17:26+00:00"
+            "time": "2026-06-15T12:15:05+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -919,133 +919,6 @@
             "time": "2024-06-07T09:27:23+00:00"
         },
         {
-            "name": "pronamic/pronamic-pay-admin-reports",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/knit-pay/knit-pay-admin-reports",
-                "reference": "47de561c2aa160e825dfabc42684e321c4b9b298"
-            },
-            "require": {
-                "automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
-                "php": ">=8.1",
-                "pronamic/wp-money": "^2.4",
-                "woocommerce/action-scheduler": "^3.8",
-                "wp-pay/core": "^4.19"
-            },
-            "require-dev": {
-                "overtrue/phplint": "^9.1",
-                "php-coveralls/php-coveralls": "^2.7",
-                "php-stubs/woocommerce-stubs": "^8.7",
-                "php-stubs/wp-cli-stubs": "^2.10",
-                "phpmd/phpmd": "^2.15",
-                "phpstan/extension-installer": "^1.4",
-                "phpstan/phpstan": "^1.11",
-                "pronamic/pronamic-cli": "^1.1",
-                "pronamic/wp-coding-standards": "^2.2",
-                "roots/wordpress": "^6.4",
-                "szepeviktor/phpstan-wordpress": "^1.3",
-                "vimeo/psalm": "^0.3.14",
-                "wp-cli/wp-cli": "^2.10",
-                "wp-phpunit/wp-phpunit": "^6.4",
-                "yoast/phpunit-polyfills": "^2.0"
-            },
-            "default-branch": true,
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-paths": {
-                    "packages/{$vendor}/{$name}": [
-                        "vendor:pronamic",
-                        "vendor:wp-pay",
-                        "vendor:wp-pay-extensions",
-                        "vendor:wp-pay-gateways",
-                        "woocommerce/action-scheduler"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Pronamic\\PronamicPayAdminReports\\": "php/classes/"
-                }
-            },
-            "scripts": {
-                "coveralls": [
-                    "vendor/bin/php-coveralls -v"
-                ],
-                "make-i18n-json": [
-                    "wp i18n make-json languages/*.po --no-purge"
-                ],
-                "make-pot": [
-                    "wp pronamic i18n make-pot . languages/pronamic-pay-fundraising.pot --slug='pronamic-pay-fundraising'"
-                ],
-                "update-po": [
-                    "find languages/*.po -type f -exec msgmerge --update --backup=off {} languages/pronamic-pay-fundraising.pot \\;"
-                ],
-                "phpcbf": [
-                    "XDEBUG_MODE=off vendor/bin/phpcbf"
-                ],
-                "phpcs": [
-                    "XDEBUG_MODE=off vendor/bin/phpcs -s -v"
-                ],
-                "phplint": [
-                    "vendor/bin/phplint"
-                ],
-                "phpmd": [
-                    "vendor/bin/phpmd src,tests text phpmd.ruleset.xml --suffixes php"
-                ],
-                "phpstan": [
-                    "XDEBUG_MODE=off vendor/bin/phpstan analyse --memory-limit=-1"
-                ],
-                "phpunit": [
-                    "vendor/bin/phpunit"
-                ],
-                "psalm": [
-                    "vendor/bin/psalm"
-                ],
-                "xmllint-phpcs": [
-                    "xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd phpcs.xml.dist"
-                ],
-                "xmllint": [
-                    "@xmllint-phpcs"
-                ]
-            },
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Pronamic",
-                    "email": "info@pronamic.eu",
-                    "homepage": "http://www.pronamic.eu/",
-                    "role": "Company"
-                },
-                {
-                    "name": "Remco Tolsma",
-                    "email": "info@remcotolsma.nl",
-                    "homepage": "http://www.remcotolsma.nl/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "This plugin adds simple reporting functionality in the WordPress admin dashboard for the Pronamic Pay plugin.",
-            "homepage": "https://www.pronamicpay.com/",
-            "keywords": [
-                "pay",
-                "pronamic",
-                "report",
-                "reporting",
-                "reports",
-                "wordpress",
-                "wp",
-                "wp-admin"
-            ],
-            "support": {
-                "email": "support@wp-pay.org",
-                "issues": "https://github.com/pronamic/pronamic-pay-admin-reports/issues",
-                "source": "https://github.com/pronamic/pronamic-pay-admin-reports"
-            },
-            "time": "2026-01-26T03:59:48+00:00"
-        },
-        {
             "name": "pronamic/wp-datetime",
             "version": "v2.2.0",
             "source": {
@@ -1617,16 +1490,16 @@
         },
         {
             "name": "razorpay/razorpay",
-            "version": "2.9.2",
+            "version": "2.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/razorpay/razorpay-php.git",
-                "reference": "c5cf59941eb2d888e80371328d932e6e8266d352"
+                "reference": "b724515d548083b9fba52e61f47c0c24136ab181"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/razorpay/razorpay-php/zipball/c5cf59941eb2d888e80371328d932e6e8266d352",
-                "reference": "c5cf59941eb2d888e80371328d932e6e8266d352",
+                "url": "https://api.github.com/repos/razorpay/razorpay-php/zipball/b724515d548083b9fba52e61f47c0c24136ab181",
+                "reference": "b724515d548083b9fba52e61f47c0c24136ab181",
                 "shasum": ""
             },
             "require": {
@@ -1678,20 +1551,20 @@
                 "issues": "https://github.com/Razorpay/razorpay-php/issues",
                 "source": "https://github.com/Razorpay/razorpay-php"
             },
-            "time": "2025-08-05T07:13:20+00:00"
+            "time": "2026-06-08T08:12:20+00:00"
         },
         {
             "name": "setasign/fpdf",
-            "version": "1.8.6",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Setasign/FPDF.git",
-                "reference": "0838e0ee4925716fcbbc50ad9e1799b5edfae0a0"
+                "reference": "051b70e4c57dedc88df41b1eff1c62894e5f9ed0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Setasign/FPDF/zipball/0838e0ee4925716fcbbc50ad9e1799b5edfae0a0",
-                "reference": "0838e0ee4925716fcbbc50ad9e1799b5edfae0a0",
+                "url": "https://api.github.com/repos/Setasign/FPDF/zipball/051b70e4c57dedc88df41b1eff1c62894e5f9ed0",
+                "reference": "051b70e4c57dedc88df41b1eff1c62894e5f9ed0",
                 "shasum": ""
             },
             "require": {
@@ -1722,9 +1595,9 @@
                 "pdf"
             ],
             "support": {
-                "source": "https://github.com/Setasign/FPDF/tree/1.8.6"
+                "source": "https://github.com/Setasign/FPDF/tree/1.9.0"
             },
-            "time": "2023-06-26T14:44:25+00:00"
+            "time": "2026-05-31T14:25:29+00:00"
         },
         {
             "name": "stripe/stripe-php",
@@ -1940,16 +1813,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.38.1",
+            "version": "v1.38.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "14c5439eec4ccff081ac14eca2dc57feb2a66d92"
+                "reference": "d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/14c5439eec4ccff081ac14eca2dc57feb2a66d92",
-                "reference": "14c5439eec4ccff081ac14eca2dc57feb2a66d92",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6",
+                "reference": "d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6",
                 "shasum": ""
             },
             "require": {
@@ -2001,7 +1874,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.38.1"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.38.2"
             },
             "funding": [
                 {
@@ -2021,20 +1894,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-26T12:51:13+00:00"
+            "time": "2026-05-27T06:59:30+00:00"
         },
         {
             "name": "symfony/polyfill-php83",
-            "version": "v1.38.1",
+            "version": "v1.38.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php83.git",
-                "reference": "8339098cae28673c15cce00d80734af0453054e2"
+                "reference": "796a26abb75ce49f3a84433cd81bf1009d73d5f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/8339098cae28673c15cce00d80734af0453054e2",
-                "reference": "8339098cae28673c15cce00d80734af0453054e2",
+                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/796a26abb75ce49f3a84433cd81bf1009d73d5f8",
+                "reference": "796a26abb75ce49f3a84433cd81bf1009d73d5f8",
                 "shasum": ""
             },
             "require": {
@@ -2081,7 +1954,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php83/tree/v1.38.1"
+                "source": "https://github.com/symfony/polyfill-php83/tree/v1.38.2"
             },
             "funding": [
                 {
@@ -2101,7 +1974,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-26T12:51:13+00:00"
+            "time": "2026-05-27T06:51:48+00:00"
         },
         {
             "name": "viison/address-splitter",
@@ -3176,11 +3049,11 @@
         },
         {
             "name": "wp-pay/core",
-            "version": "4.26.0.3",
+            "version": "4.26.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/wp-pay-core",
-                "reference": "7f48cc91a68d9b3cdf4e20f3cf558eb2aadfe59e"
+                "reference": "d18b4af832359ee868bccb72614b3dae519ad929"
             },
             "require": {
                 "automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
@@ -3318,7 +3191,7 @@
                 "issues": "https://github.com/wp-pay/core/issues",
                 "source": "https://github.com/wp-pay/core"
             },
-            "time": "2026-05-06T14:00:37+00:00"
+            "time": "2026-06-13T12:19:08+00:00"
         }
     ],
     "packages-dev": [
@@ -3533,31 +3406,29 @@
         },
         {
             "name": "automattic/wordbless",
-            "version": "0.4.2",
+            "version": "0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/wordbless.git",
-                "reference": "a1fe6376b81e6d037190aa1a5dc684d51eb674cd"
+                "reference": "fc36fd22a43a9cfd2a47cd576a0584ee88afe521"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/wordbless/zipball/a1fe6376b81e6d037190aa1a5dc684d51eb674cd",
-                "reference": "a1fe6376b81e6d037190aa1a5dc684d51eb674cd",
+                "url": "https://api.github.com/repos/Automattic/wordbless/zipball/fc36fd22a43a9cfd2a47cd576a0584ee88afe521",
+                "reference": "fc36fd22a43a9cfd2a47cd576a0584ee88afe521",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6.20",
-                "roots/wordpress": "^6.0.2",
-                "yoast/phpunit-polyfills": "^1.0"
+                "roots/wordpress": "^5.4"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^9.5"
+                "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^9.0"
             },
             "type": "wordpress-dropin",
             "autoload": {
                 "psr-4": {
-                    "WorDBless\\": "src/",
-                    "WorDBless\\Composer\\": "src/Composer/"
+                    "WorDBless\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3572,9 +3443,9 @@
             "description": "WorDBless allows you to use WordPress core functions in your PHPUnit tests without having to set up a database and the whole WordPress environment",
             "support": {
                 "issues": "https://github.com/Automattic/wordbless/issues",
-                "source": "https://github.com/Automattic/wordbless/tree/0.4.2"
+                "source": "https://github.com/Automattic/wordbless/tree/0.3.1"
             },
-            "time": "2023-03-15T12:16:20+00:00"
+            "time": "2021-07-07T13:01:21+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -4875,16 +4746,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "6.8.2",
+            "version": "6.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jsonrainbow/json-schema.git",
-                "reference": "2c89ebb95ca9cedc9347f780333f7b25792dcb76"
+                "reference": "8b1308a9d7bdbdb20ce87ef920f82b4564bb2d33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/2c89ebb95ca9cedc9347f780333f7b25792dcb76",
-                "reference": "2c89ebb95ca9cedc9347f780333f7b25792dcb76",
+                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/8b1308a9d7bdbdb20ce87ef920f82b4564bb2d33",
+                "reference": "8b1308a9d7bdbdb20ce87ef920f82b4564bb2d33",
                 "shasum": ""
             },
             "require": {
@@ -4944,9 +4815,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jsonrainbow/json-schema/issues",
-                "source": "https://github.com/jsonrainbow/json-schema/tree/6.8.2"
+                "source": "https://github.com/jsonrainbow/json-schema/tree/6.10.0"
             },
-            "time": "2026-05-05T05:39:01+00:00"
+            "time": "2026-06-16T20:50:26+00:00"
         },
         {
             "name": "marc-mabe/php-enum",
@@ -7081,29 +6952,35 @@
         },
         {
             "name": "roots/wordpress",
-            "version": "6.9.4",
+            "version": "5.9.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/roots/wordpress.git",
-                "reference": "2fa44383ade9e8ccbb986e95ca70a365c8221eb1"
+                "url": "https://github.com/WordPress/WordPress.git",
+                "reference": "5.9.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roots/wordpress/zipball/2fa44383ade9e8ccbb986e95ca70a365c8221eb1",
-                "reference": "2fa44383ade9e8ccbb986e95ca70a365c8221eb1",
-                "shasum": ""
+                "url": "https://api.github.com/repos/WordPress/WordPress/zipball/refs/tags/5.9.3"
             },
             "require": {
-                "roots/wordpress-core-installer": "^3.0",
-                "roots/wordpress-no-content": "self.version"
+                "php": ">=5.3.2",
+                "roots/wordpress-core-installer": ">=1.0.0"
             },
-            "type": "metapackage",
+            "provide": {
+                "wordpress/core-implementation": "5.9.3"
+            },
+            "type": "wordpress-core",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT",
                 "GPL-2.0-or-later"
             ],
-            "description": "WordPress is open source software you can use to create a beautiful website, blog, or app.",
+            "authors": [
+                {
+                    "name": "WordPress Community",
+                    "homepage": "https://wordpress.org/about/"
+                }
+            ],
+            "description": "WordPress is web software you can use to create a beautiful website or blog.",
             "homepage": "https://wordpress.org/",
             "keywords": [
                 "blog",
@@ -7111,33 +6988,42 @@
                 "wordpress"
             ],
             "support": {
-                "issues": "https://github.com/roots/wordpress/issues",
-                "source": "https://github.com/roots/wordpress/tree/6.9.4"
+                "docs": "https://developer.wordpress.org/",
+                "forum": "https://wordpress.org/support/",
+                "irc": "irc://irc.freenode.net/wordpress",
+                "issues": "https://core.trac.wordpress.org/",
+                "rss": "https://wordpress.org/news/feed/",
+                "source": "https://core.trac.wordpress.org/browser",
+                "wiki": "https://codex.wordpress.org/"
             },
             "funding": [
                 {
                     "url": "https://github.com/roots",
                     "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/rootsdev",
+                    "type": "patreon"
                 }
             ],
-            "time": "2026-03-09T19:47:29+00:00"
+            "time": "2022-04-06T02:26:36+00:00"
         },
         {
             "name": "roots/wordpress-core-installer",
-            "version": "3.0.0",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roots/wordpress-core-installer.git",
-                "reference": "714d2e2a9e523f6e7bde4810d5a04aedf0ec217f"
+                "reference": "85d3589252eb93eee836facf33b54ce30c565bea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roots/wordpress-core-installer/zipball/714d2e2a9e523f6e7bde4810d5a04aedf0ec217f",
-                "reference": "714d2e2a9e523f6e7bde4810d5a04aedf0ec217f",
+                "url": "https://api.github.com/repos/roots/wordpress-core-installer/zipball/85d3589252eb93eee836facf33b54ce30c565bea",
+                "reference": "85d3589252eb93eee836facf33b54ce30c565bea",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.0 || ^2.0",
+                "composer-plugin-api": "^2.0",
                 "php": ">=7.2.24"
             },
             "conflict": {
@@ -7147,7 +7033,7 @@
                 "johnpbloch/wordpress-core-installer": "*"
             },
             "require-dev": {
-                "composer/composer": "^1.0 || ^2.0",
+                "composer/composer": "^2.0",
                 "phpunit/phpunit": "^8.5"
             },
             "type": "composer-plugin",
@@ -7179,7 +7065,7 @@
             ],
             "support": {
                 "issues": "https://github.com/roots/wordpress-core-installer/issues",
-                "source": "https://github.com/roots/wordpress-core-installer/tree/3.0.0"
+                "source": "https://github.com/roots/wordpress-core-installer/tree/v4.0.0"
             },
             "funding": [
                 {
@@ -7187,7 +7073,78 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-05-23T18:47:25+00:00"
+            "time": "2026-03-22T03:17:23+00:00"
+        },
+        {
+            "name": "roots/wordpress-no-content",
+            "version": "7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WordPress/WordPress.git",
+                "reference": "7.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.w.org/release/wordpress-7.0-no-content.zip",
+                "reference": "7.0",
+                "shasum": "2ffdd31a747f68e3e5633064993997a7ce881975"
+            },
+            "require": {
+                "php": ">= 7.4"
+            },
+            "provide": {
+                "wordpress/core-implementation": "7.0"
+            },
+            "suggest": {
+                "ext-curl": "Performs remote request operations.",
+                "ext-dom": "Used to validate Text Widget content and to automatically configuring IIS7+.",
+                "ext-exif": "Works with metadata stored in images.",
+                "ext-fileinfo": "Used to detect mimetype of file uploads.",
+                "ext-hash": "Used for hashing, including passwords and update packages.",
+                "ext-imagick": "Provides better image quality for media uploads.",
+                "ext-json": "Used for communications with other servers.",
+                "ext-libsodium": "Validates Signatures and provides securely random bytes.",
+                "ext-mbstring": "Used to properly handle UTF8 text.",
+                "ext-mysqli": "Connects to MySQL for database interactions.",
+                "ext-openssl": "Permits SSL-based connections to other hosts.",
+                "ext-pcre": "Increases performance of pattern matching in code searches.",
+                "ext-xml": "Used for XML parsing, such as from a third-party site.",
+                "ext-zip": "Used for decompressing Plugins, Themes, and WordPress update packages."
+            },
+            "type": "wordpress-core",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "WordPress Community",
+                    "homepage": "https://wordpress.org/about/"
+                }
+            ],
+            "description": "WordPress is open source software you can use to create a beautiful website, blog, or app.",
+            "homepage": "https://wordpress.org/",
+            "keywords": [
+                "blog",
+                "cms",
+                "wordpress"
+            ],
+            "support": {
+                "docs": "https://developer.wordpress.org/",
+                "forum": "https://wordpress.org/support/",
+                "irc": "irc://irc.freenode.net/wordpress",
+                "issues": "https://core.trac.wordpress.org/",
+                "rss": "https://wordpress.org/news/feed/",
+                "source": "https://core.trac.wordpress.org/browser",
+                "wiki": "https://codex.wordpress.org/"
+            },
+            "funding": [
+                {
+                    "url": "https://wordpressfoundation.org/donate/",
+                    "type": "other"
+                }
+            ],
+            "time": "2026-05-20T18:34:28+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -8202,16 +8159,16 @@
         },
         {
             "name": "seld/jsonlint",
-            "version": "1.11.0",
+            "version": "1.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/jsonlint.git",
-                "reference": "1748aaf847fc731cfad7725aec413ee46f0cc3a2"
+                "reference": "9a90eb5d32d5a500296bf43f946d60246444d5f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/1748aaf847fc731cfad7725aec413ee46f0cc3a2",
-                "reference": "1748aaf847fc731cfad7725aec413ee46f0cc3a2",
+                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/9a90eb5d32d5a500296bf43f946d60246444d5f7",
+                "reference": "9a90eb5d32d5a500296bf43f946d60246444d5f7",
                 "shasum": ""
             },
             "require": {
@@ -8250,7 +8207,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/jsonlint/issues",
-                "source": "https://github.com/Seldaek/jsonlint/tree/1.11.0"
+                "source": "https://github.com/Seldaek/jsonlint/tree/1.12.1"
             },
             "funding": [
                 {
@@ -8262,7 +8219,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-11T14:55:45+00:00"
+            "time": "2026-06-12T11:32:29+00:00"
         },
         {
             "name": "seld/phar-utils",
@@ -9549,6 +9506,71 @@
                 }
             ],
             "time": "2026-05-26T12:51:13+00:00"
+        },
+        {
+            "name": "symfony/process",
+            "version": "v6.4.41",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/process.git",
+                "reference": "c8fc09bdfe9fde9aaa89b415a4477feaccec16a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/process/zipball/c8fc09bdfe9fde9aaa89b415a4477feaccec16a7",
+                "reference": "c8fc09bdfe9fde9aaa89b415a4477feaccec16a7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Process\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Executes commands in sub-processes",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/process/tree/v6.4.41"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-05-23T13:47:21+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -11745,56 +11767,6 @@
             "time": "2026-03-29T11:12:54+00:00"
         },
         {
-            "name": "wp-cli/process",
-            "version": "v5.9.99",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/wp-cli/process.git",
-                "reference": "f0aec5ca26a702d3157e3a19982b662521ac2b81"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/process/zipball/f0aec5ca26a702d3157e3a19982b662521ac2b81",
-                "reference": "f0aec5ca26a702d3157e3a19982b662521ac2b81",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.5.9|>=7.0.8"
-            },
-            "replace": {
-                "symfony/process": "^5.4.47"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Process\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Process Component",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/wp-cli/process/tree/v5.9.99"
-            },
-            "time": "2025-05-06T21:26:50+00:00"
-        },
-        {
             "name": "wp-cli/rewrite-command",
             "version": "v2.0.16",
             "source": {
@@ -12364,16 +12336,16 @@
         },
         {
             "name": "wp-cli/wp-cli-bundle",
-            "version": "v2.12.0",
+            "version": "v2.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli-bundle.git",
-                "reference": "d639a3dab65f4b935b21c61ea3662bf3258a03a5"
+                "reference": "f77a284ccf92023981046edf63111ab427106d05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli-bundle/zipball/d639a3dab65f4b935b21c61ea3662bf3258a03a5",
-                "reference": "d639a3dab65f4b935b21c61ea3662bf3258a03a5",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli-bundle/zipball/f77a284ccf92023981046edf63111ab427106d05",
+                "reference": "f77a284ccf92023981046edf63111ab427106d05",
                 "shasum": ""
             },
             "require": {
@@ -12395,7 +12367,6 @@
                 "wp-cli/maintenance-mode-command": "^2",
                 "wp-cli/media-command": "^2",
                 "wp-cli/package-command": "^2.1",
-                "wp-cli/process": "5.9.99",
                 "wp-cli/rewrite-command": "^2",
                 "wp-cli/role-command": "^2",
                 "wp-cli/scaffold-command": "^2",
@@ -12404,7 +12375,7 @@
                 "wp-cli/shell-command": "^2",
                 "wp-cli/super-admin-command": "^2",
                 "wp-cli/widget-command": "^2",
-                "wp-cli/wp-cli": "^2.12"
+                "wp-cli/wp-cli": "^2.11.0"
             },
             "require-dev": {
                 "roave/security-advisories": "dev-latest",
@@ -12416,7 +12387,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "2.12.x-dev"
+                    "dev-main": "2.11.x-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -12434,7 +12405,7 @@
                 "issues": "https://github.com/wp-cli/wp-cli-bundle/issues",
                 "source": "https://github.com/wp-cli/wp-cli-bundle"
             },
-            "time": "2025-05-07T02:15:53+00:00"
+            "time": "2024-08-08T03:29:34+00:00"
         },
         {
             "name": "wp-cli/wp-config-transformer",
@@ -12617,6 +12588,12 @@
     ],
     "aliases": [
         {
+            "package": "setasign/fpdf",
+            "version": "1.9.0.0",
+            "alias": "1.8.6",
+            "alias_normalized": "1.8.6.0"
+        },
+        {
             "package": "wp-pay-extensions/charitable",
             "version": "dev-knitpay-master",
             "alias": "4.3.5",
@@ -12672,7 +12649,7 @@
         },
         {
             "package": "wp-pay/core",
-            "version": "4.26.0.3",
+            "version": "4.26.0.5",
             "alias": "4.26.0",
             "alias_normalized": "4.26.0.0"
         }
@@ -12681,7 +12658,6 @@
     "stability-flags": {
         "paytm/paytmchecksum": 20,
         "pronamic/changelog-md-to-wordpress-plugin-readme-txt": 20,
-        "pronamic/pronamic-pay-admin-reports": 20,
         "wp-pay-extensions/charitable": 20,
         "wp-pay-extensions/easy-digital-downloads": 20,
         "wp-pay-extensions/formidable-forms": 20,

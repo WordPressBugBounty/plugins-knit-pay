@@ -57,9 +57,9 @@
 		"composer/installers": "^2.3",
 		"gautammkgarg/psr-for-wordpress": "*",
 		"konekt/pdf-invoice": "^1.14",
+		"setasign/fpdf": "1.9.0 as 1.8.6",
 		"omnipay/common": "^3.5",
 		"paytm/paytmchecksum": "dev-master",
-		"pronamic/pronamic-pay-admin-reports": "dev-main",
 		"pronamic/wp-datetime": "^2.1",
 		"pronamic/wp-html": "^2.2",
 		"pronamic/wp-http": "^1.2",
@@ -78,7 +78,7 @@
 		"wp-pay-extensions/ninjaforms": "dev-knitpay-master as 3.3.4",
 		"wp-pay-extensions/restrict-content-pro": "dev-knitpay-master as 4.6.3",
 		"wp-pay-extensions/woocommerce": "dev-knitpay-master as 4.12.1",
-		"wp-pay/core": "4.26.0.3 as 4.26.0"
+		"wp-pay/core": "4.26.0.5 as 4.26.0"
 	},
 	"require-dev": {
 		"automattic/wordbless": "^0.3 || ^0.4",
@@ -89,7 +89,7 @@
 		"pronamic/changelog-md-to-wordpress-plugin-readme-txt": "dev-main",
 		"pronamic/pronamic-cli": "^1.1",
 		"pronamic/wp-coding-standards": "^2.2",
-		"roots/wordpress-no-content": "^6.4",
+		"roots/wordpress-no-content": "^7.0",
 		"vimeo/psalm": "^5.24",
 		"wp-cli/dist-archive-command": "*",
 		"wp-cli/wp-cli-bundle": "*",
@@ -97,7 +97,6 @@
 	},
 	"replace" : {
 		"rmccue/requests" : "*",
-		"roots/wordpress-no-content" : "*",
 		"wp-pay-gateways/mollie": "*",
 		"guzzlehttp/guzzle": "^7.5"
 	},

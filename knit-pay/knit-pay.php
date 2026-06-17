@@ -4,7 +4,7 @@
  * Plugin URI: https://www.knitpay.org
  * Description: Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, Razorpay, PayPal, Stripe, UPI QR, and SSLCommerz, with over 100 WordPress plugins.
  *
- * Version: 9.4.0.1
+ * Version: 9.5.0.0
  * Requires at least: 6.2
  * Requires PHP: 8.1
  *
@@ -60,8 +60,8 @@ $knit_pay_plugin = \Pronamic\WordPress\Pay\Plugin::instance(
 );
 define( 'KNITPAY_VERSION', $knit_pay_plugin->get_version() );
 
-// Admin reports.
-\Pronamic\PronamicPayAdminReports\Plugin::instance()->setup();
+// Knit Pay Reports Module.
+\KnitPay\Reports\ReportsModule::instance()->setup();
 
 add_filter(
 	'pronamic_pay_modules',
@@ -234,7 +234,7 @@ function knitpay_filter_plugin_action_links( array $actions ) {
 	return array_merge(
 		[
 			'configurations' => '<a href="edit.php?post_type=pronamic_gateway">' . esc_html__( 'Configurations', 'knit-pay-lang' ) . '</a>',
-			'payments'       => '<a href="edit.php?post_type=pronamic_payment">' . esc_html__( 'Payments', 'knit-pay-lang' ) . '</a>',
+			'payments'       => '<a href="admin.php?page=knit-pay-reports&tab=transactions">' . esc_html__( 'Payments', 'knit-pay-lang' ) . '</a>',
 		],
 		$actions
 	);

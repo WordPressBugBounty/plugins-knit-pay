@@ -36,7 +36,10 @@ class Gateway extends Easebuzz_Gateway {
 
 		$this->config = $config;
 
-		$this->supports = [];
+		// Supported features.
+		$this->supports = [
+			'refunds',
+		];
 
 		$this->set_method( self::METHOD_HTML_FORM );
 

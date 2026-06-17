@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v5.0.18",
-            "version_normalized": "5.0.18.0",
+            "version": "v5.0.20",
+            "version_normalized": "5.0.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "be5ea0f2109f3300a22a05727721587c9116ffe8"
+                "reference": "b6abf43a9ea638d6a0edc02f0dd7575703f9c2a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/be5ea0f2109f3300a22a05727721587c9116ffe8",
-                "reference": "be5ea0f2109f3300a22a05727721587c9116ffe8",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/b6abf43a9ea638d6a0edc02f0dd7575703f9c2a1",
+                "reference": "b6abf43a9ea638d6a0edc02f0dd7575703f9c2a1",
                 "shasum": ""
             },
             "require": {
@@ -20,11 +20,11 @@
                 "php": ">=7.2"
             },
             "require-dev": {
-                "automattic/phpunit-select-config": "^1.0.6",
+                "automattic/phpunit-select-config": "^1.0.9",
                 "composer/composer": "^2.2",
                 "yoast/phpunit-polyfills": "^4.0.0"
             },
-            "time": "2026-05-19T09:17:26+00:00",
+            "time": "2026-06-15T12:15:05+00:00",
             "type": "composer-plugin",
             "extra": {
                 "class": "Automattic\\Jetpack\\Autoloader\\CustomAutoloaderPlugin",
@@ -63,7 +63,7 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.18"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.20"
             },
             "install-path": "../automattic/jetpack-autoloader"
         },
@@ -949,136 +949,6 @@
             "install-path": "../pronamic/ideal-issuers"
         },
         {
-            "name": "pronamic/pronamic-pay-admin-reports",
-            "version": "dev-main",
-            "version_normalized": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/knit-pay/knit-pay-admin-reports",
-                "reference": "47de561c2aa160e825dfabc42684e321c4b9b298"
-            },
-            "require": {
-                "automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
-                "php": ">=8.1",
-                "pronamic/wp-money": "^2.4",
-                "woocommerce/action-scheduler": "^3.8",
-                "wp-pay/core": "^4.19"
-            },
-            "require-dev": {
-                "overtrue/phplint": "^9.1",
-                "php-coveralls/php-coveralls": "^2.7",
-                "php-stubs/woocommerce-stubs": "^8.7",
-                "php-stubs/wp-cli-stubs": "^2.10",
-                "phpmd/phpmd": "^2.15",
-                "phpstan/extension-installer": "^1.4",
-                "phpstan/phpstan": "^1.11",
-                "pronamic/pronamic-cli": "^1.1",
-                "pronamic/wp-coding-standards": "^2.2",
-                "roots/wordpress": "^6.4",
-                "szepeviktor/phpstan-wordpress": "^1.3",
-                "vimeo/psalm": "^0.3.14",
-                "wp-cli/wp-cli": "^2.10",
-                "wp-phpunit/wp-phpunit": "^6.4",
-                "yoast/phpunit-polyfills": "^2.0"
-            },
-            "time": "2026-01-26T03:59:48+00:00",
-            "default-branch": true,
-            "type": "wordpress-plugin",
-            "extra": {
-                "installer-paths": {
-                    "packages/{$vendor}/{$name}": [
-                        "vendor:pronamic",
-                        "vendor:wp-pay",
-                        "vendor:wp-pay-extensions",
-                        "vendor:wp-pay-gateways",
-                        "woocommerce/action-scheduler"
-                    ]
-                }
-            },
-            "installation-source": "source",
-            "autoload": {
-                "psr-4": {
-                    "Pronamic\\PronamicPayAdminReports\\": "php/classes/"
-                }
-            },
-            "scripts": {
-                "coveralls": [
-                    "vendor/bin/php-coveralls -v"
-                ],
-                "make-i18n-json": [
-                    "wp i18n make-json languages/*.po --no-purge"
-                ],
-                "make-pot": [
-                    "wp pronamic i18n make-pot . languages/pronamic-pay-fundraising.pot --slug='pronamic-pay-fundraising'"
-                ],
-                "update-po": [
-                    "find languages/*.po -type f -exec msgmerge --update --backup=off {} languages/pronamic-pay-fundraising.pot \\;"
-                ],
-                "phpcbf": [
-                    "XDEBUG_MODE=off vendor/bin/phpcbf"
-                ],
-                "phpcs": [
-                    "XDEBUG_MODE=off vendor/bin/phpcs -s -v"
-                ],
-                "phplint": [
-                    "vendor/bin/phplint"
-                ],
-                "phpmd": [
-                    "vendor/bin/phpmd src,tests text phpmd.ruleset.xml --suffixes php"
-                ],
-                "phpstan": [
-                    "XDEBUG_MODE=off vendor/bin/phpstan analyse --memory-limit=-1"
-                ],
-                "phpunit": [
-                    "vendor/bin/phpunit"
-                ],
-                "psalm": [
-                    "vendor/bin/psalm"
-                ],
-                "xmllint-phpcs": [
-                    "xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd phpcs.xml.dist"
-                ],
-                "xmllint": [
-                    "@xmllint-phpcs"
-                ]
-            },
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Pronamic",
-                    "email": "info@pronamic.eu",
-                    "homepage": "http://www.pronamic.eu/",
-                    "role": "Company"
-                },
-                {
-                    "name": "Remco Tolsma",
-                    "email": "info@remcotolsma.nl",
-                    "homepage": "http://www.remcotolsma.nl/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "This plugin adds simple reporting functionality in the WordPress admin dashboard for the Pronamic Pay plugin.",
-            "homepage": "https://www.pronamicpay.com/",
-            "keywords": [
-                "pay",
-                "pronamic",
-                "report",
-                "reporting",
-                "reports",
-                "wordpress",
-                "wp",
-                "wp-admin"
-            ],
-            "support": {
-                "email": "support@wp-pay.org",
-                "issues": "https://github.com/pronamic/pronamic-pay-admin-reports/issues",
-                "source": "https://github.com/pronamic/pronamic-pay-admin-reports"
-            },
-            "install-path": "../../packages/pronamic/pronamic-pay-admin-reports"
-        },
-        {
             "name": "pronamic/wp-datetime",
             "version": "v2.2.0",
             "version_normalized": "2.2.0.0",
@@ -1683,17 +1553,17 @@
         },
         {
             "name": "razorpay/razorpay",
-            "version": "2.9.2",
-            "version_normalized": "2.9.2.0",
+            "version": "2.9.3",
+            "version_normalized": "2.9.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/razorpay/razorpay-php.git",
-                "reference": "c5cf59941eb2d888e80371328d932e6e8266d352"
+                "reference": "b724515d548083b9fba52e61f47c0c24136ab181"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/razorpay/razorpay-php/zipball/c5cf59941eb2d888e80371328d932e6e8266d352",
-                "reference": "c5cf59941eb2d888e80371328d932e6e8266d352",
+                "url": "https://api.github.com/repos/razorpay/razorpay-php/zipball/b724515d548083b9fba52e61f47c0c24136ab181",
+                "reference": "b724515d548083b9fba52e61f47c0c24136ab181",
                 "shasum": ""
             },
             "require": {
@@ -1705,7 +1575,7 @@
                 "phpunit/phpunit": "^9",
                 "raveren/kint": "1.*"
             },
-            "time": "2025-08-05T07:13:20+00:00",
+            "time": "2026-06-08T08:12:20+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1751,24 +1621,24 @@
         },
         {
             "name": "setasign/fpdf",
-            "version": "1.8.6",
-            "version_normalized": "1.8.6.0",
+            "version": "1.9.0",
+            "version_normalized": "1.9.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Setasign/FPDF.git",
-                "reference": "0838e0ee4925716fcbbc50ad9e1799b5edfae0a0"
+                "reference": "051b70e4c57dedc88df41b1eff1c62894e5f9ed0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Setasign/FPDF/zipball/0838e0ee4925716fcbbc50ad9e1799b5edfae0a0",
-                "reference": "0838e0ee4925716fcbbc50ad9e1799b5edfae0a0",
+                "url": "https://api.github.com/repos/Setasign/FPDF/zipball/051b70e4c57dedc88df41b1eff1c62894e5f9ed0",
+                "reference": "051b70e4c57dedc88df41b1eff1c62894e5f9ed0",
                 "shasum": ""
             },
             "require": {
                 "ext-gd": "*",
                 "ext-zlib": "*"
             },
-            "time": "2023-06-26T14:44:25+00:00",
+            "time": "2026-05-31T14:25:29+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1794,7 +1664,7 @@
                 "pdf"
             ],
             "support": {
-                "source": "https://github.com/Setasign/FPDF/tree/1.8.6"
+                "source": "https://github.com/Setasign/FPDF/tree/1.9.0"
             },
             "install-path": "../setasign/fpdf"
         },
@@ -2021,17 +1891,17 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.38.1",
-            "version_normalized": "1.38.1.0",
+            "version": "v1.38.2",
+            "version_normalized": "1.38.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "14c5439eec4ccff081ac14eca2dc57feb2a66d92"
+                "reference": "d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/14c5439eec4ccff081ac14eca2dc57feb2a66d92",
-                "reference": "14c5439eec4ccff081ac14eca2dc57feb2a66d92",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6",
+                "reference": "d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6",
                 "shasum": ""
             },
             "require": {
@@ -2044,7 +1914,7 @@
             "suggest": {
                 "ext-mbstring": "For best performance"
             },
-            "time": "2026-05-26T12:51:13+00:00",
+            "time": "2026-05-27T06:59:30+00:00",
             "type": "library",
             "extra": {
                 "thanks": {
@@ -2085,7 +1955,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.38.1"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.38.2"
             },
             "funding": [
                 {
@@ -2109,23 +1979,23 @@
         },
         {
             "name": "symfony/polyfill-php83",
-            "version": "v1.38.1",
-            "version_normalized": "1.38.1.0",
+            "version": "v1.38.2",
+            "version_normalized": "1.38.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php83.git",
-                "reference": "8339098cae28673c15cce00d80734af0453054e2"
+                "reference": "796a26abb75ce49f3a84433cd81bf1009d73d5f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/8339098cae28673c15cce00d80734af0453054e2",
-                "reference": "8339098cae28673c15cce00d80734af0453054e2",
+                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/796a26abb75ce49f3a84433cd81bf1009d73d5f8",
+                "reference": "796a26abb75ce49f3a84433cd81bf1009d73d5f8",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2"
             },
-            "time": "2026-05-26T12:51:13+00:00",
+            "time": "2026-05-27T06:51:48+00:00",
             "type": "library",
             "extra": {
                 "thanks": {
@@ -2168,7 +2038,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php83/tree/v1.38.1"
+                "source": "https://github.com/symfony/polyfill-php83/tree/v1.38.2"
             },
             "funding": [
                 {
@@ -3296,12 +3166,12 @@
         },
         {
             "name": "wp-pay/core",
-            "version": "4.26.0.3",
-            "version_normalized": "4.26.0.3",
+            "version": "4.26.0.5",
+            "version_normalized": "4.26.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/wp-pay-core",
-                "reference": "7f48cc91a68d9b3cdf4e20f3cf558eb2aadfe59e"
+                "reference": "d18b4af832359ee868bccb72614b3dae519ad929"
             },
             "require": {
                 "automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
@@ -3338,7 +3208,7 @@
                 "wp-phpunit/wp-phpunit": "^6.1",
                 "yoast/phpunit-polyfills": "^2.0"
             },
-            "time": "2026-05-06T14:00:37+00:00",
+            "time": "2026-06-13T12:19:08+00:00",
             "type": "wordpress-plugin",
             "installation-source": "source",
             "autoload": {

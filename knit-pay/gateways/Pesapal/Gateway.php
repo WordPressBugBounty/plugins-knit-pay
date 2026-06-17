@@ -157,7 +157,7 @@ class Gateway extends Core_Gateway {
 		}
 		
 		// Add detailed response in debug mode
-		if ( pronamic_pay_plugin()->is_debug_mode() ) {
+		if ( knit_pay_plugin()->is_debug_mode() ) {
 			unset( $gateway_payment->call_back_url );
 			$payment->add_note( 
 				'<details><summary>Pesapal Response</summary><pre>' . 
