@@ -16,7 +16,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<thead>
 			<tr>
 				<th><?php esc_html_e( 'Payment Method', 'knit-pay-lang' ); ?></th>
-				<th><?php esc_html_e( 'Total', 'knit-pay-lang' ); ?></th>
+				<th>
+					<span class="knit-pay-th-tooltip" title="<?php esc_attr_e( 'Successful payments out of total payment attempts. Includes partially refunded payments.', 'knit-pay-lang' ); ?>">
+						<?php esc_html_e( 'Success / Total', 'knit-pay-lang' ); ?> <span class="kpi-info-icon">&#9432;</span>
+					</span>
+				</th>
 				<th><?php esc_html_e( 'Success Rate', 'knit-pay-lang' ); ?></th>
 				<th><?php esc_html_e( 'Avg. Amount', 'knit-pay-lang' ); ?></th>
 				<th>
@@ -40,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<template x-for="m in methodRows()" :key="m.key">
 				<tr>
 					<td x-text="methodName(m.key)"></td>
-					<td x-text="m.count"></td>
+					<td x-text="m.success_count + '/' + m.count"></td>
 					<td x-text="m.success_rate + '%'"></td>
 					<td x-html="buildCurrencyList(m.avg, Object.keys(m.avg || {}), (a, c) => formatMoney(a, c))"></td>
 					<td x-html="buildCurrencyList(m.success_amounts, Object.keys(m.success_amounts || {}), (a, c) => formatMoney(a, c))"></td>

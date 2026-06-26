@@ -320,6 +320,12 @@ class ReportsApiHelper {
 		$transactions = [];
 		foreach ( $results as $row ) {
 			$config_id      = (int) ( $row->gateway_id ?? 0 );
+
+			// Fallback for payments where gateway.post_id was not saved in post_content JSON.
+			if ( 0 === $config_id ) {
+				$config_id = (int) get_post_meta( $row->ID, '_pronamic_payment_config_id', true );
+			}
+
 			$source_key     = $row->source_key ?? '';
 			$source         = ! empty( $source_key ) ? $source_key : get_post_meta( $row->ID, '_pronamic_payment_source', true );
 			$source_id      = get_post_meta( $row->ID, '_pronamic_payment_source_id', true );
@@ -465,6 +471,7 @@ class ReportsApiHelper {
 			$agg             = new Aggregator( $rows );
 			$data[ $method ] = [
 				'count'                   => $agg->total_count(),
+				'success_count'           => $agg->success_count(),
 				'amounts'                 => $agg->sum_amount_by_currency(),
 				'success_amounts'         => $agg->success_amount_by_currency(),
 				'avg'                     => $agg->weighted_avg_per_currency(),

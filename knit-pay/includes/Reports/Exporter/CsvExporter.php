@@ -102,7 +102,7 @@ class CsvExporter {
 
 	public function export_gateway_performance( array $data ): string {
 		$lines   = [];
-		$lines[] = implode( ',', [ __( 'Gateway', 'knit-pay-lang' ), __( 'Total', 'knit-pay-lang' ), __( 'Success Rate', 'knit-pay-lang' ), __( 'Average Amount', 'knit-pay-lang' ), __( 'Revenue', 'knit-pay-lang' ), __( 'Volume', 'knit-pay-lang' ) ] );
+		$lines[] = implode( ',', [ __( 'Gateway', 'knit-pay-lang' ), __( 'Success / Total', 'knit-pay-lang' ), __( 'Success Rate', 'knit-pay-lang' ), __( 'Average Amount', 'knit-pay-lang' ), __( 'Revenue', 'knit-pay-lang' ), __( 'Volume', 'knit-pay-lang' ) ] );
 
 		foreach ( $data as $gateway_id => $gw ) {
 			$volume_parts = [];
@@ -127,7 +127,7 @@ class CsvExporter {
 				',',
 				[
 					$this->escape_csv_field( $gw['name'] ),
-					$gw['count'],
+					( $gw['success_count'] ?? 0 ) . '/' . $gw['count'],
 					$gw['success_rate'] . '%',
 					$this->escape_csv_field( $avg_str ),
 					$this->escape_csv_field( $rev_str ),
@@ -142,7 +142,7 @@ class CsvExporter {
 	public function export_payment_methods( array $data ): string {
 		$method_names = ReportsApiHelper::payment_method_names( array_keys( $data ) );
 		$lines        = [];
-		$lines[]      = implode( ',', [ __( 'Payment Method', 'knit-pay-lang' ), __( 'Total', 'knit-pay-lang' ), __( 'Success Rate', 'knit-pay-lang' ), __( 'Average Amount', 'knit-pay-lang' ), __( 'Revenue', 'knit-pay-lang' ), __( 'Volume', 'knit-pay-lang' ) ] );
+		$lines[]      = implode( ',', [ __( 'Payment Method', 'knit-pay-lang' ), __( 'Success / Total', 'knit-pay-lang' ), __( 'Success Rate', 'knit-pay-lang' ), __( 'Average Amount', 'knit-pay-lang' ), __( 'Revenue', 'knit-pay-lang' ), __( 'Volume', 'knit-pay-lang' ) ] );
 
 		foreach ( $data as $method => $info ) {
 			$volume_parts = [];
@@ -167,7 +167,7 @@ class CsvExporter {
 				',',
 				[
 					$this->escape_csv_field( $method_names[ $method ] ?? $method ),
-					$info['count'],
+					( $info['success_count'] ?? 0 ) . '/' . $info['count'],
 					$info['success_rate'] . '%',
 					$this->escape_csv_field( $avg_str ),
 					$this->escape_csv_field( $rev_str ),
@@ -181,7 +181,7 @@ class CsvExporter {
 
 	public function export_sources( array $data ): string {
 		$lines   = [];
-		$lines[] = implode( ',', [ __( 'Source', 'knit-pay-lang' ), __( 'Total', 'knit-pay-lang' ), __( 'Success Rate', 'knit-pay-lang' ), __( 'Average Amount', 'knit-pay-lang' ), __( 'Revenue', 'knit-pay-lang' ), __( 'Volume', 'knit-pay-lang' ) ] );
+		$lines[] = implode( ',', [ __( 'Integration', 'knit-pay-lang' ), __( 'Success / Total', 'knit-pay-lang' ), __( 'Success Rate', 'knit-pay-lang' ), __( 'Average Amount', 'knit-pay-lang' ), __( 'Revenue', 'knit-pay-lang' ), __( 'Volume', 'knit-pay-lang' ) ] );
 
 		foreach ( $data as $source => $info ) {
 			$volume_parts = [];
@@ -206,7 +206,7 @@ class CsvExporter {
 				',',
 				[
 					$this->escape_csv_field( $info['name'] ?? $source ),
-					$info['count'],
+					( $info['success_count'] ?? 0 ) . '/' . $info['count'],
 					$info['success_rate'] . '%',
 					$this->escape_csv_field( $avg_str ),
 					$this->escape_csv_field( $rev_str ),

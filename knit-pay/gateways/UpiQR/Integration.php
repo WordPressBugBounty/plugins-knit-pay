@@ -332,7 +332,7 @@ class Integration extends KnitPayGatewayIntegration {
 				PaymentStatus::SUCCESS => PaymentStatus::SUCCESS,
 			],
 			'default'     => PaymentStatus::ON_HOLD,
-			'description' => 'Knit Pay does not check if payment is received or not. Kindly deliver the product/service only after cross-checking the payment status with your bank.<br><strong>Note:</strong> You can also use the "Knit Pay - UPI" plugin to automatically check the payment status of your UPI payments.',
+			'description' => __( 'Knit Pay does not verify UPI QR payments. The customer marks the payment themselves by clicking the Submit button.<br><br>On Hold (Recommended): You check your bank first, then mark the payment as paid. Safe for all stores.<br>Success: The order is marked paid the moment the customer clicks Submit. Use this only if your store does not auto-deliver on success (for example, physical goods you ship manually). For digital goods, downloads, or memberships, use On Hold.<br><br>Note: For automatic bank verification, install the "Knit Pay - UPI" plugin.', 'knit-pay-lang' ),
 		];
 		
 		// Transaction ID Field.

@@ -55,6 +55,11 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 
+		// Convert float to a fixed-point decimal string to avoid scientific
+		// notation (e.g. "5.6e-5") which bcmath functions reject.
+		$exchange_rate = \sprintf( '%.14F', $exchange_rate );
+		$exchange_rate = \rtrim( $exchange_rate, '0' );
+		$exchange_rate = \rtrim( $exchange_rate, '.' );
 		$exchange_rate = new Number( $exchange_rate );
 		$total_amount  = $payment->get_total_amount();
 		$total_amount->set_currency( $default_currency );

@@ -342,13 +342,13 @@ class PdfExporter extends FPDF {
 		$top_gateways = $data['top_gateways'] ?? [];
 		if ( ! empty( $top_gateways ) ) {
 			$this->render_section_title( __( 'Top Gateways', 'knit-pay-lang' ) );
-			$headers = [ __( 'Gateway', 'knit-pay-lang' ), __( 'Total', 'knit-pay-lang' ), __( 'Success Rate', 'knit-pay-lang' ), __( 'Revenue', 'knit-pay-lang' ) ];
+			$headers = [ __( 'Gateway', 'knit-pay-lang' ), __( 'Success / Total', 'knit-pay-lang' ), __( 'Success Rate', 'knit-pay-lang' ), __( 'Revenue', 'knit-pay-lang' ) ];
 			$rows    = [];
-			$widths  = [ 50, 25, 30, 75 ];
+			$widths  = [ 50, 30, 30, 70 ];
 			foreach ( $top_gateways as $gw ) {
 				$rows[] = [
 					$gw['name'] ?? '',
-					number_format( (int) ( $gw['count'] ?? 0 ) ),
+					( $gw['success_count'] ?? 0 ) . '/' . (int) ( $gw['count'] ?? 0 ),
 					( $gw['success_rate'] ?? 0 ) . '%',
 					$this->format_multi_currency( $gw['success_amounts'] ?? [] ),
 				];
@@ -425,14 +425,14 @@ class PdfExporter extends FPDF {
 			return;
 		}
 
-		$headers = [ __( 'Gateway', 'knit-pay-lang' ), __( 'Total', 'knit-pay-lang' ), __( 'Success Rate', 'knit-pay-lang' ), __( 'Revenue', 'knit-pay-lang' ), __( 'Volume', 'knit-pay-lang' ) ];
+		$headers = [ __( 'Gateway', 'knit-pay-lang' ), __( 'Success / Total', 'knit-pay-lang' ), __( 'Success Rate', 'knit-pay-lang' ), __( 'Revenue', 'knit-pay-lang' ), __( 'Volume', 'knit-pay-lang' ) ];
 		$rows    = [];
-		$widths  = [ 45, 20, 25, 50, 40 ];
+		$widths  = [ 45, 25, 25, 45, 40 ];
 
 		foreach ( $data as $gw ) {
 			$rows[] = [
 				$gw['name'] ?? '',
-				number_format( (int) ( $gw['count'] ?? 0 ) ),
+				( $gw['success_count'] ?? 0 ) . '/' . (int) ( $gw['count'] ?? 0 ),
 				( $gw['success_rate'] ?? 0 ) . '%',
 				$this->format_multi_currency( $gw['success_amounts'] ?? [] ),
 				$this->format_multi_currency( $gw['amounts'] ?? [] ),
@@ -450,15 +450,15 @@ class PdfExporter extends FPDF {
 			return;
 		}
 
-		$headers = [ __( 'Payment Method', 'knit-pay-lang' ), __( 'Total', 'knit-pay-lang' ), __( 'Success Rate', 'knit-pay-lang' ), __( 'Revenue', 'knit-pay-lang' ), __( 'Volume', 'knit-pay-lang' ) ];
+		$headers = [ __( 'Payment Method', 'knit-pay-lang' ), __( 'Success / Total', 'knit-pay-lang' ), __( 'Success Rate', 'knit-pay-lang' ), __( 'Revenue', 'knit-pay-lang' ), __( 'Volume', 'knit-pay-lang' ) ];
 		$rows    = [];
-		$widths  = [ 40, 20, 25, 50, 45 ];
+		$widths  = [ 40, 25, 25, 45, 45 ];
 
 		foreach ( $data as $method => $info ) {
 			$method_name = ReportsApiHelper::payment_method_name( $method );
 			$rows[]      = [
 				$method_name,
-				number_format( (int) ( $info['count'] ?? 0 ) ),
+				( $info['success_count'] ?? 0 ) . '/' . (int) ( $info['count'] ?? 0 ),
 				( $info['success_rate'] ?? 0 ) . '%',
 				$this->format_multi_currency( $info['success_amounts'] ?? [] ),
 				$this->format_multi_currency( $info['amounts'] ?? [] ),
@@ -472,18 +472,18 @@ class PdfExporter extends FPDF {
 		if ( empty( $data ) ) {
 			$this->SetFont( 'Helvetica', '', 9 );
 			$this->SetTextColor( ...self::COLOR_TEXT_LIGHT );
-			$this->Cell( 0, 8, __( 'No source data available.', 'knit-pay-lang' ), 0, 1 );
+			$this->Cell( 0, 8, __( 'No integration data available.', 'knit-pay-lang' ), 0, 1 );
 			return;
 		}
 
-		$headers = [ __( 'Source', 'knit-pay-lang' ), __( 'Total', 'knit-pay-lang' ), __( 'Success Rate', 'knit-pay-lang' ), __( 'Revenue', 'knit-pay-lang' ), __( 'Volume', 'knit-pay-lang' ) ];
+		$headers = [ __( 'Integration', 'knit-pay-lang' ), __( 'Success / Total', 'knit-pay-lang' ), __( 'Success Rate', 'knit-pay-lang' ), __( 'Revenue', 'knit-pay-lang' ), __( 'Volume', 'knit-pay-lang' ) ];
 		$rows    = [];
-		$widths  = [ 40, 20, 25, 50, 45 ];
+		$widths  = [ 40, 25, 25, 45, 45 ];
 
 		foreach ( $data as $source => $info ) {
 			$rows[] = [
 				$info['name'] ?? $source,
-				number_format( (int) ( $info['count'] ?? 0 ) ),
+				( $info['success_count'] ?? 0 ) . '/' . (int) ( $info['count'] ?? 0 ),
 				( $info['success_rate'] ?? 0 ) . '%',
 				$this->format_multi_currency( $info['success_amounts'] ?? [] ),
 				$this->format_multi_currency( $info['amounts'] ?? [] ),

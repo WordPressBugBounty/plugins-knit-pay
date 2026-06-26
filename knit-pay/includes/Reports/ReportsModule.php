@@ -64,7 +64,7 @@ class ReportsModule {
 			return;
 		}
 
-		echo '<style>.knit-pay-badge-new{display:inline-block;vertical-align:super;margin:1px 0 0 4px;padding:0 7px;min-height:17px;border-radius:9px;background:#00a32a;color:#fff !important;font-size:9px;font-weight:600;line-height:17px;box-sizing:border-box;text-decoration:none;letter-spacing:0.3px;transition:background .15s ease}.knit-pay-badge-new .processing-count{font-size:9px !important;line-height:17px !important;padding:0 !important;color:#fff !important}#adminmenu a:hover .knit-pay-badge-new{background:#008a20}</style>';
+		echo '<style>.knit-pay-badge-new{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;margin:0 0 0 4px;padding:0 7px;min-height:17px;border-radius:9px;background:#00a32a;color:#fff !important;font-size:9px;font-weight:600;line-height:1;box-sizing:border-box;text-decoration:none;letter-spacing:0.3px;transition:background .15s ease}.knit-pay-badge-new .processing-count{font-size:9px !important;line-height:1 !important;padding:0 !important;color:#fff !important}#adminmenu a:hover .knit-pay-badge-new{background:#008a20}</style>';
 	}
 
 	private function should_hide_new_badge(): bool {
@@ -307,7 +307,11 @@ class ReportsModule {
 
 	public function render_page(): void {
 		$visits = (int) get_user_meta( get_current_user_id(), self::NEW_BADGE_META_KEY, true );
-		update_user_meta( get_current_user_id(), self::NEW_BADGE_META_KEY, $visits + 1 );
+
+		// Only count visits while the badge is still visible to avoid unnecessary writes.
+		if ( $visits < self::NEW_BADGE_VISIT_THRESHOLD ) {
+			update_user_meta( get_current_user_id(), self::NEW_BADGE_META_KEY, $visits + 1 );
+		}
 
 		$active_tab = 'overview';
 		$tab        = filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_SPECIAL_CHARS );

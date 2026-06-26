@@ -38,3 +38,33 @@ function KnitPayQRCodeScan(element) {
 	}
 	reader.readAsDataURL(element.files[0]);
 }
+
+(function () {
+	var statusField = document.getElementById("_pronamic_gateway_upi_qr_payment_success_status");
+	if (!statusField) {
+		return;
+	}
+
+	statusField.addEventListener("change", function () {
+		if (this.value !== "Success") {
+			return;
+		}
+
+		var confirmed = confirm(
+			"WARNING: You selected \"Success\".\n\n" +
+			"Knit Pay does NOT verify UPI QR payments. The payment will be marked as paid as soon as the customer clicks Submit — before you can check your bank.\n\n" +
+			"If your store auto-delivers on success (digital goods, downloads, memberships, etc.), the customer gets the product WITHOUT paying.\n\n" +
+			"Safe only if you ship physical goods manually and check your bank yourself first.\n\n" +
+			"Click OK to keep \"Success\", or Cancel to go back."
+		);
+
+		if (!confirmed) {
+			this.value = this.dataset.previousValue || "On Hold";
+		}
+	});
+
+	statusField.dataset.previousValue = statusField.value;
+	statusField.addEventListener("focus", function () {
+		this.dataset.previousValue = this.value;
+	});
+})();

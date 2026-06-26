@@ -10,13 +10,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <div class="knit-pay-reports-sources" id="knit-pay-reports-sources">
-	<h2 class="knit-pay-tab-heading"><?php esc_html_e( 'Sources', 'knit-pay-lang' ); ?></h2>
+	<h2 class="knit-pay-tab-heading"><?php esc_html_e( 'Integrations', 'knit-pay-lang' ); ?></h2>
 
 	<table class="wp-list-table widefat fixed striped knit-pay-report-table" id="knit-pay-source-table">
 		<thead>
 			<tr>
-				<th><?php esc_html_e( 'Source', 'knit-pay-lang' ); ?></th>
-				<th><?php esc_html_e( 'Total', 'knit-pay-lang' ); ?></th>
+				<th><?php esc_html_e( 'Integration', 'knit-pay-lang' ); ?></th>
+				<th>
+					<span class="knit-pay-th-tooltip" title="<?php esc_attr_e( 'Successful payments out of total payment attempts. Includes partially refunded payments.', 'knit-pay-lang' ); ?>">
+						<?php esc_html_e( 'Success / Total', 'knit-pay-lang' ); ?> <span class="kpi-info-icon">&#9432;</span>
+					</span>
+				</th>
 				<th><?php esc_html_e( 'Success Rate', 'knit-pay-lang' ); ?></th>
 				<th><?php esc_html_e( 'Avg. Amount', 'knit-pay-lang' ); ?></th>
 				<th>
@@ -40,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<template x-for="src in sourceRows()" :key="src.key">
 				<tr>
 					<td x-text="src.name"></td>
-					<td x-text="src.count"></td>
+					<td x-text="src.success_count + '/' + src.count"></td>
 					<td x-text="src.success_rate + '%'"></td>
 					<td x-html="buildCurrencyList(src.avg, Object.keys(src.avg || {}), (a, c) => formatMoney(a, c))"></td>
 					<td x-html="buildCurrencyList(src.success_amounts, Object.keys(src.success_amounts || {}), (a, c) => formatMoney(a, c))"></td>

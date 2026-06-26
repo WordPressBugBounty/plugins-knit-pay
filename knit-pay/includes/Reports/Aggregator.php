@@ -80,18 +80,24 @@ class Aggregator {
 		return $sums;
 	}
 
-	public function success_rate(): float {
-		$total   = 0;
+	public function success_count(): int {
 		$success = 0;
 		foreach ( $this->raw_results as $row ) {
 			$cnt     = (int) ( $row->cnt ?? 1 );
-			$total  += $cnt;
 			$derived = $row->derived_status ?? '';
 			if ( in_array( $derived, self::success_statuses(), true ) ) {
 				$success += $cnt;
 			}
 		}
-		return $total > 0 ? round( ( $success / $total ) * 100, 1 ) : 0.0;
+		return $success;
+	}
+
+	public function success_rate(): float {
+		$total = $this->total_count();
+		if ( $total <= 0 ) {
+			return 0.0;
+		}
+		return round( ( $this->success_count() / $total ) * 100, 1 );
 	}
 
 	public function by_status(): array {
@@ -137,6 +143,7 @@ class Aggregator {
 			$result[ $config_id ] = [
 				'name'            => $name,
 				'count'           => $agg->total_count(),
+				'success_count'   => $agg->success_count(),
 				'amounts'         => $agg->sum_amount_by_currency(),
 				'success_amounts' => $agg->success_amount_by_currency(),
 				'avg'             => $agg->weighted_avg_per_currency(),
@@ -293,6 +300,7 @@ class Aggregator {
 			$agg               = new self( $rows );
 			$result[ $source ] = [
 				'count'           => $agg->total_count(),
+				'success_count'   => $agg->success_count(),
 				'amounts'         => $agg->sum_amount_by_currency(),
 				'success_amounts' => $agg->success_amount_by_currency(),
 				'avg'             => $agg->weighted_avg_per_currency(),

@@ -10,13 +10,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <div class="knit-pay-reports-gateway-performance" id="knit-pay-reports-gateway-performance">
-	<h2 class="knit-pay-tab-heading"><?php esc_html_e( 'Gateway Performance', 'knit-pay-lang' ); ?></h2>
+	<h2 class="knit-pay-tab-heading"><?php esc_html_e( 'Gateways', 'knit-pay-lang' ); ?></h2>
 
 	<table class="wp-list-table widefat fixed striped knit-pay-report-table" id="knit-pay-gateway-table">
 		<thead>
 			<tr>
 				<th><?php esc_html_e( 'Gateway', 'knit-pay-lang' ); ?></th>
-				<th><?php esc_html_e( 'Total', 'knit-pay-lang' ); ?></th>
+				<th>
+					<span class="knit-pay-th-tooltip" title="<?php esc_attr_e( 'Successful payments out of total payment attempts. Includes partially refunded payments.', 'knit-pay-lang' ); ?>">
+						<?php esc_html_e( 'Success / Total', 'knit-pay-lang' ); ?> <span class="kpi-info-icon">&#9432;</span>
+					</span>
+				</th>
 				<th><?php esc_html_e( 'Success Rate', 'knit-pay-lang' ); ?></th>
 				<th><?php esc_html_e( 'Avg. Amount', 'knit-pay-lang' ); ?></th>
 				<th>
@@ -40,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<template x-for="gw in gatewayRows()" :key="gw.key">
 				<tr>
 					<td x-text="gw.name"></td>
-					<td x-text="gw.count"></td>
+					<td x-text="gw.success_count + '/' + gw.count"></td>
 					<td x-text="gw.success_rate + '%'"></td>
 					<td x-html="buildCurrencyList(gw.avg, Object.keys(gw.avg || {}), (a, c) => formatMoney(a, c))"></td>
 					<td x-html="buildCurrencyList(gw.success_amounts, Object.keys(gw.success_amounts || {}), (a, c) => formatMoney(a, c))"></td>

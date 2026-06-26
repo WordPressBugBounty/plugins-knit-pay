@@ -4,7 +4,7 @@ Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 9.5.0.0
+Stable tag: 9.6.0.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, PayPal, Razorpay, and SSLCommerz, with over 100 WordPress plugins.
@@ -65,7 +65,6 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Zoho Payments
 
 = non-Indian Payment Gateways (Try for free with Knit Pay - Pro) =
-* Elavon Converge
 * Slydepay
 * MyFatoorah
 * Thawani
@@ -102,6 +101,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Paymob
 * PayTabs
 * Tap Payments
+* Tosla by AKÖde
 
 = Indian Payment Gateways (Contact us for this premium addon.) =
 * JioPay
@@ -130,6 +130,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * and many more...
 
 = non-Indian Payment Gateways (Contact us for this premium addon.) =
+* Elavon Converge
 * Mollie
 * Square
 * Sofort/Sofort­überweisung
