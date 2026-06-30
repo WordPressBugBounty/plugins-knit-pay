@@ -1,7 +1,6 @@
 <?php
 namespace KnitPay\Gateways\Paytr;
 
-use Pronamic\WordPress\Pay\Plugin;
 use Pronamic\WordPress\Pay\Payments\FailureReason;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
@@ -10,7 +9,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
- * @version 8.86.0.0
+ * @version 9.6.0.1
  * @since 8.86.0.0
  */
 class Listener {
@@ -22,25 +21,41 @@ class Listener {
 			return;
 		}
 
-		$config_id    = isset( $_GET['kp_config_id'] ) ? sanitize_text_field( wp_unslash( $_GET['kp_config_id'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- External payment gateway webhook; no WordPress nonce available.
 		$merchant_oid = sanitize_text_field( wp_unslash( $_POST['merchant_oid'] ) );
 		$status       = isset( $_POST['status'] ) ? sanitize_text_field( wp_unslash( $_POST['status'] ) ) : '';
 		$total_amount = isset( $_POST['total_amount'] ) ? sanitize_text_field( wp_unslash( $_POST['total_amount'] ) ) : '';
 
+		$payment = get_pronamic_payment_by_transaction_id( $merchant_oid );
+
+		if ( null === $payment ) {
+			die( 'PAYTR notification failed: Order ID not found.' );
+		}
+
+		// Load config from the payment's own config_id (never from $_GET).
+		$config_id = $payment->get_config_id();
+		if ( empty( $config_id ) ) {
+			die( 'PAYTR notification failed: missing configuration.' );
+		}
+
 		$paytr_integration = new Integration();
 		$config            = $paytr_integration->get_config( $config_id );
-		
+
+		if ( empty( $config->merchant_key ) || empty( $config->merchant_salt ) ) {
+			die( 'PAYTR notification failed: missing merchant credentials.' );
+		}
+
 		$generated_hash = base64_encode( hash_hmac( 'sha256', $merchant_oid . $config->merchant_salt . $status . $total_amount, $config->merchant_key, true ) );
-		
+
 		$hash_sanitized = isset( $_POST['hash'] ) ? sanitize_text_field( wp_unslash( $_POST['hash'] ) ) : '';
 		if ( $generated_hash !== $hash_sanitized ) {
 			die( 'PAYTR notification failed: bad hash' );
 		}
-		
-		$payment = get_pronamic_payment_by_transaction_id( $merchant_oid );
-		
-		if ( null === $payment ) {
-			die( 'PAYTR notification failed: Order ID not found.' );
+
+		// Verify amount: collected amount must be at least the order total.
+		// Note: PayTR may collect MORE than payment_amount for installments (see https://dev.paytr.com/en/iframe-api/iframe-api-2-adim).
+		$expected_amount = $payment->get_total_amount()->get_minor_units()->format( 0, '.', '' );
+		if ( floatval( $total_amount ) < floatval( $expected_amount ) ) {
+			die( 'PAYTR notification failed: amount mismatch.' );
 		}
 		
 		// Add note.

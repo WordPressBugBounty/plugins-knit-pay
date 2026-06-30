@@ -10,13 +10,12 @@ use KnitPay\Utils as KnitPayUtils;
  * Copyright: 2020-2026 Knit Pay
  *
  * @author Knit Pay
- * @version 8.86.0.0
+ * @version 9.6.0.1
  * @since 8.86.0.0
  */
 class Gateway extends Core_Gateway {
 	private $test_mode;
 	private $config;
-	private $api;
 
 	/**
 	 * Initializes an PayTR gateway

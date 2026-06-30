@@ -2,7 +2,6 @@
 
 namespace KnitPay\Gateways\Paytr;
 
-use KnitPay\Utils as KnitPayUtils;
 use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
 use KnitPay\Gateways\IntegrationModeTrait;
 use Pronamic\WordPress\Pay\Payments\Payment;
@@ -12,7 +11,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  * Copyright: 2020-2026 Knit Pay
  *
  * @author  Knit Pay
- * @version 8.86.0.0
+ * @version 9.6.0.1
  * @since   8.86.0.0
  */
 class Integration extends AbstractGatewayIntegration {
@@ -132,8 +131,6 @@ class Integration extends AbstractGatewayIntegration {
 		];
 		
 		// Callback URL.
-		$config_id = KnitPayUtils::get_gateway_config_id();
-		
 		$fields[] = [
 			'section'     => 'feedback',
 			'title'       => \__( 'Callback URL', 'knit-pay-lang' ),
@@ -142,7 +139,6 @@ class Integration extends AbstractGatewayIntegration {
 			'value'       => add_query_arg(
 				[
 					'kp_paytr_webhook' => '', 
-					'kp_config_id'     => $config_id,
 				],
 				home_url( '/' ) 
 			),
