@@ -35,6 +35,61 @@ class ReportsApiHelper {
 		return array_keys( self::get_status_map() );
 	}
 
+	/**
+	 * Get the real payment post_status slugs (excluding virtual statuses).
+	 *
+	 * Returns the keys of PaymentPostType::get_payment_states() — the authoritative
+	 * source of real payment post statuses as registered by Pronamic core. This
+	 * excludes the virtual 'payment_partially_refunded' status (which is a Reports
+	 * layer concept, not a real post_status) so it is safe to use in SQL IN() clauses.
+	 *
+	 * Used by QueryBuilder to build an index-friendly positive status filter
+	 * (post_status IN (...)) instead of the non-indexable NOT IN ('trash','auto-draft'),
+	 * which forces a full table scan defeating the type_status_date index.
+	 *
+	 * @return string[]
+	 */
+	public static function get_real_payment_statuses(): array {
+		static $statuses = null;
+		if ( null === $statuses ) {
+			$statuses = array_keys( PaymentPostType::get_payment_states() );
+		}
+		return $statuses;
+	}
+
+	/**
+	 * Self-heal the cached currency list with currencies found in an AJAX response.
+	 *
+	 * get_currency_list() scans only the latest 5000 payments, so a rare currency
+	 * used >5000 payments ago may be missing from the cached option. Each AJAX
+	 * endpoint calls this with the currencies it encountered in its aggregation
+	 * results. If any currency is not already in the option, it is merged in and
+	 * the option is updated. The write is conditional — only happens when a
+	 * genuinely new currency is found, so most calls do zero I/O.
+	 *
+	 * @param string[] $currencies Currency codes found in the current response.
+	 * @return void
+	 */
+	public static function self_heal_currencies( array $currencies ): void {
+		$currencies = array_filter( array_map( 'strtoupper', $currencies ) );
+		if ( empty( $currencies ) ) {
+			return;
+		}
+
+		$option_key = 'knit_pay_reports_currencies';
+		$existing   = get_option( $option_key );
+		if ( ! is_array( $existing ) ) {
+			$existing = [];
+		}
+
+		$merged = array_unique( array_merge( $existing, $currencies ) );
+		sort( $merged );
+
+		if ( count( $merged ) !== count( $existing ) ) {
+			update_option( $option_key, $merged, false );
+		}
+	}
+
 	public static function is_virtual_status( string $status ): bool {
 		return 'payment_partially_refunded' === $status;
 	}
@@ -252,6 +307,10 @@ class ReportsApiHelper {
 		$gw_agg               = new Aggregator( $gw_results );
 		$data['top_gateways'] = $gw_agg->by_gateway( $gateway_names );
 
+		$response_currencies = array_filter( array_unique( array_column( $kpi_results, 'currency' ) ) );
+		self::self_heal_currencies( $response_currencies );
+		$data['currencies'] = array_values( $response_currencies );
+
 		return $data;
 	}
 
@@ -276,6 +335,8 @@ class ReportsApiHelper {
 		}
 
 		$transactions = self::map_transaction_rows( $results, $gateways );
+
+		self::self_heal_currencies( array_column( $transactions, 'currency' ) );
 
 		return [
 			'transactions' => $transactions,
@@ -448,6 +509,8 @@ class ReportsApiHelper {
 			}
 		}
 
+		self::self_heal_currencies( array_column( $results, 'currency' ) );
+
 		return $data;
 	}
 
@@ -502,6 +565,8 @@ class ReportsApiHelper {
 			}
 		}
 
+		self::self_heal_currencies( array_column( $results, 'currency' ) );
+
 		return $data;
 	}
 
@@ -518,6 +583,8 @@ class ReportsApiHelper {
 		unset( $src_data );
 
 		uasort( $data, fn( $a, $b ) => ( $b['count'] ?? 0 ) <=> ( $a['count'] ?? 0 ) );
+
+		self::self_heal_currencies( array_column( $results, 'currency' ) );
 
 		return $data;
 	}
@@ -668,6 +735,8 @@ class ReportsApiHelper {
 			'trend'            => $trend,
 			'trend_interval'   => $trend_interval,
 		];
+
+		self::self_heal_currencies( array_column( $all_results, 'currency' ) );
 
 		return $data;
 	}

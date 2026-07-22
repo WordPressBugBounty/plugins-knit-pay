@@ -67,7 +67,7 @@ class Listener {
 		
 		$webhook_shared_secret = $config->webhook_shared_secret;
 		
-		if ( ! filter_has_var( INPUT_SERVER, 'HTTP_X_CC_WEBHOOK_SIGNATURE' ) ) {
+		if ( ! filter_has_var( INPUT_SERVER, 'HTTP_X_CC_WEBHOOK_SIGNATURE' ) || empty( $webhook_shared_secret ) ) {
 			return false;
 		}
 		

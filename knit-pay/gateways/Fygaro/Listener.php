@@ -41,6 +41,10 @@ class Listener {
 		$fygaro_integration = new Integration();
 		$config             = $fygaro_integration->get_config( $payment->get_config_id() );
 
+		if ( empty( $config->api_secret ) ) {
+			exit;
+		}
+
 		// JWT v6 conflicting with many plugings. that's why restricting it to only Faygaro.
 		if ( ! class_exists( 'Firebase\JWT\JWT' ) ) {
 			require_once KNITPAY_DIR . '/secondary-packages/vendor/autoload.php';

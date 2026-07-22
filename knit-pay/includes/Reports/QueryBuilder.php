@@ -216,7 +216,10 @@ class QueryBuilder {
 				$where[] = '(' . implode( ' OR ', $all_clauses ) . ')';
 			}
 		} else {
-			$where[] = "p.post_status NOT IN ('trash', 'auto-draft')";
+			$real_statuses = ReportsApiHelper::get_real_payment_statuses();
+			$placeholders   = implode( ',', array_fill( 0, count( $real_statuses ), '%s' ) );
+			$where[]        = "p.post_status IN ($placeholders)";
+			$args           = array_merge( $args, $real_statuses );
 		}
 
 		if ( $this->date_from && $this->date_to ) {
@@ -498,7 +501,48 @@ class QueryBuilder {
 	}
 
 	public function get_currency_list(): array {
-		$cache_key = 'knit_pay_reports_currencies';
+		$option_key = 'knit_pay_reports_currencies';
+		$cached     = get_option( $option_key );
+		if ( is_array( $cached ) ) {
+			return $cached;
+		}
+
+		global $wpdb;
+
+		$real_statuses = ReportsApiHelper::get_real_payment_statuses();
+
+		// Scan only the latest 5000 payments instead of the full table. The inner
+		// subquery uses the type_status_date index (post_type + post_status +
+		// post_date DESC) to grab the 5000 newest payment rows, then only those
+		// 5000 rows get JSON_EXTRACTed for currency — avoiding a full-table scan
+		// of all payment rows on stores with large payment history.
+		// Any currency not found in the latest 5000 is discovered via self-heal
+		// (ReportsApiHelper::self_heal_currencies) during AJAX responses.
+		$results = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT DISTINCT JSON_UNQUOTE(JSON_EXTRACT(post_content, '$.total_amount.currency')) AS currency
+				 FROM (
+					SELECT post_content
+					FROM {$wpdb->posts}
+					WHERE post_type = 'pronamic_payment'
+					AND post_status IN (" . implode( ',', array_fill( 0, count( $real_statuses ), '%s' ) ) . ")
+					ORDER BY post_date DESC
+					LIMIT %d
+				 ) AS recent
+				 WHERE JSON_EXTRACT(post_content, '$.total_amount.currency') IS NOT NULL
+				 ORDER BY currency",
+				...array_merge( $real_statuses, [ 5000 ] )
+			),
+			OBJECT
+		);
+
+		$values = array_filter( array_column( $results, 'currency' ) );
+		update_option( $option_key, $values, false );
+		return $values;
+	}
+
+	public function get_source_list(): array {
+		$cache_key = 'knit_pay_reports_sources';
 		$cached    = get_transient( $cache_key );
 		if ( is_array( $cached ) ) {
 			return $cached;
@@ -506,50 +550,36 @@ class QueryBuilder {
 
 		global $wpdb;
 
+		$real_statuses = ReportsApiHelper::get_real_payment_statuses();
+
+		// Query the _pronamic_payment_source postmeta (written universally by Pronamic core
+		// via PaymentsDataStoreCPT::update_post_meta) instead of JSON-extracting post_content.
+		// postmeta.meta_key is indexed, so this is a fast range scan + DISTINCT regardless of
+		// payment volume. The JOIN on wp_posts.ID (primary key) preserves the post_status
+		// filter. Uses a positive IN list of real payment statuses (not NOT IN trash/auto-draft)
+		// so the type_status_date index is usable on the posts side of the JOIN.
 		$results = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT DISTINCT JSON_UNQUOTE(JSON_EXTRACT(post_content, '$.total_amount.currency')) AS currency
-				 FROM {$wpdb->posts}
-				 WHERE post_type = 'pronamic_payment'
-				 AND post_status NOT IN ('trash', 'auto-draft')
-				 AND JSON_EXTRACT(post_content, '$.total_amount.currency') IS NOT NULL
-				 ORDER BY currency
-				 LIMIT %d",
-				500
-			),
-			OBJECT
-		);
-
-		$values = array_filter( array_column( $results, 'currency' ) );
-		set_transient( $cache_key, $values, HOUR_IN_SECONDS );
-		return $values;
-	}
-
-	public function get_source_list(): array {
-		global $wpdb;
-
-		$results = $wpdb->get_results(
-			$wpdb->prepare(
-				"SELECT DISTINCT JSON_UNQUOTE(JSON_EXTRACT(post_content, '$.source.key')) AS source
-				 FROM {$wpdb->posts}
-				 WHERE post_type = 'pronamic_payment'
-				 AND post_status NOT IN ('trash', 'auto-draft')
-				 AND JSON_EXTRACT(post_content, '$.source.key') IS NOT NULL
-				 AND JSON_UNQUOTE(JSON_EXTRACT(post_content, '$.source.key')) != ''
+				"SELECT DISTINCT pm.meta_value AS source
+				 FROM {$wpdb->postmeta} pm
+				 JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+				 WHERE pm.meta_key = '_pronamic_payment_source'
+				 AND pm.meta_value != ''
+				 AND p.post_type = 'pronamic_payment'
+				 AND p.post_status IN (" . implode( ',', array_fill( 0, count( $real_statuses ), '%s' ) ) . ")
 				 ORDER BY source
 				 LIMIT %d",
-				500
+				...array_merge( $real_statuses, [ 500 ] )
 			),
 			OBJECT
 		);
 
-		$raw = array_filter( array_column( $results, 'source' ) );
-
 		$values = [];
-		foreach ( $raw as $slug ) {
+		foreach ( array_column( $results, 'source' ) as $slug ) {
 			$values[ $slug ] = ReportsApiHelper::source_display_name( $slug );
 		}
 
+		set_transient( $cache_key, $values, HOUR_IN_SECONDS );
 		return $values;
 	}
 

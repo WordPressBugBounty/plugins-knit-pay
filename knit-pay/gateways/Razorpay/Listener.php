@@ -129,19 +129,27 @@ class Listener {
 
 		$webhook_secret = $config->webhook_secret;
 
+		if ( empty( $webhook_secret ) ) {
+			$kp_object->add_note( 'Webhook Error: Webhook secret is not configured.' );
+			return false;
+		}
+
+		if ( ! isset( $_SERVER['HTTP_X_RAZORPAY_SIGNATURE'] ) ) {
+			$kp_object->add_note( 'Webhook Error: Signature header is missing.' );
+			return false;
+		}
+
 		$api = new Api( $config->key_id, $config->key_secret );
-		if ( isset( $_SERVER['HTTP_X_RAZORPAY_SIGNATURE'] ) || isset( $webhook_secret ) ) {
-			try {
-				$api->utility->verifyWebhookSignature(
-					$post_body,
-					sanitize_text_field( $_SERVER['HTTP_X_RAZORPAY_SIGNATURE'] ),
-					$webhook_secret
-				);
-			} catch ( Errors\SignatureVerificationError $e ) {
-				$kp_object->add_note( 'Webhook Error: ' . $e->getMessage() );
-				http_response_code( 400 );
-				return false;
-			}
+		try {
+			$api->utility->verifyWebhookSignature(
+				$post_body,
+				sanitize_text_field( $_SERVER['HTTP_X_RAZORPAY_SIGNATURE'] ),
+				$webhook_secret
+			);
+		} catch ( Errors\SignatureVerificationError $e ) {
+			$kp_object->add_note( 'Webhook Error: ' . $e->getMessage() );
+			http_response_code( 400 );
+			return false;
 		}
 		return true;
 	}

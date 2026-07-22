@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => '9.5.x-dev',
-        'version' => '9.5.9999999.9999999-dev',
-        'reference' => '98769ee498b2453215f5790e1df833cf3687c957',
+        'pretty_version' => '9.6.x-dev',
+        'version' => '9.6.9999999.9999999-dev',
+        'reference' => 'a25a90a5384525d383a0033785ed462e69164117',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '9.5.x-dev',
-            'version' => '9.5.9999999.9999999-dev',
-            'reference' => '98769ee498b2453215f5790e1df833cf3687c957',
+            'pretty_version' => '9.6.x-dev',
+            'version' => '9.6.9999999.9999999-dev',
+            'reference' => 'a25a90a5384525d383a0033785ed462e69164117',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -53,9 +53,9 @@
             ),
         ),
         'league/flysystem' => array(
-            'pretty_version' => '3.34.0',
-            'version' => '3.34.0.0',
-            'reference' => '2daaac3b0d4c83ea7ed5d8586e786f5d00f3540e',
+            'pretty_version' => '3.35.2',
+            'version' => '3.35.2.0',
+            'reference' => 'b277b5dc3d56650b68904117124e79c851e12376',
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/flysystem',
             'aliases' => array(),
@@ -77,9 +77,9 @@
             'dev_requirement' => false,
         ),
         'league/mime-type-detection' => array(
-            'pretty_version' => '1.16.0',
-            'version' => '1.16.0.0',
-            'reference' => '2d6702ff215bf922936ccc1ad31007edc76451b9',
+            'pretty_version' => '1.17.0',
+            'version' => '1.17.0.0',
+            'reference' => 'f5f47eff7c48ed1003069a2ca67f316fb4021c76',
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/mime-type-detection',
             'aliases' => array(),
