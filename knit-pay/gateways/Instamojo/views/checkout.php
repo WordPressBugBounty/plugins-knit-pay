@@ -1,4 +1,4 @@
-<input id="instamojo-pay-button" class="pronamic-pay-btn" type="submit" name="pay" value="Pay" />
+<input id="instamojo-pay-button" class="pronamic-pay-btn" type="submit" name="pay" value="<?php esc_attr_e( 'Pay', 'knit-pay-lang' ); ?>" />
 <script src="https://js.instamojo.com/v1/checkout.js"></script>
 
 <div class="top-bar">
@@ -12,7 +12,7 @@
 			<div class="right top-bar-button">
 				<a id="instamojo-cancel-button" style="display: block; padding: 8px 16px; color: rgb(255, 255, 255); height: 100%;">
 					&#x274C;
-					<span class="hide-on-small">Cancel</span>
+					<span class="hide-on-small"><?php esc_html_e( 'Cancel', 'knit-pay-lang' ); ?></span>
 				</a>
 			</div>
 		</div>
@@ -21,6 +21,7 @@
 
 <script>
 	var options = <?php echo wp_json_encode( $instamojo_data ); ?>;
+	var paid = false;
 
 	if (options.hide_top_bar){
 		document.getElementsByClassName('top-bar')[0].setAttribute("hidden", true);
@@ -30,22 +31,32 @@
 	document.getElementById('instamojo-cancel-button').setAttribute("href", options.cancel_url);
 
 	document.getElementById('instamojo-pay-button').onclick = function(e) {
+		e.preventDefault();
+
+		e.target.disabled = true;
+
 		Instamojo.configure({
 			directPaymentMode: options.payment_method,
 			handlers: {
+				onSuccess: function() {
+					paid = true;
+				},
 				onClose: function() {
-						// Hide payment redirect container.
-					document.getElementsByClassName("pronamic-pay-redirect-container")[0].style.visibility = 'hidden';
+					// Hide payment redirect container.
+					var redirectContainer = document.getElementsByClassName("pronamic-pay-redirect-container")[0];
+					if (redirectContainer) {
+						redirectContainer.style.visibility = 'hidden';
+					}
 
-					window.location.href = options.cancel_url;
+					if (!paid) {
+						window.location.href = options.cancel_url;
+					}
 				},
 			}
 		});
 
 		// Hide payment redirect container.
 		Instamojo.open(options.action_url);
-
-		e.preventDefault();
 	}
 </script>
 

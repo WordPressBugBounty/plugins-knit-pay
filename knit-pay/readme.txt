@@ -2,9 +2,9 @@
 Contributors: knitpay, GautamMKGarg
 Tags: instamojo, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.2
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 9.6.1.0
+Stable tag: 9.6.2.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, PayPal, Razorpay, and SSLCommerz, with over 100 WordPress plugins.

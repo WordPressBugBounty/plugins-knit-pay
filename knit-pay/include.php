@@ -2,6 +2,38 @@
 
 // TODO add review notice similar to wpforms
 
+/**
+ * Fallback PSR-4 autoloader for KnitPay namespaces.
+ *
+ * Safety net for optimized autoloader dumps that miss classes added after
+ * the dump (e.g. new extension files committed to SVN without re-running
+ * composer). Jetpack's autoloader handles everything in its classmap; this
+ * only fires for the classes it can't find.
+ */
+spl_autoload_register(
+	static function ( $class_name ) {
+		static $prefixes = [
+			'KnitPay\\Extensions\\' => 'extensions/',
+			'KnitPay\\Gateways\\'   => 'gateways/',
+			'KnitPay\\'             => 'includes/',
+			'BooklyKnitPay\\'       => 'extensions/BooklyPro/gateway/',
+		];
+
+		foreach ( $prefixes as $prefix => $dir ) {
+			if ( 0 !== strpos( $class_name, $prefix ) ) {
+				continue;
+			}
+
+			$path = KNITPAY_DIR . $dir . str_replace( '\\', '/', substr( $class_name, strlen( $prefix ) ) ) . '.php';
+
+			if ( is_file( $path ) ) {
+				require_once $path;
+				return;
+			}
+		}
+	}
+);
+
 // Load dependency for get_plugins;
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 

@@ -62,6 +62,10 @@ class Extension extends AbstractPluginIntegration {
 
 		new Gateway();
 
+		// BookingPress 1.5.6+/1.6.x Vue 3 booking form integration.
+		new Vue3Gateway();
+
+		// TODO: Remove legacy BookingPress (<= 1.5.5) hooks. Remove after 8 September 2028.
 		add_action( 'bookingpress_gateway_listing_field', [ $this, 'gateway_listing' ] );
 		add_action( 'bpa_front_add_payment_gateway', [ $this, 'bpa_front_add_payment_gateway' ] );
 		add_filter( 'bookingpress_add_setting_dynamic_data_fields', [ $this, 'setting_dynamic_data_fields' ] );
@@ -80,6 +84,7 @@ class Extension extends AbstractPluginIntegration {
 		return $bookingpress_revenue_filter_payment_gateway_list;
 	}
 
+	// TODO: Legacy BookingPress (<= 1.5.5) frontend. Remove after 8 September 2028.
 	/**
 	 * Function for package booking
 	 *
@@ -114,6 +119,7 @@ class Extension extends AbstractPluginIntegration {
 		return ! defined( 'BOOKINGPRESS_DIR_PRO_NAME_PRO' ) && 'true' != $on_site_payment && 'true' != $paypal_payment;
 	}
 	
+	// TODO: Legacy BookingPress (<= 1.5.5) frontend card. Remove after 8 September 2028.
 	public function bpa_front_add_payment_gateway() {
 		if ( $this->is_free_and_gateway_disabled() ) {
 			?>
@@ -133,10 +139,12 @@ class Extension extends AbstractPluginIntegration {
 		<?php 
 	}
 	
+	// TODO: Remove when legacy el-* branch is dropped from setting-form.php. After 8 September 2028.
 	public function gateway_listing() {
 		require_once 'setting-form.php';
 	}
 	
+	// TODO: Legacy BookingPress (<= 1.5.5) admin settings. Remove after 8 September 2028.
 	public function setting_dynamic_data_fields( $fields ) {
 		$payment_configurations = Plugin::get_config_select_options( 'knit_pay' );
 		foreach ( $payment_configurations as $key => $payment_config ) {
@@ -190,9 +198,14 @@ class Extension extends AbstractPluginIntegration {
 			case Core_Statuses::CANCELLED:
 			case Core_Statuses::EXPIRED:
 			case Core_Statuses::FAILURE:
-				$bookingpress_payment_status = '3'; // Failed/Cancelled
+			// Do NOT confirm the booking: BookingPress derives the appointment
+			// status from the staged entry (default Approved), so confirming
+			// here would create an Approved appointment for an unpaid booking.
+			// Mirrors BookingPress core: failed payments leave the entry unconfirmed.
+			do_action( 'knit_pay_bookingpress_payment_failed', $payment, $entry_id );
 
-				break;
+				return;
+
 			case Core_Statuses::SUCCESS:
 				$bookingpress_payment_status = '1'; // Success
 
@@ -228,7 +241,7 @@ class Extension extends AbstractPluginIntegration {
 			// Initialize bookingpress_pro_payment_gateways if not already set, for BookingPress Free.
 			$bookingpress_pro_payment_gateways = new bookingpress_payment_gateways();
 			
-			$payment_log_id = $bookingpress_pro_payment_gateways->bookingpress_confirm_booking(
+			$bookingpress_pro_payment_gateways->bookingpress_confirm_booking(
 				$entry_id,
 				[
 					'transaction_id'      => $payment->get_transaction_id(),

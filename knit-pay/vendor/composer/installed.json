@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v5.0.21",
-            "version_normalized": "5.0.21.0",
+            "version": "v5.0.23",
+            "version_normalized": "5.0.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "07b6e0d9b5f948659ce8503140551d5758865a3c"
+                "reference": "d11b2d621035dcb920abce8ae09bebd5da5f9ff8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/07b6e0d9b5f948659ce8503140551d5758865a3c",
-                "reference": "07b6e0d9b5f948659ce8503140551d5758865a3c",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/d11b2d621035dcb920abce8ae09bebd5da5f9ff8",
+                "reference": "d11b2d621035dcb920abce8ae09bebd5da5f9ff8",
                 "shasum": ""
             },
             "require": {
@@ -24,7 +24,7 @@
                 "composer/composer": "^2.2",
                 "yoast/phpunit-polyfills": "^4.0.0"
             },
-            "time": "2026-07-13T23:33:42+00:00",
+            "time": "2026-08-11T18:32:06+00:00",
             "type": "composer-plugin",
             "extra": {
                 "class": "Automattic\\Jetpack\\Autoloader\\CustomAutoloaderPlugin",
@@ -63,7 +63,7 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.21"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.23"
             },
             "install-path": "../automattic/jetpack-autoloader"
         },
@@ -1150,17 +1150,17 @@
         },
         {
             "name": "pronamic/wp-money",
-            "version": "v2.4.4",
-            "version_normalized": "2.4.4.0",
+            "version": "2.5.0",
+            "version_normalized": "2.5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pronamic/wp-money.git",
-                "reference": "f2762d981b1d6ab8739b6f74a9f5ff21bd759efc"
+                "reference": "be5692165072bb2056ba286754a4c639e98d2456"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pronamic/wp-money/zipball/f2762d981b1d6ab8739b6f74a9f5ff21bd759efc",
-                "reference": "f2762d981b1d6ab8739b6f74a9f5ff21bd759efc",
+                "url": "https://api.github.com/repos/pronamic/wp-money/zipball/be5692165072bb2056ba286754a4c639e98d2456",
+                "reference": "be5692165072bb2056ba286754a4c639e98d2456",
                 "shasum": ""
             },
             "require": {
@@ -1185,7 +1185,7 @@
                 "wp-phpunit/wp-phpunit": "^6.1",
                 "yoast/phpunit-polyfills": "^1.0"
             },
-            "time": "2024-10-02T08:04:48+00:00",
+            "time": "2026-09-21T07:38:19+00:00",
             "type": "wordpress-plugin",
             "installation-source": "dist",
             "autoload": {
@@ -1200,7 +1200,7 @@
             "description": "WordPress Money library.",
             "support": {
                 "issues": "https://github.com/pronamic/wp-money/issues",
-                "source": "https://github.com/pronamic/wp-money/tree/v2.4.4"
+                "source": "https://github.com/pronamic/wp-money/tree/v2.5.0"
             },
             "install-path": "../../packages/pronamic/wp-money"
         },
@@ -1807,17 +1807,17 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v6.4.42",
-            "version_normalized": "6.4.42.0",
+            "version": "v6.4.46",
+            "version_normalized": "6.4.46.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "23dcf8e0f59cbbfa9d2894f58fd8be6833794372"
+                "reference": "08bbdd5cf09248785442c41929aabe42f8ef5cfd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/23dcf8e0f59cbbfa9d2894f58fd8be6833794372",
-                "reference": "23dcf8e0f59cbbfa9d2894f58fd8be6833794372",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/08bbdd5cf09248785442c41929aabe42f8ef5cfd",
+                "reference": "08bbdd5cf09248785442c41929aabe42f8ef5cfd",
                 "shasum": ""
             },
             "require": {
@@ -1839,7 +1839,7 @@
                 "symfony/mime": "^5.4|^6.0|^7.0",
                 "symfony/rate-limiter": "^5.4|^6.0|^7.0"
             },
-            "time": "2026-06-16T10:12:24+00:00",
+            "time": "2026-09-14T17:40:49+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1867,7 +1867,7 @@
             "description": "Defines an object-oriented layer for the HTTP specification",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-foundation/tree/v6.4.42"
+                "source": "https://github.com/symfony/http-foundation/tree/v6.4.46"
             },
             "funding": [
                 {
@@ -1979,23 +1979,23 @@
         },
         {
             "name": "symfony/polyfill-php83",
-            "version": "v1.38.2",
-            "version_normalized": "1.38.2.0",
+            "version": "v1.41.0",
+            "version_normalized": "1.41.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php83.git",
-                "reference": "796a26abb75ce49f3a84433cd81bf1009d73d5f8"
+                "reference": "5ea99087fb99c273a9b9236ed4c31e78b16103c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/796a26abb75ce49f3a84433cd81bf1009d73d5f8",
-                "reference": "796a26abb75ce49f3a84433cd81bf1009d73d5f8",
+                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/5ea99087fb99c273a9b9236ed4c31e78b16103c6",
+                "reference": "5ea99087fb99c273a9b9236ed4c31e78b16103c6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2"
             },
-            "time": "2026-05-27T06:51:48+00:00",
+            "time": "2026-07-01T12:47:55+00:00",
             "type": "library",
             "extra": {
                 "thanks": {
@@ -2038,7 +2038,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php83/tree/v1.38.2"
+                "source": "https://github.com/symfony/polyfill-php83/tree/v1.41.0"
             },
             "funding": [
                 {
@@ -2569,7 +2569,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/knit-pay/extension-gravityforms",
-                "reference": "a4890d876eda7976a7bf5f57de51a4dc516f3345"
+                "reference": "cb8f3675e88b128fdfdf0c9321607c478031d8a0"
             },
             "require": {
                 "automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
@@ -2600,7 +2600,7 @@
                 "wp-phpunit/wp-phpunit": "^6.4",
                 "yoast/phpunit-polyfills": "^2.0"
             },
-            "time": "2026-01-26T19:35:14+00:00",
+            "time": "2026-07-30T12:41:00+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "installer-paths": {

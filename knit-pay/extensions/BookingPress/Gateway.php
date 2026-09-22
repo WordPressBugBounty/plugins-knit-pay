@@ -22,6 +22,8 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  */
 defined( 'ABSPATH' ) || exit();
 
+// TODO: Legacy BookingPress (<= 1.5.5) submission flow (Vue 3 handled by Vue3Gateway).
+// Remove after 8 September 2028.
 class Gateway {
 
 	protected $config_id;
@@ -31,6 +33,16 @@ class Gateway {
 	 * @var string
 	 */
 	public $id = 'knit_pay';
+
+	/**
+	 * Get the Knit Pay payment method id used across the BookingPress
+	 * integration (legacy and Vue 3 paths).
+	 *
+	 * @return string
+	 */
+	public static function get_id() {
+		return 'knit_pay';
+	}
 
 	/**
 	 * Constructor
