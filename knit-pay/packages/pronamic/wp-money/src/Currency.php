@@ -3,7 +3,7 @@
  * Currency
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2026 Pronamic
+ * @copyright 2005-2023 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Money
  */
@@ -93,7 +93,7 @@ class Currency implements JsonSerializable {
 			throw new \InvalidArgumentException(
 				\sprintf(
 					'The alphabetical code of a currency must consist of 3 characters: %s.',
-					\esc_html( $alphabetic_code )
+					$alphabetic_code
 				)
 			);
 		}

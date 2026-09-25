@@ -3095,27 +3095,23 @@ return array(
 		'path'    => $baseDir . '/packages/pronamic/wp-http/src/Response.php'
 	),
 	'Pronamic\\WordPress\\Money\\Currencies' => array(
-		'version' => '2.5.0.0',
+		'version' => '2.4.0.0',
 		'path'    => $baseDir . '/packages/pronamic/wp-money/src/Currencies.php'
 	),
 	'Pronamic\\WordPress\\Money\\Currency' => array(
-		'version' => '2.5.0.0',
+		'version' => '2.4.0.0',
 		'path'    => $baseDir . '/packages/pronamic/wp-money/src/Currency.php'
 	),
-	'Pronamic\\WordPress\\Money\\CurrencyMismatchException' => array(
-		'version' => '2.5.0.0',
-		'path'    => $baseDir . '/packages/pronamic/wp-money/src/CurrencyMismatchException.php'
-	),
 	'Pronamic\\WordPress\\Money\\Money' => array(
-		'version' => '2.5.0.0',
+		'version' => '2.4.0.0',
 		'path'    => $baseDir . '/packages/pronamic/wp-money/src/Money.php'
 	),
 	'Pronamic\\WordPress\\Money\\Parser' => array(
-		'version' => '2.5.0.0',
+		'version' => '2.4.0.0',
 		'path'    => $baseDir . '/packages/pronamic/wp-money/src/Parser.php'
 	),
 	'Pronamic\\WordPress\\Money\\TaxedMoney' => array(
-		'version' => '2.5.0.0',
+		'version' => '2.4.0.0',
 		'path'    => $baseDir . '/packages/pronamic/wp-money/src/TaxedMoney.php'
 	),
 	'Pronamic\\WordPress\\Number\\Calculator' => array(

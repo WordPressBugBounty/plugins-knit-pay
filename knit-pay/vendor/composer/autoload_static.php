@@ -1026,7 +1026,6 @@ class ComposerStaticInitf2c3742f1a4dd897508bac6ba588afbd
         'Pronamic\\WordPress\\Http\\Response' => __DIR__ . '/../..' . '/packages/pronamic/wp-http/src/Response.php',
         'Pronamic\\WordPress\\Money\\Currencies' => __DIR__ . '/../..' . '/packages/pronamic/wp-money/src/Currencies.php',
         'Pronamic\\WordPress\\Money\\Currency' => __DIR__ . '/../..' . '/packages/pronamic/wp-money/src/Currency.php',
-        'Pronamic\\WordPress\\Money\\CurrencyMismatchException' => __DIR__ . '/../..' . '/packages/pronamic/wp-money/src/CurrencyMismatchException.php',
         'Pronamic\\WordPress\\Money\\Money' => __DIR__ . '/../..' . '/packages/pronamic/wp-money/src/Money.php',
         'Pronamic\\WordPress\\Money\\Parser' => __DIR__ . '/../..' . '/packages/pronamic/wp-money/src/Parser.php',
         'Pronamic\\WordPress\\Money\\TaxedMoney' => __DIR__ . '/../..' . '/packages/pronamic/wp-money/src/TaxedMoney.php',

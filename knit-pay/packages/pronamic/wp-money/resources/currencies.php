@@ -3,7 +3,7 @@
  * Currencies
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2026 Pronamic
+ * @copyright 2005-2023 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Money
  */
@@ -555,7 +555,7 @@ return [
 	new Currency(
 		'KMF',
 		'174',
-		__( 'Comorian Franc', 'pronamic-money' ),
+		__( 'Comorian Franc ', 'pronamic-money' ),
 		'F',
 		0
 	),
