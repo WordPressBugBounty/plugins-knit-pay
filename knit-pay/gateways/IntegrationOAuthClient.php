@@ -266,6 +266,20 @@ abstract class IntegrationOAuthClient extends Integration {
 			];
 		}
 
+		if ( $result->success ) {
+			$oauth_state = $this->get_oauth_state( $result );
+			if ( empty( $oauth_state ) ) {
+				// Fail closed: without a state the callback cannot be validated.
+				$result->success = false;
+				$result->data    = (object) [
+					'message' => 'The Knit Pay OAuth server did not return the state parameter. Please try again after some time or report this issue to the Knit Pay support team.',
+				];
+			} else {
+				// Bind the state to this configuration (CSRF protection).
+				set_transient( 'knit_pay_' . $this->snake_case_id . '_oauth_state_' . $oauth_state, $config_id, HOUR_IN_SECONDS );
+			}
+		}
+
 		if ( $return_response ) {
 			return $result;
 		} elseif ( $result->success ) {
@@ -279,6 +293,16 @@ abstract class IntegrationOAuthClient extends Integration {
 			$this->knit_pay_post_save_notice( $result->errors[0]->message );
 			self::redirect_to_config( $config_id );
 		}
+	}
+
+	/**
+	 * Extract the OAuth state from the authorize response.
+	 *
+	 * @param object $result Authorize response from the OAuth server.
+	 * @return string
+	 */
+	protected function get_oauth_state( $result ) {
+		return isset( $result->data->state ) ? (string) $result->data->state : '';
 	}
 
 	protected function clear_config( $config_id ) {
@@ -302,11 +326,11 @@ abstract class IntegrationOAuthClient extends Integration {
 	}
 
 	public function update_connection_status() {
-		if ( ! ( filter_has_var( INPUT_GET, 'knitpay_oauth_auth_status' ) && current_user_can( 'manage_options' ) ) ) {
+		if ( ! ( isset( $_GET['knitpay_oauth_auth_status'] ) && current_user_can( 'manage_options' ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- CSRF validated via state below.
 			return;
 		}
 
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- External OAuth callback; validation relies on `state` parameter from OAuth provider and `gateway` parameter match below.
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- External OAuth callback; CSRF is validated below by binding the `state` parameter to a transient created during the connection initiated by THIS site.
 		$code                      = isset( $_GET['code'] ) ? sanitize_text_field( $_GET['code'] ) : null;
 		$state                     = isset( $_GET['state'] ) ? sanitize_text_field( $_GET['state'] ) : null;
 		$gateway_id                = isset( $_GET['gateway_id'] ) ? sanitize_text_field( $_GET['gateway_id'] ) : null;
@@ -318,7 +342,27 @@ abstract class IntegrationOAuthClient extends Integration {
 			return;
 		}
 
-		if ( empty( $code ) || empty( $state ) || 'failed' === $knitpay_oauth_auth_status ) {
+		// CSRF protection: only honour states issued by a connect flow of this
+		// site, bound to the same gateway configuration, and only once.
+		if ( empty( $state ) || empty( $gateway_id ) ) {
+			return;
+		}
+
+		$state_transient_key = 'knit_pay_' . $this->snake_case_id . '_oauth_state_' . $state;
+		$expected_config_id  = get_transient( $state_transient_key );
+		if ( false === $expected_config_id || (string) $expected_config_id !== (string) $gateway_id ) {
+			return;
+		}
+
+		// The callback must target a gateway configuration of this integration.
+		if ( 'pronamic_gateway' !== get_post_type( $gateway_id ) || $this->get_id() !== get_post_meta( $gateway_id, '_pronamic_gateway_id', true ) ) {
+			return;
+		}
+
+		// Single-use state.
+		delete_transient( $state_transient_key );
+
+		if ( empty( $code ) || 'failed' === $knitpay_oauth_auth_status ) {
 			self::clear_config( $gateway_id );
 			$this->knit_pay_post_save_notice( __( 'OAuth authorization failed or was cancelled. Please try connecting again.', 'knit-pay-lang' ) );
 			$this->redirect_to_config( $gateway_id );

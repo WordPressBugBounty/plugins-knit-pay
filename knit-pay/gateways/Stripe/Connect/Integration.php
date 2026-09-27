@@ -260,20 +260,52 @@ class Integration extends Stripe_Integration {
 			exit;
 		}
 		if ( isset( $result->return_url ) ) {
+			// CSRF protection: bind the state to this configuration so the
+			// callback can verify this site initiated the connection.
+			$query_args = [];
+			wp_parse_str( wp_parse_url( $result->return_url, PHP_URL_QUERY ), $query_args );
+
+			if ( empty( $query_args['state'] ) ) {
+				echo 'Error: The Stripe Connect server did not return the state parameter. Please try again after some time or report this issue to the Knit Pay support team.';
+				exit;
+			}
+
+			// The state is a long encrypted string; hash it to keep the
+			// transient key within the WordPress option name length limit.
+			set_transient( 'knit_pay_stripe-connect_oauth_state_' . md5( $query_args['state'] ), $config_id, HOUR_IN_SECONDS );
+
 			wp_redirect( $result->return_url, 303 );
 			exit;
 		}
 	}
 
 	public static function update_connection_status() {
-		if ( ! ( filter_has_var( INPUT_GET, 'stripe_connect_status' ) && current_user_can( 'manage_options' ) ) ) {
+		if ( ! ( isset( $_GET['stripe_connect_status'] ) && current_user_can( 'manage_options' ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- External OAuth callback; CSRF validated via state below.
 			return;
 		}
 
-		$code                  = filter_input( INPUT_GET, 'code', FILTER_SANITIZE_STRING );
-		$state                 = filter_input( INPUT_GET, 'state', FILTER_SANITIZE_STRING );
-		$gateway_id            = filter_input( INPUT_GET, 'gateway_id', FILTER_SANITIZE_STRING );
-		$stripe_connect_status = filter_input( INPUT_GET, 'stripe_connect_status', FILTER_SANITIZE_STRING );
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- External OAuth callback; CSRF validated via state below.
+		$code                  = isset( $_GET['code'] ) ? sanitize_text_field( $_GET['code'] ) : null;
+		$state                 = isset( $_GET['state'] ) ? sanitize_text_field( $_GET['state'] ) : null;
+		$gateway_id            = isset( $_GET['gateway_id'] ) ? sanitize_text_field( $_GET['gateway_id'] ) : null;
+		$stripe_connect_status = isset( $_GET['stripe_connect_status'] ) ? sanitize_text_field( $_GET['stripe_connect_status'] ) : null;
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+		// CSRF protection: only honour states issued by a connect flow of this
+		// site, bound to the same gateway configuration, and only once.
+		$state_transient_key = 'knit_pay_stripe-connect_oauth_state_' . md5( (string) $state );
+		$expected_config_id  = empty( $state ) ? false : get_transient( $state_transient_key );
+
+		if ( false === $expected_config_id || (string) $expected_config_id !== (string) $gateway_id ) {
+			return;
+		}
+
+		if ( 'pronamic_gateway' !== get_post_type( $gateway_id ) || 'stripe-connect' !== get_post_meta( $gateway_id, '_pronamic_gateway_id', true ) ) {
+			return;
+		}
+
+		// Single-use state.
+		delete_transient( $state_transient_key );
 
 		if ( empty( $code ) || empty( $state ) || empty( $gateway_id ) || 'failed' === $stripe_connect_status ) {
 			self::clear_config( $gateway_id );
