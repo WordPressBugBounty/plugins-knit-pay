@@ -62,11 +62,15 @@ class Gateway extends Core_Gateway {
 
 	// AJAX handler to create a PayPal order before the buyer approves it.
 	public static function ajax_create_order() {
-		if ( ! check_ajax_referer( 'knitpay_paypal_checkout', 'nonce', false ) ) {
+		$payment_id = isset( $_POST['payment_id'] ) ? absint( $_POST['payment_id'] ) : 0;
+
+		// The nonce is bound to this payment ID. It can only be obtained from the
+		// payment's own checkout page, which core only serves with a valid payment
+		// key. This prevents visitors from acting on payments they do not own.
+		if ( ! check_ajax_referer( 'knitpay_paypal_checkout_' . $payment_id, 'nonce', false ) ) {
 			wp_send_json_error( [ 'message' => 'Security check failed. Please refresh the page and try again.' ], 403 );
 		}
 
-		$payment_id = isset( $_POST['payment_id'] ) ? absint( $_POST['payment_id'] ) : 0;
 		if ( empty( $payment_id ) ) {
 			wp_send_json_error( [ 'message' => 'Invalid payment ID.' ], 400 );
 		}
@@ -149,11 +153,13 @@ class Gateway extends Core_Gateway {
 
 	// AJAX handler to capture an approved PayPal order and finalise payment.
 	public static function ajax_capture_order() {
-		if ( ! check_ajax_referer( 'knitpay_paypal_checkout', 'nonce', false ) ) {
+		$payment_id = isset( $_POST['payment_id'] ) ? absint( $_POST['payment_id'] ) : 0;
+
+		// The nonce is bound to this payment ID (see ajax_create_order).
+		if ( ! check_ajax_referer( 'knitpay_paypal_checkout_' . $payment_id, 'nonce', false ) ) {
 			wp_send_json_error( [ 'message' => 'Security check failed. Please refresh the page and try again.' ], 403 );
 		}
 
-		$payment_id = isset( $_POST['payment_id'] ) ? absint( $_POST['payment_id'] ) : 0;
 		if ( empty( $payment_id ) ) {
 			wp_send_json_error( [ 'message' => 'Invalid request parameters.' ], 400 );
 		}
@@ -349,7 +355,7 @@ class Gateway extends Core_Gateway {
 			'return_url'        => $payment->get_return_url(),
 			'cancel_url'        => add_query_arg( 'cancelled', true, $payment->get_return_url() ),
 			'ajax_url'          => admin_url( 'admin-ajax.php' ),
-			'nonce'             => wp_create_nonce( 'knitpay_paypal_checkout' ),
+			'nonce'             => wp_create_nonce( 'knitpay_paypal_checkout_' . $payment->get_id() ),
 			'client_id'         => $this->config->client_id,
 			'sdk_url'           => $sdk_url,
 			'sandbox'           => 'test' === $this->config->mode,
