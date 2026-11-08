@@ -123,6 +123,7 @@ use KnitPay\Gateways\PaymentMethods;
 					<img src="<?php echo esc_url( $image_path ); ?>gpay_icon.svg" alt="Google Pay" class="upi-app-icon no-drag">
 					<img src="<?php echo esc_url( $image_path ); ?>phonepe.svg" alt="PhonePe" class="upi-app-icon no-drag">
 					<img src="<?php echo esc_url( $image_path ); ?>paytm_icon.svg" alt="Paytm" class="upi-app-icon no-drag">
+					<img src="<?php echo esc_url( $image_path ); ?>cred_icon.svg" alt="CRED" class="upi-app-icon no-drag">
 					<img src="<?php echo esc_url( $image_path ); ?>upi_icon.svg" alt="BHIM" class="upi-app-icon no-drag">
 				</div>
 
@@ -171,6 +172,13 @@ use KnitPay\Gateways\PaymentMethods;
 						<div class="method-item">
 							<img src="<?php echo esc_url( $image_path ); ?>paytm_icon.svg" class="method-icon no-drag" alt="Paytm">
 							<span class="method-name"><?php echo esc_html__( 'Paytm', 'knit-pay-lang' ); ?></span>
+						</div>
+					</a>
+
+					<a href="<?php echo esc_url( add_query_arg( $intent_url_parameters, 'credpay://upi/pay' ), [ 'credpay' ] ); ?>" target="_blank">
+						<div class="method-item">
+							<img src="<?php echo esc_url( $image_path ); ?>cred_icon.svg" class="method-icon no-drag" alt="CRED">
+							<span class="method-name"><?php echo esc_html__( 'CRED', 'knit-pay-lang' ); ?></span>
 						</div>
 					</a>
 

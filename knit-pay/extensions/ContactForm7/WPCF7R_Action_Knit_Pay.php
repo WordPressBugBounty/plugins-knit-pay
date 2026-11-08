@@ -35,16 +35,22 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 		$settings_url  = add_query_arg( 'page', 'pronamic_pay_settings', get_admin_url( null, 'admin.php' ) );
 		$pages_options = self::get_pages_options();
 
+		$save_entry_notice = [];
+
+		if ( ! self::has_save_entry_action( $this->get_cf7_post_id() ) ) {
+			$save_entry_notice['save_entry_recommendation'] = [
+				'name'        => 'save_entry_recommendation',
+				'type'        => 'notice',
+				'label'       => __( 'Setup Save Entry Action!', 'knit-pay-lang' ),
+				'sub_title'   => __( 'For Knit Pay to work properly, we highly recommend setting up the "Save Entry" action if you have not done so already.', 'knit-pay-lang' ),
+				'placeholder' => '',
+				'class'       => 'field-warning-alert',
+			];
+		}
+
 		return array_merge(
+			$save_entry_notice,
 			[
-				'save_entry_recommendation' => [
-					'name'        => 'save_entry_recommendation',
-					'type'        => 'notice',
-					'label'       => __( 'Setup Save Entry Action!', 'knit-pay-lang' ),
-					'sub_title'   => __( 'For Knit Pay to work properly, we highly recommend setting up the "Save Entry" action if you have not done so already.', 'knit-pay-lang' ),
-					'placeholder' => '',
-					'class'       => 'field-warning-alert',
-				],
 				[
 					'name'    => 'config_id',
 					'type'    => 'select',
@@ -211,6 +217,18 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 						esc_url( $settings_url )
 					),
 					'fields' => [
+						'redirection_pages_notice' => [
+							'name'        => 'redirection_pages_notice',
+							'type'        => 'notice',
+							'label'       => __( 'Set Once for All Forms', 'knit-pay-lang' ),
+							'sub_title'   => sprintf(
+								/* translators: %s: URL of the Knit Pay settings page */
+								__( 'To use the same pages for every form, set them once in <a href="%s" target="_blank">"Knit Pay >> Settings"</a>. Pages selected below apply to this form only.', 'knit-pay-lang' ),
+								esc_url( $settings_url )
+							),
+							'placeholder' => '',
+							'class'       => 'field-notice-alert',
+						],
 						'completed_page_id' => [
 							'name'    => 'completed_page_id',
 							'type'    => 'select',
@@ -266,6 +284,46 @@ class WPCF7R_Action_Knit_Pay extends WPCF7R_Action {
 		}
 
 		return $options;
+	}
+
+	/**
+	 * Check whether the form has an active Save Entry action.
+	 *
+	 * @param int $form_id Contact Form 7 form ID.
+	 *
+	 * @return bool
+	 */
+	private static function has_save_entry_action( $form_id ) {
+		if ( empty( $form_id ) ) {
+			return false;
+		}
+
+		$actions = \get_posts(
+			[
+				'post_type'      => 'wpcf7r_action',
+				'post_status'    => 'private',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'no_found_rows'  => true,
+				'meta_query'     => [
+					'relation' => 'AND',
+					[
+						'key'   => 'wpcf7_id',
+						'value' => $form_id,
+					],
+					[
+						'key'   => 'action_type',
+						'value' => 'save_lead',
+					],
+					[
+						'key'   => 'action_status',
+						'value' => 'on',
+					],
+				],
+			]
+		);
+
+		return ! empty( $actions );
 	}
 
 	/**

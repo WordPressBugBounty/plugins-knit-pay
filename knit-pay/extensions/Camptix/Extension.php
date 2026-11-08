@@ -58,7 +58,7 @@ class Extension extends AbstractPluginIntegration {
 		}
 
 		add_filter( 'pronamic_payment_redirect_url_' . self::SLUG, [ $this, 'redirect_url' ], 10, 2 );
-		add_action( 'pronamic_payment_status_update_' . self::SLUG, [ $this, 'status_update' ], 10 );
+		add_action( 'pronamic_payment_status_update_' . self::SLUG, [ $this, 'status_update' ], 10, 2 );
 
 		// Add Custom Fileds in Checkout page of Camptix. Include only if "Camptix Indian Payments" is not installed.
 		if ( ! class_exists( 'Camptix_Indian_Payments' ) ) {
@@ -113,12 +113,18 @@ class Extension extends AbstractPluginIntegration {
 	/**
 	 * Update the status of the specified payment
 	 *
-	 * @param Payment $payment Payment.
+	 * @param Payment $payment      Payment.
+	 * @param bool    $can_redirect Whether a redirect is allowed after the payment update.
 	 */
-	public static function status_update( Payment $payment ) {
+	public static function status_update( Payment $payment, $can_redirect = true ) {
 		/** @var CampTix_Plugin $camptix */
 		global $camptix;
 		
+		// The reconciliation path settles the order itself, after refreshing the payment.
+		if ( isset( Gateway::$reconciling[ (int) $payment->get_id() ] ) ) {
+			return;
+		}
+
 		$payment_data = [
 			'transaction_id'      => $payment->transaction_id,
 			'transaction_details' => [ 'knit_pay_payment_id' => $payment->get_id() ],
@@ -131,24 +137,24 @@ class Extension extends AbstractPluginIntegration {
 
 		switch ( $payment->get_status() ) {
 			case Core_Statuses::CANCELLED:
-				$camptix->payment_result( $camptix_payment_token, CampTix_Plugin::PAYMENT_STATUS_CANCELLED, $payment_data );
+				$camptix->payment_result( $camptix_payment_token, CampTix_Plugin::PAYMENT_STATUS_CANCELLED, $payment_data, $can_redirect );
 				
 				break;
 			case Core_Statuses::EXPIRED:
-				$camptix->payment_result( $camptix_payment_token, CampTix_Plugin::PAYMENT_STATUS_TIMEOUT, $payment_data );
+				$camptix->payment_result( $camptix_payment_token, CampTix_Plugin::PAYMENT_STATUS_TIMEOUT, $payment_data, $can_redirect );
 				
 				break;
 			case Core_Statuses::FAILURE:
-				$camptix->payment_result( $camptix_payment_token, CampTix_Plugin::PAYMENT_STATUS_FAILED, $payment_data );
+				$camptix->payment_result( $camptix_payment_token, CampTix_Plugin::PAYMENT_STATUS_FAILED, $payment_data, $can_redirect );
 
 				break;
 			case Core_Statuses::SUCCESS:
-				$camptix->payment_result( $camptix_payment_token, CampTix_Plugin::PAYMENT_STATUS_COMPLETED, $payment_data );
+				$camptix->payment_result( $camptix_payment_token, CampTix_Plugin::PAYMENT_STATUS_COMPLETED, $payment_data, $can_redirect );
 
 				break;
 			case Core_Statuses::OPEN:
 			default:
-				$camptix->payment_result( $camptix_payment_token, CampTix_Plugin::PAYMENT_STATUS_PENDING, $payment_data );
+				$camptix->payment_result( $camptix_payment_token, CampTix_Plugin::PAYMENT_STATUS_PENDING, $payment_data, $can_redirect );
 
 				break;
 		}

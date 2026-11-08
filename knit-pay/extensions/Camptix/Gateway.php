@@ -9,6 +9,7 @@ use Pronamic\WordPress\Pay\Plugin;
 use Pronamic\WordPress\Pay\Util;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Pronamic\WordPress\Pay\Refunds\Refund;
 use CampTix_Addon;
 use CampTix_Payment_Method;
@@ -177,9 +178,18 @@ class Gateway extends CampTix_Payment_Method {
 	];
 	
 	public $supported_features = [
-		'refund-single' => true,
-		'refund-all'    => true,
+		'refund-single'  => true,
+		'refund-all'     => true,
+		'refund-partial' => true,
+		'payment-lookup' => true,
 	];
+
+	/**
+	 * Payment IDs currently being reconciled, with their nesting count.
+	 *
+	 * @var array<int, int>
+	 */
+	public static $reconciling = [];
 	
 	/**
 	 * We can have an array to store our options.
@@ -443,7 +453,7 @@ class Gateway extends CampTix_Payment_Method {
 	}
 	
 	/**
-	 * Submits a single, user-initiated refund request to Stripe and returns the result.
+	 * Submits a single, user-initiated refund request to the gateway and returns the result.
 	 *
 	 * @param string $payment_token
 	 *
@@ -452,44 +462,65 @@ class Gateway extends CampTix_Payment_Method {
 	public function payment_refund( $payment_token ) {
 		/** @var CampTix_Plugin $camptix */
 		global $camptix;
-		
+
 		$result = $this->send_refund_request( $payment_token );
-		
-		if ( CampTix_Plugin::PAYMENT_STATUS_REFUND_FAILED === $result['status'] ) {         
+
+		if ( CampTix_Plugin::PAYMENT_STATUS_REFUND_FAILED === $result['status'] ) {
+			$error_message = is_array( $result['refund_transaction_details'] ) && isset( $result['refund_transaction_details']['error_message'] )
+				? $result['refund_transaction_details']['error_message']
+				: __( 'Unknown error.', 'knit-pay-lang' );
+
 			$camptix->error(
 				sprintf(
 					__( 'Refund Error: %s', 'knit-pay-lang' ),
-					esc_html( $result['refund_transaction_details']['error_message'] )
-				) 
+					esc_html( $error_message )
+				)
 			);
 		}
-		
+
 		return $camptix->payment_result( $payment_token, $result['status'], $result );
 	}
 
-	/*
-	 * Sends a request to Gateway to refund a transaction
+	/**
+	 * Refund part of a payment, leaving the order's other tickets paid.
 	 *
 	 * @param string $payment_token
+	 * @param float  $amount            The amount to refund, in the currency's base unit.
+	 * @param bool   $refunds_remainder Whether this refunds everything still paid on the order.
 	 *
 	 * @return array
 	 */
-	public function send_refund_request( $payment_token ) {
-		$order = $this->get_order( $payment_token );
-		
-		/** @var $camptix CampTix_Plugin */
+	public function payment_refund_partial( $payment_token, $amount, $refunds_remainder ) {
+		/** @var CampTix_Plugin $camptix */
 		global $camptix;
-		
+
+		$result = $this->send_refund_request( $payment_token, $refunds_remainder ? null : $amount );
+
+		if ( CampTix_Plugin::PAYMENT_STATUS_REFUNDED !== $result['status'] ) {
+			$order = $this->get_order( $payment_token );
+
+			$camptix->log( 'Knit Pay partial refund failed', $order['attendee_id'] ?? null, $result, 'refund' );
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Sends a request to the gateway to refund a transaction.
+	 *
+	 * @param string     $payment_token
+	 * @param float|null $amount Optional. The amount to refund, in the currency's base unit.
+	 *                           Null refunds the remaining refundable amount.
+	 *
+	 * @return array
+	 */
+	public function send_refund_request( $payment_token, $amount = null ) {
+		/** @var CampTix_Plugin $camptix */
+		global $camptix;
+
 		// Check gateway.
 		$gateway = Plugin::get_gateway( $this->options['config_id'] );
-		
-		if ( null === $gateway ) {
-			return new \WP_Error(
-				'knit-pay-camptix-refund-gateway',
-				__( 'Unable to process refund as gateway configuration does not exist.', 'knit-pay-lang' )
-			);
-		}
-		
+
 		$transaction_id = $camptix->get_post_meta_from_payment_token( $payment_token, 'tix_transaction_id' );
 		$reason         = filter_input( INPUT_POST, 'tix_refund_request_reason', FILTER_SANITIZE_STRING );
 
@@ -500,18 +531,36 @@ class Gateway extends CampTix_Payment_Method {
 			'refund_transaction_details' => '',
 		];
 
+		if ( null === $gateway ) {
+			$result['refund_transaction_details'] = [
+				'error_message' => __( 'Unable to process refund as gateway configuration does not exist.', 'knit-pay-lang' ),
+			];
+
+			return $result;
+		}
+
 		// Check payment.
 		$payment = \get_pronamic_payment_by_transaction_id( $transaction_id );
 
 		if ( null === $payment ) {
-			return;
+			$result['refund_transaction_details'] = [
+				'error_message' => __( 'No payment record was found for this order.', 'knit-pay-lang' ),
+			];
+
+			return $result;
 		}
 
 		$currency = Currency::get_instance( $this->camptix_options['currency'] );
 		$payment->get_refunded_amount()->set_currency( $currency );
 
+		if ( null === $amount ) {
+			$refund_amount = $payment->get_total_amount()->subtract( $payment->get_refunded_amount() );
+		} else {
+			$refund_amount = new Money( $amount, $currency );
+		}
+
 		try {
-			$refund = new Refund( $payment, $payment->get_total_amount() );
+			$refund = new Refund( $payment, $refund_amount );
 			$refund->set_description( $reason );
 
 			Plugin::create_refund( $refund );
@@ -525,7 +574,187 @@ class Gateway extends CampTix_Payment_Method {
 			];
 			$result['status']                     = CampTix_Plugin::PAYMENT_STATUS_REFUND_FAILED;
 		}
-		
+
 		return $result;
+	}
+
+	/**
+	 * Ask Knit Pay what became of an order's payment before CampTix times it out.
+	 *
+	 * @param string $payment_token CampTix payment token of a draft order.
+	 *
+	 * @return array See CampTix_Payment_Method::reconcile_payment().
+	 */
+	public function reconcile_payment( $payment_token ) {
+		/** @var CampTix_Plugin $camptix */
+		global $camptix;
+
+		$order = $this->get_order( $payment_token );
+
+		if ( empty( $order ) ) {
+			return $this->lookup_result( self::LOOKUP_EXPIRED, 'no CampTix order found for this payment token' );
+		}
+
+		$payments = \get_pronamic_payments_by_source( 'camptix', $order['attendee_id'] );
+
+		if ( empty( $payments ) ) {
+			return $this->lookup_result( self::LOOKUP_EXPIRED, 'no Knit Pay payment recorded for this order' );
+		}
+
+		$payment = null;
+
+		foreach ( $payments as $candidate ) {
+			if ( PaymentStatus::SUCCESS === $candidate->get_status() ) {
+				$payment = $candidate;
+
+				break;
+			}
+		}
+
+		if ( null === $payment ) {
+			$payment = reset( $payments );
+		}
+
+		$log = [
+			'knit_pay_payment_id' => $payment->get_id(),
+			'status'              => $payment->get_status(),
+			'transaction_id'      => $payment->get_transaction_id(),
+		];
+
+		$gateway = $payment->get_gateway();
+
+		if (
+			PaymentStatus::SUCCESS !== $payment->get_status()
+			&& null !== $gateway
+			&& $gateway->supports( 'payment_status_request' )
+		) {
+			$payment_id = (int) $payment->get_id();
+
+			self::$reconciling[ $payment_id ] = ( self::$reconciling[ $payment_id ] ?? 0 ) + 1;
+
+			try {
+				$gateway->update_status( $payment );
+				$payment->save();
+			} catch ( \Exception $e ) {
+				return $this->lookup_result(
+					self::LOOKUP_UNREACHABLE,
+					'could not refresh the Knit Pay payment',
+					[
+						'knit_pay_payment_id' => $payment->get_id(),
+						'error'               => $e->getMessage(),
+					]
+				);
+			} finally {
+				--self::$reconciling[ $payment_id ];
+
+				if ( self::$reconciling[ $payment_id ] <= 0 ) {
+					unset( self::$reconciling[ $payment_id ] );
+				}
+			}
+
+			$log['status'] = $payment->get_status();
+		}
+
+		$status = $payment->get_status();
+
+		switch ( $status ) {
+			case PaymentStatus::SUCCESS:
+				$this->record_payment_result( $payment_token, $order, CampTix_Plugin::PAYMENT_STATUS_COMPLETED, $payment );
+
+				return $this->lookup_result( self::LOOKUP_SETTLED, 'the Knit Pay payment completed', $log );
+
+			case PaymentStatus::FAILURE:
+				$this->record_payment_result( $payment_token, $order, CampTix_Plugin::PAYMENT_STATUS_FAILED, $payment );
+
+				return $this->lookup_result( self::LOOKUP_SETTLED, 'the Knit Pay payment failed', $log );
+
+			case PaymentStatus::CANCELLED:
+				$this->record_payment_result( $payment_token, $order, CampTix_Plugin::PAYMENT_STATUS_CANCELLED, $payment );
+
+				return $this->lookup_result( self::LOOKUP_SETTLED, 'the Knit Pay payment was cancelled', $log );
+
+			case PaymentStatus::AUTHORIZED:
+			case PaymentStatus::ON_HOLD:
+				$this->record_payment_result( $payment_token, $order, CampTix_Plugin::PAYMENT_STATUS_PENDING, $payment );
+
+				return $this->lookup_result( self::LOOKUP_SETTLED, sprintf( 'the Knit Pay payment is %s', $status ), $log );
+
+			case PaymentStatus::OPEN:
+				$expiry_date = $payment->get_expiry_date();
+
+				if ( null !== $expiry_date && $expiry_date->getTimestamp() > time() ) {
+					return $this->lookup_result( self::LOOKUP_OPEN, 'the Knit Pay payment is still open', $log, $expiry_date->getTimestamp() );
+				}
+
+				return $this->lookup_result( self::LOOKUP_UNKNOWN, 'the Knit Pay payment is still open past its expiry', $log );
+
+			case PaymentStatus::EXPIRED:
+				return $this->lookup_result( self::LOOKUP_EXPIRED, 'the Knit Pay payment expired', $log );
+
+			case PaymentStatus::REFUNDED:
+				return $this->lookup_result( self::LOOKUP_EXPIRED, 'the Knit Pay payment was refunded', $log );
+
+			default:
+				return $this->lookup_result( self::LOOKUP_UNKNOWN, sprintf( 'the Knit Pay payment is %s', $status ), $log );
+		}
+	}
+
+	/**
+	 * Record a Knit Pay payment result on a CampTix draft order.
+	 *
+	 * @param string  $payment_token   CampTix payment token.
+	 * @param array   $order           CampTix order.
+	 * @param int     $camp_tix_status One of the CampTix_Plugin::PAYMENT_STATUS_* constants.
+	 * @param Payment $payment         Knit Pay payment.
+	 *
+	 * @return void
+	 */
+	private function record_payment_result( $payment_token, $order, $camp_tix_status, Payment $payment ) {
+		/** @var CampTix_Plugin $camptix */
+		global $camptix;
+
+		$attendee_id    = $order['attendee_id'];
+		$current_status = get_post_status( $attendee_id );
+
+		$target_statuses = [
+			CampTix_Plugin::PAYMENT_STATUS_COMPLETED => 'publish',
+			CampTix_Plugin::PAYMENT_STATUS_FAILED    => 'failed',
+			CampTix_Plugin::PAYMENT_STATUS_CANCELLED => 'cancel',
+			CampTix_Plugin::PAYMENT_STATUS_PENDING   => 'pending',
+		];
+
+		// Don't process a status the order already has, or downgrade a settled order.
+		if ( isset( $target_statuses[ $camp_tix_status ] ) && $target_statuses[ $camp_tix_status ] === $current_status ) {
+			return;
+		}
+
+		if ( 'publish' === $current_status && CampTix_Plugin::PAYMENT_STATUS_COMPLETED !== $camp_tix_status ) {
+			return;
+		}
+
+		if ( 'refund' === $current_status ) {
+			return;
+		}
+
+		$camptix->log(
+			'Recording a Knit Pay payment result on a CampTix order from a payment lookup.',
+			$attendee_id,
+			[
+				'knit_pay_payment_id' => $payment->get_id(),
+				'knit_pay_status'     => $payment->get_status(),
+				'transaction_id'      => $payment->get_transaction_id(),
+			],
+			'payment'
+		);
+
+		$camptix->payment_result(
+			$payment_token,
+			$camp_tix_status,
+			[
+				'transaction_id'      => $payment->get_transaction_id(),
+				'transaction_details' => [ 'knit_pay_payment_id' => $payment->get_id() ],
+			],
+			false
+		);
 	}
 }
