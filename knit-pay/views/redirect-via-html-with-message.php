@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<title><?php echo $payment_page_title; ?></title>
+		<title><?php echo esc_html( $payment_page_title ); ?></title>
 
 		<?php wp_print_styles( 'pronamic-pay-redirect' ); ?>
 
@@ -44,10 +44,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<body>
 		<div class="pronamic-pay-redirect-page">
 			<div class="pronamic-pay-redirect-container">
-				<h1><?php echo $payment_page_title; ?></h1>
+				<h1><?php echo esc_html( $payment_page_title ); ?></h1>
 
 				<p>
-					<?php echo $payment_page_description; ?>
+					<?php echo wp_kses_post( $payment_page_description ); ?>
 				</p>
 
 				<div class="pp-page-section-container">

@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<title><?php echo $payment_page_title; ?></title>
+		<title><?php echo esc_html( $payment_page_title ); ?></title>
 
 		<?php wp_print_styles( 'pronamic-pay-redirect' ); ?>
 

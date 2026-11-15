@@ -15,6 +15,9 @@
 	<?php if ( $show_download_qr_button ) { ?>
 		<button class="template-3-button download-qr-button">Download QR</button>
 	<?php } ?>
+	<div class="knit-pay-upi-report-fraud">
+		<a href="https://www.upihelp.npci.org.in/" target="_blank" rel="noopener noreferrer" title="<?php esc_attr_e( 'Opens the NPCI MyUPI grievance portal in a new tab', 'knit-pay-lang' ); ?>"><?php esc_html_e( 'Report fraud to NPCI', 'knit-pay-lang' ); ?></a>
+	</div>
 	<div class="kp-upi-template-3-footer">
 		<span id="countdown-timer" class="expires-span"></span>
 		<span>

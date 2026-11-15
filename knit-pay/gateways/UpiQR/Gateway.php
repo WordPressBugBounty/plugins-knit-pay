@@ -205,10 +205,14 @@ class Gateway extends Core_Gateway {
 			esc_attr( $payment->get_return_url() ),
 			$form_inner
 		);
+
+		$html .= '<div style="margin: 16px 0 0; text-align: center; font-size: 12px;"><a href="https://www.upihelp.npci.org.in/" target="_blank" rel="noopener noreferrer" title="' . esc_attr__( 'Opens the NPCI MyUPI grievance portal in a new tab', 'knit-pay-lang' ) . '">' . esc_html__( 'Report fraud to NPCI', 'knit-pay-lang' ) . '</a></div>';
+
 		ob_start();
 		wp_print_footer_scripts();
 		$html .= ob_get_clean();
 
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $html is built from escaped values above.
 		echo $html;
 	}
 

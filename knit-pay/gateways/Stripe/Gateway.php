@@ -169,7 +169,7 @@ class Gateway extends Core_Gateway {
 			return;
 		}
 
-		if ( filter_has_var( INPUT_GET, 'cancelled' ) ) {
+		if ( ! filter_has_var( INPUT_GET, 'kp_stripe_webhook' ) && filter_has_var( INPUT_GET, 'cancelled' ) ) {
 			$payment->set_status( PaymentStatus::CANCELLED );
 			return;
 		}

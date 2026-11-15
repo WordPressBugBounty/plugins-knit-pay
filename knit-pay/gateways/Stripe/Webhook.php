@@ -130,6 +130,12 @@ class Webhook extends Gateway {
 			exit;
 		}
 
+		$session_id = $event->data->object->id ?? null;
+
+		if ( empty( $session_id ) || $payment->get_meta( 'stripe_session_id' ) !== $session_id ) {
+			exit;
+		}
+
 		// Add note.
 		$note = sprintf(
 		/* translators: %s: Razorpay */

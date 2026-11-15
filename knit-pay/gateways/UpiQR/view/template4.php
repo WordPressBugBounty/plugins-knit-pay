@@ -27,5 +27,8 @@
 				<button class="template-4-button pay-button" onclick="confirmPayment()">Confirm Payment</button>
 		</div>
 		<div id="countdown-timer" class="validity"></div>
+		<div class="knit-pay-upi-report-fraud">
+			<a href="https://www.upihelp.npci.org.in/" target="_blank" rel="noopener noreferrer" title="<?php esc_attr_e( 'Opens the NPCI MyUPI grievance portal in a new tab', 'knit-pay-lang' ); ?>"><?php esc_html_e( 'Report fraud to NPCI', 'knit-pay-lang' ); ?></a>
+		</div>
 	</div>
 </div>

@@ -117,10 +117,10 @@ class Gateway extends Easebuzz_Gateway {
 		$form_inner = '';
 
 		$form_inner .= '<hr><h2>' . __( 'Customer Details', 'knit-pay-lang' ) . '</h2><dl class="alignleft">';
-		$form_inner .= '<dt>Customer Name</dt><dd>' . $customer->get_name() . '</dd>';
-		$form_inner .= '<dt>Customer Email</dt><dd>' . $customer->get_email() . '</dd>';
+		$form_inner .= '<dt>Customer Name</dt><dd>' . esc_html( (string) $customer->get_name() ) . '</dd>';
+		$form_inner .= '<dt>Customer Email</dt><dd>' . esc_html( (string) $customer->get_email() ) . '</dd>';
 		if ( ! ( empty( $payment->get_billing_address() ) || empty( $payment->get_billing_address()->get_phone() ) ) ) {
-			$form_inner .= '<dt>Customer Phone</dt><dd>' . $payment->get_billing_address()->get_phone() . '</dd>';
+			$form_inner .= '<dt>Customer Phone</dt><dd>' . esc_html( (string) $payment->get_billing_address()->get_phone() ) . '</dd>';
 		}
 		$form_inner .= '</dl><br><hr>';
 

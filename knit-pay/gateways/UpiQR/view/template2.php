@@ -178,6 +178,9 @@
 				<div style='display: flex;gap: 14px;margin:10px;'>
 					<img src='<?php echo esc_url( $image_path ); ?>upi.svg' alt='UPI Icon'>
 				</div>
+				<div class='knit-pay-upi-report-fraud'>
+					<a href='https://www.upihelp.npci.org.in/' target='_blank' rel='noopener noreferrer' title='<?php esc_attr_e( 'Opens the NPCI MyUPI grievance portal in a new tab', 'knit-pay-lang' ); ?>'><?php esc_html_e( 'Report fraud to NPCI', 'knit-pay-lang' ); ?></a>
+				</div>
 			</div>
 		</div>
 	</div>

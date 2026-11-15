@@ -67,19 +67,19 @@ class Gateway extends Core_Gateway {
 
 		$form_inner .= '<strong>Transaction Details</strong><br><br>';
 		$form_inner .= '<table style="margin: auto;"';
-		$form_inner .= '<tr><td><b>Payment Description:</b></td><td>' . $payment->get_description() . '</td></tr>';
-		$form_inner .= '<tr><td><b>Transaction Reference:</b></td><td>' . $payment->get_transaction_id() . '</td></tr>';
-		$form_inner .= '<tr><td><b>Amount:</b></td><td>' . $payment->get_total_amount()->number_format( null, '.', '' ) . ' ' . $payment->get_total_amount()->get_currency()->get_alphabetic_code() . '</td></tr>';
+		$form_inner .= '<tr><td><b>Payment Description:</b></td><td>' . esc_html( (string) $payment->get_description() ) . '</td></tr>';
+		$form_inner .= '<tr><td><b>Transaction Reference:</b></td><td>' . esc_html( (string) $payment->get_transaction_id() ) . '</td></tr>';
+		$form_inner .= '<tr><td><b>Amount:</b></td><td>' . esc_html( $payment->get_total_amount()->number_format( null, '.', '' ) ) . ' ' . esc_html( $payment->get_total_amount()->get_currency()->get_alphabetic_code() ) . '</td></tr>';
 		$form_inner .= '</table><br><hr>';
 
 		$form_inner .= sprintf(
 			'<input class="pronamic-pay-btn" type="submit" name="pay" value="%s" />',
-			__( 'Paid', 'knit-pay-lang' )
+			esc_attr( __( 'Paid', 'knit-pay-lang' ) )
 		);
 		$form_inner .= '&nbsp;&nbsp;';
 		$form_inner .= sprintf(
 			'<input class="pronamic-pay-btn" type="submit" name="pay" value="%s" />',
-			__( 'Cancel', 'knit-pay-lang' )
+			esc_attr( __( 'Cancel', 'knit-pay-lang' ) )
 		);
 
 		printf(

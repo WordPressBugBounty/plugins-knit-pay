@@ -279,3 +279,20 @@ input {
 		z-index: -1;
 	}
 }
+
+.paymentWrapper .paymentFooter .knit-pay-upi-report-fraud {
+	margin-top: 4px;
+	font-size: 12px;
+	text-align: center;
+	color: #6e6e6e;
+}
+
+.knit-pay-upi-report-fraud a {
+	color: #6e6e6e;
+	text-decoration: underline !important;
+}
+
+.knit-pay-upi-report-fraud a:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
