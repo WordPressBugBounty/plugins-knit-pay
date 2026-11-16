@@ -138,7 +138,7 @@ class Webhook extends Gateway {
 
 		// Add note.
 		$note = sprintf(
-		/* translators: %s: Razorpay */
+		/* translators: %s: Stripe */
 			__( 'Webhook requested by %s.', 'knit-pay-lang' ),
 			__( 'Stripe', 'knit-pay-lang' )
 		);

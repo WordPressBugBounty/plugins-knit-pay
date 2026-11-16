@@ -74,18 +74,25 @@ class PMProGateway_knit_pay extends PMProGateway {
 		add_filter( 'pmpro_payment_options', [ $this, 'pmpro_payment_options' ] );
 		add_filter( 'pmpro_payment_option_fields', [ $this, 'pmpro_payment_option_fields' ], 10, 2 );
 
-		// code to add at checkout if knit pay is the current gateway
-		$gateway = self::pmpro_getOption( 'gateway' );
-		if ( $gateway === $this->id ) {
-			add_filter( 'pmpro_include_payment_information_fields', '__return_false' );
-			add_filter( 'pmpro_required_billing_fields', [ $this, 'pmpro_required_billing_fields' ] );
-			add_action( 'pmpro_checkout_before_change_membership_level', [ $this, 'pmpro_checkout_before_change_membership_level' ], 10, 2 );
-			add_action( 'pmpro_checkout_before_form', [ $this, 'hide_checkout_fields' ] );
+		// Add the multi-gateway checkout UI and scripts when Knit Pay is the default gateway.
+		if ( self::pmpro_getOption( 'gateway' ) === $this->id ) {
+			add_action( 'wp_enqueue_scripts', [ $this, 'checkout_scripts' ], 20 );
 
 			// Actions for adding support for Multiple Gateways.
 			add_action( 'pmpro_checkout_boxes', [ $this, 'pmpro_checkout_boxes_multi_gateway' ], 30 );
 			add_action( 'pmpro_after_saved_payment_options', [ $this, 'save_config_ids' ] );
 		}
+
+		// Add checkout behaviour only when Knit Pay is the gateway selected for this checkout.
+		if ( pmpro_getGateway() !== $this->id ) {
+			return;
+		}
+
+		add_filter( 'pmpro_include_payment_information_fields', '__return_false' );
+		add_filter( 'pmpro_required_billing_fields', [ $this, 'pmpro_required_billing_fields' ], 100 );
+		add_action( 'pmpro_checkout_before_change_membership_level', [ $this, 'pmpro_checkout_before_change_membership_level' ], 10, 2 );
+		add_action( 'pmpro_checkout_before_form', [ $this, 'hide_checkout_fields' ] );
+		add_action( 'pmpro_checkout_preheader_after_get_level_at_checkout', [ $this, 'restore_hidden_payment_fields' ], 21 );
 	}
 
 	/**
@@ -368,9 +375,6 @@ class PMProGateway_knit_pay extends PMProGateway {
 	 * @since 1.8
 	 */
 	public static function pmpro_required_billing_fields( $fields ) {
-		global $pmpro_required_billing_fields;
-		$fields = $pmpro_required_billing_fields;
-
 		unset( $fields['baddress1'] );
 		unset( $fields['bcity'] );
 		unset( $fields['bstate'] );
@@ -566,6 +570,53 @@ class PMProGateway_knit_pay extends PMProGateway {
 	}
 
 	/**
+	 * Re-hide the payment information fields after the PMPro Pay by Check add-on
+	 * removes the `__return_false` callback from the filter.
+	 *
+	 * @since 9.6.6.0
+	 *
+	 * @return void
+	 */
+	public function restore_hidden_payment_fields() {
+		add_filter( 'pmpro_include_payment_information_fields', '__return_false' );
+	}
+
+	/**
+	 * Enqueue the PMPro checkout script.
+	 *
+	 * @since 9.6.6.0
+	 *
+	 * @return void
+	 */
+	public function checkout_scripts() {
+		if ( ! function_exists( 'pmpro_is_checkout' ) || ! pmpro_is_checkout() ) {
+			return;
+		}
+
+		$title = self::pmpro_getOption( 'knit_pay_title' );
+		if ( empty( $title ) ) {
+			$title = 'Online Payment';
+		}
+
+		wp_enqueue_script(
+			'knit-pay-pmpro-checkout',
+			plugins_url( 'js/knit-pay-pmpro-checkout.js', __FILE__ ),
+			[ 'jquery' ],
+			KNITPAY_VERSION,
+			true
+		);
+
+		wp_localize_script(
+			'knit-pay-pmpro-checkout',
+			'knitPayPmproCheckout',
+			[
+				'title'          => $title,
+				'secondaryTitle' => __( 'Choose Payment Provider', 'knit-pay-lang' ),
+			]
+		);
+	}
+
+	/**
 	 * Get PMPro option.
 	 *
 	 * @param string $s     Option name.
@@ -595,24 +646,43 @@ class PMProGateway_knit_pay extends PMProGateway {
 	/**
 	 * Checkout boxes for multiple gateways.
 	 *
+	 * @param object|null $level Membership level at checkout.
 	 * @return void
 	 */
-	public function pmpro_checkout_boxes_multi_gateway() {
+	public function pmpro_checkout_boxes_multi_gateway( $level = null ) {
 		$knit_pay_selected_config_id = self::pmpro_getOption( 'knit_pay_config_id' );
 		if ( ! ( is_array( $knit_pay_selected_config_id ) && count( $knit_pay_selected_config_id ) > 1 ) ) {
 			return;
 		}
 
+		if ( null === $level && function_exists( 'pmpro_getLevelAtCheckout' ) ) {
+			$level = pmpro_getLevelAtCheckout();
+		}
+
+		// In Pay by Check addon, check-only levels (setting 2) must not post a gateway=knit_pay radio over the hidden check gateway.
+		if ( function_exists( 'pmpropbc_getOptions' ) && ! empty( $level->id ) ) {
+			$options = pmpropbc_getOptions( (int) $level->id );
+
+			if ( isset( $options['setting'] ) && 2 === (int) $options['setting'] ) {
+				return;
+			}
+		}
+
+		$selected_config_id = isset( $_REQUEST['knit_pay_config_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['knit_pay_config_id'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only, prefills the selection after a failed checkout submission; the checkout nonce is verified by PMPro core.
+		if ( ! in_array( $selected_config_id, array_map( 'strval', $knit_pay_selected_config_id ), true ) ) {
+			$selected_config_id = (string) reset( $knit_pay_selected_config_id );
+		}
+
 		?>
-		<fieldset id="pmpro_payment_method" class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_fieldset', 'pmpro_payment_method' ) ); ?>">
+		<fieldset id="knit_pay_payment_method" class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_fieldset', 'pmpro_payment_method' ) ); ?>">
 			<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_card' ) ); ?>">
 				<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_card_content' ) ); ?>">
 					<legend class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_legend' ) ); ?>">
-						<h2 class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_heading pmpro_font-large' ) ); ?>">
+						<h2 class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_heading pmpro_font-large' ) ); ?> knit-pay-payment-method-heading">
 							<?php esc_html_e( 'Choose Your Payment Method', 'knit-pay-lang' ); ?>
 						</h2>
 					</legend>
-					<input type="hidden" id="knit_pay_config_id" name="knit_pay_config_id" value="" />
+					<input type="hidden" id="knit_pay_config_id" name="knit_pay_config_id" value="<?php echo esc_attr( $selected_config_id ); ?>" />
 					<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_fields' ) ); ?>">
 						<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_field pmpro_form_field-radio' ) ); ?>">
 							<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_field-radio-items' ) ); ?>">
@@ -621,7 +691,7 @@ class PMProGateway_knit_pay extends PMProGateway {
 								foreach ( $knit_pay_selected_config_id as $config_id ) {
 									?>
 									<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_field pmpro_form_field-radio-item' ) ); ?> gateway_knit_pay">
-										<input type="radio" id="knit_pay_<?php echo esc_attr( $config_id ); ?>" name="gateway" class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_input pmpro_form_input-radio' ) ); ?>" value="knit_pay" onclick="document.getElementById('knit_pay_config_id').value='<?php echo esc_attr( $config_id ); ?>'" required />
+										<input type="radio" id="knit_pay_<?php echo esc_attr( $config_id ); ?>" name="gateway" class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_input pmpro_form_input-radio' ) ); ?>" value="knit_pay" data-config-id="<?php echo esc_attr( $config_id ); ?>" onclick="document.getElementById('knit_pay_config_id').value='<?php echo esc_attr( $config_id ); ?>'" />
 										<label for="knit_pay_<?php echo esc_attr( $config_id ); ?>" class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_form_label pmpro_form_label-inline pmpro_clickable' ) ); ?>">
 											<?php
 											if ( isset( $knit_pay_gateways[ $config_id ] ) ) {

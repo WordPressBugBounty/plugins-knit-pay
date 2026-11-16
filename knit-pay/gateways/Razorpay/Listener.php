@@ -66,6 +66,19 @@ class Listener {
 
 				// First Payment
 				$first_payment = \get_pronamic_payment( $knitpay_first_payment_id );
+
+				if ( null === $first_payment ) {
+					exit;
+				}
+
+				if ( ! self::verify_webhook_signature( $post_body, $first_payment ) ) {
+					exit;
+				}
+
+				if ( $razorpay_subscription_id !== $first_payment->get_meta( 'razorpay_subscription_id' ) ) {
+					exit;
+				}
+
 				if ( PaymentStatus::SUCCESS !== $first_payment->get_status() ) {
 					$payment = $first_payment;
 					break;
@@ -82,7 +95,7 @@ class Listener {
 					exit;
 				}
 
-				if ( ! self::verify_webhook_signature( $post_body, $subscription ) ) {
+				if ( (int) $subscription->get_config_id() !== (int) $first_payment->get_config_id() ) {
 					exit;
 				}
 

@@ -223,6 +223,12 @@ class Integration extends AbstractGatewayIntegration {
 			return;
 		}
 
+		$config_gateway = get_post_meta( $payment->get_config_id(), '_pronamic_gateway_id', true );
+
+		if ( 'ccavenue' !== $config_gateway ) {
+			return;
+		}
+
 		// Check if we should redirect.
 		$should_redirect = true;
 
