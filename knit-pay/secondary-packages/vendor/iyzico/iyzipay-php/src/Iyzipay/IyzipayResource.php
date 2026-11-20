@@ -12,7 +12,7 @@ class IyzipayResource extends ApiResource {
     private $conversationId;
 
 
-    protected static function getHttpHeadersV2($uri, Request $request = null, Options $options) {
+    protected static function getHttpHeadersV2($uri, ?Request $request, Options $options) {
         $header = array(
             "Accept: application/json",
             "Content-type: application/json",
@@ -20,12 +20,12 @@ class IyzipayResource extends ApiResource {
 
         $rnd = uniqid();
         $header[] = "Authorization: " . self::prepareAuthorizationStringV2($uri, $request, $options, $rnd);
-        $header[] = "x-iyzi-client-version: " . "iyzipay-php-2.0.61";
+        $header[] = "x-iyzi-client-version: " . "iyzipay-php-2.0.64";
 
         return $header;
     }
 
-    protected static function prepareAuthorizationStringV2($uri, Request $request = null, Options $options, $rnd) {
+    protected static function prepareAuthorizationStringV2($uri, ?Request $request, Options $options, $rnd) {
         $hash = IyziAuthV2Generator::generateAuthContent($uri, $options->getApiKey(), $options->getSecretKey(), $rnd, $request);
 
         return 'IYZWSv2' . ' ' . $hash;

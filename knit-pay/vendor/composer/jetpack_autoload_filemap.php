@@ -15,15 +15,15 @@ return array(
 		'path'    => $vendorDir . '/clue/stream-filter/src/functions_include.php'
 	),
 	'6e3fae29631ef280660b3cdad06f25a8' => array(
-		'version' => '3.7.1.0',
+		'version' => '3.8.1.0',
 		'path'    => $vendorDir . '/symfony/deprecation-contracts/function.php'
 	),
 	'0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => array(
-		'version' => '1.38.2.0',
+		'version' => '1.43.3.0',
 		'path'    => $vendorDir . '/symfony/polyfill-mbstring/bootstrap.php'
 	),
 	'662a729f963d39afe703c9d9b7ab4a8c' => array(
-		'version' => '1.41.0.0',
+		'version' => '1.43.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/bootstrap.php'
 	),
 	'8cff32064859f4559445b89279f3199c' => array(

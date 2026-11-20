@@ -471,39 +471,39 @@ return array(
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-container.php'
 	),
 	'DateError' => array(
-		'version' => '1.41.0.0',
+		'version' => '1.43.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateError.php'
 	),
 	'DateException' => array(
-		'version' => '1.41.0.0',
+		'version' => '1.43.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateException.php'
 	),
 	'DateInvalidOperationException' => array(
-		'version' => '1.41.0.0',
+		'version' => '1.43.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateInvalidOperationException.php'
 	),
 	'DateInvalidTimeZoneException' => array(
-		'version' => '1.41.0.0',
+		'version' => '1.43.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateInvalidTimeZoneException.php'
 	),
 	'DateMalformedIntervalStringException' => array(
-		'version' => '1.41.0.0',
+		'version' => '1.43.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateMalformedIntervalStringException.php'
 	),
 	'DateMalformedPeriodStringException' => array(
-		'version' => '1.41.0.0',
+		'version' => '1.43.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateMalformedPeriodStringException.php'
 	),
 	'DateMalformedStringException' => array(
-		'version' => '1.41.0.0',
+		'version' => '1.43.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateMalformedStringException.php'
 	),
 	'DateObjectError' => array(
-		'version' => '1.41.0.0',
+		'version' => '1.43.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateObjectError.php'
 	),
 	'DateRangeError' => array(
-		'version' => '1.41.0.0',
+		'version' => '1.43.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateRangeError.php'
 	),
 	'FPDF' => array(
@@ -2987,7 +2987,7 @@ return array(
 		'path'    => $baseDir . '/extensions/LatePoint/OsPaymentsKnitPayController.php'
 	),
 	'Override' => array(
-		'version' => '1.41.0.0',
+		'version' => '1.43.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/Override.php'
 	),
 	'PHP_Autoloader' => array(
@@ -4447,7 +4447,7 @@ return array(
 		'path'    => $vendorDir . '/razorpay/razorpay/tests/VirtualAccountTest.php'
 	),
 	'SQLite3Exception' => array(
-		'version' => '1.41.0.0',
+		'version' => '1.43.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/SQLite3Exception.php'
 	),
 	'Shutdown_Handler' => array(
@@ -4455,1423 +4455,1423 @@ return array(
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-shutdown-handler.php'
 	),
 	'Stripe\\Account' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Account.php'
 	),
 	'Stripe\\AccountLink' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/AccountLink.php'
 	),
 	'Stripe\\AlipayAccount' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/AlipayAccount.php'
 	),
 	'Stripe\\ApiOperations\\All' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ApiOperations/All.php'
 	),
 	'Stripe\\ApiOperations\\Create' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ApiOperations/Create.php'
 	),
 	'Stripe\\ApiOperations\\Delete' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ApiOperations/Delete.php'
 	),
 	'Stripe\\ApiOperations\\NestedResource' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ApiOperations/NestedResource.php'
 	),
 	'Stripe\\ApiOperations\\Request' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ApiOperations/Request.php'
 	),
 	'Stripe\\ApiOperations\\Retrieve' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ApiOperations/Retrieve.php'
 	),
 	'Stripe\\ApiOperations\\Search' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ApiOperations/Search.php'
 	),
 	'Stripe\\ApiOperations\\Update' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ApiOperations/Update.php'
 	),
 	'Stripe\\ApiRequestor' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ApiRequestor.php'
 	),
 	'Stripe\\ApiResource' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ApiResource.php'
 	),
 	'Stripe\\ApiResponse' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ApiResponse.php'
 	),
 	'Stripe\\ApplePayDomain' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ApplePayDomain.php'
 	),
 	'Stripe\\ApplicationFee' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ApplicationFee.php'
 	),
 	'Stripe\\ApplicationFeeRefund' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ApplicationFeeRefund.php'
 	),
 	'Stripe\\Balance' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Balance.php'
 	),
 	'Stripe\\BalanceTransaction' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/BalanceTransaction.php'
 	),
 	'Stripe\\BankAccount' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/BankAccount.php'
 	),
 	'Stripe\\BaseStripeClient' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/BaseStripeClient.php'
 	),
 	'Stripe\\BaseStripeClientInterface' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/BaseStripeClientInterface.php'
 	),
 	'Stripe\\BillingPortal\\Configuration' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/BillingPortal/Configuration.php'
 	),
 	'Stripe\\BillingPortal\\Session' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/BillingPortal/Session.php'
 	),
 	'Stripe\\BitcoinReceiver' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/BitcoinReceiver.php'
 	),
 	'Stripe\\BitcoinTransaction' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/BitcoinTransaction.php'
 	),
 	'Stripe\\Capability' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Capability.php'
 	),
 	'Stripe\\Card' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Card.php'
 	),
 	'Stripe\\CashBalance' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/CashBalance.php'
 	),
 	'Stripe\\Charge' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Charge.php'
 	),
 	'Stripe\\Checkout\\Session' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Checkout/Session.php'
 	),
 	'Stripe\\Collection' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Collection.php'
 	),
 	'Stripe\\CountrySpec' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/CountrySpec.php'
 	),
 	'Stripe\\Coupon' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Coupon.php'
 	),
 	'Stripe\\CreditNote' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/CreditNote.php'
 	),
 	'Stripe\\CreditNoteLineItem' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/CreditNoteLineItem.php'
 	),
 	'Stripe\\Customer' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Customer.php'
 	),
 	'Stripe\\CustomerBalanceTransaction' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/CustomerBalanceTransaction.php'
 	),
 	'Stripe\\Discount' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Discount.php'
 	),
 	'Stripe\\Dispute' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Dispute.php'
 	),
 	'Stripe\\EphemeralKey' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/EphemeralKey.php'
 	),
 	'Stripe\\ErrorObject' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ErrorObject.php'
 	),
 	'Stripe\\Event' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Event.php'
 	),
 	'Stripe\\Exception\\ApiConnectionException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/ApiConnectionException.php'
 	),
 	'Stripe\\Exception\\ApiErrorException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/ApiErrorException.php'
 	),
 	'Stripe\\Exception\\AuthenticationException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/AuthenticationException.php'
 	),
 	'Stripe\\Exception\\BadMethodCallException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/BadMethodCallException.php'
 	),
 	'Stripe\\Exception\\CardException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/CardException.php'
 	),
 	'Stripe\\Exception\\ExceptionInterface' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/ExceptionInterface.php'
 	),
 	'Stripe\\Exception\\IdempotencyException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/IdempotencyException.php'
 	),
 	'Stripe\\Exception\\InvalidArgumentException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/InvalidArgumentException.php'
 	),
 	'Stripe\\Exception\\InvalidRequestException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/InvalidRequestException.php'
 	),
 	'Stripe\\Exception\\OAuth\\ExceptionInterface' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/OAuth/ExceptionInterface.php'
 	),
 	'Stripe\\Exception\\OAuth\\InvalidClientException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/OAuth/InvalidClientException.php'
 	),
 	'Stripe\\Exception\\OAuth\\InvalidGrantException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/OAuth/InvalidGrantException.php'
 	),
 	'Stripe\\Exception\\OAuth\\InvalidRequestException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/OAuth/InvalidRequestException.php'
 	),
 	'Stripe\\Exception\\OAuth\\InvalidScopeException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/OAuth/InvalidScopeException.php'
 	),
 	'Stripe\\Exception\\OAuth\\OAuthErrorException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/OAuth/OAuthErrorException.php'
 	),
 	'Stripe\\Exception\\OAuth\\UnknownOAuthErrorException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/OAuth/UnknownOAuthErrorException.php'
 	),
 	'Stripe\\Exception\\OAuth\\UnsupportedGrantTypeException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/OAuth/UnsupportedGrantTypeException.php'
 	),
 	'Stripe\\Exception\\OAuth\\UnsupportedResponseTypeException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/OAuth/UnsupportedResponseTypeException.php'
 	),
 	'Stripe\\Exception\\PermissionException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/PermissionException.php'
 	),
 	'Stripe\\Exception\\RateLimitException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/RateLimitException.php'
 	),
 	'Stripe\\Exception\\SignatureVerificationException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/SignatureVerificationException.php'
 	),
 	'Stripe\\Exception\\UnexpectedValueException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/UnexpectedValueException.php'
 	),
 	'Stripe\\Exception\\UnknownApiErrorException' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Exception/UnknownApiErrorException.php'
 	),
 	'Stripe\\ExchangeRate' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ExchangeRate.php'
 	),
 	'Stripe\\File' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/File.php'
 	),
 	'Stripe\\FileLink' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/FileLink.php'
 	),
 	'Stripe\\FinancialConnections\\Account' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/FinancialConnections/Account.php'
 	),
 	'Stripe\\FinancialConnections\\AccountOwner' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/FinancialConnections/AccountOwner.php'
 	),
 	'Stripe\\FinancialConnections\\AccountOwnership' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/FinancialConnections/AccountOwnership.php'
 	),
 	'Stripe\\FinancialConnections\\Session' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/FinancialConnections/Session.php'
 	),
 	'Stripe\\FundingInstructions' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/FundingInstructions.php'
 	),
 	'Stripe\\HttpClient\\ClientInterface' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/HttpClient/ClientInterface.php'
 	),
 	'Stripe\\HttpClient\\CurlClient' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/HttpClient/CurlClient.php'
 	),
 	'Stripe\\HttpClient\\StreamingClientInterface' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/HttpClient/StreamingClientInterface.php'
 	),
 	'Stripe\\Identity\\VerificationReport' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Identity/VerificationReport.php'
 	),
 	'Stripe\\Identity\\VerificationSession' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Identity/VerificationSession.php'
 	),
 	'Stripe\\Invoice' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Invoice.php'
 	),
 	'Stripe\\InvoiceItem' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/InvoiceItem.php'
 	),
 	'Stripe\\InvoiceLineItem' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/InvoiceLineItem.php'
 	),
 	'Stripe\\Issuing\\Authorization' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Issuing/Authorization.php'
 	),
 	'Stripe\\Issuing\\Card' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Issuing/Card.php'
 	),
 	'Stripe\\Issuing\\CardDetails' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Issuing/CardDetails.php'
 	),
 	'Stripe\\Issuing\\Cardholder' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Issuing/Cardholder.php'
 	),
 	'Stripe\\Issuing\\Dispute' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Issuing/Dispute.php'
 	),
 	'Stripe\\Issuing\\Transaction' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Issuing/Transaction.php'
 	),
 	'Stripe\\LineItem' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/LineItem.php'
 	),
 	'Stripe\\LoginLink' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/LoginLink.php'
 	),
 	'Stripe\\Mandate' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Mandate.php'
 	),
 	'Stripe\\OAuth' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/OAuth.php'
 	),
 	'Stripe\\OAuthErrorObject' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/OAuthErrorObject.php'
 	),
 	'Stripe\\Order' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Order.php'
 	),
 	'Stripe\\OrderItem' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/OrderItem.php'
 	),
 	'Stripe\\OrderReturn' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/OrderReturn.php'
 	),
 	'Stripe\\PaymentIntent' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/PaymentIntent.php'
 	),
 	'Stripe\\PaymentLink' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/PaymentLink.php'
 	),
 	'Stripe\\PaymentMethod' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/PaymentMethod.php'
 	),
 	'Stripe\\Payout' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Payout.php'
 	),
 	'Stripe\\Person' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Person.php'
 	),
 	'Stripe\\Plan' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Plan.php'
 	),
 	'Stripe\\Price' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Price.php'
 	),
 	'Stripe\\Product' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Product.php'
 	),
 	'Stripe\\PromotionCode' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/PromotionCode.php'
 	),
 	'Stripe\\Quote' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Quote.php'
 	),
 	'Stripe\\Radar\\EarlyFraudWarning' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Radar/EarlyFraudWarning.php'
 	),
 	'Stripe\\Radar\\ValueList' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Radar/ValueList.php'
 	),
 	'Stripe\\Radar\\ValueListItem' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Radar/ValueListItem.php'
 	),
 	'Stripe\\Recipient' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Recipient.php'
 	),
 	'Stripe\\RecipientTransfer' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/RecipientTransfer.php'
 	),
 	'Stripe\\Refund' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Refund.php'
 	),
 	'Stripe\\Reporting\\ReportRun' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Reporting/ReportRun.php'
 	),
 	'Stripe\\Reporting\\ReportType' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Reporting/ReportType.php'
 	),
 	'Stripe\\RequestTelemetry' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/RequestTelemetry.php'
 	),
 	'Stripe\\Review' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Review.php'
 	),
 	'Stripe\\SKU' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/SKU.php'
 	),
 	'Stripe\\SearchResult' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/SearchResult.php'
 	),
 	'Stripe\\Service\\AbstractService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/AbstractService.php'
 	),
 	'Stripe\\Service\\AbstractServiceFactory' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/AbstractServiceFactory.php'
 	),
 	'Stripe\\Service\\AccountLinkService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/AccountLinkService.php'
 	),
 	'Stripe\\Service\\AccountService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/AccountService.php'
 	),
 	'Stripe\\Service\\ApplePayDomainService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/ApplePayDomainService.php'
 	),
 	'Stripe\\Service\\ApplicationFeeService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/ApplicationFeeService.php'
 	),
 	'Stripe\\Service\\BalanceService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/BalanceService.php'
 	),
 	'Stripe\\Service\\BalanceTransactionService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/BalanceTransactionService.php'
 	),
 	'Stripe\\Service\\BillingPortal\\BillingPortalServiceFactory' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/BillingPortal/BillingPortalServiceFactory.php'
 	),
 	'Stripe\\Service\\BillingPortal\\ConfigurationService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/BillingPortal/ConfigurationService.php'
 	),
 	'Stripe\\Service\\BillingPortal\\SessionService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/BillingPortal/SessionService.php'
 	),
 	'Stripe\\Service\\ChargeService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/ChargeService.php'
 	),
 	'Stripe\\Service\\Checkout\\CheckoutServiceFactory' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Checkout/CheckoutServiceFactory.php'
 	),
 	'Stripe\\Service\\Checkout\\SessionService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Checkout/SessionService.php'
 	),
 	'Stripe\\Service\\CoreServiceFactory' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/CoreServiceFactory.php'
 	),
 	'Stripe\\Service\\CountrySpecService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/CountrySpecService.php'
 	),
 	'Stripe\\Service\\CouponService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/CouponService.php'
 	),
 	'Stripe\\Service\\CreditNoteService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/CreditNoteService.php'
 	),
 	'Stripe\\Service\\CustomerService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/CustomerService.php'
 	),
 	'Stripe\\Service\\DisputeService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/DisputeService.php'
 	),
 	'Stripe\\Service\\EphemeralKeyService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/EphemeralKeyService.php'
 	),
 	'Stripe\\Service\\EventService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/EventService.php'
 	),
 	'Stripe\\Service\\ExchangeRateService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/ExchangeRateService.php'
 	),
 	'Stripe\\Service\\FileLinkService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/FileLinkService.php'
 	),
 	'Stripe\\Service\\FileService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/FileService.php'
 	),
 	'Stripe\\Service\\FinancialConnections\\AccountService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/FinancialConnections/AccountService.php'
 	),
 	'Stripe\\Service\\FinancialConnections\\FinancialConnectionsServiceFactory' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/FinancialConnections/FinancialConnectionsServiceFactory.php'
 	),
 	'Stripe\\Service\\FinancialConnections\\SessionService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/FinancialConnections/SessionService.php'
 	),
 	'Stripe\\Service\\Identity\\IdentityServiceFactory' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Identity/IdentityServiceFactory.php'
 	),
 	'Stripe\\Service\\Identity\\VerificationReportService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Identity/VerificationReportService.php'
 	),
 	'Stripe\\Service\\Identity\\VerificationSessionService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Identity/VerificationSessionService.php'
 	),
 	'Stripe\\Service\\InvoiceItemService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/InvoiceItemService.php'
 	),
 	'Stripe\\Service\\InvoiceService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/InvoiceService.php'
 	),
 	'Stripe\\Service\\Issuing\\AuthorizationService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Issuing/AuthorizationService.php'
 	),
 	'Stripe\\Service\\Issuing\\CardService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Issuing/CardService.php'
 	),
 	'Stripe\\Service\\Issuing\\CardholderService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Issuing/CardholderService.php'
 	),
 	'Stripe\\Service\\Issuing\\DisputeService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Issuing/DisputeService.php'
 	),
 	'Stripe\\Service\\Issuing\\IssuingServiceFactory' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Issuing/IssuingServiceFactory.php'
 	),
 	'Stripe\\Service\\Issuing\\TransactionService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Issuing/TransactionService.php'
 	),
 	'Stripe\\Service\\MandateService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/MandateService.php'
 	),
 	'Stripe\\Service\\OAuthService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/OAuthService.php'
 	),
 	'Stripe\\Service\\OrderReturnService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/OrderReturnService.php'
 	),
 	'Stripe\\Service\\OrderService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/OrderService.php'
 	),
 	'Stripe\\Service\\PaymentIntentService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/PaymentIntentService.php'
 	),
 	'Stripe\\Service\\PaymentLinkService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/PaymentLinkService.php'
 	),
 	'Stripe\\Service\\PaymentMethodService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/PaymentMethodService.php'
 	),
 	'Stripe\\Service\\PayoutService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/PayoutService.php'
 	),
 	'Stripe\\Service\\PlanService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/PlanService.php'
 	),
 	'Stripe\\Service\\PriceService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/PriceService.php'
 	),
 	'Stripe\\Service\\ProductService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/ProductService.php'
 	),
 	'Stripe\\Service\\PromotionCodeService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/PromotionCodeService.php'
 	),
 	'Stripe\\Service\\QuoteService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/QuoteService.php'
 	),
 	'Stripe\\Service\\Radar\\EarlyFraudWarningService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Radar/EarlyFraudWarningService.php'
 	),
 	'Stripe\\Service\\Radar\\RadarServiceFactory' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Radar/RadarServiceFactory.php'
 	),
 	'Stripe\\Service\\Radar\\ValueListItemService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Radar/ValueListItemService.php'
 	),
 	'Stripe\\Service\\Radar\\ValueListService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Radar/ValueListService.php'
 	),
 	'Stripe\\Service\\RefundService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/RefundService.php'
 	),
 	'Stripe\\Service\\Reporting\\ReportRunService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Reporting/ReportRunService.php'
 	),
 	'Stripe\\Service\\Reporting\\ReportTypeService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Reporting/ReportTypeService.php'
 	),
 	'Stripe\\Service\\Reporting\\ReportingServiceFactory' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Reporting/ReportingServiceFactory.php'
 	),
 	'Stripe\\Service\\ReviewService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/ReviewService.php'
 	),
 	'Stripe\\Service\\SetupAttemptService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/SetupAttemptService.php'
 	),
 	'Stripe\\Service\\SetupIntentService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/SetupIntentService.php'
 	),
 	'Stripe\\Service\\ShippingRateService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/ShippingRateService.php'
 	),
 	'Stripe\\Service\\Sigma\\ScheduledQueryRunService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Sigma/ScheduledQueryRunService.php'
 	),
 	'Stripe\\Service\\Sigma\\SigmaServiceFactory' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Sigma/SigmaServiceFactory.php'
 	),
 	'Stripe\\Service\\SkuService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/SkuService.php'
 	),
 	'Stripe\\Service\\SourceService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/SourceService.php'
 	),
 	'Stripe\\Service\\SubscriptionItemService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/SubscriptionItemService.php'
 	),
 	'Stripe\\Service\\SubscriptionScheduleService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/SubscriptionScheduleService.php'
 	),
 	'Stripe\\Service\\SubscriptionService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/SubscriptionService.php'
 	),
 	'Stripe\\Service\\TaxCodeService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/TaxCodeService.php'
 	),
 	'Stripe\\Service\\TaxRateService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/TaxRateService.php'
 	),
 	'Stripe\\Service\\Terminal\\ConfigurationService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Terminal/ConfigurationService.php'
 	),
 	'Stripe\\Service\\Terminal\\ConnectionTokenService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Terminal/ConnectionTokenService.php'
 	),
 	'Stripe\\Service\\Terminal\\LocationService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Terminal/LocationService.php'
 	),
 	'Stripe\\Service\\Terminal\\ReaderService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Terminal/ReaderService.php'
 	),
 	'Stripe\\Service\\Terminal\\TerminalServiceFactory' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/Terminal/TerminalServiceFactory.php'
 	),
 	'Stripe\\Service\\TestHelpers\\RefundService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/TestHelpers/RefundService.php'
 	),
 	'Stripe\\Service\\TestHelpers\\Terminal\\ReaderService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/TestHelpers/Terminal/ReaderService.php'
 	),
 	'Stripe\\Service\\TestHelpers\\Terminal\\TerminalServiceFactory' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/TestHelpers/Terminal/TerminalServiceFactory.php'
 	),
 	'Stripe\\Service\\TestHelpers\\TestClockService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/TestHelpers/TestClockService.php'
 	),
 	'Stripe\\Service\\TestHelpers\\TestHelpersServiceFactory' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/TestHelpers/TestHelpersServiceFactory.php'
 	),
 	'Stripe\\Service\\TokenService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/TokenService.php'
 	),
 	'Stripe\\Service\\TopupService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/TopupService.php'
 	),
 	'Stripe\\Service\\TransferService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/TransferService.php'
 	),
 	'Stripe\\Service\\WebhookEndpointService' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Service/WebhookEndpointService.php'
 	),
 	'Stripe\\SetupAttempt' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/SetupAttempt.php'
 	),
 	'Stripe\\SetupIntent' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/SetupIntent.php'
 	),
 	'Stripe\\ShippingRate' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ShippingRate.php'
 	),
 	'Stripe\\Sigma\\ScheduledQueryRun' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Sigma/ScheduledQueryRun.php'
 	),
 	'Stripe\\SingletonApiResource' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/SingletonApiResource.php'
 	),
 	'Stripe\\Source' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Source.php'
 	),
 	'Stripe\\SourceTransaction' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/SourceTransaction.php'
 	),
 	'Stripe\\Stripe' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Stripe.php'
 	),
 	'Stripe\\StripeClient' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/StripeClient.php'
 	),
 	'Stripe\\StripeClientInterface' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/StripeClientInterface.php'
 	),
 	'Stripe\\StripeObject' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/StripeObject.php'
 	),
 	'Stripe\\StripeStreamingClientInterface' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/StripeStreamingClientInterface.php'
 	),
 	'Stripe\\Subscription' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Subscription.php'
 	),
 	'Stripe\\SubscriptionItem' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/SubscriptionItem.php'
 	),
 	'Stripe\\SubscriptionSchedule' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/SubscriptionSchedule.php'
 	),
 	'Stripe\\TaxCode' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/TaxCode.php'
 	),
 	'Stripe\\TaxId' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/TaxId.php'
 	),
 	'Stripe\\TaxRate' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/TaxRate.php'
 	),
 	'Stripe\\Terminal\\Configuration' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Terminal/Configuration.php'
 	),
 	'Stripe\\Terminal\\ConnectionToken' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Terminal/ConnectionToken.php'
 	),
 	'Stripe\\Terminal\\Location' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Terminal/Location.php'
 	),
 	'Stripe\\Terminal\\Reader' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Terminal/Reader.php'
 	),
 	'Stripe\\TestHelpers\\TestClock' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/TestHelpers/TestClock.php'
 	),
 	'Stripe\\ThreeDSecure' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/ThreeDSecure.php'
 	),
 	'Stripe\\Token' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Token.php'
 	),
 	'Stripe\\Topup' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Topup.php'
 	),
 	'Stripe\\Transfer' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Transfer.php'
 	),
 	'Stripe\\TransferReversal' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/TransferReversal.php'
 	),
 	'Stripe\\UsageRecord' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/UsageRecord.php'
 	),
 	'Stripe\\UsageRecordSummary' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/UsageRecordSummary.php'
 	),
 	'Stripe\\Util\\CaseInsensitiveArray' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Util/CaseInsensitiveArray.php'
 	),
 	'Stripe\\Util\\DefaultLogger' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Util/DefaultLogger.php'
 	),
 	'Stripe\\Util\\LoggerInterface' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Util/LoggerInterface.php'
 	),
 	'Stripe\\Util\\ObjectTypes' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Util/ObjectTypes.php'
 	),
 	'Stripe\\Util\\RandomGenerator' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Util/RandomGenerator.php'
 	),
 	'Stripe\\Util\\RequestOptions' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Util/RequestOptions.php'
 	),
 	'Stripe\\Util\\Set' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Util/Set.php'
 	),
 	'Stripe\\Util\\Util' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Util/Util.php'
 	),
 	'Stripe\\Webhook' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/Webhook.php'
 	),
 	'Stripe\\WebhookEndpoint' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/WebhookEndpoint.php'
 	),
 	'Stripe\\WebhookSignature' => array(
-		'version' => '7.128.0.0',
+		'version' => '7.128.1.0',
 		'path'    => $vendorDir . '/stripe/stripe-php/lib/WebhookSignature.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\AcceptHeader' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/AcceptHeader.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\AcceptHeaderItem' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/AcceptHeaderItem.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\BinaryFileResponse' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/BinaryFileResponse.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\ChainRequestMatcher' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/ChainRequestMatcher.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Cookie' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Cookie.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Exception\\BadRequestException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Exception/BadRequestException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Exception\\ConflictingHeadersException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Exception/ConflictingHeadersException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Exception\\JsonException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Exception/JsonException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Exception\\RequestExceptionInterface' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Exception/RequestExceptionInterface.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Exception\\SessionNotFoundException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Exception/SessionNotFoundException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Exception\\SuspiciousOperationException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Exception/SuspiciousOperationException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Exception\\UnexpectedValueException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Exception/UnexpectedValueException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\ExpressionRequestMatcher' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/ExpressionRequestMatcher.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\FileBag' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/FileBag.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\File\\Exception\\AccessDeniedException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/File/Exception/AccessDeniedException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\File\\Exception\\CannotWriteFileException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/File/Exception/CannotWriteFileException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\File\\Exception\\ExtensionFileException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/File/Exception/ExtensionFileException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\File\\Exception\\FileException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/File/Exception/FileException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\File\\Exception\\FileNotFoundException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/File/Exception/FileNotFoundException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\File\\Exception\\FormSizeFileException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/File/Exception/FormSizeFileException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\File\\Exception\\IniSizeFileException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/File/Exception/IniSizeFileException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\File\\Exception\\NoFileException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/File/Exception/NoFileException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\File\\Exception\\NoTmpDirFileException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/File/Exception/NoTmpDirFileException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\File\\Exception\\PartialFileException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/File/Exception/PartialFileException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\File\\Exception\\UnexpectedTypeException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/File/Exception/UnexpectedTypeException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\File\\Exception\\UploadException' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/File/Exception/UploadException.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\File\\File' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/File/File.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\File\\Stream' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/File/Stream.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\File\\UploadedFile' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/File/UploadedFile.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\HeaderBag' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/HeaderBag.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\HeaderUtils' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/HeaderUtils.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\InputBag' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/InputBag.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\IpUtils' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/IpUtils.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\JsonResponse' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/JsonResponse.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\ParameterBag' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/ParameterBag.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RateLimiter\\AbstractRequestRateLimiter' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RateLimiter/AbstractRequestRateLimiter.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RateLimiter\\PeekableRequestRateLimiterInterface' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RateLimiter/PeekableRequestRateLimiterInterface.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RateLimiter\\RequestRateLimiterInterface' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RateLimiter/RequestRateLimiterInterface.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RedirectResponse' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RedirectResponse.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Request' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Request.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RequestMatcher' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RequestMatcher.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RequestMatcherInterface' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RequestMatcherInterface.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RequestMatcher\\AttributesRequestMatcher' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RequestMatcher/AttributesRequestMatcher.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RequestMatcher\\ExpressionRequestMatcher' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RequestMatcher/ExpressionRequestMatcher.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RequestMatcher\\HostRequestMatcher' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RequestMatcher/HostRequestMatcher.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RequestMatcher\\IpsRequestMatcher' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RequestMatcher/IpsRequestMatcher.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RequestMatcher\\IsJsonRequestMatcher' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RequestMatcher/IsJsonRequestMatcher.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RequestMatcher\\MethodRequestMatcher' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RequestMatcher/MethodRequestMatcher.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RequestMatcher\\PathRequestMatcher' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RequestMatcher/PathRequestMatcher.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RequestMatcher\\PortRequestMatcher' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RequestMatcher/PortRequestMatcher.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RequestMatcher\\SchemeRequestMatcher' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RequestMatcher/SchemeRequestMatcher.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\RequestStack' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/RequestStack.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Response' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Response.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\ResponseHeaderBag' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/ResponseHeaderBag.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\ServerBag' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/ServerBag.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBag' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Attribute/AttributeBag.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Attribute/AttributeBagInterface.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\FlashBagAwareSessionInterface' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/FlashBagAwareSessionInterface.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Flash\\AutoExpireFlashBag' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Flash/AutoExpireFlashBag.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBag' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Flash/FlashBag.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Flash/FlashBagInterface.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Session' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Session.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/SessionBagInterface.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\SessionBagProxy' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/SessionBagProxy.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\SessionFactory' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/SessionFactory.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\SessionFactoryInterface' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/SessionFactoryInterface.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\SessionInterface' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/SessionInterface.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\SessionUtils' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/SessionUtils.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\AbstractSessionHandler' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/Handler/AbstractSessionHandler.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\IdentityMarshaller' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/Handler/IdentityMarshaller.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MarshallingSessionHandler' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/Handler/MarshallingSessionHandler.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/Handler/MemcachedSessionHandler.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MigratingSessionHandler' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/Handler/MigratingSessionHandler.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MongoDbSessionHandler' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/Handler/MongoDbSessionHandler.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeFileSessionHandler' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/Handler/NativeFileSessionHandler.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NullSessionHandler' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/Handler/NullSessionHandler.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/Handler/PdoSessionHandler.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\RedisSessionHandler' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/Handler/RedisSessionHandler.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\SessionHandlerFactory' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/Handler/SessionHandlerFactory.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\StrictSessionHandler' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/Handler/StrictSessionHandler.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\MetadataBag' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/MetadataBag.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\MockArraySessionStorage' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/MockArraySessionStorage.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\MockFileSessionStorage' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/MockFileSessionStorage.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\MockFileSessionStorageFactory' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/MockFileSessionStorageFactory.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/NativeSessionStorage.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorageFactory' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/NativeSessionStorageFactory.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\PhpBridgeSessionStorage' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/PhpBridgeSessionStorage.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\PhpBridgeSessionStorageFactory' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/PhpBridgeSessionStorageFactory.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\Proxy\\AbstractProxy' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/Proxy/AbstractProxy.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\Proxy\\SessionHandlerProxy' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/Proxy/SessionHandlerProxy.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageFactoryInterface' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/SessionStorageFactoryInterface.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Session/Storage/SessionStorageInterface.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\StreamedJsonResponse' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/StreamedJsonResponse.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\StreamedResponse' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/StreamedResponse.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Test\\Constraint\\RequestAttributeValueSame' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Test/Constraint/RequestAttributeValueSame.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Test\\Constraint\\ResponseCookieValueSame' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Test/Constraint/ResponseCookieValueSame.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Test\\Constraint\\ResponseFormatSame' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Test/Constraint/ResponseFormatSame.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Test\\Constraint\\ResponseHasCookie' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Test/Constraint/ResponseHasCookie.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Test\\Constraint\\ResponseHasHeader' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Test/Constraint/ResponseHasHeader.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Test\\Constraint\\ResponseHeaderLocationSame' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Test/Constraint/ResponseHeaderLocationSame.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Test\\Constraint\\ResponseHeaderSame' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Test/Constraint/ResponseHeaderSame.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Test\\Constraint\\ResponseIsRedirected' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Test/Constraint/ResponseIsRedirected.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Test\\Constraint\\ResponseIsSuccessful' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Test/Constraint/ResponseIsSuccessful.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Test\\Constraint\\ResponseIsUnprocessable' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Test/Constraint/ResponseIsUnprocessable.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\Test\\Constraint\\ResponseStatusCodeSame' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/Test/Constraint/ResponseStatusCodeSame.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\UriSigner' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/UriSigner.php'
 	),
 	'Symfony\\Component\\HttpFoundation\\UrlHelper' => array(
-		'version' => '6.4.46.0',
+		'version' => '6.4.50.0',
 		'path'    => $vendorDir . '/symfony/http-foundation/UrlHelper.php'
 	),
 	'Symfony\\Polyfill\\Mbstring\\Mbstring' => array(
-		'version' => '1.38.2.0',
+		'version' => '1.43.3.0',
 		'path'    => $vendorDir . '/symfony/polyfill-mbstring/Mbstring.php'
 	),
 	'Symfony\\Polyfill\\Php83\\Php83' => array(
-		'version' => '1.41.0.0',
+		'version' => '1.43.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/Php83.php'
 	),
 	'VIISON\\AddressSplitter\\AddressSplitter' => array(
@@ -5883,7 +5883,7 @@ return array(
 		'path'    => $vendorDir . '/viison/address-splitter/src/Exceptions/SplittingException.php'
 	),
 	'ValueError' => array(
-		'version' => '1.41.0.0',
+		'version' => '1.43.0.0',
 		'path'    => $vendorDir . '/symfony/polyfill-php83/bootstrap72.php'
 	),
 	'Version_Loader' => array(
