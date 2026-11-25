@@ -28,11 +28,14 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 defined( 'ABSPATH' ) || exit();
 
 class Gateway extends HotelBooking_Gateway {
+	private $config_id;
+	private $payment_description;
+	private $payment_method;
 
-	public function __construct( $title, $id ) {
-		$this->admin_title    = $title;
-		$this->id             = $id;
-		$this->payment_method = $this->id;
+	public function __construct( $title, $payment_method = 'knit_pay' ) {
+		$this->adminTitle     = $title;
+		$this->payment_method = $payment_method;
+		$this->id             = 'knit_pay' === $payment_method ? 'knit_pay' : 'knit_pay_' . $payment_method;
 
 		add_filter( 'mphb_gateway_has_sandbox', [ $this, 'hide' ], 10, 2 );
 		add_filter( 'mphb_gateway_has_instructions', [ $this, 'hide' ], 10, 2 );
@@ -60,14 +63,17 @@ class Gateway extends HotelBooking_Gateway {
 	protected function setupProperties() {
 		parent::setupProperties();
 
-		$this->adminTitle          = $this->admin_title;
+		if ( empty( $this->title ) ) {
+			$this->title = __( 'Online Payment', 'knit-pay-lang' );
+		}
+
 		$this->config_id           = sanitize_text_field( $this->getOption( 'config_id' ) );
 		$this->payment_description = sanitize_text_field( $this->getOption( 'payment_description' ) );
 	}
 
 	protected function initDefaultOptions() {
 		$defaults = [
-			'title'       => $this->title,
+			'title'       => __( 'Online Payment', 'knit-pay-lang' ),
 			'description' => '',
 			'enabled'     => false,
 		];
@@ -78,7 +84,7 @@ class Gateway extends HotelBooking_Gateway {
 	public function processPayment( Booking $booking, HotelBooking_Payment $hb_payment ) {
 		// Initiating Payment.
 		$config_id      = $this->config_id;
-		$payment_method = $this->id;
+		$payment_method = $this->payment_method;
 
 		// Use default gateway if no configuration has been set.
 		if ( empty( $config_id ) ) {
@@ -117,19 +123,16 @@ class Gateway extends HotelBooking_Gateway {
 		$payment->set_total_amount( new Money( $hb_payment->getAmount(), $currency ) );
 
 		// Method.
-		$payment->set_payment_method( $this->id );
+		$payment->set_payment_method( $payment_method );
 
 		// Configuration.
 		$payment->config_id = $config_id;
 
-		try {
-			$payment = Plugin::start_payment( $payment );
+		// Let Knit Pay's handler run the gateway redirect; HB 6+ captures this URL
+		// for its checkout JSON response, so don't call $gateway->redirect() here.
+		$payment = Plugin::start_payment( $payment );
 
-			$gateway->redirect( $payment );
-		} catch ( \Exception $e ) {
-			echo $e->getMessage() . '<br><br><a href="javascript:history.back()">Click here to go back and try again.</a>';
-			exit;
-		}
+		wp_safe_redirect( $payment->get_pay_redirect_url(), 303 );
 	}
 
 	/**

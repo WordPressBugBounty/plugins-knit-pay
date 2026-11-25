@@ -80,6 +80,7 @@ class Helper {
 	/**
 	 * Get email.
 	 *
+	 * @param MemberOrder $morder Member Order.
 	 * @return string|null
 	 */
 	public static function get_email( $morder ) {
@@ -96,8 +97,8 @@ class Helper {
 	 * Get value from object.
 	 *
 	 * @param object $object Object.
-	 * @param string $key   Key.
-	 * @return string|null
+	 * @param string $var    Property name.
+	 * @return mixed
 	 */
 	private static function get_value_from_object( $object, $var ) {
 		if ( isset( $object->{$var} ) ) {
@@ -108,8 +109,13 @@ class Helper {
 
 	/**
 	 * Get customer from order.
+	 *
+	 * @param MemberOrder $morder Member Order.
+	 * @return \Pronamic\WordPress\Pay\Customer|null
 	 */
 	public static function get_customer( $morder ) {
+		$billing = null;
+
 		if ( isset( $morder->billing ) ) {
 			$billing = $morder->billing;
 		}
@@ -127,6 +133,7 @@ class Helper {
 	/**
 	 * Get name from order.
 	 *
+	 * @param MemberOrder $morder Member Order.
 	 * @return ContactName|null
 	 */
 	public static function get_name( $morder ) {
@@ -141,9 +148,12 @@ class Helper {
 	/**
 	 * Get address from order.
 	 *
+	 * @param MemberOrder $morder Member Order.
 	 * @return Address|null
 	 */
 	public static function get_address( MemberOrder $morder ) {
+		$billing = null;
+
 		if ( isset( $morder->billing ) ) {
 			$billing = $morder->billing;
 		}

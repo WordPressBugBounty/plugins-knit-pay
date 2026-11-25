@@ -93,6 +93,17 @@ class PMProGateway_knit_pay extends PMProGateway {
 		add_action( 'pmpro_checkout_before_change_membership_level', [ $this, 'pmpro_checkout_before_change_membership_level' ], 10, 2 );
 		add_action( 'pmpro_checkout_before_form', [ $this, 'hide_checkout_fields' ] );
 		add_action( 'pmpro_checkout_preheader_after_get_level_at_checkout', [ $this, 'restore_hidden_payment_fields' ], 21 );
+
+		// Save checkout fields and TOS consent before leaving for the gateway.
+		// PMPro core does the same for PayPal Standard, 2Checkout and Payfast.
+		// Do NOT fire `pmpro_after_checkout` here: that action means the payment
+		// is complete and is used by add-ons like GamiPress to award points.
+		if ( function_exists( 'pmpro_after_checkout_save_fields' ) && false === has_action( 'pmpro_before_send_to_knit_pay', 'pmpro_after_checkout_save_fields' ) ) {
+			add_action( 'pmpro_before_send_to_knit_pay', 'pmpro_after_checkout_save_fields', 20, 2 );
+		}
+		if ( function_exists( 'pmpro_after_checkout_update_consent' ) && false === has_action( 'pmpro_before_send_to_knit_pay', 'pmpro_after_checkout_update_consent' ) ) {
+			add_action( 'pmpro_before_send_to_knit_pay', 'pmpro_after_checkout_update_consent', 10, 2 );
+		}
 	}
 
 	/**
@@ -431,7 +442,6 @@ class PMProGateway_knit_pay extends PMProGateway {
 		}
 
 		do_action( 'pmpro_before_send_to_knit_pay', $user_id, $morder );
-		do_action( 'pmpro_after_checkout', $user_id, $morder );
 
 		wp_safe_redirect( $knit_pay_redirect_url );
 		exit();

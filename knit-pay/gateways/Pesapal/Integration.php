@@ -33,6 +33,7 @@ class Integration extends KnitPayGatewayIntegration {
 				'manual_url'  => 'https://developer.pesapal.com/',
 				'supports'    => [
 					'webhook',
+					'webhook_log',
 				],
 			]
 		);
@@ -150,7 +151,7 @@ class Integration extends KnitPayGatewayIntegration {
 		
 		// IPN ID
 		$fields[] = [
-			'section'  => 'general',
+			'section'  => 'feedback',
 			'meta_key' => '_pronamic_gateway_pesapal_ipn_id',
 			'title'    => __( 'IPN ID', 'knit-pay-lang' ),
 			'type'     => 'text',

@@ -2,6 +2,8 @@
 namespace KnitPay\Gateways\Pesapal;
 
 use KnitPay\Gateways\Gateway as Core_Gateway;
+use Pronamic\WordPress\Pay\Address;
+use Pronamic\WordPress\Pay\Region;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Pronamic\WordPress\Pay\Payments\FailureReason;
@@ -108,15 +110,79 @@ class Gateway extends Core_Gateway {
 				'country_code'  => $billing_address ? $billing_address->get_country_code() : '',
 				'first_name'    => $customer->get_name() ? $customer->get_name()->get_first_name() : '',
 				'last_name'     => $customer->get_name() ? $customer->get_name()->get_last_name() : '',
-				'line_1'        => $billing_address ? $billing_address->get_line_1() : '',
-				'line_2'        => $billing_address ? $billing_address->get_line_2() : '',
-				'city'          => $billing_address ? $billing_address->get_city() : '',
-				'state'         => $billing_address ? $billing_address->get_region() : '',
+				'line_1'        => $this->get_address_line( $billing_address ? $billing_address->get_line_1() : '' ),
+				'line_2'        => $this->get_address_line( $billing_address ? $billing_address->get_line_2() : '' ),
+				'city'          => $this->get_address_line( $billing_address ? $billing_address->get_city() : '' ),
+				'state'         => $this->get_state( $billing_address ),
 				'postal_code'   => $billing_address ? $billing_address->get_postal_code() : '',
 			],
 		];
 		
 		return $data;
+	}
+
+	/**
+	 * Get address value formatted for the Pesapal API.
+	 *
+	 * Pesapal only accepts alphanumeric characters, dashes, underscores,
+	 * dots, colons and at signs in address fields. Characters such as commas
+	 * are rejected with "Address Line 1 value can only contain ...".
+	 *
+	 * @param string|null $value Address value.
+	 * @return string
+	 */
+	private function get_address_line( $value ) {
+		if ( empty( $value ) ) {
+			return '';
+		}
+
+		$value = remove_accents( (string) $value );
+		$value = preg_replace( '/[^A-Za-z0-9\-_.:@ ]/', ' ', $value );
+		$value = preg_replace( '/\s+/', ' ', $value );
+
+		return trim( (string) $value );
+	}
+
+	/**
+	 * Get state value formatted for the Pesapal API.
+	 *
+	 * Pesapal documents a string with a maximum length of 3.
+	 *
+	 * @param Address|null $billing_address Billing address.
+	 * @return string
+	 */
+	private function get_state( $billing_address ) {
+		if ( null === $billing_address ) {
+			return '';
+		}
+
+		$region = $billing_address->get_region();
+
+		if ( ! $region instanceof Region ) {
+			return '';
+		}
+
+		$state = $region->get_code();
+
+		if ( empty( $state ) ) {
+			$state = $region->get_value();
+		}
+
+		if ( empty( $state ) ) {
+			$state = $region->get_name();
+		}
+
+		if ( ! is_string( $state ) ) {
+			return '';
+		}
+
+		$state = $this->get_address_line( $state );
+
+		if ( strlen( $state ) > 3 ) {
+			return '';
+		}
+
+		return $state;
 	}
 	
 	/**

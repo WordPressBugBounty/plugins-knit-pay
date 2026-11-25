@@ -4,7 +4,7 @@ Tags: paypal, razorpay, cashfree, payment, woocommerce
 Requires at least: 6.2
 Tested up to: 7.2
 Requires PHP: 8.1
-Stable tag: 9.6.7.0
+Stable tag: 9.6.8.0
 License: GPL-3.0-or-later
 
 Seamlessly integrates 500+ payment gateways, including Cashfree, Instamojo, PayPal, Razorpay, and SSLCommerz, with over 100 WordPress plugins.
@@ -313,7 +313,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 * Travel Tour Booking by GoodLayers | TourMaster
 * WP Travel
 * BA Book Everything (Try it for free with **Knit Pay - Pro**)
-* Hotel Booking Lite By MotoPress (Try it for free with **Knit Pay - Pro**)
+* Hotel Booking Lite By MotoPress (JetMonsters) (Try it for free with **Knit Pay - Pro**)
 * WP Hotel Booking (Contact us for this premium addon.)
 * WP Hotelier (Contact us for this premium addon.)
 * Chauffeur Taxi Booking System (Contact us for this premium addon.)
@@ -359,7 +359,7 @@ https://www.youtube.com/watch?v=vWxSqhSVCQE
 
 = Food Delivery and Restaurant Platforms (Contact us for this premium addon.) =
 * RestroPress (Try it for free with **Knit Pay - Pro**)
-* Restaurant Menu by MotoPress
+* Restaurant Menu by MotoPress (JetMonsters)
 * Five Star Restaurant Menu
 * WPPizza
 * RestaurantPress
@@ -487,6 +487,6 @@ Special Thanks to the Developers of the libraries used in the plugin. [Click Her
 == Changelog ==
 Stay up to date with every release of Knit Pay through our official WordPress SVN repository:
 
-* **[Changelog](https://plugins.trac.wordpress.org/log/knit-pay/tags?verbose=on&format=changelog&limit=20&mode=stop_on_copy)** – View a detailed, human-readable log of all tagged releases and the changes they include.
-* **[RSS Feed](https://plugins.trac.wordpress.org/log/knit-pay/tags?verbose=on&format=rss&limit=20&mode=stop_on_copy)** – Subscribe to get notified automatically whenever a new version is released.
-* **[SVN Repository](https://plugins.trac.wordpress.org/log/knit-pay/tags?verbose=on&limit=20&mode=stop_on_copy)** – Browse the full commit history and tagged versions directly in the Trac repository.
+* **[Changelog](https://plugins.trac.wordpress.org/log/knit-pay/tags?verbose=on&format=changelog&limit=20&mode=stop_on_copy)** â€“ View a detailed, human-readable log of all tagged releases and the changes they include.
+* **[RSS Feed](https://plugins.trac.wordpress.org/log/knit-pay/tags?verbose=on&format=rss&limit=20&mode=stop_on_copy)** â€“ Subscribe to get notified automatically whenever a new version is released.
+* **[SVN Repository](https://plugins.trac.wordpress.org/log/knit-pay/tags?verbose=on&limit=20&mode=stop_on_copy)** â€“ Browse the full commit history and tagged versions directly in the Trac repository.
